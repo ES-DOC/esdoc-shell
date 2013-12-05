@@ -4,13 +4,17 @@ _PROJECT = 'CMIP5'
 _OUTPUT_DIR = '/Users/markmorgan/Development/tmp'
 
 
+# **********************************************************************
 # STEP 0 : Importing modules.
+# **********************************************************************
 import pyesdoc
 import pyesdoc.ontologies.cim as cim
 
 
-
+# **********************************************************************
 # STEP 1 : Creating "documents", i.e. plain old python objects (POPO's).
+# **********************************************************************
+
 # ... create model
 model = pyesdoc.create(cim.v1.ModelComponent, _PROJECT, _INSTITUTE)
 model.short_name = "IPSL-CDX-LR"
@@ -73,7 +77,9 @@ pyesdoc.associate(simulation, 'model_reference', model)
 # ...etc
 
 
+# **********************************************************************
 # Step 2 : Serialization.
+# **********************************************************************
 
 # ... encode as json
 model_as_json = pyesdoc.encode(model, pyesdoc.ESDOC_ENCODING_JSON)
@@ -88,7 +94,9 @@ model = pyesdoc.decode(model_as_json, pyesdoc.ESDOC_ENCODING_JSON)
 simulation = pyesdoc.decode(simulation_as_json, pyesdoc.ESDOC_ENCODING_JSON)
 
 
+# **********************************************************************
 # Step 3 : I/O
+# **********************************************************************
 
 # ... set output path.
 pyesdoc.set_output_directory(_OUTPUT_DIR)
@@ -102,7 +110,9 @@ model = pyesdoc.read(model_filepath)
 simulation = pyesdoc.read(simulation_filepath)
 
 
+# **********************************************************************
 # STEP 4 : Publishing
+# **********************************************************************
 
 # ... publish
 pyesdoc.publish(model)
