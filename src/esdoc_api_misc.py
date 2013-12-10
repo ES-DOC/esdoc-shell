@@ -3,6 +3,7 @@ import sys
 
 import esdoc_api.lib.repo.session as session
 import esdoc_api.lib.repo.dao as dao
+import esdoc_api.lib.repo.utils as utils
 
 
 
@@ -13,7 +14,7 @@ _CONNECTION = "postgresql://postgres:Silence107!@localhost:5432/esdoc_api"
 session.start(_CONNECTION)
 
 
-print dao.get_project_institute_type_counts()
+utils.write_doc_stats()
 
 
 # Start session.

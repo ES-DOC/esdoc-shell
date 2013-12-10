@@ -121,7 +121,6 @@ pyesdoc.publish(simulation)
 print "PUBLISHED DOC :: ID = {0} :: VERSION = {1}".format(
 	model.doc_info.id, model.doc_info.version)
 
-
 # ... retrieve
 model = pyesdoc.retrieve(model.doc_info.id)
 model = pyesdoc.retrieve(model.doc_info.id, model.doc_info.version)
@@ -138,4 +137,3 @@ print "REPUBLISHED DOC :: ID = {0} :: VERSION = {1}".format(
 # ... unpublish
 pyesdoc.unpublish(model.doc_info.id)
 pyesdoc.unpublish(simulation.doc_info.id)
-

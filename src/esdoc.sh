@@ -38,6 +38,7 @@ echo
 _echo "# my name ----------------> ${0##*/}"
 _echo "# my arguments -----------> ${@}"
 _echo "# esdoc root  ------------> $DIR_ESDOC"
+_echo "# esdoc shell  -----------> $DIR_SHELL"
 _echo "# esdoc venv (client) ----> ${DIR_PYTHON_VENV_CLIENT}"
 _echo "# esdoc venv (server) ----> ${DIR_PYTHON_VENV_SERVER}"
 _echo "# esdoc tmp --------------> ${DIR_TMP}"
@@ -145,6 +146,14 @@ api_comparator_setup()
 
 	activate_python_venv api
 	python ./esdoc_api_comparator_setup.py
+}
+
+api_visualizer_setup()
+{
+    _echo "API : writing visualizer setup files ..."
+
+	activate_python_venv api
+	python ./esdoc_api_visualizer_setup.py
 }
 
 api_misc()
@@ -306,6 +315,8 @@ elif [ $ACTION = "api-misc" ]; then
 	api_misc
 elif [ $ACTION = "api-comparator-setup" ]; then
 	api_comparator_setup
+elif [ $ACTION = "api-visualizer-setup" ]; then
+	api_visualizer_setup
 
 # MP actions.
 elif [ $ACTION = "mp-help" ]; then
