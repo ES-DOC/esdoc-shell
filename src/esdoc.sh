@@ -102,13 +102,26 @@ _install_python_venv()
 # Installs a git repo.
 _install_git_repo()
 {
-	_echo "install_git_repo"
+	_echo "... installing git repo :: $1"
+	rm -rf $DIR_ESDOC/$1
+	git clone https://github.com/ES-DOC/$1.git $DIR_ESDOC/$1
 }
 
 # Installs git repos.
 install_git_repos()
 {
 	_echo "Installing git repos"
+
+	_install_git_repo esdoc-api
+	_install_git_repo esdoc-cv
+	_install_git_repo esdoc-deploy
+	_install_git_repo esdoc-docs
+	_install_git_repo esdoc-js-client
+	_install_git_repo esdoc-mp
+	_install_git_repo esdoc-py-client
+	_install_git_repo esdoc-questionnaire
+	_install_git_repo esdoc-splash
+	_install_git_repo esdoc-static
 }
 
 # Installs python virtual environments.
