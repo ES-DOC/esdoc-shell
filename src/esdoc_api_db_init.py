@@ -6,7 +6,7 @@ import esdoc_api.lib.repo.session as session
 
 
 # Repo connection string.
-_CONNECTION = "postgresql://postgres:Silence107!@localhost:5432/esdoc_api"
+_CONNECTION = "postgresql://mqcg:Silence93!@localhost:5432/esdoc_api"
 
 # Input args.
 _args = sys.argv[1:]

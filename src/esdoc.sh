@@ -3,59 +3,133 @@
 BANNER="***************************************************************\n"
 
 # Set paths.
+# ... esdoc shell
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DIR_SHELL="$(dirname "$DIR")"
-DIR_ESDOC="$(dirname "$DIR_SHELL")"
+
+# ... esdoc shell tmp
 DIR_TMP=$DIR_SHELL/tmp
 
+# ... esdoc shell client venv
 DIR_PYTHON_VENV_CLIENT=$DIR_SHELL/venv-client
-DIR_PYTHON_VENV_SERVER=$DIR_SHELL/venv-server
 
+# ... esdoc shell server api venv
+DIR_PYTHON_VENV_SERVER_API=$DIR_SHELL/venv-server-api
+
+# ... esdoc shell server questionnaire venv
+DIR_PYTHON_VENV_SERVER_QTN=$DIR_SHELL/venv-server-qtn
+
+# ... esdoc root
+DIR_ESDOC="$(dirname "$DIR_SHELL")"
+
+# ... esdoc deploy source code
 DIR_DEPLOY_SRC=$DIR_ESDOC/esdoc-deploy/src
 
+# ... esdoc api source code
 DIR_API_SRC=$DIR_ESDOC/esdoc-api/src
+
+# ... esdoc api tests
 DIR_API_TESTS=$DIR_ESDOC/esdoc-api/tests
+
+# ... esdoc api lib sub-folder
 DIR_API_LIB="$DIR_API_SRC/esdoc_api/lib"
 
+# ... esdoc mp source code
 DIR_MP_SRC=$DIR_ESDOC/esdoc-mp/src
+
+# ... esdoc mp tests
 DIR_MP_TESTS=$DIR_ESDOC/esdoc-mp/tests
 
-DIR_PYCLIENT_SRC=$DIR_ESDOC/esdoc-py-client/src
-DIR_PYCLIENT_TESTS=$DIR_ESDOC/esdoc-py-client/tests
-DIR_PYCLIENT_PYESDOC="$DIR_PYCLIENT_SRC/pyesdoc"
+# ... esdoc py-client source code
+DIR_PYESDOC_SRC=$DIR_ESDOC/esdoc-py-client/src
+
+# ... esdoc py-client tests
+DIR_PYESDOC_TESTS=$DIR_ESDOC/esdoc-py-client/tests
+
+# ... esdoc py-client source code
+DIR_PYESDOC_PYESDOC="$DIR_PYESDOC_SRC/pyesdoc"
 
 # Set action.
-ACTION=$1
+ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
 ACTION_ARG=$2
 
+# Wraps standard echo by adding ES-DOC prefix.
 _echo()
 {
-    echo "ES-DOC :: $1"	
+	if [ "$1" ]; then
+	    echo -e "ES-DOC :: $1"	
+	else
+	    echo -e "ES-DOC ::"	
+	fi
 }
 
-# Inform user.
+# Informs user of script configuration.
 echo
-_echo "# my name ----------------> ${0##*/}"
-_echo "# my arguments -----------> ${@}"
-_echo "# esdoc root  ------------> $DIR_ESDOC"
-_echo "# esdoc shell  -----------> $DIR_SHELL"
-_echo "# esdoc venv (client) ----> ${DIR_PYTHON_VENV_CLIENT}"
-_echo "# esdoc venv (server) ----> ${DIR_PYTHON_VENV_SERVER}"
-_echo "# esdoc tmp --------------> ${DIR_TMP}"
-_echo "# esdoc-api src ----------> ${DIR_API_SRC}"
-_echo "# esdoc-api tests --------> ${DIR_API_TESTS}"
-_echo "# esdoc-mp src -----------> ${DIR_MP_SRC}"
-_echo "# esdoc-mp tests ---------> ${DIR_MP_TESTS}"
-_echo "# esdoc-py-client src ----> ${DIR_MP_SRC}"
-_echo "# esdoc-py-client tests --> ${DIR_MP_TESTS}"
-_echo "# action         ---------> ${ACTION}"
+_echo "# my name -----------------> ${0##*/}"
+_echo "# my arguments ------------> ${@}"
+_echo "# esdoc root  -------------> $DIR_ESDOC"
+_echo "# esdoc shell  ------------> $DIR_SHELL"
+_echo "# esdoc venv (client) -----> ${DIR_PYTHON_VENV_CLIENT}"
+_echo "# esdoc venv (server-api) -> ${DIR_PYTHON_VENV_SERVER_API}"
+_echo "# esdoc tmp ---------------> ${DIR_TMP}"
+_echo "# esdoc-api src -----------> ${DIR_API_SRC}"
+_echo "# esdoc-api tests ---------> ${DIR_API_TESTS}"
+_echo "# esdoc-mp src ------------> ${DIR_MP_SRC}"
+_echo "# esdoc-mp tests ----------> ${DIR_MP_TESTS}"
+_echo "# esdoc-py-client src -----> ${DIR_MP_SRC}"
+_echo "# esdoc-py-client tests ---> ${DIR_MP_TESTS}"
+_echo "# action         ----------> ${ACTION}"
 echo
 
 
-
+# Clears temporary files.
 clear_tmp()
 {
 	rm -rf $DIR_TMP/*
+}
+
+# Installs python virtual environments.
+_install_python_venv()
+{
+	rm -rf $1
+    mkdir -p $1
+    virtualenv -q $1
+    source $1/bin/activate
+    pip install -r $2    
+    deactivate
+}
+
+# Installs a git repo.
+_install_git_repo()
+{
+	_echo "install_git_repo"
+}
+
+# Installs git repos.
+install_git_repos()
+{
+	_echo "Installing git repos"
+}
+
+# Installs python virtual environments.
+install_python_venv()
+{
+	_echo "Installing virtual environments"
+
+	_echo "... installing server api virtual environment"
+	_install_python_venv $DIR_PYTHON_VENV_SERVER_API $DIR/venv-server-api-requirements.txt
+
+	_echo "... installing server questionnaire virtual environment"
+	_install_python_venv $DIR_PYTHON_VENV_SERVER_QTN $DIR/venv-server-qtn-requirements.txt
+
+	_echo "... installing client virtual environment"
+	_install_python_venv $DIR_PYTHON_VENV_CLIENT $DIR/venv-client-requirements.txt
+}
+
+install()
+{
+	install_git_repos
+	install_python_venv
 }
 
 activate_python_venv()
@@ -64,27 +138,22 @@ activate_python_venv()
 
 	if [ $1 = "api" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_API_SRC
-		source $DIR_PYTHON_VENV_SERVER/bin/activate
+		source $DIR_PYTHON_VENV_SERVER_API/bin/activate
 
 	elif [ $1 = "mp" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_MP_SRC
 		export PYTHONPATH=$PYTHONPATH:$DIR_MP_TESTS
 		# TODO install nose into client venv
-		source $DIR_PYTHON_VENV_SERVER/bin/activate
+		source $DIR_PYTHON_VENV_SERVER_API/bin/activate
 		# source "$DIR_PYTHON_VENV_CLIENT/bin/activate"
 
-	elif [ $1 = "pyclient" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_PYCLIENT_SRC
-		export PYTHONPATH=$PYTHONPATH:$DIR_PYCLIENT_TESTS
+	elif [ $1 = "pyesdoc" ]; then
+		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_SRC
+		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_TESTS
 		# TODO install nose into client venv
-		source $DIR_PYTHON_VENV_SERVER/bin/activate
+		source $DIR_PYTHON_VENV_SERVER_API/bin/activate
 		# source "$DIR_PYTHON_VENV_CLIENT/bin/activate"
 	fi
-}
-
-api_help()
-{
-	_echo "TODO - api_help"
 }
 
 api_test()
@@ -92,7 +161,7 @@ api_test()
 	activate_python_venv api
 
 	# All tests.
-	if [ $1 = "all" ]; then
+	if [ ! "$1" ]; then
 	    _echo "API :: Executing api tests"
 	    nosetests -v -s $DIR_API_TESTS/esdoc_api_test
 	fi
@@ -164,11 +233,6 @@ api_misc()
 	python ./esdoc_api_misc.py    
 }
 
-mp_help()
-{
-	_echo "TODO - mp_help"
-}
-
 mp_test()
 {
 	activate_python_venv mp
@@ -195,12 +259,12 @@ mp_build()
 	_echo $BANNER
 	_echo "Step 2.  Copying generated files to pyesdoc"
 	_echo $BANNER
-	cp -r "$DIR_TMP/cim/v1" "$DIR_PYCLIENT_PYESDOC/ontologies/cim"
+	cp -r "$DIR_TMP/cim/v1" "$DIR_PYESDOC_PYESDOC/ontologies/cim"
 
 	_echo $BANNER
 	_echo "Step 3.  Copying pyesdoc to esdoc_api"
 	_echo $BANNER
-	cp -r $DIR_PYCLIENT_PYESDOC $DIR_API_LIB
+	cp -r $DIR_PYESDOC_PYESDOC $DIR_API_LIB
 
 	_echo $BANNER
 	_echo "Step 4.  Cleaning esdoc_api pyesdoc library"
@@ -217,44 +281,39 @@ mp_custom_schema()
 }
 
 
-pyclient_help()
+pyesdoc_test()
 {
-	_echo "TODO - pyclient_help"
-}
+	activate_python_venv pyesdoc
 
-pyclient_test()
-{
-	activate_python_venv pyclient
+	# All tests.
+	if [ ! "$1" ]; then
+	    _echo "pyesdoc :: Executing all pyesdoc tests"
+	    nosetests -v -s $DIR_PYESDOC_TESTS/pyesdoc_test
 
 	# Serialization tests.
-	if [ $1 = "s" ]; then
-	    _echo "PYCLIENT :: Executing pyesdoc serialization tests"
-	    nosetests -v -s $DIR_PYCLIENT_TESTS/pyesdoc_test/test_serialization.py
+	elif [ $1 = "s" ]; then
+	    _echo "pyesdoc :: Executing pyesdoc serialization tests"
+	    nosetests -v -s $DIR_PYESDOC_TESTS/pyesdoc_test/test_serialization.py
 
 	# Publishing tests.
 	elif [ $1 = "p" ]; then
-	    _echo "PYCLIENT :: Executing pyesdoc publishing tests"
-	    nosetests -v -s $DIR_PYCLIENT_TESTS/pyesdoc_test/test_publishing.py
+	    _echo "pyesdoc :: Executing pyesdoc publishing tests"
+	    nosetests -v -s $DIR_PYESDOC_TESTS/pyesdoc_test/test_publishing.py
 
 	# General tests.
 	elif [ $1 = "g" ]; then
-	    _echo "PYCLIENT :: Executing pyesdoc general tests"
-	    nosetests -v -s $DIR_PYCLIENT_TESTS/pyesdoc_test/test_general.py
-
-	# All tests.
-	elif [ $1 = "all" ]; then
-	    _echo "PYCLIENT :: Executing pyesdoc tests"
-	    nosetests -v -s $DIR_PYCLIENT_TESTS/pyesdoc_test
+	    _echo "pyesdoc :: Executing pyesdoc general tests"
+	    nosetests -v -s $DIR_PYESDOC_TESTS/pyesdoc_test/test_general.py
 	fi
 }
 
-pyclient_publishing_scenario()
+pyesdoc_publishing_scenario()
 {
-	_echo "Executing pyclient publishing scenario"
+	_echo "Executing pyesdoc publishing scenario"
 
 	clear_tmp
-	activate_python_venv pyclient
-	python ./esdoc_pyclient_scenario.py
+	activate_python_venv pyesdoc
+	python ./esdoc_pyesdoc_scenario.py
 }
 
 deploy_rollout()
@@ -275,66 +334,48 @@ deploy_rollback()
 
 help()
 {
-	_echo "api-help"
-	_echo "api-test"
-	_echo "api-run"
-	_echo "api-db-init"
-	_echo "api-db-ingest"
-	_echo "api-db-ingest-debug"
-	_echo "api-comparator-setup"
+	_echo "General commands :"
+	_echo "\tinstall-python-venv"
+	_echo "\t\tinstall server/client virtual environments"
 
-	_echo "mp-help"
-	_echo "mp-test"
-	_echo "mp-build"
-	_echo "mp-custom-schema"
-
-	_echo "pyclient-help"
-	_echo "pyclient-test"
-	_echo "pyclient-publishing_scenario"
+	_echo ""
+	_echo "API commands :"
+	_echo "\tapi-test"
+	_echo "\t\texecutes api automated tests"
+	_echo "\tapi-run"
+	_echo "\t\tlaunches api web application"
+	_echo "\tapi-db-init"
+	_echo "\t\tinitializes database"
+	_echo "\tapi-db-ingest"
+	_echo "\t\tingests published documents from atom feeds"
+	_echo "\tapi-db-ingest-debug"
+	_echo "\t\truns ingestion debug script"
+	_echo "\tapi-comparator-setup"
+	_echo "\t\texecutes comparator setup"
+	_echo "\tapi-visualizer-setup"
+	_echo "\t\texecutes visualizer setup"
+	_echo "\tapi-misc"
+	_echo "\t\texecutes miscellaneous script"
+	
+	_echo ""
+	_echo "MP commands :"
+	_echo "\tmp-test"
+	_echo "\t\texecutes mp automated tests"
+	_echo "\tmp-build"
+	_echo "\t\tbuilds pyesdoc from meta-programming framework"
+	_echo "\tmp-custom-schema"
+	_echo "\t\tbuilds custom schema as proof of concept"
+	
+	_echo ""
+	_echo "pyesdoc commands :"
+	_echo "\tpyesdoc-test"
+	_echo "\t\texecutes pyesdoc automated tests"
+	_echo "\tpyesdoc-publishing-scenario"
+	_echo "\t\tillustrates pyesdoc usage scenarios"
 
 }
 
-
-if [ $ACTION = "help" ]; then
-	help
-
-# API actions.
-elif [ $ACTION = "api-help" ]; then
-	api_help
-elif [ $ACTION = "api-test" ]; then
-	test_api $ACTION_ARG
-elif [ $ACTION = "api-run" ]; then
-	api_run
-elif [ $ACTION = "api-db-init" ]; then
-	api_db_init
-elif [ $ACTION = "api-db-ingest" ]; then
-	api_db_ingest
-elif [ $ACTION = "api-db-ingest-debug" ]; then
-	api_db_ingest_debug
-elif [ $ACTION = "api-misc" ]; then
-	api_misc
-elif [ $ACTION = "api-comparator-setup" ]; then
-	api_comparator_setup
-elif [ $ACTION = "api-visualizer-setup" ]; then
-	api_visualizer_setup
-
-# MP actions.
-elif [ $ACTION = "mp-help" ]; then
-	mp_help
-elif [ $ACTION = "mp-test" ]; then
-	mp_test $ACTION_ARG
-elif [ $ACTION = "mp-build" ]; then
-	mp_build
-elif [ $ACTION = "mp-custom-schema" ]; then
-	mp_custom_schema
-
-# Pyclient actions.
-elif [ $ACTION = "pyclient-help" ]; then
-	pyclient_help $ACTION_ARG
-elif [ $ACTION = "pyclient-test" ]; then
-	pyclient_test $ACTION_ARG
-elif [ $ACTION = "pyclient-publishing-scenario" ]; then
-	pyclient_publishing_scenario
-fi
+# Invoke action.
+$ACTION
 
 exit 0
