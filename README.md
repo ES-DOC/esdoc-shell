@@ -5,14 +5,14 @@ ES-DOC command line shell
 
 
 
-supported commands
+General commands
 ===========
 
-General commands :
 \tinstall-python-venv
 \t\tinstall server/client virtual environments
 
-API commands :
+API commands
+===========
 \tapi-test
 \t\texecutes api automated tests
 \tapi-run
@@ -30,7 +30,8 @@ API commands :
 \tapi-misc
 \t\texecutes miscellaneous script
 	
-MP commands :
+MP commands
+===========
 \tmp-test
 \t\texecutes mp automated tests
 \tmp-build
@@ -38,7 +39,8 @@ MP commands :
 \tmp-custom-schema
 \t\tbuilds custom schema as proof of concept
 	
-pyesdoc commands :
+pyesdoc commands
+===========
 \tpyesdoc-test
 \t\texecutes pyesdoc automated tests
 \tpyesdoc-publishing-scenario
