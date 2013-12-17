@@ -3,7 +3,6 @@ esdoc-shell
 
 ES-DOC command line shell
 
-==================================================
 
 What is ES-DOC ?
 --------------------------------------
@@ -26,19 +25,13 @@ There is a need to support command line programs for streamlining deployments, p
 Who uses esdoc-shell ?
 --------------------------------------
 
-Anyone who wishes to install and use es-doc toosl & services from the command line.
+Anyone who wishes to install and use es-doc tools & api's from the command line.
 
 
 What are the contents of esdoc-shell ?
 --------------------------------------
 
     \src           Source code.
-
-
-Further Information ?
---------------------------------------
-
-Please refer to the [wiki pages](https://github.com/ES-DOC/esdoc-shell/wiki) for further information.
 
 
 Installation
@@ -50,3 +43,8 @@ Supported commands
 --------
 
 For guide to supported commands please refer to  [supported commands documentation](https://github.com/ES-DOC/esdoc-shell/wiki/Supported-Commands).
+
+Further Information ?
+--------------------------------------
+
+Please refer to the [wiki pages](https://github.com/ES-DOC/esdoc-shell/wiki) for further information.
