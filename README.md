@@ -47,4 +47,4 @@ For guide to supported commands please refer to  [supported commands documentati
 Further Information ?
 --------------------------------------
 
-Please refer to the [wiki pages](https://github.com/ES-DOC/esdoc-shell/wiki) for further information.
+Please refer to the [splash page](http:es-doc.org) for further information.
