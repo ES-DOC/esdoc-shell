@@ -1,15 +1,52 @@
 esdoc-shell
---------
+===============
 
 ES-DOC command line shell
 
+==================================================
 
-installation
+What is ES-DOC ?
+--------------------------------------
+
+ES-DOC stands for Earth Science - Documentation.  It's goal is to provide software tools and services in order to support the distribution of earth science documentation.
+
+
+What is esdoc-shell ?
+--------------------------------------
+
+esdoc-shell is a command line interface for interacting with the es-doc eco-system.
+
+
+Why esdoc-shell ?
+--------------------------------------
+
+There is a need to support command line programs for streamlining deployments, publishing ... etc. 
+
+
+Who uses esdoc-shell ?
+--------------------------------------
+
+Anyone who wishes to install and use es-doc toosl & services from the command line.
+
+
+What are the contents of esdoc-shell ?
+--------------------------------------
+
+    \src           Source code.
+
+
+Further Information ?
+--------------------------------------
+
+Please refer to the [wiki pages](https://github.com/ES-DOC/esdoc-shell/wiki) for further information.
+
+
+Installation
 --------
 
-See [notes](https://github.com/ES-DOC/esdoc-shell/wiki/Installation)
+For guide to installation please refer to [installation documentation](https://github.com/ES-DOC/esdoc-shell/wiki/Installation).
 
-supported commands
+Supported commands
 --------
 
-See [supported commands documentation](https://github.com/ES-DOC/esdoc-shell/wiki/Supported-Commands)
+For guide to supported commands please refer to  [supported commands documentation](https://github.com/ES-DOC/esdoc-shell/wiki/Supported-Commands).
