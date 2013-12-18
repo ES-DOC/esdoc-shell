@@ -1,7 +1,9 @@
+import sys
+
 # Constants.
 _INSTITUTE = 'IPSL'
 _PROJECT = 'CMIP5'
-_OUTPUT_DIR = '/Users/markmorgan/Development/tmp'
+_OUTPUT_DIR = sys.argv[1]
 
 
 # **********************************************************************

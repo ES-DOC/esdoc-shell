@@ -1,0 +1,5 @@
+{
+	"api-db": {
+		"connection": "postgresql://esdoc_dbuser@localhost:5432/esdoc_api"
+	}
+}

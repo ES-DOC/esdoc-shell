@@ -1,7 +1,5 @@
 #!/bin/bash
 
-BANNER="***************************************************************\n"
-
 # Set paths.
 # ... esdoc shell
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -24,6 +22,9 @@ DIR_ESDOC="$(dirname "$DIR_SHELL")"
 
 # ... esdoc deploy source code
 DIR_DEPLOY_SRC=$DIR_ESDOC/esdoc-deploy/src
+
+# ... esdoc questionnaire source code
+DIR_QTN_SRC=$DIR_ESDOC/esdoc-questionnaire/src
 
 # ... esdoc api source code
 DIR_API_SRC=$DIR_ESDOC/esdoc-api/src
@@ -82,10 +83,11 @@ _echo "# action         ----------> ${ACTION}"
 echo
 
 
-# Clears temporary files.
-clear_tmp()
+# Resets temporary folder.
+reset_tmp()
 {
 	rm -rf $DIR_TMP/*
+	mkdir -p $DIR_TMP
 }
 
 # Installs python virtual environments.
@@ -95,7 +97,7 @@ _install_python_venv()
     mkdir -p $1
     virtualenv -q $1
     source $1/bin/activate
-    pip install -r $2    
+    pip install -q -r $2    
     deactivate
 }
 
@@ -139,10 +141,16 @@ install_python_venv()
 	_install_python_venv $DIR_PYTHON_VENV_CLIENT $DIR/venv-client-requirements.txt
 }
 
+install_config()
+{
+	cp ./config-template.json ./config.json	
+}
+
 install()
 {
 	install_git_repos
 	install_python_venv
+	install_config $1
 }
 
 activate_python_venv()
@@ -153,19 +161,19 @@ activate_python_venv()
 		export PYTHONPATH=$PYTHONPATH:$DIR_API_SRC
 		source $DIR_PYTHON_VENV_SERVER_API/bin/activate
 
+	elif [ $1 = "qtn" ]; then
+		export PYTHONPATH=$PYTHONPATH:$DIR_QTN_SRC
+		source "$DIR_PYTHON_VENV_SERVER_QTN/bin/activate"
+
 	elif [ $1 = "mp" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_MP_SRC
 		export PYTHONPATH=$PYTHONPATH:$DIR_MP_TESTS
-		# TODO install nose into client venv
-		source $DIR_PYTHON_VENV_SERVER_API/bin/activate
-		# source "$DIR_PYTHON_VENV_CLIENT/bin/activate"
+		source "$DIR_PYTHON_VENV_CLIENT/bin/activate"
 
 	elif [ $1 = "pyesdoc" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_SRC
 		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_TESTS
-		# TODO install nose into client venv
-		source $DIR_PYTHON_VENV_SERVER_API/bin/activate
-		# source "$DIR_PYTHON_VENV_CLIENT/bin/activate"
+		source "$DIR_PYTHON_VENV_CLIENT/bin/activate"
 	fi
 }
 
@@ -190,22 +198,36 @@ api_run()
 
 api_db_init()
 {
-    _echo "API : initializing db ..."
+    _echo "API : DB initializing ..."
 
-	# Init app database.
-	_echo "API : ... creating db"
-	dropdb -h localhost -p 5432 -U postgres -e esdoc_api	
-	createdb -h localhost -p 5432 -U postgres -e -O postgres -T template0 esdoc_api
+    # Drop previous db.
+	_echo "API : DB dropping db"
+	dropdb -h localhost -p 5432 -U esdoc_dbuser esdoc_api	
+	_echo "API : DB dropping test db"
+	dropdb -h localhost -p 5432 -U esdoc_dbuser esdoc_api_test	
 
-	_echo "API : ... populating db"
+    # Drop previous db user.
+	_echo "API : DB dropping user"
+    dropuser esdoc_dbuser
+
+	# Init db user.
+	_echo "API : DB creating user"
+    createuser -P -s esdoc_dbuser
+
+	# Init db.
+	_echo "API : DB creating"
+	createdb -h localhost -p 5432 -U esdoc_dbuser -O esdoc_dbuser -T template0 esdoc_api
+
+	# Seed db.
+	_echo "API : DB populating"
 	activate_python_venv api
-	python ./esdoc_api_db_init.py
+	python ./esdoc.py "api-db-init"
 
-	_echo "API : ... creating test db"
-	dropdb -h localhost -p 5432 -U postgres -e esdoc_api_test	
-	createdb -h localhost -p 5432 -U postgres -e -O postgres -T esdoc_api esdoc_api_test
+	# Init test db.
+	_echo "API : DB creating test db"
+	createdb -h localhost -p 5432 -U esdoc_dbuser -O esdoc_dbuser -T esdoc_api esdoc_api_test
 
-	_echo "API : created db's"
+	_echo "API : DB initialized"
 }
 
 api_db_ingest()
@@ -213,7 +235,7 @@ api_db_ingest()
     _echo "API : ingesting from external sources ..."
 
 	activate_python_venv api
-	python ./esdoc_api_db_ingest.py
+	python ./esdoc.py "api-db-ingest"
 }
 
 api_db_ingest_debug()
@@ -227,7 +249,7 @@ api_comparator_setup()
     _echo "API : writing comparator setup files ..."
 
 	activate_python_venv api
-	python ./esdoc_api_comparator_setup.py
+	python ./esdoc.py "api-setup-comparators"
 }
 
 api_visualizer_setup()
@@ -235,7 +257,7 @@ api_visualizer_setup()
     _echo "API : writing visualizer setup files ..."
 
 	activate_python_venv api
-	python ./esdoc_api_visualizer_setup.py
+	python ./esdoc.py "api-setup-visualizers"
 }
 
 api_misc()
@@ -249,50 +271,39 @@ api_misc()
 mp_test()
 {
 	activate_python_venv mp
-	# TODO
+
+    _echo "MP : TODO launch automated tests ..."
 }
 
 mp_build()
 {
     _echo "MP : building ..."
 
-	_echo $BANNER
-	_echo "Step 0.  Clearing targets"
-	_echo $BANNER
-	rm -rf $DIR_TMP"/*"
-	# rm -rf $TARGET
-	# rm -rf $ESDOC_API
+	_echo "Step 0.  Resetting"
+	reset_tmp
 
-	_echo $BANNER
 	_echo "Step 1.  Running es-doc mp utility"
-	_echo $BANNER
 	activate_python_venv mp	
 	python "$DIR_MP_SRC/esdoc_mp" -s "cim" -v "1" -l "python" -o $DIR_TMP
 
-	_echo $BANNER
 	_echo "Step 2.  Copying generated files to pyesdoc"
-	_echo $BANNER
 	cp -r "$DIR_TMP/cim/v1" "$DIR_PYESDOC_PYESDOC/ontologies/cim"
 
-	_echo $BANNER
-	_echo "Step 3.  Copying pyesdoc to esdoc_api"
-	_echo $BANNER
+	_echo "Step 3.  Copying generated files to api"
 	cp -r $DIR_PYESDOC_PYESDOC $DIR_API_LIB
 
-	_echo $BANNER
-	_echo "Step 4.  Cleaning esdoc_api pyesdoc library"
-	_echo $BANNER
+	_echo "Step 4.  Cleaning"
 	find $DIR_API_LIB -type f -name "*.pyc" -exec rm -f {} \;
 	find $DIR_API_LIB -type f -name "*.pye" -exec rm -f {} \;
 }
 
 mp_custom_schema()
 {
+	reset_tmp
 	activate_python_venv mp
 
-	python ./esdoc_mp_custom_schema.py $DIR_TMP
+	python ./esdoc_exec_mp_scenario.py $DIR_TMP
 }
-
 
 pyesdoc_test()
 {
@@ -324,9 +335,9 @@ pyesdoc_publishing_scenario()
 {
 	_echo "Executing pyesdoc publishing scenario"
 
-	clear_tmp
+	reset_tmp
 	activate_python_venv pyesdoc
-	python ./esdoc_pyesdoc_scenario.py
+	python ./esdoc_exec_pyesdoc_scenario.py $DIR_TMP
 }
 
 deploy_rollout()
@@ -385,10 +396,9 @@ help()
 	_echo "\t\texecutes pyesdoc automated tests"
 	_echo "\tpyesdoc-publishing-scenario"
 	_echo "\t\tillustrates pyesdoc usage scenarios"
-
 }
 
 # Invoke action.
-$ACTION
+$ACTION $ACTION_ARG
 
 exit 0
