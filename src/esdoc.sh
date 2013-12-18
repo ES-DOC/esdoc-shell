@@ -54,6 +54,9 @@ DIR_PYESDOC_PYESDOC="$DIR_PYESDOC_SRC/pyesdoc"
 ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
 ACTION_ARG=$2
 
+# Set working directory.
+cd $DIR
+
 # Wraps standard echo by adding ES-DOC prefix.
 _echo()
 {
@@ -112,7 +115,7 @@ _install_git_repo()
 # Installs git repos.
 install_git_repos()
 {
-	_echo "Installing git repos"
+	_echo "Step 1 : installing git repos:"
 
 	_install_git_repo esdoc-api
 	_install_git_repo esdoc-cv
@@ -129,15 +132,15 @@ install_git_repos()
 # Installs python virtual environments.
 install_python_venv()
 {
-	_echo "Installing virtual environments"
+	_echo "Step 2 : installing python virtual environments"
 
-	_echo "... installing server api virtual environment"
+	_echo "... installing python virtual environment :: api "
 	_install_python_venv $DIR_PYTHON_VENV_SERVER_API $DIR/venv-server-api-requirements.txt
 
-	_echo "... installing server questionnaire virtual environment"
+	_echo "... installing python virtual environment :: questionnaire"
 	_install_python_venv $DIR_PYTHON_VENV_SERVER_QTN $DIR/venv-server-qtn-requirements.txt
 
-	_echo "... installing client virtual environment"
+	_echo "... installing python virtual environment :: client tools"
 	_install_python_venv $DIR_PYTHON_VENV_CLIENT $DIR/venv-client-requirements.txt
 }
 
