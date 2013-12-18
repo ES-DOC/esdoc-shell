@@ -97,7 +97,7 @@ _install_python_venv()
     mkdir -p $1
     virtualenv -q $1
     source $1/bin/activate
-    pip install -q -r $2    
+    pip install -q --allow-all-external -r $2    
     deactivate
 }
 
@@ -106,7 +106,7 @@ _install_git_repo()
 {
 	_echo "... installing git repo :: $1"
 	rm -rf $DIR_ESDOC/$1
-	git clone https://github.com/ES-DOC/$1.git $DIR_ESDOC/$1
+	git clone -q https://github.com/ES-DOC/$1.git $DIR_ESDOC/$1
 }
 
 # Installs git repos.
