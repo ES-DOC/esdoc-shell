@@ -1,4 +1,5 @@
 #  Module imports.
+import os
 import sys
 
 import esdoc_api.lib.api.comparator_setup as comparator_setup
@@ -7,11 +8,11 @@ import esdoc_api.lib.repo.ingest as ingest
 import esdoc_api.lib.repo.session as session
 import esdoc_api.models as models
 
+from utils import convert
 
 
-# Repo connection string.
-_CONNECTION = "postgresql://esdoc_dbuser@localhost:5432/esdoc_api"
-
+# Script configuration.
+cfg = None
 
 # Set of comparators for which to write setup data in json format.
 _COMPARATORS = {
@@ -24,9 +25,9 @@ _VISUALIZERS = {
 }
 
 
-def _start_api_db_session(connection=_CONNECTION):
+def _start_api_db_session():
 	"""Starts an api db session."""
-	session.start(connection)
+	session.start(cfg.api.db)
 
 
 def _end_api_db_session():
@@ -34,7 +35,7 @@ def _end_api_db_session():
 	session.end()
 
 
-def _api_db_init(connection=_CONNECTION):
+def _api_db_init():
 	"""Execute db initialization."""
 	# Start session.
 	_start_api_db_session()
@@ -46,7 +47,7 @@ def _api_db_init(connection=_CONNECTION):
 	_end_api_db_session()
 
 
-def _api_db_ingest(connection=_CONNECTION):
+def _api_db_ingest():
 	"""Execute db ingestion."""
 	# Start session.
 	_start_api_db_session()
@@ -84,7 +85,16 @@ def _api_setup_visualizers():
 	_end_api_db_session()
 
 
-# Set of supported actions.
+def _init_config():
+	"""Initialize configuration."""
+	global cfg
+
+	fp = os.path.dirname(os.path.abspath(__file__))
+	fp = os.path.join(fp, "config.json")
+	cfg = convert.json_file_to_namedtuple(fp)
+
+
+# Map of supported actions.
 _actions = {
 	"api-db-init": _api_db_init,
 	"api-db-ingest": _api_db_ingest,
@@ -92,9 +102,20 @@ _actions = {
 	"api-setup-visualizers": _api_setup_visualizers
 }
 
-# Validate action.
-if sys.argv[1] not in _actions:
-	raise NotImplementedError(sys.argv[1])
+def main():
+	"""Main entry point."""
+	# Validate action.
+	if sys.argv[1] not in _actions:
+		raise NotImplementedError(sys.argv[1])
 
-# Invoke action.
-_actions[sys.argv[1]]()
+	# Initialize configuration.
+	_init_config()
+
+	# Invoke action.
+	_actions[sys.argv[1]]()
+
+
+
+if __name__ == '__main__':
+    main()
+
