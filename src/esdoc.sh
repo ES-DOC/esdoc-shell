@@ -210,7 +210,7 @@ install()
 {
 	install_git_repos
 	install_python_venv
-	install_config $1
+	install_config
 }
 
 # Activates a python virtual environment.
@@ -502,6 +502,7 @@ help()
 	_echo "pyesdoc-publishing-scenario" 1
 	_echo "illustrates pyesdoc usage scenarios" 2
 }
+
 
 # Set working directory.
 _set_working_dir
