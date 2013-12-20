@@ -2,3 +2,4 @@ venv-client
 tmp
 venv-server
 venv
+config.json
