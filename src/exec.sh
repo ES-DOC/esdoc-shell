@@ -162,7 +162,7 @@ _activate_venv()
 }
 
 # ###############################################################
-# SECTION: SETUP FUNCTIONS
+# SECTION: INSTALL
 # ###############################################################
 
 # Installs a git repo.
@@ -226,8 +226,8 @@ install_config()
 	cp ./repos/esdoc-shell/src/config.json ./config.json	
 }
 
-# Displays information notice upon update.
-_display_install_notice()
+# Displays information notice upon installation.
+_install_notice()
 {
 	_echo "IMPORTANT NOTICE"
 	_echo "The install process installs a config file @ ./esdoc/config.json." 1
@@ -243,11 +243,16 @@ install()
 	install_repos
 	install_venvs
 	install_config
+	_reset_tmp	
 
 	_echo "INSTALLED STACK"
 
-	_display_install_notice
+	_install_notice
 }
+
+# ###############################################################
+# SECTION: UPDATE
+# ###############################################################
 
 # Updates a git repo.
 _update_repo()
@@ -295,6 +300,14 @@ _update_venvs()
 	_install_venv $DIR_VENV_MP $DIR_SRC_SHELL/venv-requirements-mp.txt
 }
 
+# Updates shell script.
+_update_shell_script()
+{
+	_echo "... updating shell script"
+
+	cp ./repos/esdoc-shell/src/exec.sh ./exec.sh
+}
+
 # Updates config file.
 _update_config()
 {
@@ -304,16 +317,8 @@ _update_config()
 	cp ./repos/esdoc-shell/src/config.json ./config.json	
 }
 
-# Updates shell script.
-_update_shell_script()
-{
-	_echo "... updating shell script"
-
-	cp ./repos/esdoc-shell/src/exec.sh ./exec.sh
-}
-
 # Displays information notice upon update.
-_display_update_notice()
+_update_notice()
 {
 	_echo "IMPORTANT NOTICE"
 	_echo "The update process created a new config file @ ./esdoc/config.json." 1
@@ -321,7 +326,6 @@ _display_update_notice()
 	_echo "Please reset your configuration settings accordingly." 1
 	_echo "IMPORTANT NOTICE ENDS"
 }
-
 
 # Updates stack.
 update()
@@ -335,8 +339,12 @@ update()
 
 	_echo "UPDATED STACK"
 
-	_display_update_notice
+	_update_notice
 }
+
+# ###############################################################
+# SECTION: UNINSTALL
+# ###############################################################
 
 # Uninstalls virtual environments.
 _uninstall_venv()
@@ -387,7 +395,7 @@ _uninstall_repos()
 # Uninstalls stack.
 uninstall()
 {
-	_echo "UNINSTALLING STACK ..."
+	_echo "UNINSTALLING STACK"
 
 	_uninstall_repos
 	_uninstall_venvs
