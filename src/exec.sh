@@ -6,40 +6,32 @@
 # ###############################################################
 
 # Set paths.
-# ... esdoc shell
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-DIR_SHELL="$(dirname "$DIR")"
-
 # ... esdoc root folder
-DIR_ROOT="$(dirname "$DIR_SHELL")"
-DIR_ROOT="$(dirname "$DIR_ROOT")"
-
-# ... esdoc cv root folder.
-DIR_CV=$DIR_ROOT/cv
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # ... esdoc git repos root folder.
-DIR_REPOS=$DIR_ROOT/repos
+DIR_REPOS=$DIR/repos
 
 # ... esdoc tmp folder.
-DIR_TMP=$DIR_ROOT/tmp
+DIR_TMP=$DIR/tmp
 
 # ... esdoc virtual environment folder.
-DIR_ROOT_VENV=$DIR_ROOT/venv
+DIR_VENV=$DIR/venv
 
 # ... esdoc webapps root folder.
-DIR_WEBAPPS=$DIR_ROOT/webapps
+DIR_WEBAPPS=$DIR/webapps
 
 # ... esdoc shell pyesdoc venv
-DIR_VENV_PYESDOC=$DIR_ROOT_VENV/pyesdoc
+DIR_VENV_PYESDOC=$DIR_VENV/pyesdoc
 
 # ... esdoc shell meta-prgamming venv
-DIR_VENV_MP=$DIR_ROOT_VENV/mp
+DIR_VENV_MP=$DIR_VENV/mp
 
 # ... esdoc shell api venv
-DIR_VENV_API=$DIR_ROOT_VENV/api
+DIR_VENV_API=$DIR_VENV/api
 
 # ... esdoc shell questionnaire venv
-DIR_VENV_QTN=$DIR_ROOT_VENV/questionnaire
+DIR_VENV_QTN=$DIR_VENV/questionnaire
 
 # ... esdoc deploy source code
 DIR_SRC_DEPLOY=$DIR_REPOS/esdoc-deploy/src
@@ -101,13 +93,12 @@ _echo()
 # Outputs working folders.
 show_working_folders()
 {
-	_echo $DIR_ROOT
-	_echo $DIR_CV
+	_echo $DIR
 	_echo $DIR_REPOS
 	_echo $DIR_TMP
 	_echo $DIR_WEBAPPS
 
-	_echo $DIR_ROOT_VENV
+	_echo $DIR_VENV
 	_echo $DIR_VENV_QTN
 	_echo $DIR_VENV_API
 	_echo $DIR_VENV_MP
@@ -171,6 +162,7 @@ install_git_repos()
 	_echo "Installing git repos:"
 
 	_install_git_repo esdoc-api
+	_install_git_repo esdoc-bootstrap
 	_install_git_repo esdoc-cv
 	_install_git_repo esdoc-deploy
 	_install_git_repo esdoc-docs
@@ -199,6 +191,7 @@ update_git_repos()
 	_echo "Installing git repos:"
 
 	_update_git_repo esdoc-api
+	_update_git_repo esdoc-bootstrap
 	_update_git_repo esdoc-cv
 	_update_git_repo esdoc-deploy
 	_update_git_repo esdoc-docs
@@ -255,7 +248,7 @@ install_config()
 {
 	_echo "Installing configuration files"
 
-	cp ./config.json ./config.json	
+	cp ./repos/esdoc-shell/src/config.json ./config.json	
 }
 
 # Installs stack.
