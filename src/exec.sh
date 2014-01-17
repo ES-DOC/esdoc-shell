@@ -33,29 +33,32 @@ DIR_VENV_API=$DIR_VENV/api
 # ... esdoc shell questionnaire venv
 DIR_VENV_QTN=$DIR_VENV/questionnaire
 
-# ... esdoc deploy source code
-DIR_SRC_DEPLOY=$DIR_REPOS/esdoc-deploy/src
-
-# ... esdoc questionnaire source code
-DIR_SRC_QTN=$DIR_REPOS/esdoc-questionnaire/src
-
 # ... esdoc api source code
 DIR_SRC_API=$DIR_REPOS/esdoc-api/src
 
-# ... esdoc api tests
-DIR_TESTS_API=$DIR_REPOS/esdoc-api/tests
+# ... esdoc shell source code
+DIR_SRC_SHELL=$DIR_REPOS/esdoc-shell/src
 
-# ... esdoc api lib sub-folder
-DIR_LIB_API=$DIR_SRC_API/esdoc_api/lib
+# ... esdoc deploy source code
+DIR_SRC_DEPLOY=$DIR_REPOS/esdoc-deploy/src
 
 # ... esdoc mp source code
 DIR_SRC_MP=$DIR_REPOS/esdoc-mp/src
 
-# ... esdoc mp tests
-DIR_TESTS_MP=$DIR_REPOS/esdoc-mp/tests
-
 # ... esdoc py-client source code
 DIR_SRC_PYESDOC=$DIR_REPOS/esdoc-py-client/src
+
+# ... esdoc questionnaire source code
+DIR_SRC_QTN=$DIR_REPOS/esdoc-questionnaire/src
+
+# ... esdoc api lib sub-folder
+DIR_LIB_API=$DIR_SRC_API/esdoc_api/lib
+
+# ... esdoc api tests
+DIR_TESTS_API=$DIR_REPOS/esdoc-api/tests
+
+# ... esdoc mp tests
+DIR_TESTS_MP=$DIR_REPOS/esdoc-mp/tests
 
 # ... esdoc py-client tests
 DIR_TESTS_PYESDOC=$DIR_REPOS/esdoc-py-client/tests
@@ -132,6 +135,32 @@ _reset_tmp()
 	mkdir -p $DIR_TMP
 }
 
+# Activates a virtual environment.
+_activate_venv()
+{	
+	_echo "Activating $1 virtual environment"
+
+	if [ $1 = "api" ]; then
+		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_API
+		_echo $DIR_VENV_API/bin/activate
+		source $DIR_VENV_API/bin/activate
+
+	elif [ $1 = "qtn" ]; then
+		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_QTN
+		source "$DIR_VENV_QTN/bin/activate"
+
+	elif [ $1 = "mp" ]; then
+		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_MP
+		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_MP
+		source "$DIR_VENV_MP/bin/activate"
+
+	elif [ $1 = "pyesdoc" ]; then
+		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_PYESDOC
+		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_PYESDOC
+		source "$DIR_VENV_PYESDOC/bin/activate"
+	fi
+}
+
 # ###############################################################
 # SECTION: SETUP FUNCTIONS
 # ###############################################################
@@ -139,7 +168,7 @@ _reset_tmp()
 # Installs a git repo.
 _install_repo()
 {
-	_echo "... installing git repo :: $1"
+	_echo "... installing repo :: $1"
 
 	rm -rf $DIR_REPOS/$1
 	git clone -q https://github.com/ES-DOC/$1.git $DIR_REPOS/$1
@@ -177,42 +206,16 @@ _install_venv()
 install_venvs()
 {
 	_echo "... installing virtual environment :: api "
-	_install_venv $DIR_VENV_API $DIR/venv-requirements-api.txt
+	_install_venv $DIR_VENV_API $DIR_SRC_SHELL/venv-requirements-api.txt
 
 	_echo "... installing virtual environment :: questionnaire"
-	_install_venv $DIR_VENV_QTN $DIR/venv-requirements-questionnaire.txt
+	_install_venv $DIR_VENV_QTN $DIR_SRC_SHELL/venv-requirements-questionnaire.txt
 
 	_echo "... installing virtual environment :: pyesdoc"
-	_install_venv $DIR_VENV_PYESDOC $DIR/venv-requirements-pyesdoc.txt
+	_install_venv $DIR_VENV_PYESDOC $DIR_SRC_SHELL/venv-requirements-pyesdoc.txt
 
 	_echo "... installing virtual environment :: meta-programming tools"
-	_install_venv $DIR_VENV_MP $DIR/venv-requirements-mp.txt
-}
-
-# Activates a virtual environment.
-_activate_venv()
-{	
-	_echo "Activating $1 virtual environment"
-
-	if [ $1 = "api" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_API
-		_echo $DIR_VENV_API/bin/activate
-		source $DIR_VENV_API/bin/activate
-
-	elif [ $1 = "qtn" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_QTN
-		source "$DIR_VENV_QTN/bin/activate"
-
-	elif [ $1 = "mp" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_MP
-		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_MP
-		source "$DIR_VENV_MP/bin/activate"
-
-	elif [ $1 = "pyesdoc" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_PYESDOC
-		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_PYESDOC
-		source "$DIR_VENV_PYESDOC/bin/activate"
-	fi
+	_install_venv $DIR_VENV_MP $DIR_SRC_SHELL/venv-requirements-mp.txt
 }
 
 # Installs configuration files.
@@ -238,7 +241,7 @@ install()
 # Updates a git repo.
 _update_repo()
 {
-	_echo "... updating git repo :: $1"
+	_echo "... updating repo :: $1"
 
 	_set_working_dir $DIR_REPOS/$1
 	git pull -q https://github.com/ES-DOC/$1.git
@@ -302,7 +305,7 @@ _uninstall_repo()
 # Uninstalls git repos.
 _uninstall_repos()
 {
-	_echo "... uninstalling git repos", 1
+	_echo "... uninstalling repos"
 
 	_uninstall_repo esdoc-api
 	_uninstall_repo esdoc-bootstrap
