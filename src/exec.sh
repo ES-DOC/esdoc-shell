@@ -214,7 +214,7 @@ install_venvs()
 	_echo "... installing virtual environment :: pyesdoc"
 	_install_venv $DIR_VENV_PYESDOC $DIR_SRC_SHELL/venv-requirements-pyesdoc.txt
 
-	_echo "... installing virtual environment :: meta-programming tools"
+	_echo "... installing virtual environment :: mp"
 	_install_venv $DIR_VENV_MP $DIR_SRC_SHELL/venv-requirements-mp.txt
 }
 
@@ -224,6 +224,15 @@ install_config()
 	_echo "... installing configuration file"
 
 	cp ./repos/esdoc-shell/src/config.json ./config.json	
+}
+
+# Displays information notice upon update.
+_display_install_notice()
+{
+	_echo "IMPORTANT NOTICE"
+	_echo "The install process installs a config file @ ./esdoc/config.json." 1
+	_echo "Please review and assign configuration settings as appropriate to your environemt." 1
+	_echo "IMPORTANT NOTICE ENDS"
 }
 
 # Installs stack.
@@ -236,6 +245,8 @@ install()
 	install_config
 
 	_echo "INSTALLED STACK"
+
+	_display_install_notice
 }
 
 # Updates a git repo.
@@ -262,6 +273,26 @@ _update_repos()
 	_update_repo esdoc-questionnaire
 	_update_repo esdoc-splash
 	_update_repo esdoc-static
+}
+
+# updates virtual environments.
+_update_venvs()
+{
+	_echo "... updating virtual environment :: api "
+	_uninstall_venv $DIR_VENV_API
+	_install_venv $DIR_VENV_API $DIR_SRC_SHELL/venv-requirements-api.txt
+
+	_echo "... updating virtual environment :: questionnaire"
+	_uninstall_venv $DIR_VENV_QTN
+	_install_venv $DIR_VENV_QTN $DIR_SRC_SHELL/venv-requirements-questionnaire.txt
+
+	_echo "... updating virtual environment :: pyesdoc"
+	_uninstall_venv $DIR_VENV_PYESDOC
+	_install_venv $DIR_VENV_PYESDOC $DIR_SRC_SHELL/venv-requirements-pyesdoc.txt
+
+	_echo "... updating virtual environment :: mp"
+	_uninstall_venv $DIR_VENV_MP
+	_install_venv $DIR_VENV_MP $DIR_SRC_SHELL/venv-requirements-mp.txt
 }
 
 # Updates config file.
@@ -298,6 +329,7 @@ update()
 	_echo "UPDATING STACK"
 
 	_update_repos
+	_update_venvs	
 	_update_shell_script
 	_update_config
 
@@ -324,7 +356,7 @@ _uninstall_venvs()
 	_echo "... uninstalling virtual environment :: pyesdoc"
 	_uninstall_venv $DIR_VENV_PYESDOC
 
-	_echo "... uninstalling virtual environment :: meta-programming tools"
+	_echo "... uninstalling virtual environment :: mp"
 	_uninstall_venv $DIR_VENV_MP
 }
 
