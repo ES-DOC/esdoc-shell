@@ -148,8 +148,6 @@ _install_repo()
 # Installs git repos.
 install_repos()
 {
-	_echo "Installing git repos:"
-
 	_install_repo esdoc-api
 	_install_repo esdoc-bootstrap
 	_install_repo esdoc-cv
@@ -164,7 +162,7 @@ install_repos()
 	_install_repo esdoc-static
 }
 
-# Installs python virtual environment.
+# Installs virtual environment.
 _install_venv()
 {
 	rm -rf $1
@@ -175,27 +173,23 @@ _install_venv()
     deactivate
 }
 
-# Installs python virtual environments.
+# Installs virtual environments.
 install_venvs()
 {
-	_echo "Installing python virtual environments"
-
-	_echo "... installing python virtual environment :: api "
+	_echo "... installing virtual environment :: api "
 	_install_venv $DIR_VENV_API $DIR/venv-requirements-api.txt
 
-	_echo "... installing python virtual environment :: questionnaire"
+	_echo "... installing virtual environment :: questionnaire"
 	_install_venv $DIR_VENV_QTN $DIR/venv-requirements-questionnaire.txt
 
-	_echo "... installing python virtual environment :: pyesdoc"
+	_echo "... installing virtual environment :: pyesdoc"
 	_install_venv $DIR_VENV_PYESDOC $DIR/venv-requirements-pyesdoc.txt
 
-	_echo "... installing python virtual environment :: meta-programming tools"
+	_echo "... installing virtual environment :: meta-programming tools"
 	_install_venv $DIR_VENV_MP $DIR/venv-requirements-mp.txt
-
-	_echo "Installed python virtual environments"
 }
 
-# Activates a python virtual environment.
+# Activates a virtual environment.
 _activate_venv()
 {	
 	_echo "Activating $1 virtual environment"
@@ -224,7 +218,7 @@ _activate_venv()
 # Installs configuration files.
 install_config()
 {
-	_echo "Installing configuration files"
+	_echo "... installing configuration files"
 
 	cp ./repos/esdoc-shell/src/config.json ./config.json	
 }
@@ -254,8 +248,6 @@ _update_repo()
 # updates git repos.
 update_repos()
 {
-	_echo "Installing git repos:"
-
 	_update_repo esdoc-api
 	_update_repo esdoc-bootstrap
 	_update_repo esdoc-cv
@@ -279,30 +271,26 @@ update()
 	_echo "UPDATED STACK"
 }
 
-# Uninstalls python virtual environments.
+# Uninstalls virtual environments.
 _uninstall_venv()
 {
 	rm -rf $1
 }
 
-# Uninstalls python virtual environments.
+# Uninstalls virtual environments.
 _uninstall_venvs()
 {
-	_echo "uninstalling virtual environments ..."
-
-	_echo "... deleting virtual environment :: api "
+	_echo "... uninstalling virtual environment :: api "
 	_uninstall_venv $DIR_VENV_API
 
-	_echo "... deleting virtual environment :: questionnaire"
+	_echo "... uninstalling virtual environment :: questionnaire"
 	_uninstall_venv $DIR_VENV_QTN
 
-	_echo "... deleting virtual environment :: pyesdoc"
+	_echo "... uninstalling virtual environment :: pyesdoc"
 	_uninstall_venv $DIR_VENV_PYESDOC
 
-	_echo "... deleting virtual environment :: meta-programming tools"
+	_echo "... uninstalling virtual environment :: meta-programming tools"
 	_uninstall_venv $DIR_VENV_MP
-
-	_echo "uninstalled virtual environments" 1
 }
 
 # Uninstalls git repo.
@@ -314,6 +302,8 @@ _uninstall_repo()
 # Uninstalls git repos.
 _uninstall_repos()
 {
+	_echo "... uninstalling git repos", 1
+
 	_uninstall_repo esdoc-api
 	_uninstall_repo esdoc-bootstrap
 	_uninstall_repo esdoc-cv
@@ -325,8 +315,6 @@ _uninstall_repos()
 	_uninstall_repo esdoc-questionnaire
 	_uninstall_repo esdoc-splash
 	_uninstall_repo esdoc-static
-	
-	_echo "uninstalled git repos", 1
 }
 
 # Uninstalls stack.
