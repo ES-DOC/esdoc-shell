@@ -158,6 +158,7 @@ install_git_repos()
 	_install_git_repo esdoc-mp
 	_install_git_repo esdoc-py-client
 	_install_git_repo esdoc-questionnaire
+	_install_git_repo esdoc-shell
 	_install_git_repo esdoc-splash
 	_install_git_repo esdoc-static
 }
@@ -234,7 +235,7 @@ install_config()
 {
 	_echo "Installing configuration files"
 
-	cp ./config-template.json ./config.json	
+	cp ./config.json ./config.json	
 }
 
 # Installs stack.
@@ -306,7 +307,7 @@ api_db_init()
 	# Seed db.
 	_echo "API : DB populating"
 	activate_python_venv api
-	python ./esdoc.py "api-db-init"
+	python ./exec.py "api-db-init"
 
 	# Init test db.
 	_echo "API : DB creating test db"
@@ -355,16 +356,7 @@ api_db_ingest()
     _echo "API : DB : ingesting from external sources ..."
 
 	activate_python_venv api
-	python ./esdoc.py "api-db-ingest"
-}
-
-# Launches api db ingestion debug script.
-api_db_ingest_debug()
-{
-    _echo "API : DB : running ingestion debug ..."
-
-	activate_python_venv api
-	python ./esdoc_api_db_ingest_debug.py
+	python ./exec.py "api-db-ingest"
 }
 
 # Executes api comparator setup.
@@ -373,7 +365,7 @@ api_comparator_setup()
     _echo "API : writing comparator setup files ..."
 
 	activate_python_venv api
-	python ./esdoc.py "api-setup-comparators"
+	python ./exec.py "api-setup-comparators"
 }
 
 # Executes api visualizer setup.
@@ -382,7 +374,7 @@ api_visualizer_setup()
     _echo "API : writing visualizer setup files ..."
 
 	activate_python_venv api
-	python ./esdoc.py "api-setup-visualizers"
+	python ./exec.py "api-setup-visualizers"
 }
 
 # Executes meta-programming tests.
@@ -425,7 +417,7 @@ mp_custom_schema()
 	_reset_tmp
 	activate_python_venv mp
 
-	python ./esdoc_exec_mp_scenario.py $DIR_TMP
+	python ./exec_mp_scenario.py $DIR_TMP
 }
 
 # Executes pyesdoc tests.
@@ -462,7 +454,7 @@ pyesdoc_publishing_scenario()
 
 	_reset_tmp
 	activate_python_venv pyesdoc
-	python ./esdoc_exec_pyesdoc_scenario.py $DIR_TMP
+	python ./exec_pyesdoc_scenario.py $DIR_TMP
 }
 
 # Executes miscellaneous script.

@@ -1,5 +1,0 @@
-{
-	"api": {
-		"db": "postgresql://postgres@localhost:5432/esdoc_api"
-	}
-}
