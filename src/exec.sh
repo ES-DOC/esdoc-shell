@@ -221,7 +221,7 @@ install_venvs()
 # Installs configuration files.
 install_config()
 {
-	_echo "... installing configuration files"
+	_echo "... installing configuration file"
 
 	cp ./repos/esdoc-shell/src/config.json ./config.json	
 }
@@ -249,7 +249,7 @@ _update_repo()
 }
 
 # updates git repos.
-update_repos()
+_update_repos()
 {
 	_update_repo esdoc-api
 	_update_repo esdoc-bootstrap
@@ -264,14 +264,46 @@ update_repos()
 	_update_repo esdoc-static
 }
 
+# Updates config file.
+_update_config()
+{
+	_echo "... updating configuration file"
+
+	cp ./config.json ./config-backup.json	
+	cp ./repos/esdoc-shell/src/config.json ./config.json	
+}
+
+# Updates shell script.
+_update_shell_script()
+{
+	_echo "... updating shell script"
+
+	cp ./repos/esdoc-shell/src/exec.sh ./exec.sh
+}
+
+# Displays information notice upon update.
+_display_update_notice()
+{
+	_echo "IMPORTANT NOTICE"
+	_echo "The update process created a new config file @ ./esdoc/config.json." 1
+	_echo "It also created a backup of your old config file @ ./esdoc/config-backup.json" 1
+	_echo "Please reset your configuration settings accordingly." 1
+	_echo "IMPORTANT NOTICE ENDS"
+}
+
+
 # Updates stack.
 update()
 {
 	_echo "UPDATING STACK"
 
-	update_repos
+	_update_repos
+	_update_shell_script
+	_update_config
 
 	_echo "UPDATED STACK"
+
+	_display_update_notice
 }
 
 # Uninstalls virtual environments.
