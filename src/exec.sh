@@ -164,34 +164,6 @@ install_repos()
 	_install_repo esdoc-static
 }
 
-# Updates a git repo.
-_update_repo()
-{
-	_echo "... updating git repo :: $1"
-
-	_set_working_dir $DIR_REPOS/$1
-	git pull -q https://github.com/ES-DOC/$1.git
-	_set_working_dir
-}
-
-# updates git repos.
-update_repos()
-{
-	_echo "Installing git repos:"
-
-	_update_repo esdoc-api
-	_update_repo esdoc-bootstrap
-	_update_repo esdoc-cv
-	_update_repo esdoc-deploy
-	_update_repo esdoc-docs
-	_update_repo esdoc-js-client
-	_update_repo esdoc-mp
-	_update_repo esdoc-py-client
-	_update_repo esdoc-questionnaire
-	_update_repo esdoc-splash
-	_update_repo esdoc-static
-}
-
 # Installs python virtual environment.
 _install_venv()
 {
@@ -223,39 +195,14 @@ install_venvs()
 	_echo "Installed python virtual environments"
 }
 
-# Deletes python virtual environments.
-_delete_venv()
-{
-	rm -rf $1
-}
-
-# Deletes python virtual environments.
-delete_venvs()
-{
-	_echo "Deleting python virtual environments"
-
-	_echo "... deleting python virtual environment :: api "
-	_delete_venv $DIR_VENV_API
-
-	_echo "... deleting python virtual environment :: questionnaire"
-	_delete_venv $DIR_VENV_QTN
-
-	_echo "... deleting python virtual environment :: pyesdoc"
-	_delete_venv $DIR_VENV_PYESDOC
-
-	_echo "... deleting python virtual environment :: meta-programming tools"
-	_delete_venv $DIR_VENV_MP
-
-	_echo "Deleted python virtual environments"
-}
-
 # Activates a python virtual environment.
-activate_venv()
+_activate_venv()
 {	
 	_echo "Activating $1 virtual environment"
 
 	if [ $1 = "api" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_API
+		_echo $DIR_VENV_API/bin/activate
 		source $DIR_VENV_API/bin/activate
 
 	elif [ $1 = "qtn" ]; then
@@ -285,11 +232,116 @@ install_config()
 # Installs stack.
 install()
 {
+	_echo "INSTALLING STACK"
+
 	install_repos
 	install_venvs
 	install_config
+
+	_echo "INSTALLED STACK"
 }
 
+# Updates a git repo.
+_update_repo()
+{
+	_echo "... updating git repo :: $1"
+
+	_set_working_dir $DIR_REPOS/$1
+	git pull -q https://github.com/ES-DOC/$1.git
+	_set_working_dir
+}
+
+# updates git repos.
+update_repos()
+{
+	_echo "Installing git repos:"
+
+	_update_repo esdoc-api
+	_update_repo esdoc-bootstrap
+	_update_repo esdoc-cv
+	_update_repo esdoc-deploy
+	_update_repo esdoc-docs
+	_update_repo esdoc-js-client
+	_update_repo esdoc-mp
+	_update_repo esdoc-py-client
+	_update_repo esdoc-questionnaire
+	_update_repo esdoc-splash
+	_update_repo esdoc-static
+}
+
+# Updates stack.
+update()
+{
+	_echo "UPDATING STACK"
+
+	update_repos
+
+	_echo "UPDATED STACK"
+}
+
+# Uninstalls python virtual environments.
+_uninstall_venv()
+{
+	rm -rf $1
+}
+
+# Uninstalls python virtual environments.
+_uninstall_venvs()
+{
+	_echo "uninstalling virtual environments ..."
+
+	_echo "... deleting virtual environment :: api "
+	_uninstall_venv $DIR_VENV_API
+
+	_echo "... deleting virtual environment :: questionnaire"
+	_uninstall_venv $DIR_VENV_QTN
+
+	_echo "... deleting virtual environment :: pyesdoc"
+	_uninstall_venv $DIR_VENV_PYESDOC
+
+	_echo "... deleting virtual environment :: meta-programming tools"
+	_uninstall_venv $DIR_VENV_MP
+
+	_echo "uninstalled virtual environments" 1
+}
+
+# Uninstalls git repo.
+_uninstall_repo()
+{
+	rm -rf $DIR_REPOS/$1
+}
+
+# Uninstalls git repos.
+_uninstall_repos()
+{
+	_uninstall_repo esdoc-api
+	_uninstall_repo esdoc-bootstrap
+	_uninstall_repo esdoc-cv
+	_uninstall_repo esdoc-deploy
+	_uninstall_repo esdoc-docs
+	_uninstall_repo esdoc-js-client
+	_uninstall_repo esdoc-mp
+	_uninstall_repo esdoc-py-client
+	_uninstall_repo esdoc-questionnaire
+	_uninstall_repo esdoc-splash
+	_uninstall_repo esdoc-static
+	
+	_echo "uninstalled git repos", 1
+}
+
+# Uninstalls stack.
+uninstall()
+{
+	_echo "UNINSTALLING STACK ..."
+
+	_uninstall_repos
+	_uninstall_venvs
+	_reset_tmp
+	cd ..
+	rm -rf esdoc
+
+	_echo "UNINSTALLED STACK"
+}
 
 # ###############################################################
 # SECTION: API FUNCTIONS
@@ -298,7 +350,7 @@ install()
 # Executes api tests.
 api_test()
 {
-	activate_venv api
+	_activate_venv api
 
 	# All tests.
 	if [ ! "$1" ]; then
@@ -312,7 +364,7 @@ api_run()
 {
     _echo "API : running ..."
 
-	activate_venv api
+	_activate_venv api
 	paster serve --reload $DIR_SRC_API/esdoc_api/config/ini_files/config.ini
 }
 
@@ -330,7 +382,7 @@ api_db_init()
 
 	# Seed db.
 	_echo "API : DB populating"
-	activate_venv api
+	_activate_venv api
 	python ./exec.py "api-db-init"
 
 	# Init test db.
@@ -379,7 +431,7 @@ api_db_ingest()
 {
     _echo "API : DB : ingesting from external sources ..."
 
-	activate_venv api
+	_activate_venv api
 	python ./exec.py "api-db-ingest"
 }
 
@@ -388,7 +440,7 @@ api_comparator_setup()
 {
     _echo "API : writing comparator setup files ..."
 
-	activate_venv api
+	_activate_venv api
 	python ./exec.py "api-setup-comparators"
 }
 
@@ -397,7 +449,7 @@ api_visualizer_setup()
 {
     _echo "API : writing visualizer setup files ..."
 
-	activate_venv api
+	_activate_venv api
 	python ./exec.py "api-setup-visualizers"
 }
 
@@ -409,7 +461,7 @@ api_visualizer_setup()
 # Executes meta-programming tests.
 mp_test()
 {
-	activate_venv mp
+	_activate_venv mp
 
     _echo "MP : TODO launch automated tests ..."
 }
@@ -424,7 +476,7 @@ mp_build()
 	_reset_tmp
 
 	_echo "Step 1.  Running es-doc mp utility"
-	activate_venv mp	
+	_activate_venv mp	
 	python "$DIR_SRC_MP/esdoc_mp" -s "cim" -v "1" -l "python" -o $DIR_TMP
 
 	_echo "Step 2.  Copying generated files to pyesdoc"
@@ -444,7 +496,7 @@ mp_build()
 mp_custom_schema()
 {
 	_reset_tmp
-	activate_venv mp
+	_activate_venv mp
 
 	python ./exec_mp_scenario.py $DIR_TMP
 }
@@ -457,7 +509,7 @@ mp_custom_schema()
 # Executes pyesdoc tests.
 pyesdoc_test()
 {
-	activate_venv pyesdoc
+	_activate_venv pyesdoc
 
 	# All tests.
 	if [ ! "$1" ]; then
@@ -487,7 +539,7 @@ pyesdoc_publishing_scenario()
 	_echo "Executing pyesdoc publishing scenario"
 
 	_reset_tmp
-	activate_venv pyesdoc
+	_activate_venv pyesdoc
 	python ./exec_pyesdoc_scenario.py $DIR_TMP
 }
 
@@ -496,7 +548,7 @@ misc()
 {
     _echo "OTHER : miscellaneous script ..."
 
-	activate_venv pyesdoc
+	_activate_venv pyesdoc
 	python ./exec_misc_scenario.py    
 }
 
