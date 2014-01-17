@@ -1,72 +1,5 @@
 #!/bin/bash
 
-# Set paths.
-# ... esdoc shell
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-DIR_SHELL="$(dirname "$DIR")"
-
-# ... esdoc shell tmp
-DIR_TMP=$DIR_SHELL/tmp
-
-# ... esdoc shell pyesdoc venv
-DIR_PYTHON_VENV_PYESDOC=$DIR_SHELL/venv/pyesdoc
-
-# ... esdoc shell meta-prgamming venv
-DIR_PYTHON_VENV_MP=$DIR_SHELL/venv/mp
-
-# ... esdoc shell api venv
-DIR_PYTHON_VENV_SERVER_API=$DIR_SHELL/venv/api
-
-# ... esdoc shell questionnaire venv
-DIR_PYTHON_VENV_SERVER_QTN=$DIR_SHELL/venv/questionnaire
-
-# ... esdoc root
-DIR_ESDOC="$(dirname "$DIR_SHELL")"
-
-# ... esdoc deploy source code
-DIR_DEPLOY_SRC=$DIR_ESDOC/esdoc-deploy/src
-
-# ... esdoc questionnaire source code
-DIR_QTN_SRC=$DIR_ESDOC/esdoc-questionnaire/src
-
-# ... esdoc api source code
-DIR_API_SRC=$DIR_ESDOC/esdoc-api/src
-
-# ... esdoc api tests
-DIR_API_TESTS=$DIR_ESDOC/esdoc-api/tests
-
-# ... esdoc api lib sub-folder
-DIR_API_LIB="$DIR_API_SRC/esdoc_api/lib"
-
-# ... esdoc mp source code
-DIR_MP_SRC=$DIR_ESDOC/esdoc-mp/src
-
-# ... esdoc mp tests
-DIR_MP_TESTS=$DIR_ESDOC/esdoc-mp/tests
-
-# ... esdoc py-client source code
-DIR_PYESDOC_SRC=$DIR_ESDOC/esdoc-py-client/src
-
-# ... esdoc py-client tests
-DIR_PYESDOC_TESTS=$DIR_ESDOC/esdoc-py-client/tests
-
-# ... esdoc py-client source code
-DIR_PYESDOC_PYESDOC="$DIR_PYESDOC_SRC/pyesdoc"
-
-# Set action.
-ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
-ACTION_ARG=$2
-
-# Assigns the current working directory.
-_set_working_dir()
-{
-	if [ "$1" ]; then
-		cd $1
-	else
-		cd $DIR
-	fi
-}
-
 # Wraps standard echo by adding ES-DOC prefix.
 _echo()
 {
@@ -83,6 +16,105 @@ _echo()
 	    fi
 	else
 	    echo -e "ES-DOC ::"	
+	fi
+}
+
+# Set paths.
+# ... esdoc shell
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR_SHELL="$(dirname "$DIR")"
+
+# ... esdoc root folder
+DIR_ROOT="$(dirname "$DIR_SHELL")"
+DIR_ROOT="$(dirname "$DIR_ROOT")"
+
+# ... esdoc cv root folder.
+DIR_CV=$DIR_ROOT/cv
+
+# ... esdoc git repos root folder.
+DIR_REPOS=$DIR_ROOT/repos
+
+# ... esdoc tmp folder.
+DIR_TMP=$DIR_ROOT/tmp
+
+# ... esdoc virtual environment folder.
+DIR_ROOT_VENV=$DIR_ROOT/venv
+
+# ... esdoc webapps root folder.
+DIR_WEBAPPS=$DIR_ROOT/webapps
+
+# ... esdoc shell pyesdoc venv
+DIR_VENV_PYESDOC=$DIR_ROOT_VENV/pyesdoc
+
+# ... esdoc shell meta-prgamming venv
+DIR_VENV_MP=$DIR_ROOT_VENV/mp
+
+# ... esdoc shell api venv
+DIR_VENV_API=$DIR_ROOT_VENV/api
+
+# ... esdoc shell questionnaire venv
+DIR_VENV_QTN=$DIR_ROOT_VENV/questionnaire
+
+# ... esdoc deploy source code
+DIR_SRC_DEPLOY=$DIR_REPOS/esdoc-deploy/src
+
+# ... esdoc questionnaire source code
+DIR_SRC_QTN=$DIR_REPOS/esdoc-questionnaire/src
+
+# ... esdoc api source code
+DIR_SRC_API=$DIR_REPOS/esdoc-api/src
+
+# ... esdoc api tests
+DIR_TESTS_API=$DIR_REPOS/esdoc-api/tests
+
+# ... esdoc api lib sub-folder
+DIR_LIB_API=$DIR_SRC_API/esdoc_api/lib
+
+# ... esdoc mp source code
+DIR_SRC_MP=$DIR_REPOS/esdoc-mp/src
+
+# ... esdoc mp tests
+DIR_TESTS_MP=$DIR_REPOS/esdoc-mp/tests
+
+# ... esdoc py-client source code
+DIR_SRC_PYESDOC=$DIR_REPOS/esdoc-py-client/src
+
+# ... esdoc py-client tests
+DIR_TESTS_PYESDOC=$DIR_REPOS/esdoc-py-client/tests
+
+# Outputs working folders.
+_show_working_folders()
+{
+	_echo $DIR_ROOT
+	_echo $DIR_CV
+	_echo $DIR_REPOS
+	_echo $DIR_TMP
+	_echo $DIR_WEBAPPS
+
+	_echo $DIR_ROOT_VENV
+	_echo $DIR_VENV_QTN
+	_echo $DIR_VENV_API
+	_echo $DIR_VENV_MP
+	_echo $DIR_VENV_PYESDOC
+
+	_echo $DIR_SRC_DEPLOY
+	_echo $DIR_SRC_QTN
+	_echo $DIR_SRC_API
+	_echo $DIR_TESTS_API
+	_echo $DIR_LIB_API
+	_echo $DIR_SRC_MP
+	_echo $DIR_TESTS_MP
+	_echo $DIR_SRC_PYESDOC
+	_echo $DIR_TESTS_PYESDOC	
+}
+
+# Assigns the current working directory.
+_set_working_dir()
+{
+	if [ "$1" ]; then
+		cd $1
+	else
+		cd $DIR
 	fi
 }
 
@@ -109,8 +141,8 @@ _install_git_repo()
 {
 	_echo "... installing git repo :: $1"
 
-	rm -rf $DIR_ESDOC/$1
-	git clone -q https://github.com/ES-DOC/$1.git $DIR_ESDOC/$1
+	rm -rf $DIR_REPOS/$1
+	git clone -q https://github.com/ES-DOC/$1.git $DIR_REPOS/$1
 }
 
 # Installs git repos.
@@ -135,7 +167,7 @@ _update_git_repo()
 {
 	_echo "... updating git repo :: $1"
 
-	_set_working_dir $DIR_ESDOC/$1
+	_set_working_dir $DIR_REPOS/$1
 	git pull -q https://github.com/ES-DOC/$1.git
 	_set_working_dir
 }
@@ -163,16 +195,16 @@ install_python_venv()
 	_echo "Installing python virtual environments"
 
 	_echo "... installing python virtual environment :: api "
-	_install_python_venv $DIR_PYTHON_VENV_SERVER_API $DIR/venv-requirements-api.txt
+	_install_python_venv $DIR_VENV_API $DIR/venv-requirements-api.txt
 
 	_echo "... installing python virtual environment :: questionnaire"
-	_install_python_venv $DIR_PYTHON_VENV_SERVER_QTN $DIR/venv-requirements-questionnaire.txt
+	_install_python_venv $DIR_VENV_QTN $DIR/venv-requirements-questionnaire.txt
 
 	_echo "... installing python virtual environment :: pyesdoc"
-	_install_python_venv $DIR_PYTHON_VENV_PYESDOC $DIR/venv-requirements-pyesdoc.txt
+	_install_python_venv $DIR_VENV_PYESDOC $DIR/venv-requirements-pyesdoc.txt
 
 	_echo "... installing python virtual environment :: meta-programming tools"
-	_install_python_venv $DIR_PYTHON_VENV_MP $DIR/venv-requirements-mp.txt
+	_install_python_venv $DIR_VENV_MP $DIR/venv-requirements-mp.txt
 
 	_echo "Installed python virtual environments"
 }
@@ -183,16 +215,16 @@ delete_python_venv()
 	_echo "Deleting python virtual environments"
 
 	_echo "... deleting python virtual environment :: api "
-	rm -rf $DIR_PYTHON_VENV_SERVER_API
+	rm -rf $DIR_VENV_API
 
 	_echo "... deleting python virtual environment :: questionnaire"
-	rm -rf $DIR_PYTHON_VENV_SERVER_QTN
+	rm -rf $DIR_VENV_QTN
 
 	_echo "... deleting python virtual environment :: pyesdoc"
-	rm -rf $DIR_PYTHON_VENV_PYESDOC
+	rm -rf $DIR_VENV_PYESDOC
 
 	_echo "... deleting python virtual environment :: meta-programming tools"
-	rm -rf $DIR_PYTHON_VENV_MP
+	rm -rf $DIR_VENV_MP
 
 	_echo "Deleted python virtual environments"
 }
@@ -219,22 +251,22 @@ activate_python_venv()
 	_echo "Activating $1 virtual environment"
 
 	if [ $1 = "api" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_API_SRC
-		source $DIR_PYTHON_VENV_SERVER_API/bin/activate
+		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_API
+		source $DIR_VENV_API/bin/activate
 
 	elif [ $1 = "qtn" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_QTN_SRC
-		source "$DIR_PYTHON_VENV_SERVER_QTN/bin/activate"
+		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_QTN
+		source "$DIR_VENV_QTN/bin/activate"
 
 	elif [ $1 = "mp" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_MP_SRC
-		export PYTHONPATH=$PYTHONPATH:$DIR_MP_TESTS
-		source "$DIR_PYTHON_VENV_MP/bin/activate"
+		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_MP
+		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_MP
+		source "$DIR_VENV_MP/bin/activate"
 
 	elif [ $1 = "pyesdoc" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_SRC
-		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_TESTS
-		source "$DIR_PYTHON_VENV_PYESDOC/bin/activate"
+		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_PYESDOC
+		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_PYESDOC
+		source "$DIR_VENV_PYESDOC/bin/activate"
 	fi
 }
 
@@ -246,7 +278,7 @@ api_test()
 	# All tests.
 	if [ ! "$1" ]; then
 	    _echo "API :: Executing api tests"
-	    nosetests -v -s $DIR_API_TESTS/esdoc_api_test
+	    nosetests -v -s $DIR_TESTS_API/esdoc_api_test
 	fi
 }
 
@@ -256,7 +288,7 @@ api_run()
     _echo "API : running ..."
 
 	activate_python_venv api
-	paster serve --reload $DIR_API_SRC/esdoc_api/config/ini_files/config.ini
+	paster serve --reload $DIR_SRC_API/esdoc_api/config/ini_files/config.ini
 }
 
 # Initialises api db.
@@ -309,7 +341,7 @@ api_db_restore()
 	createdb -h localhost -p 5432 -U postgres -O postgres -T template0 esdoc_api	
 
 	_echo "API : DB restoring"
-	unzip -q $DIR_DEPLOY_SRC/db/db.zip -d $DIR_TMP
+	unzip -q $DIR_SRC_DEPLOY/db/db.zip -d $DIR_TMP
 	pg_restore -U postgres -d esdoc_api $DIR_TMP/db
 
 	_reset_tmp
@@ -353,15 +385,6 @@ api_visualizer_setup()
 	python ./esdoc.py "api-setup-visualizers"
 }
 
-# Executes miscellaneous api script.
-api_misc()
-{
-    _echo "API : miscellaneous script ..."
-
-	activate_python_venv api
-	python ./esdoc_api_misc.py    
-}
-
 # Executes meta-programming tests.
 mp_test()
 {
@@ -374,23 +397,26 @@ mp_test()
 mp_build()
 {
     _echo "MP : building ..."
+	_show_working_folders    
 
 	_echo "Step 0.  Resetting"
 	_reset_tmp
 
 	_echo "Step 1.  Running es-doc mp utility"
 	activate_python_venv mp	
-	python "$DIR_MP_SRC/esdoc_mp" -s "cim" -v "1" -l "python" -o $DIR_TMP
+	python "$DIR_SRC_MP/esdoc_mp" -s "cim" -v "1" -l "python" -o $DIR_TMP
 
 	_echo "Step 2.  Copying generated files to pyesdoc"
-	cp -r "$DIR_TMP/cim/v1" "$DIR_PYESDOC_PYESDOC/ontologies/cim"
+	cp -r "$DIR_TMP/cim/v1" "$DIR_SRC_PYESDOC/pyesdoc/ontologies/cim"
 
 	_echo "Step 3.  Copying generated files to api"
-	cp -r $DIR_PYESDOC_PYESDOC $DIR_API_LIB
+	cp -r $DIR_SRC_PYESDOC/pyesdoc $DIR_LIB_API
 
 	_echo "Step 4.  Cleaning"
-	find $DIR_API_LIB -type f -name "*.pyc" -exec rm -f {} \;
-	find $DIR_API_LIB -type f -name "*.pye" -exec rm -f {} \;
+	find $DIR_SRC_PYESDOC -type f -name "*.pyc" -exec rm -f {} \;
+	find $DIR_SRC_PYESDOC -type f -name "*.pye" -exec rm -f {} \;
+	find $DIR_LIB_API -type f -name "*.pyc" -exec rm -f {} \;
+	find $DIR_LIB_API -type f -name "*.pye" -exec rm -f {} \;
 }
 
 # Executes meta-programming build against a custim scheme.
@@ -410,22 +436,22 @@ pyesdoc_test()
 	# All tests.
 	if [ ! "$1" ]; then
 	    _echo "pyesdoc :: Executing all pyesdoc tests"
-	    nosetests -v -s $DIR_PYESDOC_TESTS/pyesdoc_test
+	    nosetests -v -s $DIR_TESTS_PYESDOC/pyesdoc_test
 
 	# Serialization tests.
 	elif [ $1 = "s" ]; then
 	    _echo "pyesdoc :: Executing pyesdoc serialization tests"
-	    nosetests -v -s $DIR_PYESDOC_TESTS/pyesdoc_test/test_serialization.py
+	    nosetests -v -s $DIR_TESTS_PYESDOC/pyesdoc_test/test_serialization.py
 
 	# Publishing tests.
 	elif [ $1 = "p" ]; then
 	    _echo "pyesdoc :: Executing pyesdoc publishing tests"
-	    nosetests -v -s $DIR_PYESDOC_TESTS/pyesdoc_test/test_publishing.py
+	    nosetests -v -s $DIR_TESTS_PYESDOC/pyesdoc_test/test_publishing.py
 
 	# General tests.
 	elif [ $1 = "g" ]; then
 	    _echo "pyesdoc :: Executing pyesdoc general tests"
-	    nosetests -v -s $DIR_PYESDOC_TESTS/pyesdoc_test/test_general.py
+	    nosetests -v -s $DIR_TESTS_PYESDOC/pyesdoc_test/test_general.py
 	fi
 }
 
@@ -439,23 +465,16 @@ pyesdoc_publishing_scenario()
 	python ./esdoc_exec_pyesdoc_scenario.py $DIR_TMP
 }
 
-# Executes deployment rollout.
-deploy_rollout()
+# Executes miscellaneous script.
+misc()
 {
-	_echo "Rolling out deployment"
+    _echo "OTHER : miscellaneous script ..."
 
-	activate_python_venv api
-	python "$DIR_DEPLOY_SRC/deploy.py" rollout $DIR_ESDOC test 0.8.6.6 Silence107! Silence107! pEsTuq4d
+	activate_python_venv pyesdoc
+	python ./exec_misc_scenario.py    
 }
 
-# Executes deployment rollback.
-deploy_rollback()
-{
-	_echo "Rolling back deployment"
 
-	activate_python_venv api
-	python "$DIR_DEPLOY_SRC/deploy.py" rollback $DIR_ESDOC test 0.8.6.6 Silence107! Silence107!
-}
 
 # Displays help information to user.
 help()
@@ -475,7 +494,6 @@ help()
 	_echo "api-db-restore" 1
 	_echo "initializes database restore from deployment backup" 2
 	_echo "api-db-ingest" 1
-
 	_echo "ingests published documents from atom feeds" 2
 	_echo "api-db-ingest-debug" 1
 	_echo "runs ingestion debug script" 2
@@ -483,8 +501,6 @@ help()
 	_echo "executes comparator setup" 2
 	_echo "api-visualizer-setup" 1
 	_echo "executes visualizer setup" 2
-	_echo "api-misc" 1
-	_echo "executes miscellaneous script" 2
 	
 	_echo ""
 	_echo "MP commands :"
@@ -501,11 +517,20 @@ help()
 	_echo "exec automated tests" 2
 	_echo "pyesdoc-publishing-scenario" 1
 	_echo "illustrates pyesdoc usage scenarios" 2
+
+	_echo ""
+	_echo "misc" 1
+	_echo "executes miscellaneous script" 2	
 }
+
 
 
 # Set working directory.
 _set_working_dir
+
+# Set action.
+ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
+ACTION_ARG=$2
 
 # Invoke action.
 $ACTION $ACTION_ARG

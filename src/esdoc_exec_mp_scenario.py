@@ -18,7 +18,7 @@ def get_test_classes():
             'type': 'class',
             'name': 'test_class_a',
             'base': None,
-            'abstract': True,
+            'is_abstract': True,
             'doc': 'Test class A documentation.',
             'properties': [
                 ('x', 'int', '0.1', 'Property x documentation.'),
@@ -30,7 +30,7 @@ def get_test_classes():
             'type': 'class',
             'name': 'test_class_b',
             'base': None,
-            'abstract': False,
+            'is_abstract': False,
             'doc': 'Test class B documentation.',
             'properties': [
                 ('y', 'int', '0.N', 'Property y documentation.'),
@@ -42,7 +42,7 @@ def get_test_classes():
             'type': 'class',
             'name': 'test_class_c',
             'base': 'test_package.test_class_a',
-            'abstract': False,
+            'is_abstract': False,
             'doc': 'Test class C documentation.',
             'properties': [
                 ('z', 'bar.class_b', '0.N', 'Property z documentation'),
