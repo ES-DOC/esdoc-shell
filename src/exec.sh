@@ -223,7 +223,7 @@ install_config()
 {
 	_echo "... installing configuration file"
 
-	cp ./repos/esdoc-shell/src/config.json ./config.json	
+	cp $DIR_SRC_SHELL/config.json ./config.json	
 }
 
 # Displays information notice upon installation.
@@ -305,7 +305,7 @@ _update_shell_script()
 {
 	_echo "... updating shell script"
 
-	cp ./repos/esdoc-shell/src/exec.sh ./exec.sh
+	cp $DIR_SRC_SHELL/exec.sh ./exec.sh
 }
 
 # Updates config file.
@@ -314,7 +314,7 @@ _update_config()
 	_echo "... updating configuration file"
 
 	cp ./config.json ./config-backup.json	
-	cp ./repos/esdoc-shell/src/config.json ./config.json	
+	cp $DIR_SRC_SHELL/config.json ./config.json	
 }
 
 # Displays information notice upon update.
