@@ -1,23 +1,9 @@
 #!/bin/bash
 
-# Wraps standard echo by adding ES-DOC prefix.
-_echo()
-{
-	tabs=''
-	if [ "$1" ]; then
-		if [ "$2" ]; then
-			for ((i=0; i<$2; i++))
-			do
-				tabs+='\t'
-			done
-	    	echo -e 'ES-DOC :: '$tabs$1	
-	    else
-	    	echo -e "ES-DOC :: "$1	
-	    fi
-	else
-	    echo -e "ES-DOC ::"	
-	fi
-}
+
+# ###############################################################
+# SECTION: INIT
+# ###############################################################
 
 # Set paths.
 # ... esdoc shell
@@ -82,8 +68,38 @@ DIR_SRC_PYESDOC=$DIR_REPOS/esdoc-py-client/src
 # ... esdoc py-client tests
 DIR_TESTS_PYESDOC=$DIR_REPOS/esdoc-py-client/tests
 
+# Set action.
+ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
+
+# Set action argument.
+ACTION_ARG=$2
+
+
+# ###############################################################
+# SECTION: HELPER FUNCTIONS
+# ###############################################################
+
+# Wraps standard echo by adding ES-DOC prefix.
+_echo()
+{
+	tabs=''
+	if [ "$1" ]; then
+		if [ "$2" ]; then
+			for ((i=0; i<$2; i++))
+			do
+				tabs+='\t'
+			done
+	    	echo -e 'ES-DOC :: '$tabs$1	
+	    else
+	    	echo -e "ES-DOC :: "$1	
+	    fi
+	else
+	    echo -e "ES-DOC ::"	
+	fi
+}
+
 # Outputs working folders.
-_show_working_folders()
+show_working_folders()
 {
 	_echo $DIR_ROOT
 	_echo $DIR_CV
@@ -124,6 +140,10 @@ _reset_tmp()
 	rm -rf $DIR_TMP/*
 	mkdir -p $DIR_TMP
 }
+
+# ###############################################################
+# SECTION: SETUP FUNCTIONS
+# ###############################################################
 
 # Installs python virtual environments.
 _install_python_venv()
@@ -271,6 +291,11 @@ activate_python_venv()
 	fi
 }
 
+
+# ###############################################################
+# SECTION: API FUNCTIONS
+# ###############################################################
+
 # Executes api tests.
 api_test()
 {
@@ -377,6 +402,11 @@ api_visualizer_setup()
 	python ./exec.py "api-setup-visualizers"
 }
 
+
+# ###############################################################
+# SECTION: META-PROGRAMMING FUNCTIONS
+# ###############################################################
+
 # Executes meta-programming tests.
 mp_test()
 {
@@ -389,7 +419,7 @@ mp_test()
 mp_build()
 {
     _echo "MP : building ..."
-	_show_working_folders    
+	show_working_folders    
 
 	_echo "Step 0.  Resetting"
 	_reset_tmp
@@ -419,6 +449,11 @@ mp_custom_schema()
 
 	python ./exec_mp_scenario.py $DIR_TMP
 }
+
+
+# ###############################################################
+# SECTION: PYESDOC FUNCTIONS
+# ###############################################################
 
 # Executes pyesdoc tests.
 pyesdoc_test()
@@ -465,8 +500,6 @@ misc()
 	activate_python_venv pyesdoc
 	python ./exec_misc_scenario.py    
 }
-
-
 
 # Displays help information to user.
 help()
@@ -515,14 +548,18 @@ help()
 	_echo "executes miscellaneous script" 2	
 }
 
+# ###############################################################
+# SECTION: MAIN
+# ###############################################################
 
-
-# Set working directory.
+# Initialise working directory.
 _set_working_dir
 
-# Set action.
-ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
-ACTION_ARG=$2
+# Initialise temporary folder.
+_reset_tmp
+
+# Display header.
+# _show_script_header $ACTION $ACTION_ARG
 
 # Invoke action.
 $ACTION $ACTION_ARG
