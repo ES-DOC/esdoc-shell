@@ -87,7 +87,7 @@ pyesdoc.associate(simulation, 'model_reference', model)
 model_as_json = pyesdoc.encode(model, pyesdoc.ESDOC_ENCODING_JSON)
 simulation_as_json = pyesdoc.encode(simulation, pyesdoc.ESDOC_ENCODING_JSON)
 
-# ... encode asxml
+# ... encode as xml
 model_as_XML = pyesdoc.encode(model, pyesdoc.ESDOC_ENCODING_XML)
 simulation_as_XML = pyesdoc.encode(simulation, pyesdoc.ESDOC_ENCODING_XML)
 
