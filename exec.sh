@@ -600,23 +600,12 @@ run_api_visualizer_setup()
 # SECTION: META-PROGRAMMING FUNCTIONS
 # ###############################################################
 
-# Executes meta-programming tests.
-mp_test()
-{
-	_activate_venv mp
-
-    _echo "MP : TODO launch automated tests ..."
-}
-
 # Executes meta-programming build process.
-mp_build()
+run_mp()
 {
-    _echo "MP : building ..."
+    _echo "running mp build ..."
 
-	_echo "Step 0.  Resetting"
-	_reset_tmp
-
-	_echo "Step 1.  Running es-doc mp utility"
+	_echo "Step 1.  Running mp utility"
 	_activate_venv mp	
 	python "$DIR_SRC_MP/esdoc_mp" -s "cim" -v "1" -l "python" -o $DIR_TMP
 
@@ -626,17 +615,29 @@ mp_build()
 	_echo "Step 3.  Copying generated files to api"
 	cp -r $DIR_SRC_PYESDOC/pyesdoc $DIR_LIB_API
 
-	_echo "Step 4.  Cleaning"
+	_echo "Step 4.  Cleaning up"
 	find $DIR_SRC_PYESDOC -type f -name "*.pyc" -exec rm -f {} \;
 	find $DIR_SRC_PYESDOC -type f -name "*.pye" -exec rm -f {} \;
 	find $DIR_LIB_API -type f -name "*.pyc" -exec rm -f {} \;
 	find $DIR_LIB_API -type f -name "*.pye" -exec rm -f {} \;
 }
 
-# Executes meta-programming build against a custim scheme.
-mp_custom_schema()
+# Executes meta-programming tests.
+run_mp_tests()
 {
-	_reset_tmp
+	_echo "running mp tests ..."
+
+	_activate_venv mp
+
+	_echo "TODO"
+}
+
+# Executes meta-programming build against a custim scheme.
+run_mp_custom_schema()
+{
+	_echo "running mp custom scenario ..."
+    exit 0
+
 	_activate_venv mp
 
 	python ./exec_mp_scenario.py $DIR_TMP
@@ -648,8 +649,10 @@ mp_custom_schema()
 # ###############################################################
 
 # Executes pyesdoc tests.
-pyesdoc_test()
+run_pyesdoc_tests()
 {
+	_echo "executing pyesdoc tests ..."
+
 	_activate_venv pyesdoc
 
 	# All tests.
@@ -675,11 +678,11 @@ pyesdoc_test()
 }
 
 # Executes pyesdoc publishing scenario.
-pyesdoc_publishing_scenario()
+run_pyesdoc_scenario()
 {
-	_echo "Executing pyesdoc publishing scenario"
+	_echo "executing pyesdoc publishing scenario ..."
+	exit 0
 
-	_reset_tmp
 	_activate_venv pyesdoc
 	python ./exec_pyesdoc_scenario.py $DIR_TMP
 }
@@ -705,7 +708,7 @@ help()
 	_echo "API commands :"
 	_echo "run-api" 1
 	_echo "launches api web application" 2
-	_echo "run-api-test" 1
+	_echo "run-api-tests" 1
 	_echo "executes api automated tests" 2
 	_echo "run-api-comparator-setup" 1
 	_echo "executes comparator setup" 2
@@ -718,27 +721,24 @@ help()
 	_echo "sets up database" 2
 	_echo "run-db-ingest" 1
 	_echo "ingests externally published documents" 2
-
-	_echo "api-db-restore" 1
-	_echo "initializes database restore from deployment backup" 2
-	_echo "api-db-ingest-debug" 1
-	_echo "runs ingestion debug script" 2
+	_echo "run-db-restore" 1
+	_echo "restores database restore from deployment backup" 2
 
 	_echo ""
 	_echo "MP commands :"
-	_echo "mp-test" 1
-	_echo "executes mp automated tests" 2
-	_echo "mp-build" 1
+	_echo "run-mp" 1
 	_echo "builds pyesdoc from meta-programming framework" 2
-	_echo "mp-custom-schema" 1
-	_echo "builds custom schema as proof of concept" 2
+	_echo "run-mp-tests" 1
+	_echo "executes mp automated tests" 2
+	_echo "run-mp-custom-schema" 1
+	_echo "runs mp against a custom schema as proof of concept" 2
 	
 	_echo ""
 	_echo "PYESDOC commands :"
-	_echo "pyesdoc-test" 1cutes pyesdo
-	_echo "exec automated tests" 2
-	_echo "pyesdoc-publishing-scenario" 1
-	_echo "illustrates pyesdoc usage scenarios" 2
+	_echo "run-pyesdoc-tests" 1
+	_echo "exec pyesdoc automated tests" 2
+	_echo "run-pyesdoc-scenario" 1
+	_echo "illustrates pyesdoc scenarios" 2
 
 	_echo ""
 	_echo "help" 1
