@@ -21,7 +21,7 @@ _COMPARATORS = {
 
 # Set of visualizers for which to write setup data in json format.
 _VISUALIZERS = {
-    'CMIP5' : ['v1']
+
 }
 
 
@@ -35,54 +35,46 @@ def _end_api_db_session():
 	session.end()
 
 
-def _api_db_init():
-	"""Execute db initialization."""
+def _wrap_api_db_session(task):
+	"""Wraps a function with a call to db session start/end."""
 	# Start session.
 	_start_api_db_session()
 	
-	# Create repo.
-	session.create_repo()
+	# Perform work.
+	task()
 
 	# End session.
 	_end_api_db_session()
+
+
+def _api_db_init():
+	"""Execute db initialization."""
+	_wrap_api_db_session(session.create_repo)
 
 
 def _api_db_ingest():
 	"""Execute db ingestion."""
-	# Start session.
-	_start_api_db_session()
-	
-	# Launch ingestion.
-	ingest.execute()
-
-	# End session.
-	_end_api_db_session()
+	_wrap_api_db_session(ingest.execute)
 
 
-def _api_setup_comparators():
+def _api_setup_comparator():
 	"""Write api comparator setup data."""
-	# Start session.
-	_start_api_db_session()
-	
-	for project in _COMPARATORS:
-	    for type in _COMPARATORS[project]:
-	        comparator_setup.write_comparator_json(project, type)
+	def _do():
+		for project in _COMPARATORS:
+		    for type in _COMPARATORS[project]:
+		        comparator_setup.write_comparator_json(project, type)
 
-	# End session.
-	_end_api_db_session()
+	_wrap_api_db_session(_do)
 
 
-def _api_setup_visualizers():
+def _api_setup_visualizer():
 	"""Write api visualizer setup data."""
-	# Start session.
-	_start_api_db_session()
-	
-	for project in _VISUALIZERS:
-	    for type in _VISUALIZERS[project]:
-	        visualizer_setup.write_visualizer_json(project, type)
+	def _do():
+		for project in _VISUALIZERS:
+		    for type in _VISUALIZERS[project]:
+		        visualizer_setup.write_visualizer_json(project, type)
 
-	# End session.
-	_end_api_db_session()
+	_wrap_api_db_session(_do)
 
 
 def _init_config():
@@ -98,8 +90,8 @@ def _init_config():
 _actions = {
 	"api-db-init": _api_db_init,
 	"api-db-ingest": _api_db_ingest,
-	"api-setup-comparators": _api_setup_comparators,
-	"api-setup-visualizers": _api_setup_visualizers
+	"api-setup-comparator": _api_setup_comparator,
+	"api-setup-visualizer": _api_setup_visualizer
 }
 
 def main():

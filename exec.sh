@@ -26,20 +26,7 @@ DIR_VENV=$DIR/venv
 # Set path: python.
 DIR_PYTHON=$DIR_VENV/python
 
-# Set path: venv pyesdoc
-DIR_VENV_PYESDOC=$DIR_VENV/pyesdoc
-
-# Set path: venv meta-programming
-DIR_VENV_MP=$DIR_VENV/mp
-
-# Set path: venv api
-DIR_VENV_API=$DIR_VENV/api
-
-# Set path: venv questionnaire
-DIR_VENV_QTN=$DIR_VENV/questionnaire
-
 # Set path: source code: api
-# ... esdoc api source code
 DIR_SRC_API=$DIR_REPOS/esdoc-api/src
 
 # Set path: source code: shell
@@ -147,23 +134,20 @@ _activate_venv()
 
 	if [ $1 = "api" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_API
-		_echo $DIR_VENV_API/bin/activate
-		source $DIR_VENV_API/bin/activate
 
 	elif [ $1 = "qtn" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_QTN
-		source "$DIR_VENV_QTN/bin/activate"
 
 	elif [ $1 = "mp" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_MP
 		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_MP
-		source "$DIR_VENV_MP/bin/activate"
 
 	elif [ $1 = "pyesdoc" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_PYESDOC
 		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_PYESDOC
-		source "$DIR_VENV_PYESDOC/bin/activate"
 	fi
+
+	source $DIR_VENV/$1/bin/activate
 }
 
 
@@ -493,40 +477,13 @@ uninstall()
 # SECTION: DB FUNCTIONS
 # ###############################################################
 
-
-
-# ###############################################################
-# SECTION: API FUNCTIONS
-# ###############################################################
-
-# Executes api tests.
-api_test()
-{
-	_activate_venv api
-
-	# All tests.
-	if [ ! "$1" ]; then
-	    _echo "API :: Executing api tests"
-	    nosetests -v -s $DIR_TESTS_API/esdoc_api_test
-	fi
-}
-
-# Launches api web-service.
-api_run()
-{
-    _echo "API : running ..."
-
-	_activate_venv api
-	paster serve --reload $DIR_SRC_API/esdoc_api/config/ini_files/config.ini
-}
-
 # Initialises api db.
-api_db_init()
+db_init()
 {
     _echo "API : DB initializing ..."
 
     # Drop previous db.
-    api_db_delete
+    db_delete
 
 	# Init db.
 	_echo "API : DB creating"
@@ -539,13 +496,13 @@ api_db_init()
 
 	# Init test db.
 	_echo "API : DB creating test db"
-	createdb -h localhost -p 5432 -U postgres -O postgres -T esdoc_api esdoc_api_test
+	createdb -h localhost -p 5432 -U postgres -O postgres -T esdoc_api esdoc_run_api_tests
 
 	_echo "API : DB initialized"
 }
 
 # Deletes existing api db.
-api_db_delete()
+db_delete()
 {
     _echo "API : DB deleting ..."
 
@@ -553,13 +510,13 @@ api_db_delete()
 	_echo "API : DB dropping db"
 	dropdb -h localhost -p 5432 -U postgres esdoc_api	
 	_echo "API : DB dropping test db"
-	dropdb -h localhost -p 5432 -U postgres esdoc_api_test	
+	dropdb -h localhost -p 5432 -U postgres esdoc_run_api_tests	
 
 	_echo "API : DB deleted"
 }
 
 # Restores api db from deplyoyment backup file.
-api_db_restore()
+db_restore()
 {
     _echo "API : DB : restoring ..."
 
@@ -579,7 +536,7 @@ api_db_restore()
 }
 
 # Launches api db ingestion job.
-api_db_ingest()
+db_ingest()
 {
     _echo "API : DB : ingesting from external sources ..."
 
@@ -587,22 +544,49 @@ api_db_ingest()
 	python ./exec.py "api-db-ingest"
 }
 
-# Executes api comparator setup.
-api_comparator_setup()
+
+# ###############################################################
+# SECTION: API FUNCTIONS
+# ###############################################################
+
+# Launches api web-service.
+run_api()
 {
-    _echo "API : writing comparator setup files ..."
+    _echo "API : running ..."
+
+	_activate_venv api	
+	paster serve --reload $DIR_SRC_API/esdoc_api/config/ini_files/config.ini
+}
+
+# Executes api tests.
+run_api_tests()
+{
+    _echo "API : running tests ..."
 
 	_activate_venv api
-	python ./exec.py "api-setup-comparators"
+
+	if [ ! "$1" ]; then
+	    _echo "API :: Executing api tests"
+	    nosetests -v -s $DIR_TESTS_API/esdoc_api_test
+	fi
+}
+
+# Executes api comparator setup.
+run_api_comparator_setup()
+{
+    _echo "API : setting up comparator ..."
+ 
+	_activate_venv api
+	python ./exec.py "api-setup-comparator"
 }
 
 # Executes api visualizer setup.
-api_visualizer_setup()
+run_api_visualizer_setup()
 {
-    _echo "API : writing visualizer setup files ..."
-
+    _echo "API : setting up visualizer ..."
+ 
 	_activate_venv api
-	python ./exec.py "api-setup-visualizers"
+	python ./exec.py "api-setup-visualizer"
 }
 
 
@@ -709,14 +693,21 @@ help()
 	_echo "update" 1
 	_echo "updates esdoc shell, git repos & virtual environments" 2
 	_echo "uninstall" 1
-	_echo "uninstalls previously installed esdoc artefacts" 2
+	_echo "uninstalls esdoc shell, git repos & virtual environments" 2
 
 	_echo ""
 	_echo "API commands :"
-	_echo "api-test" 1
-	_echo "executes api automated tests" 2
-	_echo "api-run" 1
+	_echo "run-api" 1
 	_echo "launches api web application" 2
+	_echo "run-api-test" 1
+	_echo "executes api automated tests" 2
+	_echo "run-api-comparator-setup" 1
+	_echo "executes comparator setup" 2
+	_echo "run-api-visualizer-setup" 1
+	_echo "executes visualizer setup" 2
+	
+	_echo ""
+	_echo "Database commands :"
 	_echo "api-db-init" 1
 	_echo "initializes database" 2
 	_echo "api-db-restore" 1
@@ -725,11 +716,7 @@ help()
 	_echo "ingests published documents from atom feeds" 2
 	_echo "api-db-ingest-debug" 1
 	_echo "runs ingestion debug script" 2
-	_echo "api-comparator-setup" 1
-	_echo "executes comparator setup" 2
-	_echo "api-visualizer-setup" 1
-	_echo "executes visualizer setup" 2
-	
+
 	_echo ""
 	_echo "MP commands :"
 	_echo "mp-test" 1
