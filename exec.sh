@@ -477,68 +477,22 @@ uninstall()
 # SECTION: DB FUNCTIONS
 # ###############################################################
 
-# Sets up db.
-db_setup()
+# Drop db.
+_db_restore()
 {
-    _echo "API : DB initializing ..."
+	_echo "... restoring DB"
 
-    # Drop previous db.
-    db_delete
-
-	# Init db.
-	_echo "API : DB creating"
-	createdb -h localhost -p 5432 -U postgres -O postgres -T template0 esdoc_api
-
-	# Seed db.
-	_echo "API : DB populating"
-	_activate_venv api
-	python ./exec.py "api-db-init"
-
-	# Init test db.
-	_echo "API : DB creating test db"
-	createdb -h localhost -p 5432 -U postgres -O postgres -T esdoc_api esdoc_run_api_tests
-
-	_echo "API : DB initialized"
-}
-
-# Deletes existing api db.
-db_delete()
-{
-    _echo "API : DB deleting ..."
-
-    # Drop previous db's.
-	_echo "API : DB dropping db"
-	dropdb -h localhost -p 5432 -U postgres esdoc_api	
-	_echo "API : DB dropping test db"
-	dropdb -h localhost -p 5432 -U postgres esdoc_run_api_tests	
-
-	_echo "API : DB deleted"
-}
-
-# Restores api db from deplyoyment backup file.
-db_restore()
-{
-    _echo "API : DB : restoring ..."
-
-	_echo "API : DB dropping existing"
-	dropdb -h localhost -p 5432 -U postgres esdoc_api	
-
-	_echo "API : DB creating new"
-	createdb -h localhost -p 5432 -U postgres -O postgres -T template0 esdoc_api	
-
-	_echo "API : DB restoring"
 	unzip -q $DIR_SRC_DEPLOY/db/db.zip -d $DIR_TMP
 	pg_restore -U postgres -d esdoc_api $DIR_TMP/db
-
+	pg_restore -U postgres -d esdoc_api_test $DIR_TMP/db
 	_reset_tmp
-
-    _echo "API : DB : restored"
 }
 
 # Drop db.
 _db_drop()
 {
 	_echo "... dropping DB"
+
 	dropdb -U postgres esdoc_api --if-exists
 	dropdb -U postgres esdoc_api_test --if-exists
 }
@@ -555,7 +509,7 @@ _db_create()
 # Seed db.
 _db_seed()
 {
-	_echo "... seeding DB"
+	_echo "DB: seeding ..."
 
 	_activate_venv api
 	python ./exec.py "db-setup"
@@ -564,22 +518,36 @@ _db_seed()
 # Setup db.
 run_db_setup()
 {
-	_echo "initializing DB ..."
+	_echo "DB: initializing ..."	
 
 	_db_drop
 	_db_create
 	_db_seed
+
+	_echo "TODO - seed test db"
 	
-	_echo "initialized DB"
+	_echo "DB: initialized"
 }
 
 # Launches api db ingestion job.
 run_db_ingest()
 {
-    _echo "API : DB : ingesting from external sources ..."
+    _echo "DB: ingesting from external sources ..."
 
 	_activate_venv api
 	python ./exec.py "db-ingest"
+}
+
+# Restores api db from deplyoyment backup file.
+run_db_restore()
+{
+    _echo "DB: restoring ..."
+
+	_db_drop
+	_db_create
+	_db_restore
+
+    _echo "DB: restored"
 }
 
 
