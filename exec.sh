@@ -23,6 +23,9 @@ DIR_TMP=$DIR/tmp
 # Set path: venv.
 DIR_VENV=$DIR/venv
 
+# Set path: python.
+DIR_PYTHON=$DIR_VENV/python
+
 # Set path: venv pyesdoc
 DIR_VENV_PYESDOC=$DIR_VENV/pyesdoc
 
@@ -204,6 +207,64 @@ bootstrap()
 # SECTION: INSTALL
 # ###############################################################
 
+# Installs virtual environments.
+_install_venv()
+{
+	if [ "$2" ]; then
+		_echo "... installing virtual environment: $1"
+	fi
+
+	TARGET_VENV=$DIR_VENV/$1	
+	TARGET_REQUIREMENTS=$DIR_TEMPLATES/template-venv-$1.txt
+	rm -rf $TARGET_VENV
+    mkdir -p $TARGET_VENV
+    virtualenv -q $TARGET_VENV
+    source $TARGET_VENV/bin/activate
+    pip install -q --allow-all-external -r $TARGET_REQUIREMENTS 
+    deactivate
+}
+
+# Installs virtual environments.
+install_venvs()
+{
+	_install_venv "api" "echo"
+	_install_venv "questionnaire" "echo"
+	_install_venv "pyesdoc" "echo"
+	_install_venv "mp" "echo"
+}
+
+# Installs a python executable primed with setuptools, pip & virtualenv.
+_install_python()
+{
+	_echo "... installing python "$PYTHON_VERSION" (takes approx 2 minutes)"
+
+	# Download source.
+	_set_working_dir $DIR_PYTHON
+	mkdir src	
+	cd src
+	wget http://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz >/dev/null 2>&1
+	tar -xvf Python-$PYTHON_VERSION.tgz >/dev/null 2>&1
+	rm Python-$PYTHON_VERSION.tgz
+
+	# Compile.
+	cd Python-$PYTHON_VERSION
+	./configure --prefix=$DIR_PYTHON >/dev/null 2>&1
+	make >/dev/null 2>&1
+	make install >/dev/null 2>&1
+	export PATH=$DIR_PYTHON/bin:$PATH
+
+	# Install setuptools.
+	cd $DIR_PYTHON/src
+	wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py >/dev/null 2>&1
+	python ez_setup.py >/dev/null 2>&1
+
+	# Install pip.
+	easy_install --prefix $DIR_PYTHON pip >/dev/null 2>&1
+
+	# Install virtualenv.
+	pip install virtualenv >/dev/null 2>&1
+}
+
 # Installs a git repo.
 _install_repo()
 {
@@ -225,53 +286,17 @@ install_repos()
 	_install_repo esdoc-mp
 	_install_repo esdoc-py-client
 	_install_repo esdoc-questionnaire
-	_install_repo esdoc-shell
 	_install_repo esdoc-splash
 	_install_repo esdoc-static
 }
 
-# Installs virtual environment.
-_install_venv()
+# Sets up directories.
+_install_dirs()
 {
-	rm -rf $1
-    mkdir -p $1
-    virtualenv -q $1
-    source $1/bin/activate
-    pip install -q --allow-all-external -r $2    
-    deactivate
-}
-
-# Installs virtual environments.
-install_venvs()
-{
-	_echo "... installing virtual environment :: api "
-	_install_venv $DIR_VENV_API $DIR_SRC_SHELL/venv-requirements-api.txt
-
-	_echo "... installing virtual environment :: questionnaire"
-	_install_venv $DIR_VENV_QTN $DIR_SRC_SHELL/venv-requirements-questionnaire.txt
-
-	_echo "... installing virtual environment :: pyesdoc"
-	_install_venv $DIR_VENV_PYESDOC $DIR_SRC_SHELL/venv-requirements-pyesdoc.txt
-
-	_echo "... installing virtual environment :: mp"
-	_install_venv $DIR_VENV_MP $DIR_SRC_SHELL/venv-requirements-mp.txt
-}
-
-# Installs configuration files.
-install_config()
-{
-	_echo "... installing configuration file"
-
-	cp $DIR_SRC_SHELL/config.json ./config.json	
-}
-
-# Displays information notice upon installation.
-_install_notice()
-{
-	_echo "IMPORTANT NOTICE"
-	_echo "The install process installs a config file @ ./esdoc/config.json." 1
-	_echo "Please review and assign configuration settings as appropriate to your environemt." 1
-	_echo "IMPORTANT NOTICE ENDS"
+	mkdir -p $DIR_REPOS
+	mkdir -p $DIR_DB/backups
+	mkdir -p $DIR_PYTHON
+	mkdir -p $DIR_TMP
 }
 
 # Installs stack.
@@ -279,14 +304,13 @@ install()
 {
 	_echo "INSTALLING STACK"
 
-	install_repos
-	install_venvs
-	install_config
+	_install_dirs
+	_install_repos
+	_install_python
+	_install_venvs
 	_reset_tmp	
 
 	_echo "INSTALLED STACK"
-
-	_install_notice
 }
 
 # ###############################################################
