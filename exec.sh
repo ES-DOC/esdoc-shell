@@ -275,7 +275,7 @@ _install_repo()
 }
 
 # Installs git repos.
-install_repos()
+_install_repos()
 {
 	_install_repo esdoc-api
 	_install_repo esdoc-bootstrap
