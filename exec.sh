@@ -93,6 +93,11 @@ _echo()
 	fi
 }
 
+_echo_banner()
+{
+	echo "---------------------------------------------"
+}
+
 # Outputs config settings to console.
 echo_config()
 {
@@ -175,8 +180,8 @@ _bootstrap_notice()
 	_echo_banner
 	_echo "IMPORTANT NOTICE"
 	_echo "The bootstrap process installs config files:" 1
-	_echo "./prodiguer/config.json" 2
-	_echo "./prodiguer/exec.config" 2
+	_echo "./esdoc/config.json" 2
+	_echo "./esdoc/exec.config" 2
 	_echo "Please review and assign settings as appropriate to your " 1
 	_echo "environemt prior to continuing with the installation process." 1
 	_echo "IMPORTANT NOTICE ENDS"
@@ -185,6 +190,8 @@ _bootstrap_notice()
 bootstrap()
 {
 	_echo "BOOTSTRAP STARTS"
+	_echo $DIR
+	_echo $DIR_TEMPLATES
 	_set_working_dir 
 	_boostrap_init_config
 	_echo "BOOTSTRAP ENDS"
