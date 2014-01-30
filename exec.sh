@@ -477,8 +477,8 @@ uninstall()
 # SECTION: DB FUNCTIONS
 # ###############################################################
 
-# Initialises api db.
-db_init()
+# Sets up db.
+db_setup()
 {
     _echo "API : DB initializing ..."
 
@@ -535,13 +535,51 @@ db_restore()
     _echo "API : DB : restored"
 }
 
+# Drop db.
+_db_drop()
+{
+	_echo "... dropping DB"
+	dropdb -U postgres esdoc_api --if-exists
+	dropdb -U postgres esdoc_api_test --if-exists
+}
+
+# Create db.
+_db_create()
+{
+	_echo "... creating DB"
+
+	createdb -U postgres -e -O postgres -T template0 esdoc_api
+	createdb -U postgres -e -O postgres -T template0 esdoc_api_test
+}
+
+# Seed db.
+_db_seed()
+{
+	_echo "... seeding DB"
+
+	_activate_venv api
+	python ./exec.py "db-setup"
+}
+
+# Setup db.
+run_db_setup()
+{
+	_echo "initializing DB ..."
+
+	_db_drop
+	_db_create
+	_db_seed
+	
+	_echo "initialized DB"
+}
+
 # Launches api db ingestion job.
-db_ingest()
+run_db_ingest()
 {
     _echo "API : DB : ingesting from external sources ..."
 
 	_activate_venv api
-	python ./exec.py "api-db-ingest"
+	python ./exec.py "db-ingest"
 }
 
 
@@ -708,12 +746,13 @@ help()
 	
 	_echo ""
 	_echo "Database commands :"
-	_echo "api-db-init" 1
-	_echo "initializes database" 2
+	_echo "run-db-setup" 1
+	_echo "sets up database" 2
+	_echo "run-db-ingest" 1
+	_echo "ingests externally published documents" 2
+
 	_echo "api-db-restore" 1
 	_echo "initializes database restore from deployment backup" 2
-	_echo "api-db-ingest" 1
-	_echo "ingests published documents from atom feeds" 2
 	_echo "api-db-ingest-debug" 1
 	_echo "runs ingestion debug script" 2
 

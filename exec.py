@@ -47,12 +47,12 @@ def _wrap_api_db_session(task):
 	_end_api_db_session()
 
 
-def _api_db_init():
+def _db_setup():
 	"""Execute db initialization."""
 	_wrap_api_db_session(session.create_repo)
 
 
-def _api_db_ingest():
+def _db_ingest():
 	"""Execute db ingestion."""
 	_wrap_api_db_session(ingest.execute)
 
@@ -88,8 +88,8 @@ def _init_config():
 
 # Map of supported actions.
 _actions = {
-	"api-db-init": _api_db_init,
-	"api-db-ingest": _api_db_ingest,
+	"db-setup": _db_setup,
+	"db-ingest": _db_ingest,
 	"api-setup-comparator": _api_setup_comparator,
 	"api-setup-visualizer": _api_setup_visualizer
 }
