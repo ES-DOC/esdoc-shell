@@ -416,20 +416,12 @@ update()
 # SECTION: UNINSTALL
 # ###############################################################
 
-# Uninstalls virtual environments.
-_uninstall_venv()
+# Uninstalls shell.
+_uninstall_shell()
 {
-	_echo "... uninstalling virtual environment :: "$1
-	rm -rf $DIR_VENV/$1
-}
+	_echo "... uninstalling shell"
 
-# Uninstalls virtual environments.
-_uninstall_venvs()
-{
-	_uninstall_venv "api"
-	_uninstall_venv "mp"
-	_uninstall_venv "pyesdoc"
-	_uninstall_venv "questionnaire"
+	rm -rf $DIR
 }
 
 # Uninstalls git repo.
@@ -448,7 +440,7 @@ _uninstall_repos()
 	_uninstall_repo esdoc-cv
 	_uninstall_repo esdoc-deploy
 	_uninstall_repo esdoc-docs
-	_uninstall_repo esdoc-js-client
+	_uninstall_repo esdoc-js-clients
 	_uninstall_repo esdoc-mp
 	_uninstall_repo esdoc-py-client
 	_uninstall_repo esdoc-questionnaire
@@ -456,19 +448,52 @@ _uninstall_repos()
 	_uninstall_repo esdoc-static
 }
 
+# Uninstalls python.
+_uninstall_python()
+{
+	_echo "... uninstalling python"
+
+	rm -rf $DIR_PYTHON
+}
+
+# Uninstalls a virtual environment.
+_uninstall_venv()
+{
+	if [ "$2" ]; then
+		_echo "... uninstalling virtual environment :: $1"
+	fi
+
+	rm -rf $DIR_VENV/$1
+}
+
+# Uninstalls virtual environments.
+_uninstall_venvs()
+{
+	_uninstall_venv "api" "echo"
+	_uninstall_venv "mp" "echo"
+	_uninstall_venv "pyesdoc" "echo"
+	_uninstall_venv "questionnaire" "echo"
+}
+
 # Uninstalls stack.
 uninstall()
 {
 	_echo "UNINSTALLING STACK"
 
-	_uninstall_repos
 	_uninstall_venvs
-	_reset_tmp
-	cd ..
-	rm -rf esdoc
+	_uninstall_python
+	_uninstall_repos
+	_uninstall_shell
 
 	_echo "UNINSTALLED STACK"
 }
+
+
+# ###############################################################
+# SECTION: DB FUNCTIONS
+# ###############################################################
+
+
 
 # ###############################################################
 # SECTION: API FUNCTIONS
