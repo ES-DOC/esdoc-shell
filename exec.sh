@@ -8,58 +8,59 @@
 # ... esdoc root folder
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# ... esdoc git repos root folder.
+# Set path: db.
+DIR_DB=$DIR/db
+
+# Set path: repos.
 DIR_REPOS=$DIR/repos
 
-# ... esdoc tmp folder.
+# Set path: tmp.
 DIR_TMP=$DIR/tmp
 
-# ... esdoc virtual environment folder.
+# Set path: venv.
 DIR_VENV=$DIR/venv
 
-# ... esdoc webapps root folder.
-DIR_WEBAPPS=$DIR/webapps
-
-# ... esdoc shell pyesdoc venv
+# Set path: venv pyesdoc
 DIR_VENV_PYESDOC=$DIR_VENV/pyesdoc
 
-# ... esdoc shell meta-prgamming venv
+# Set path: venv meta-programming
 DIR_VENV_MP=$DIR_VENV/mp
 
-# ... esdoc shell api venv
+# Set path: venv api
 DIR_VENV_API=$DIR_VENV/api
 
-# ... esdoc shell questionnaire venv
+# Set path: venv questionnaire
 DIR_VENV_QTN=$DIR_VENV/questionnaire
 
+# Set path: source code: api
 # ... esdoc api source code
 DIR_SRC_API=$DIR_REPOS/esdoc-api/src
 
-# ... esdoc shell source code
+# Set path: source code: shell
 DIR_SRC_SHELL=$DIR_REPOS/esdoc-shell/src
 
-# ... esdoc deploy source code
+# Set path: source code: deploy
 DIR_SRC_DEPLOY=$DIR_REPOS/esdoc-deploy/src
 
-# ... esdoc mp source code
+# Set path: source code: meta-programming
 DIR_SRC_MP=$DIR_REPOS/esdoc-mp/src
 
-# ... esdoc py-client source code
+# Set path: source code: pyesdoc
 DIR_SRC_PYESDOC=$DIR_REPOS/esdoc-py-client/src
 
-# ... esdoc questionnaire source code
+# Set path: source code: questionnaire
 DIR_SRC_QTN=$DIR_REPOS/esdoc-questionnaire/src
 
-# ... esdoc api lib sub-folder
+# Set path: source code: api lib
 DIR_LIB_API=$DIR_SRC_API/esdoc_api/lib
 
-# ... esdoc api tests
+# Set path: tests: api
 DIR_TESTS_API=$DIR_REPOS/esdoc-api/tests
 
-# ... esdoc mp tests
+# Set path: tests: meta-programming
 DIR_TESTS_MP=$DIR_REPOS/esdoc-mp/tests
 
-# ... esdoc py-client tests
+# Set path: tests: pyesdoc
 DIR_TESTS_PYESDOC=$DIR_REPOS/esdoc-py-client/tests
 
 # Set action.
@@ -92,29 +93,23 @@ _echo()
 	fi
 }
 
-# Outputs working folders.
-show_working_folders()
+# Outputs config settings to console.
+echo_config()
 {
-	_echo $DIR
-	_echo $DIR_REPOS
-	_echo $DIR_TMP
-	_echo $DIR_WEBAPPS
+	_echo "CONFIG SETTING: PYTHON_VERSION=$PYTHON_VERSION"
+	_echo "CONFIG SETTING: DB_HOSTNAME=$DB_HOSTNAME"
+	_echo "CONFIG SETTING: DB_USERNAME=$DB_USERNAME"
+	_echo "CONFIG SETTING: DB_SERVER_VERSION=$DB_SERVER_VERSION"
+}
 
-	_echo $DIR_VENV
-	_echo $DIR_VENV_QTN
-	_echo $DIR_VENV_API
-	_echo $DIR_VENV_MP
-	_echo $DIR_VENV_PYESDOC
-
-	_echo $DIR_SRC_DEPLOY
-	_echo $DIR_SRC_QTN
-	_echo $DIR_SRC_API
-	_echo $DIR_TESTS_API
-	_echo $DIR_LIB_API
-	_echo $DIR_SRC_MP
-	_echo $DIR_TESTS_MP
-	_echo $DIR_SRC_PYESDOC
-	_echo $DIR_TESTS_PYESDOC	
+# Outputs header information.
+_echo_script_header()
+{	
+	_echo "EXEC PATH: $DIR/exec.sh"
+	_echo "EXEC COMMAND: ${1}"
+	if [ "$2" ]; then
+		_echo "EXEC COMMAND OPTION: ${2}"
+	fi
 }
 
 # Assigns the current working directory.
@@ -159,6 +154,43 @@ _activate_venv()
 		source "$DIR_VENV_PYESDOC/bin/activate"
 	fi
 }
+
+
+# ###############################################################
+# SECTION: BOOTSTRAP
+# ###############################################################
+
+# Intiializes configuration files.
+_boostrap_init_config()
+{
+	_echo "... initializing configuration"
+
+	cp $DIR_TEMPLATES/template-config.json $DIR/config.json
+	cp $DIR_TEMPLATES/template-exec.config $DIR/exec.config
+}
+
+# Displays information notice upon installation.
+_bootstrap_notice()
+{
+	_echo_banner
+	_echo "IMPORTANT NOTICE"
+	_echo "The bootstrap process installs config files:" 1
+	_echo "./prodiguer/config.json" 2
+	_echo "./prodiguer/exec.config" 2
+	_echo "Please review and assign settings as appropriate to your " 1
+	_echo "environemt prior to continuing with the installation process." 1
+	_echo "IMPORTANT NOTICE ENDS"
+}
+
+bootstrap()
+{
+	_echo "BOOTSTRAP STARTS"
+	_set_working_dir 
+	_boostrap_init_config
+	_echo "BOOTSTRAP ENDS"
+	_bootstrap_notice
+}
+
 
 # ###############################################################
 # SECTION: INSTALL
@@ -532,7 +564,6 @@ mp_test()
 mp_build()
 {
     _echo "MP : building ..."
-	show_working_folders    
 
 	_echo "Step 0.  Resetting"
 	_reset_tmp
@@ -668,13 +699,34 @@ help()
 # Initialise working directory.
 _set_working_dir
 
+# Load config.
+if [ -a $DIR/exec.config ]; then
+	_echo_banner
+	_echo "Loading config @ ./exec.config"
+	source $DIR/exec.config
+
+	# ... set default db host name.
+	if [ ! $DB_HOSTNAME ]; then
+		DB_HOSTNAME="localhost"
+	fi;
+
+	# ... set default db user name.
+	if [ ! $DB_USERNAME ]; then
+		DB_USERNAME="postgres"
+	fi;
+fi
+
 # Initialise temporary folder.
 _reset_tmp
 
-# Display header.
-# _show_script_header $ACTION $ACTION_ARG
+# Echo standard information.
+_echo_banner
+_echo_script_header $ACTION $ACTION_ARG
+_echo_banner
 
 # Invoke action.
 $ACTION $ACTION_ARG
 
+# End.
+_echo_banner
 exit 0

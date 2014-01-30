@@ -28,12 +28,6 @@ Who uses esdoc-shell ?
 Anyone who wishes to install and use es-doc tools & api's from the command line.
 
 
-What are the contents of esdoc-shell ?
---------------------------------------
-
-    \src           Source code.
-
-
 Installation
 --------
 
