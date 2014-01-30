@@ -211,7 +211,7 @@ bootstrap()
 _install_venv()
 {
 	if [ "$2" ]; then
-		_echo "... installing virtual environment: $1"
+		_echo "... installing virtual environment: "$1" (takes approx 1 minute)"
 	fi
 
 	TARGET_VENV=$DIR_VENV/$1	
@@ -236,7 +236,7 @@ _install_venvs()
 # Installs a python executable primed with setuptools, pip & virtualenv.
 _install_python()
 {
-	_echo "... installing python "$PYTHON_VERSION" (takes approx 2 minutes)"
+	_echo "... installing python "$PYTHON_VERSION" (takes approx 3 minutes)"
 
 	# Download source.
 	_set_working_dir $DIR_PYTHON
@@ -419,23 +419,17 @@ update()
 # Uninstalls virtual environments.
 _uninstall_venv()
 {
-	rm -rf $1
+	_echo "... uninstalling virtual environment :: "$1
+	rm -rf $DIR_VENV/$1
 }
 
 # Uninstalls virtual environments.
 _uninstall_venvs()
 {
-	_echo "... uninstalling virtual environment :: api "
-	_uninstall_venv $DIR_VENV_API
-
-	_echo "... uninstalling virtual environment :: questionnaire"
-	_uninstall_venv $DIR_VENV_QTN
-
-	_echo "... uninstalling virtual environment :: pyesdoc"
-	_uninstall_venv $DIR_VENV_PYESDOC
-
-	_echo "... uninstalling virtual environment :: mp"
-	_uninstall_venv $DIR_VENV_MP
+	_uninstall_venv "api"
+	_uninstall_venv "mp"
+	_uninstall_venv "pyesdoc"
+	_uninstall_venv "questionnaire"
 }
 
 # Uninstalls git repo.
