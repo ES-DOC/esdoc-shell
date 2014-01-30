@@ -317,17 +317,51 @@ install()
 # SECTION: UPDATE
 # ###############################################################
 
-# Updates a git repo.
+# Displays information notice upon update.
+_update_notice()
+{
+	_echo_banner
+	_echo "IMPORTANT NOTICE"
+	_echo "The update process created new config files:" 1
+	_echo "./esdoc/config.json" 2
+	_echo "./esdoc/exec.config" 2
+	_echo "It also created a backup of your old config files:" 1
+	_echo "./esdoc/config.json-backup" 2
+	_echo "./esdoc/exec.config-backup" 2
+	_echo "Please verify your local configuration settings accordingly." 1
+	_echo "IMPORTANT NOTICE ENDS"
+}
+
+_update_venv()
+{
+	_echo "... updating virtual environment :: $1"
+
+	_uninstall_venv $1
+	_install_venv $1
+}
+
+# updates virtual environments.
+_update_venvs()
+{
+	export PATH=$DIR_PYTHON/bin:$PATH
+
+	_update_venv "api"
+	_update_venv "questionnaire"
+	_update_venv "pyesdoc"
+	_update_venv "mp"
+}
+
+# Updates a repo.
 _update_repo()
 {
-	_echo "... updating repo :: $1"
+	_echo "... updating repo: $1"
 
 	_set_working_dir $DIR_REPOS/$1
-	git pull -q https://github.com/ES-DOC/$1.git
+	git pull -q 
 	_set_working_dir
 }
 
-# updates git repos.
+# Updates repos.
 _update_repos()
 {
 	_update_repo esdoc-api
@@ -343,51 +377,24 @@ _update_repos()
 	_update_repo esdoc-static
 }
 
-# updates virtual environments.
-_update_venvs()
-{
-	_echo "... updating virtual environment :: api "
-	_uninstall_venv $DIR_VENV_API
-	_install_venv $DIR_VENV_API $DIR_SRC_SHELL/venv-requirements-api.txt
-
-	_echo "... updating virtual environment :: questionnaire"
-	_uninstall_venv $DIR_VENV_QTN
-	_install_venv $DIR_VENV_QTN $DIR_SRC_SHELL/venv-requirements-questionnaire.txt
-
-	_echo "... updating virtual environment :: pyesdoc"
-	_uninstall_venv $DIR_VENV_PYESDOC
-	_install_venv $DIR_VENV_PYESDOC $DIR_SRC_SHELL/venv-requirements-pyesdoc.txt
-
-	_echo "... updating virtual environment :: mp"
-	_uninstall_venv $DIR_VENV_MP
-	_install_venv $DIR_VENV_MP $DIR_SRC_SHELL/venv-requirements-mp.txt
-}
-
-# Updates shell script.
-_update_shell_script()
-{
-	_echo "... updating shell script"
-
-	cp $DIR_SRC_SHELL/exec.sh ./exec.sh
-}
-
 # Updates config file.
 _update_config()
 {
-	_echo "... updating configuration file"
+	_echo "... updating configuration"
 
-	cp ./config.json ./config-backup.json	
-	cp $DIR_SRC_SHELL/config.json ./config.json	
+	cp ./exec.config ./exec.config-backup
+	cp ./config.json ./config.json-backup	
+	cp $DIR_TEMPLATES/template-config.json $DIR/config.json
+	cp $DIR_TEMPLATES/template-exec.config $DIR/exec.config
 }
 
-# Displays information notice upon update.
-_update_notice()
+# Updates shell.
+_update_shell()
 {
-	_echo "IMPORTANT NOTICE"
-	_echo "The update process created a new config file @ ./esdoc/config.json." 1
-	_echo "It also created a backup of your old config file @ ./esdoc/config-backup.json" 1
-	_echo "Please reset your configuration settings accordingly." 1
-	_echo "IMPORTANT NOTICE ENDS"
+	_echo "... updating shell"
+
+	_set_working_dir		
+	git pull -q 
 }
 
 # Updates stack.
@@ -395,10 +402,10 @@ update()
 {
 	_echo "UPDATING STACK"
 
+	_update_shell
+	_update_config
 	_update_repos
 	_update_venvs	
-	_update_shell_script
-	_update_config
 
 	_echo "UPDATED STACK"
 
