@@ -694,21 +694,22 @@ pyesdoc_publishing_scenario()
 	python ./exec_pyesdoc_scenario.py $DIR_TMP
 }
 
-# Executes miscellaneous script.
-misc()
-{
-    _echo "OTHER : miscellaneous script ..."
-
-	_activate_venv pyesdoc
-	python ./exec_misc_scenario.py    
-}
+# ###############################################################
+# SECTION: MISCELLANEOUS FUNCTIONS
+# ###############################################################
 
 # Displays help information to user.
 help()
 {
 	_echo "General commands :"
-	_echo "install-python-venv" 1
-	_echo "install server/client virtual environments" 2
+	_echo "boostrap" 1
+	_echo "prepares system for install " 2
+	_echo "install" 1
+	_echo "installs esdoc shell, git repos & virtual environments" 2
+	_echo "update" 1
+	_echo "updates esdoc shell, git repos & virtual environments" 2
+	_echo "uninstall" 1
+	_echo "uninstalls previously installed esdoc artefacts" 2
 
 	_echo ""
 	_echo "API commands :"
@@ -746,8 +747,8 @@ help()
 	_echo "illustrates pyesdoc usage scenarios" 2
 
 	_echo ""
-	_echo "misc" 1
-	_echo "executes miscellaneous script" 2	
+	_echo "help" 1
+	_echo "displays help text" 2	
 }
 
 # ###############################################################
