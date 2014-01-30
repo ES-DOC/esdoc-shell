@@ -225,7 +225,7 @@ _install_venv()
 }
 
 # Installs virtual environments.
-install_venvs()
+_install_venvs()
 {
 	_install_venv "api" "echo"
 	_install_venv "questionnaire" "echo"
