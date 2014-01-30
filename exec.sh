@@ -14,6 +14,9 @@ DIR_DB=$DIR/db
 # Set path: repos.
 DIR_REPOS=$DIR/repos
 
+# Set path: templates.
+DIR_TEMPLATES=$DIR/templates
+
 # Set path: tmp.
 DIR_TMP=$DIR/tmp
 
@@ -190,8 +193,6 @@ _bootstrap_notice()
 bootstrap()
 {
 	_echo "BOOTSTRAP STARTS"
-	_echo $DIR
-	_echo $DIR_TEMPLATES
 	_set_working_dir 
 	_boostrap_init_config
 	_echo "BOOTSTRAP ENDS"
