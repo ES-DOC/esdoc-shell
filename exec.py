@@ -6,6 +6,7 @@ import esdoc_api.lib.api.comparator_setup as comparator_setup
 import esdoc_api.lib.api.visualizer_setup as visualizer_setup
 import esdoc_api.lib.repo.ingest as ingest
 import esdoc_api.lib.repo.session as session
+import esdoc_api.lib.repo.utils as repo_utils
 import esdoc_api.models as models
 
 from utils import convert
@@ -77,6 +78,11 @@ def _api_setup_visualizer():
 	_wrap_api_db_session(_do)
 
 
+def _api_stats():
+	"""Write api statistical data."""
+	_wrap_api_db_session(repo_utils.write_doc_stats)
+	
+
 def _init_config():
 	"""Initialize configuration."""
 	global cfg
@@ -91,7 +97,8 @@ _actions = {
 	"db-setup": _db_setup,
 	"db-ingest": _db_ingest,
 	"api-setup-comparator": _api_setup_comparator,
-	"api-setup-visualizer": _api_setup_visualizer
+	"api-setup-visualizer": _api_setup_visualizer,
+	"api-stats": _api_stats,
 }
 
 def main():

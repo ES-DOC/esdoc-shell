@@ -582,8 +582,30 @@ run_api_comparator_setup()
 {
     _echo "API : setting up comparator ..."
  
+    # Generate data.
 	_activate_venv api
 	python ./exec.py "api-setup-comparator"
+
+	# Copy to static files.
+	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/compare.setup*.* $DIR_REPOS/esdoc-static/data
+}
+
+# Executes api stats.
+run_api_stats()
+{
+    _echo "API : writing stats ..."
+ 
+    # Generate data.
+	_activate_venv api
+	python ./exec.py "api-stats"
+
+	# Copy to docs.
+	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/csv/doc_stats.* $DIR_REPOS/esdoc-docs/stats
+	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/doc_stats.* $DIR_REPOS/esdoc-docs/stats
+
+	# Copy to static files.
+	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/csv/doc_stats.* $DIR_REPOS/esdoc-static/data
+	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/doc_stats.* $DIR_REPOS/esdoc-static/data
 }
 
 # Executes api visualizer setup.
@@ -591,8 +613,12 @@ run_api_visualizer_setup()
 {
     _echo "API : setting up visualizer ..."
  
+    # Generate data.
 	_activate_venv api
 	python ./exec.py "api-setup-visualizer"
+
+	# Copy to static files.
+	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/visualize.setup*.* $DIR_REPOS/esdoc-static/data	
 }
 
 
@@ -714,7 +740,9 @@ help()
 	_echo "executes comparator setup" 2
 	_echo "run-api-visualizer-setup" 1
 	_echo "executes visualizer setup" 2
-	
+	_echo "run-api-stats" 1
+	_echo "writes api statistics to file system" 2
+
 	_echo ""
 	_echo "Database commands :"
 	_echo "run-db-setup" 1
