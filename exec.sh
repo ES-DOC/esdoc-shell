@@ -62,6 +62,27 @@ ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
 # Set action argument.
 ACTION_ARG=$2
 
+# List of git repos.
+REPOS=(
+	'esdoc-api'
+	'esdoc-cv'
+	'esdoc-deploy'
+	'esdoc-docs'
+	'esdoc-js-client'
+	'esdoc-mp'
+	'esdoc-py-client'
+	'esdoc-questionnaire'
+	'esdoc-splash'
+	'esdoc-static'
+)
+
+# List of virtual environments.
+VENVS=(
+	'api'
+	'mp'
+	'questionnaire'
+	'pyesdoc'
+)
 
 # ###############################################################
 # SECTION: HELPER FUNCTIONS
@@ -211,10 +232,10 @@ _install_venv()
 # Installs virtual environments.
 _install_venvs()
 {
-	_install_venv "api" "echo"
-	_install_venv "questionnaire" "echo"
-	_install_venv "pyesdoc" "echo"
-	_install_venv "mp" "echo"
+	for VENV in "${VENVS[@]}"
+	do
+		_install_venv $VENV "echo"
+	done
 }
 
 # Installs a python executable primed with setuptools, pip & virtualenv.
@@ -261,17 +282,10 @@ _install_repo()
 # Installs git repos.
 _install_repos()
 {
-	_install_repo esdoc-api
-	_install_repo esdoc-bootstrap
-	_install_repo esdoc-cv
-	_install_repo esdoc-deploy
-	_install_repo esdoc-docs
-	_install_repo esdoc-js-client
-	_install_repo esdoc-mp
-	_install_repo esdoc-py-client
-	_install_repo esdoc-questionnaire
-	_install_repo esdoc-splash
-	_install_repo esdoc-static
+	for REPO in "${REPOS[@]}"
+	do
+		_install_repo $REPO
+	done
 }
 
 # Sets up directories.
@@ -329,10 +343,10 @@ _update_venvs()
 {
 	export PATH=$DIR_PYTHON/bin:$PATH
 
-	_update_venv "api"
-	_update_venv "questionnaire"
-	_update_venv "pyesdoc"
-	_update_venv "mp"
+	for VENV in "${VENVS[@]}"
+	do
+		_update_venv $VENV
+	done
 }
 
 # Updates a repo.
@@ -348,17 +362,10 @@ _update_repo()
 # Updates repos.
 _update_repos()
 {
-	_update_repo esdoc-api
-	_update_repo esdoc-bootstrap
-	_update_repo esdoc-cv
-	_update_repo esdoc-deploy
-	_update_repo esdoc-docs
-	_update_repo esdoc-js-client
-	_update_repo esdoc-mp
-	_update_repo esdoc-py-client
-	_update_repo esdoc-questionnaire
-	_update_repo esdoc-splash
-	_update_repo esdoc-static
+	for REPO in "${REPOS[@]}"
+	do
+		_update_repo $REPO
+	done
 }
 
 # Updates config file.
@@ -419,17 +426,10 @@ _uninstall_repos()
 {
 	_echo "... uninstalling repos"
 
-	_uninstall_repo esdoc-api
-	_uninstall_repo esdoc-bootstrap
-	_uninstall_repo esdoc-cv
-	_uninstall_repo esdoc-deploy
-	_uninstall_repo esdoc-docs
-	_uninstall_repo esdoc-js-clients
-	_uninstall_repo esdoc-mp
-	_uninstall_repo esdoc-py-client
-	_uninstall_repo esdoc-questionnaire
-	_uninstall_repo esdoc-splash
-	_uninstall_repo esdoc-static
+	for REPO in "${REPOS[@]}"
+	do
+		_uninstall_repo $REPO
+	done
 }
 
 # Uninstalls python.
@@ -453,10 +453,10 @@ _uninstall_venv()
 # Uninstalls virtual environments.
 _uninstall_venvs()
 {
-	_uninstall_venv "api" "echo"
-	_uninstall_venv "mp" "echo"
-	_uninstall_venv "pyesdoc" "echo"
-	_uninstall_venv "questionnaire" "echo"
+	for VENV in "${VENVS[@]}"
+	do
+		_uninstall_venv $VENV "echo"
+	done
 }
 
 # Uninstalls stack.
