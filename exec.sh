@@ -658,22 +658,22 @@ run_pyesdoc_tests()
 	# All tests.
 	if [ ! "$1" ]; then
 	    _echo "pyesdoc :: Executing all pyesdoc tests"
-	    nosetests -v -s $DIR_TESTS_PYESDOC/pyesdoc_test
+	    nosetests -v -s $DIR_TESTS_PYESDOC
 
 	# Serialization tests.
 	elif [ $1 = "s" ]; then
 	    _echo "pyesdoc :: Executing pyesdoc serialization tests"
-	    nosetests -v -s $DIR_TESTS_PYESDOC/pyesdoc_test/test_serialization.py
+	    nosetests -v -s $DIR_TESTS_PYESDOC/test_serialization.py
 
 	# Publishing tests.
 	elif [ $1 = "p" ]; then
 	    _echo "pyesdoc :: Executing pyesdoc publishing tests"
-	    nosetests -v -s $DIR_TESTS_PYESDOC/pyesdoc_test/test_publishing.py
+	    nosetests -v -s $DIR_TESTS_PYESDOC/test_publishing.py
 
 	# General tests.
 	elif [ $1 = "g" ]; then
 	    _echo "pyesdoc :: Executing pyesdoc general tests"
-	    nosetests -v -s $DIR_TESTS_PYESDOC/pyesdoc_test/test_general.py
+	    nosetests -v -s $DIR_TESTS_PYESDOC/test_general.py
 	fi
 }
 
