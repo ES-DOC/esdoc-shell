@@ -2,14 +2,20 @@
 import os
 import sys
 
-import esdoc_api.lib.api.comparator_setup as comparator_setup
-import esdoc_api.lib.api.visualizer_setup as visualizer_setup
-import esdoc_api.lib.repo.ingest as ingest
-import esdoc_api.lib.repo.session as session
-import esdoc_api.lib.repo.utils as repo_utils
-import esdoc_api.models as models
+# Conditionally import api.
+try:
+	import esdoc_api
+except ImportError:
+	pass
+else:		
+	import esdoc_api.lib.api.comparator_setup as comparator_setup
+	import esdoc_api.lib.api.visualizer_setup as visualizer_setup
+	import esdoc_api.lib.repo.ingest as ingest
+	import esdoc_api.lib.repo.session as session
+	import esdoc_api.lib.repo.utils as repo_utils
+	import esdoc_api.models as models
 
-from utils import convert
+from . import utils
 
 
 # Script configuration.
@@ -89,7 +95,7 @@ def _init_config():
 
 	fp = os.path.dirname(os.path.abspath(__file__))
 	fp = os.path.join(fp, "config.json")
-	cfg = convert.json_file_to_namedtuple(fp)
+	cfg = utils.json_file_to_namedtuple(fp)
 
 
 # Map of supported actions.

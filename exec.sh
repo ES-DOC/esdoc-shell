@@ -662,11 +662,12 @@ run_mp_tests()
 run_mp_custom_schema()
 {
 	_echo "running mp custom scenario ..."
-    exit 0
 
-	_activate_venv mp
+	_echo "Step 1.  Running mp utility"
+	_activate_venv mp	
+	python "$DIR_SRC_MP/esdoc_mp" -s "test" -v "1" -l "python" -o $DIR_TMP
 
-	python ./exec_mp_scenario.py $DIR_TMP
+	_echo "Generated files @ "$DIR_TMP
 }
 
 
@@ -707,7 +708,6 @@ run_pyesdoc_tests()
 run_pyesdoc_scenario()
 {
 	_echo "executing pyesdoc publishing scenario ..."
-	exit 0
 
 	_activate_venv pyesdoc
 	python ./exec_pyesdoc_scenario.py $DIR_TMP
