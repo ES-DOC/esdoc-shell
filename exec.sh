@@ -339,7 +339,7 @@ _update_venv()
 }
 
 # updates virtual environments.
-_update_venvs()
+update_venvs()
 {
 	export PATH=$DIR_PYTHON/bin:$PATH
 
@@ -360,7 +360,7 @@ _update_repo()
 }
 
 # Updates repos.
-_update_repos()
+update_repos()
 {
 	for REPO in "${REPOS[@]}"
 	do
@@ -380,7 +380,7 @@ _update_config()
 }
 
 # Updates shell.
-_update_shell()
+update_shell()
 {
 	_echo "... updating shell"
 
@@ -393,10 +393,10 @@ update()
 {
 	_echo "UPDATING STACK"
 
-	_update_shell
+	update_shell
 	_update_config
-	_update_repos
-	_update_venvs	
+	update_repos
+	update_venvs	
 
 	_echo "UPDATED STACK"
 

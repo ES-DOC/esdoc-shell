@@ -157,19 +157,32 @@ install_source()
 	done
 }
 
+# Restores db from backup.
+restore_db()
+{
+	unzip -q $DB_FILE_ZIPPED -d $DB_FOLDER
+	pg_restore -U $DB_USER -d $DB_NAME $DB_FILE
+	rm $DB_FILE
+}
+
+# Restart services.
+restart_services()
+{
+	$DIR_WEBAPPS/$1"_api_"$2/apache2/bin/restart
+}
+
+# Stop services.
+stop_services()
+{
+	$DIR_WEBAPPS/$1"_api_"$2/apache2/bin/stop
+}
+
 
 # Invoke action.
 if [ $ACTION = "install_source" ]; then
 	install_source $2 $3
 fi
 
-_echo "TODO: copy splash to splash webapp"
-_echo "TODO: copy static to static webapp"
-_echo "TODO: copy demo/compare.html to compare webapp"
-_echo "TODO: copy demo/search.html to search webapp"
-_echo "TODO: copy demo/view.html to view webapp"
-_echo "TODO: copy demo/visualize.html to visualize webapp"
-_echo "TODO: copy api to api webapp"
 
 
 # End.

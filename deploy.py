@@ -305,20 +305,17 @@ def _stop_services(ctx):
 # Set of actions.
 _actions = {
     'rollout' : [
+        # (_declare_stack, "Declaring stack"),
+        # (_set_wf_session, "Initialising web faction session"),
+        # (_create_wf_apps, "Creating apps upon web faction server"),
+        # (_create_wf_dbs, "Creating databases upon web faction server"),
+        # (_refresh_wf_session, "Refreshing web faction session"),
+        # (_set_api_port, "Assigning API port"),
         (_update_repos, "Updating repositories"),
-        (_install_source, "Installing source(s)"),
-    ],
-    'rollout1' : [
-        (_declare_stack, "Declaring stack"),
-        (_set_wf_session, "Initialising web faction session"),
-        (_create_wf_apps, "Creating apps upon web faction server"),
-        (_create_wf_dbs, "Creating databases upon web faction server"),
-        (_refresh_wf_session, "Refreshing web faction session"),
-        (_set_api_port, "Assigning API port"),
         (_install_source, "Installing source(s)"),
         (_restore_db, "Restoring database(s)"),
         (_restart_services, "Restarting services"),
-        (_update_wf_websites, "Updating web faction websites")
+        # (_update_wf_websites, "Updating web faction websites")
     ],
     'rollback' : [
         (_declare_stack, "Declaring stack"),
