@@ -33,7 +33,7 @@ DIR_SRC_API=$DIR_REPOS/esdoc-api/src
 DIR_SRC_SHELL=$DIR_REPOS/esdoc-shell/src
 
 # Set path: source code: deploy
-DIR_SRC_DEPLOY=$DIR_REPOS/esdoc-deploy/src
+DIR_SRC_DEPLOY=$DIR_REPOS/esdoc-deploy
 
 # Set path: source code: meta-programming
 DIR_SRC_MP=$DIR_REPOS/esdoc-mp/src
@@ -471,6 +471,7 @@ uninstall()
 
 	_echo "UNINSTALLED STACK"
 }
+
 
 
 # ###############################################################
