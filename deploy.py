@@ -191,7 +191,6 @@ def _declare_stack(ctx):
 
 def _set_wf_session(ctx):
     """Sets the webfactional server session."""
-    print _WEB_FACTION_API_USER_ID, ctx.wf_pwd, ctx.wf_machine
     ctx.wf = xmlrpclib.ServerProxy(_WEB_FACTION_API_URL)
     ctx.wf_session, ctx.wf_account = ctx.wf.login(_WEB_FACTION_API_USER_ID, \
                                                   ctx.wf_pwd, \
@@ -282,6 +281,8 @@ def _update_wf_websites(ctx):
     # For each app updated the associated website.
     for i in [i for i in ctx.wf_stack if i.type == 'app']:
         print "AAA", i.website
+    print ctx.wf_website_list
+
     return
 
     for el in [i for i in ctx.wf_stack if i.type == 'app' and i.website in ctx.wf_website_list]:
