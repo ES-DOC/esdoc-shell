@@ -98,10 +98,10 @@ _install_source_api()
 _install_source_static()
 {
 	# ... splash site
-	cp -r $DIR_REPOS/esdoc-splash/src $DIR_WEBAPPS/$1_$2_splash
+	cp -r $DIR_REPOS/esdoc-splash/src/* $DIR_WEBAPPS/$1_$2_splash
 
 	# ... static files
-	cp -r $DIR_REPOS/esdoc-static $DIR_WEBAPPS/$1_$2_static
+	cp -r $DIR_REPOS/esdoc-static/* $DIR_WEBAPPS/$1_$2_static
 
 	# ... tools
 	for TOOL in "${TOOLS[@]}"
