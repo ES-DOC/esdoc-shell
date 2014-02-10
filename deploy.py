@@ -304,14 +304,14 @@ def _restore_db(ctx):
     subprocess.call([_DEPLOY, "restore_db", ctx.environment, ctx.id, ctx.api_db_pwd])
 
 
-def _restart_services(ctx):
-    """Restarts application services."""
-    subprocess.call([_DEPLOY, "restart_services", ctx.environment, ctx.id])
+def _restart_api(ctx):
+    """Restarts API."""
+    subprocess.call([_DEPLOY, "restart_api", ctx.environment, ctx.id])
 
 
-def _stop_services(ctx):
-    """Stops application services."""
-    subprocess.call([_DEPLOY, "stop_services", ctx.environment, ctx.id])
+def _stop_api(ctx):
+    """Stops API."""
+    subprocess.call([_DEPLOY, "stop_api", ctx.environment, ctx.id])
 
 
 # Set of actions.
@@ -325,14 +325,14 @@ _actions = {
         (_set_api_port, "Assigning API port"),
         (_update_repos, "Updating repositories"),
         (_install_source, "Installing source(s)"),
-        # (_restore_db, "Restoring database(s)"),
-        # (_restart_services, "Restarting services"),
+        (_restore_db, "Restoring database(s)"),
+        (_restart_api, "Restarting services"),
         (_update_wf_websites, "Updating web faction websites")
     ],
     'rollback' : [
         (_declare_stack, "Declaring stack"),
         (_set_wf_session, "Initialising web faction session"),
-        # (_stop_services, "Stopping services"),
+        (_stop_api, "Stopping services"),
         (_delete_wf_apps, "Deleting apps from web faction server"),
         (_delete_wf_dbs, "Deleting databases from web faction server")
     ]

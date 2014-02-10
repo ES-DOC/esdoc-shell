@@ -102,15 +102,12 @@ _reset_tmp()
 _install_source_api()
 {
 	# ... create api source code folder
-	_echo "create api source code folder"
 	mkdir -p $API_HOME/app
 
 	# ... copy source code
-	_echo "copy source code"
 	cp -r $DIR_REPOS/esdoc-api/src/* $API_HOME/app
 
 	# ... delete obsolete code
-	_echo "delete obsolete code"
 	targets=(
 	        $API_HOME"/app/esdoc_api/config/ini_files"
 	        $API_HOME"/app/esdoc_api/app.wsgi"
@@ -122,11 +119,9 @@ _install_source_api()
 	done
 
 	# ... copy templates to temp folder
-	_echo "copy templates to temp folder"
 	cp -r $DIR_TEMPLATES $DIR_TMP
 
 	# ... format templates
-	_echo "format templates"
 	templates=(
 	        $DIR_TMP"/templates/template-api-config.ini"
 	        $DIR_TMP"/templates/template-api-httpd.conf"
@@ -134,7 +129,6 @@ _install_source_api()
 	)
 	for template in "${templates[@]}"
 	do
-			_echo $template
 	        perl -e "s/API_NAME/"$API_NAME"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_ENVIRONMENT/"$1"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_VERSION/"$2"/g;" -pi $(find $template -type f)
@@ -145,7 +139,6 @@ _install_source_api()
 	done
 
 	# ... copy formatted templates
-	_echo "copy formatted templates"
 	mv $DIR_TMP"/templates/template-api-config.ini" $API_HOME"/app/config.ini"
 	mv $DIR_TMP"/templates/template-api-httpd.conf" $API_HOME"/apache2/conf/httpd.conf"
 	mv $DIR_TMP"/templates/template-api-wsgi.py" $API_HOME"/htdocs/wsgi.py"
@@ -195,16 +188,16 @@ restore_db()
 	rm $DB_FILE
 }
 
-# Restart services.
-restart_services()
+# Restart api.
+restart_api()
 {
-	$DIR_WEBAPPS/$1"_api_"$2/apache2/bin/restart
+	$DIR_WEBAPPS/$API_NAME/apache2/bin/restart
 }
 
-# Stop services.
-stop_services()
+# Stop api.
+stop_api()
 {
-	$DIR_WEBAPPS/$1"_api_"$2/apache2/bin/stop
+	$DIR_WEBAPPS/$API_NAME/apache2/bin/stop
 }
 
 
