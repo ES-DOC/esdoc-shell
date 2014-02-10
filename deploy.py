@@ -170,6 +170,14 @@ def _get_filepath(fname, parent=False):
     return join(fpath, fname)
 
 
+# Path to exec file.
+_EXEC = _get_filepath("exec.sh")
+
+
+# Path to deploy file.
+_DEPLOY = _get_filepath("deploy.sh")
+
+
 def _get_repo(name):
     return join(_dir_repos, name)
 
@@ -279,48 +287,48 @@ def _update_wf_websites(ctx):
 
 def _update_repos(ctx):
     """Updates source code repositories."""
-    subprocess.call([_get_filepath("exec.sh"), "_update_repos"])
+    subprocess.call([_EXEC, "_update_repos"])
     
 
 def _install_source(ctx):
     """Installs source code."""
-    subprocess.call([_get_filepath("deploy.sh"), "install_source", ctx.environment, ctx.id])
+    subprocess.call([_DEPLOY, "install_source", ctx.environment, ctx.id])
 
 
 def _restore_db(ctx):
     """Installs databases from backups."""
-    subprocess.call([_get_filepath("deploy.sh"), "restore_db", ctx.environment, ctx.id, ctx.api_db_pwd])
+    subprocess.call([_DEPLOY, "restore_db", ctx.environment, ctx.id, ctx.api_db_pwd])
 
 
 def _restart_services(ctx):
     """Restarts application services."""
-    subprocess.call([_get_filepath("deploy.sh"), "restart_services", ctx.environment, ctx.id])
+    subprocess.call([_DEPLOY, "restart_services", ctx.environment, ctx.id])
 
 
 def _stop_services(ctx):
     """Stops application services."""
-    subprocess.call([_get_filepath("deploy.sh"), "stop_services", ctx.environment, ctx.id])
+    subprocess.call([_DEPLOY, "stop_services", ctx.environment, ctx.id])
 
 
 # Set of actions.
 _actions = {
     'rollout' : [
-        # (_declare_stack, "Declaring stack"),
-        # (_set_wf_session, "Initialising web faction session"),
-        # (_create_wf_apps, "Creating apps upon web faction server"),
-        # (_create_wf_dbs, "Creating databases upon web faction server"),
-        # (_refresh_wf_session, "Refreshing web faction session"),
-        # (_set_api_port, "Assigning API port"),
-        (_update_repos, "Updating repositories"),
-        (_install_source, "Installing source(s)"),
-        (_restore_db, "Restoring database(s)"),
-        (_restart_services, "Restarting services"),
-        # (_update_wf_websites, "Updating web faction websites")
+        (_declare_stack, "Declaring stack"),
+        (_set_wf_session, "Initialising web faction session"),
+        (_create_wf_apps, "Creating apps upon web faction server"),
+        (_create_wf_dbs, "Creating databases upon web faction server"),
+        (_refresh_wf_session, "Refreshing web faction session"),
+        (_set_api_port, "Assigning API port"),
+        # (_update_repos, "Updating repositories"),
+        # (_install_source, "Installing source(s)"),
+        # (_restore_db, "Restoring database(s)"),
+        # (_restart_services, "Restarting services"),
+        (_update_wf_websites, "Updating web faction websites")
     ],
     'rollback' : [
         (_declare_stack, "Declaring stack"),
         (_set_wf_session, "Initialising web faction session"),
-        (_stop_services, "Stopping services"),
+        # (_stop_services, "Stopping services"),
         (_delete_wf_apps, "Deleting apps from web faction server"),
         (_delete_wf_dbs, "Deleting databases from web faction server")
     ]

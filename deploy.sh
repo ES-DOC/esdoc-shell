@@ -7,25 +7,6 @@
 # Set action.
 ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
 
-# Set action argument.
-ACTION_ARG=$2
-
-# # Unpack params:
-# # ... application environment, i.e. test | prod
-# APP_ENVIRONMENT=$1
-
-# # ... application version, e.g. 1.0.0.0
-# APP_VERSION=$2
-
-# # ... application deployment id, e.g. 1.0.0.0.1
-# APP_ID=$3
-
-# # ... api port number
-# API_PORT=$4
-
-# # ... db password
-# DB_PWD=$5
-
 # Set paths:
 # ... shell folder
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -42,18 +23,18 @@ DIR_REPOS=$DIR/repos
 # ... path to db backups
 DIR_DB_BACKUPS=$DIR"/db/backups"
 
-# # Set derived variables.
-# # ... name of db
-# DB_NAME=$APP_ENVIRONMENT"_api_"$APP_ID
+# Set derived variables:
+# ... name of db
+DB_NAME=$2"_api_"$3
 
-# # ... name of db user
-# DB_USER=$APP_ENVIRONMENT"_api_"$APP_ID
+# ... name of db user
+DB_USER=$2"_api_"$3
 
-# # ... path to db backup file
-# DB_FILE=$DIR_DB_BACKUPS"/db"
+# ... path to db backup file
+DB_FILE=$DIR_DB_BACKUPS"/db"
 
-# # ... path to zipped db backup file
-# DB_FILE_ZIPPED=$DB_FILE".zip"
+# ... path to zipped db backup file
+DB_FILE_ZIPPED=$DB_FILE".zip"
 
 # # ... api name
 # API_NAME=$APP_ENVIRONMENT"_api_"$APP_ID
@@ -103,30 +84,6 @@ _echo_banner()
 	echo "---------------------------------------------"
 }
 
-# Outputs script variables to console.
-_echo_vars()
-{
-	_echo $APP_ENVIRONMENT
-	_echo $APP_VERSION
-	_echo $APP_ID
-	_echo $APP_PORT	
-	_echo $DB_PWD	
-}
-
-# Outputs config settings to console.
-_echo_config()
-{
-	_echo "TODO"
-}
-
-# ###############################################################
-# SECTION: REPOS
-# ###############################################################
-_update_repos()
-{
-	$DIR/exec.sh update_repos
-}
-
 # ###############################################################
 # SECTION: MAIN
 # ###############################################################
@@ -134,15 +91,13 @@ _update_repos()
 # Installs source code.
 install_source()
 {
-	rm -rf $DIR_WEBAPPS/*
-
-	# ... splash site
+	# Splash site
 	cp -r $DIR_REPOS/esdoc-splash/src $DIR_WEBAPPS/$1_$2_splash
 
-	# ... static files
+	# Static files
 	cp -r $DIR_REPOS/esdoc-static $DIR_WEBAPPS/$1_$2_static
 
-	# ... tools
+	# Tools
 	for TOOL in "${TOOLS[@]}"
 	do
 		cp -r $DIR_REPOS/esdoc-js-client/demo $DIR_WEBAPPS/$1_$2_$TOOL
@@ -160,7 +115,7 @@ install_source()
 # Restores db from backup.
 restore_db()
 {
-	unzip -q $DB_FILE_ZIPPED -d $DB_FOLDER
+	unzip -q $DB_FILE_ZIPPED -d $DIR_DB_BACKUPS
 	pg_restore -U $DB_USER -d $DB_NAME $DB_FILE
 	rm $DB_FILE
 }
@@ -179,10 +134,7 @@ stop_services()
 
 
 # Invoke action.
-if [ $ACTION = "install_source" ]; then
-	install_source $2 $3
-fi
-
+$ACTION $2 $3	
 
 
 # End.
