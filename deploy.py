@@ -323,8 +323,8 @@ _actions = {
         (_create_wf_dbs, "Creating databases upon web faction server"),
         (_refresh_wf_session, "Refreshing web faction session"),
         (_set_api_port, "Assigning API port"),
-        # (_update_repos, "Updating repositories"),
-        # (_install_source, "Installing source(s)"),
+        (_update_repos, "Updating repositories"),
+        (_install_source, "Installing source(s)"),
         # (_restore_db, "Restoring database(s)"),
         # (_restart_services, "Restarting services"),
         (_update_wf_websites, "Updating web faction websites")

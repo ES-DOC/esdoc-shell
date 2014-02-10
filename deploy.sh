@@ -88,16 +88,22 @@ _echo_banner()
 # SECTION: MAIN
 # ###############################################################
 
-# Installs source code.
-install_source()
+# Installs static source code.
+_install_source_api()
 {
-	# Splash site
+	_echo "TODO: install api source code"
+}
+
+# Installs static source code.
+_install_source_static()
+{
+	# ... splash site
 	cp -r $DIR_REPOS/esdoc-splash/src $DIR_WEBAPPS/$1_$2_splash
 
-	# Static files
+	# ... static files
 	cp -r $DIR_REPOS/esdoc-static $DIR_WEBAPPS/$1_$2_static
 
-	# Tools
+	# ... tools
 	for TOOL in "${TOOLS[@]}"
 	do
 		cp -r $DIR_REPOS/esdoc-js-client/demo $DIR_WEBAPPS/$1_$2_$TOOL
@@ -109,7 +115,14 @@ install_source()
 				rm -rf $DIR_WEBAPPS/$1_$2_$TOOL/$_TOOL*.*
 			fi
 		done
-	done
+	done	
+}
+
+# Installs source code.
+install_source()
+{
+	_install_source_api $1 $2
+	_install_source_static $1 $2
 }
 
 # Restores db from backup.
