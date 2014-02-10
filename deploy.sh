@@ -120,15 +120,17 @@ _install_source_api()
 
 	# ... copy templates to temp folder
 	cp -r $DIR_TEMPLATES"/*" $DIR_TMP
+	ls $DIR_TMP
+
+	# ... format templates
 	templates=(
 	        $DIR_TMP"/template-api-config.ini"
 	        $DIR_TMP"/template-api-httpd.conf"
 	        $DIR_TMP"/template-api-wsgi.py"
 	)
-
-	# ... format templates
 	for template in "${templates[@]}"
 	do
+			_echo $template
 	        perl -e "s/API_NAME/"$API_NAME"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_ENVIRONMENT/"$1"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_VERSION/"$2"/g;" -pi $(find $template -type f)
@@ -139,9 +141,9 @@ _install_source_api()
 	done
 
 	# ... copy formatted templates
-	cp $DIR_TMP"/template-api-config.ini" $API_NAME"/app/config.ini"
-	cp $DIR_TMP"/template-api-httpd.conf" $API_NAME"/apache2/conf/httpd.conf"
-	cp $DIR_TMP"/template-api-wsgi.py" $API_NAME"/htdocs/wsgi.py"
+	mv $DIR_TMP"/template-api-config.ini" $API_HOME"/app/config.ini"
+	mv $DIR_TMP"/template-api-httpd.conf" $API_HOME"/apache2/conf/httpd.conf"
+	mv $DIR_TMP"/template-api-wsgi.py" $API_HOME"/htdocs/wsgi.py"
 
 	# ... clear up temp files.
 	_reset_tmp
