@@ -106,7 +106,8 @@ _install_source_static()
 	# ... tools
 	for TOOL in "${TOOLS[@]}"
 	do
-		cp -r $DIR_REPOS/esdoc-js-client/demo $DIR_WEBAPPS/$1_$2_$TOOL
+
+		cp -r $DIR_REPOS/esdoc-js-client/demo/* $DIR_WEBAPPS/$1_$2_$TOOL
 		mv $DIR_WEBAPPS/$1_$2_$TOOL/$TOOL.html $DIR_WEBAPPS/$1_$2_$TOOL/index.html
 		rm -rf $DIR_WEBAPPS/$1_$2_$TOOL/*dev.*
 		for _TOOL in "${TOOLS[@]}"
