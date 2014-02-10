@@ -291,7 +291,7 @@ def _update_wf_websites(ctx):
 
 def _update_repos(ctx):
     """Updates source code repositories."""
-    subprocess.call([_EXEC, "_update_repos"])
+    subprocess.call([_EXEC, "update_repos"])
     
 
 def _install_source(ctx):
