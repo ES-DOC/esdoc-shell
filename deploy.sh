@@ -123,14 +123,14 @@ _install_source_api()
 
 	# ... copy templates to temp folder
 	_echo "copy templates to temp folder"
-	cp -r $DIR_TEMPLATES"/*" $DIR_TMP
+	cp -r $DIR_TEMPLATES $DIR_TMP
 
 	# ... format templates
 	_echo "format templates"
 	templates=(
-	        $DIR_TMP"/template-api-config.ini"
-	        $DIR_TMP"/template-api-httpd.conf"
-	        $DIR_TMP"/template-api-wsgi.py"
+	        $DIR_TMP"/templates/template-api-config.ini"
+	        $DIR_TMP"/templates/template-api-httpd.conf"
+	        $DIR_TMP"/templates/template-api-wsgi.py"
 	)
 	for template in "${templates[@]}"
 	do
@@ -146,9 +146,9 @@ _install_source_api()
 
 	# ... copy formatted templates
 	_echo "copy formatted templates"
-	mv $DIR_TMP"/template-api-config.ini" $API_HOME"/app/config.ini"
-	mv $DIR_TMP"/template-api-httpd.conf" $API_HOME"/apache2/conf/httpd.conf"
-	mv $DIR_TMP"/template-api-wsgi.py" $API_HOME"/htdocs/wsgi.py"
+	mv $DIR_TMP"/templates/template-api-config.ini" $API_HOME"/app/config.ini"
+	mv $DIR_TMP"/templates/template-api-httpd.conf" $API_HOME"/apache2/conf/httpd.conf"
+	mv $DIR_TMP"/templates/template-api-wsgi.py" $API_HOME"/htdocs/wsgi.py"
 
 	# ... clear up temp files.
 	_reset_tmp
@@ -209,7 +209,7 @@ stop_services()
 
 
 # Invoke action.
-$ACTION $2 $3	
+$ACTION $2 $3 $4 $5	
 
 # Reset temporary folder.
 _reset_tmp
