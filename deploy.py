@@ -280,7 +280,7 @@ def _update_wf_websites(ctx):
                               *ws['website_apps'])
 
     # For each app updated the associated website.
-    for [i for i in ctx.wf_stack if i.type == 'app']:
+    for i in [i for i in ctx.wf_stack if i.type == 'app']:
         print "AAA", i.website
     return
 
