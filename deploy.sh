@@ -102,6 +102,7 @@ _install_source_static()
 
 	# ... static files
 	cp -r $DIR_REPOS/esdoc-static/* $DIR_WEBAPPS/$1_$2_static
+	cp -r $DIR_REPOS/esdoc-js-client/demo/media/* $DIR_WEBAPPS/$1_$2_static
 
 	# ... tools
 	for TOOL in "${TOOLS[@]}"
