@@ -123,6 +123,7 @@ class StackElement(object):
         self.name = StackElement.get_name(ctx, config[2])
         self.website = StackElement.get_website_name(ctx, config[2])
 
+
     @staticmethod
     def get_name(ctx, element):
         """Returns ESDOC webfaction application stack element name.
@@ -190,6 +191,7 @@ def _declare_stack(ctx):
 
 def _set_wf_session(ctx):
     """Sets the webfactional server session."""
+    _log(_WEB_FACTION_API_USER_ID, ctx.wf_pwd, ctx.wf_machine)
     ctx.wf = xmlrpclib.ServerProxy(_WEB_FACTION_API_URL)
     ctx.wf_session, ctx.wf_account = ctx.wf.login(_WEB_FACTION_API_USER_ID, \
                                                   ctx.wf_pwd, \
