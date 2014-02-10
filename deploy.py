@@ -123,7 +123,7 @@ class StackElement(object):
         self.name = StackElement.get_name(ctx, config[2])
         self.website = StackElement.get_website_name(ctx, config[2])
 
-
+    @staticmethod
     def get_name(ctx, element):
         """Returns ESDOC webfaction application stack element name.
 
@@ -140,6 +140,7 @@ class StackElement(object):
         return ctx.environment + '_' + ctx.id + '_' + element
 
 
+    @staticmethod
     def get_website_name(ctx, element):
         """Returns ESDOC webfaction application stack website name.
 
