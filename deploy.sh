@@ -102,12 +102,15 @@ _reset_tmp()
 _install_source_api()
 {
 	# ... create api source code folder
+	_echo "create api source code folder"
 	mkdir -p $API_HOME/app
 
 	# ... copy source code
+	_echo "copy source code"
 	cp -r $DIR_REPOS/esdoc-api/src/* $API_HOME/app
 
 	# ... delete obsolete code
+	_echo "delete obsolete code"
 	targets=(
 	        $API_HOME"/app/esdoc_api/config/ini_files"
 	        $API_HOME"/app/esdoc_api/app.wsgi"
@@ -119,10 +122,11 @@ _install_source_api()
 	done
 
 	# ... copy templates to temp folder
+	_echo "copy templates to temp folder"
 	cp -r $DIR_TEMPLATES"/*" $DIR_TMP
-	ls $DIR_TMP
 
 	# ... format templates
+	_echo "format templates"
 	templates=(
 	        $DIR_TMP"/template-api-config.ini"
 	        $DIR_TMP"/template-api-httpd.conf"
@@ -141,6 +145,7 @@ _install_source_api()
 	done
 
 	# ... copy formatted templates
+	_echo "copy formatted templates"
 	mv $DIR_TMP"/template-api-config.ini" $API_HOME"/app/config.ini"
 	mv $DIR_TMP"/template-api-httpd.conf" $API_HOME"/apache2/conf/httpd.conf"
 	mv $DIR_TMP"/template-api-wsgi.py" $API_HOME"/htdocs/wsgi.py"
