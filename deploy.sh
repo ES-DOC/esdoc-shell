@@ -119,7 +119,7 @@ _install_source_api()
 	done
 
 	# ... copy templates to temp folder
-	cp -r $DIR_TEMPLATES"/template-api*.*" $DIR_TMP
+	cp -r $DIR_TEMPLATES"/*" $DIR_TMP
 	templates=(
 	        $DIR_TMP"/template-api-config.ini"
 	        $DIR_TMP"/template-api-httpd.conf"
