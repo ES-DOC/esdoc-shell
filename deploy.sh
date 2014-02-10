@@ -102,7 +102,7 @@ _reset_tmp()
 _install_source_api()
 {
 	# ... copy source code
-	cp -r $DIR_REPOS/esdoc-splash/src/* $API_HOME/app
+	cp -r $DIR_REPOS/esdoc-api/src/* $API_HOME/app
 
 	# ... delete obsolete code
 	targets=(
@@ -126,19 +126,22 @@ _install_source_api()
 	# ... format templates
 	for template in "${templates[@]}"
 	do
-	        perl -e "s/APP_NAME/"$APP_NAME"/g;" -pi $(find $template -type f)
-	        perl -e "s/APP_ENVIRONMENT/"$1"/g;" -pi $(find $template -type f)
-	        perl -e "s/APP_VERSION/"$2"/g;" -pi $(find $template -type f)
+	        perl -e "s/API_NAME/"$API_NAME"/g;" -pi $(find $template -type f)
+	        perl -e "s/API_ENVIRONMENT/"$1"/g;" -pi $(find $template -type f)
+	        perl -e "s/API_VERSION/"$2"/g;" -pi $(find $template -type f)
 	        perl -e "s/DB_USER/"$DB_USER"/g;" -pi $(find $template -type f)
 	        perl -e "s/DB_NAME/"$DB_NAME"/g;" -pi $(find $template -type f)
 	        perl -e "s/DB_PWD/"$3"/g;" -pi $(find $template -type f)
-	        perl -e "s/APP_PORT/"$4"/g;" -pi $(find $template -type f)
+	        perl -e "s/API_PORT/"$4"/g;" -pi $(find $template -type f)
 	done
 
 	# ... copy formatted templates
-	cp $TMP"/template-api-config.ini" $APP_HOME"/app/config.ini"
-	cp $TMP"/template-api-httpd.conf" $APP_HOME"/apache2/conf/httpd.conf"
-	cp $TMP"/template-api-wsgi.py" $APP_HOME"/htdocs/wsgi.py"
+	cp $DIR_TMP"/template-api-config.ini" $API_NAME"/app/config.ini"
+	cp $DIR_TMP"/template-api-httpd.conf" $API_NAME"/apache2/conf/httpd.conf"
+	cp $DIR_TMP"/template-api-wsgi.py" $API_NAME"/htdocs/wsgi.py"
+
+	# ... clear up temp files.
+	_reset_tmp
 }
 
 # Installs static source code.
