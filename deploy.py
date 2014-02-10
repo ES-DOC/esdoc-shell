@@ -296,7 +296,7 @@ def _update_repos(ctx):
 
 def _install_source(ctx):
     """Installs source code."""
-    subprocess.call([_DEPLOY, "install_source", ctx.environment, ctx.id])
+    subprocess.call([_DEPLOY, "install_source", ctx.environment, ctx.id, ctx.api_db_pwd, ctx.api_port])
 
 
 def _restore_db(ctx):

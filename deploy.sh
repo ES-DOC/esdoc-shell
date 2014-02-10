@@ -14,21 +14,27 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... home folder
 DIR_HOME="$( cd "$( dirname "$DIR" )" && pwd )"
 
+# Set path: tmp.
+DIR_TMP=$DIR"/tmp"
+
 # ... web apps folder
-DIR_WEBAPPS=$DIR_HOME/webapps
+DIR_WEBAPPS=$DIR_HOME"/webapps"
+
+# ... templates
+DIR_TEMPLATES=$DIR"/templates"
 
 # ... git repos folder
-DIR_REPOS=$DIR/repos
+DIR_REPOS=$DIR"/repos"
 
 # ... path to db backups
 DIR_DB_BACKUPS=$DIR"/db/backups"
 
 # Set derived variables:
 # ... name of db
-DB_NAME=$2"_api_"$3
+DB_NAME=$2"_"$3"_api"
 
 # ... name of db user
-DB_USER=$2"_api_"$3
+DB_USER=$2"_"$3"_api"
 
 # ... path to db backup file
 DB_FILE=$DIR_DB_BACKUPS"/db"
@@ -36,16 +42,11 @@ DB_FILE=$DIR_DB_BACKUPS"/db"
 # ... path to zipped db backup file
 DB_FILE_ZIPPED=$DB_FILE".zip"
 
-# # ... api name
-# API_NAME=$APP_ENVIRONMENT"_api_"$APP_ID
+# ... api name
+API_NAME=$2"_"$3"_api"
 
-# # ... api home directory
-# API_HOME=$DIR_WEBAPPS/$API_NAME
-
-# API_SOURCE=$API_HOME"/app"
-# API_PACKAGE=$API_SOURCE"/esdoc_api"
-# API_TEMPLATES=$DIR"/templates"
-
+# ... path to api home
+API_HOME=$DIR_WEBAPPS/$API_NAME
 
 # List of virtual environments.
 TOOLS=(
@@ -79,19 +80,65 @@ _echo()
 	fi
 }
 
+# Outputs a separator.
 _echo_banner()
 {
 	echo "---------------------------------------------"
+}
+
+# Resets temporary folder.
+_reset_tmp()
+{
+	rm -rf $DIR_TMP/*
+	mkdir -p $DIR_TMP
 }
 
 # ###############################################################
 # SECTION: MAIN
 # ###############################################################
 
+
 # Installs static source code.
 _install_source_api()
 {
-	_echo "TODO: install api source code"
+	# ... copy source code
+	cp -r $DIR_REPOS/esdoc-splash/src/* $API_HOME/app
+
+	# ... delete obsolete code
+	targets=(
+	        $API_HOME"/app/esdoc_api/config/ini_files"
+	        $API_HOME"/app/esdoc_api/app.wsgi"
+	        $API_HOME"/app/esdoc_api/webrun.py"
+	)
+	for target in "${targets[@]}"
+	do
+	        rm -rf $target
+	done
+
+	# ... copy templates to temp folder
+	cp -r $DIR_TEMPLATES"/template-api*.*" $DIR_TMP
+	templates=(
+	        $DIR_TMP"/template-api-config.ini"
+	        $DIR_TMP"/template-api-httpd.conf"
+	        $DIR_TMP"/template-api-wsgi.py"
+	)
+
+	# ... format templates
+	for template in "${templates[@]}"
+	do
+	        perl -e "s/APP_NAME/"$APP_NAME"/g;" -pi $(find $template -type f)
+	        perl -e "s/APP_ENVIRONMENT/"$1"/g;" -pi $(find $template -type f)
+	        perl -e "s/APP_VERSION/"$2"/g;" -pi $(find $template -type f)
+	        perl -e "s/DB_USER/"$DB_USER"/g;" -pi $(find $template -type f)
+	        perl -e "s/DB_NAME/"$DB_NAME"/g;" -pi $(find $template -type f)
+	        perl -e "s/DB_PWD/"$3"/g;" -pi $(find $template -type f)
+	        perl -e "s/APP_PORT/"$4"/g;" -pi $(find $template -type f)
+	done
+
+	# ... copy formatted templates
+	cp $TMP"/template-api-config.ini" $APP_HOME"/app/config.ini"
+	cp $TMP"/template-api-httpd.conf" $APP_HOME"/apache2/conf/httpd.conf"
+	cp $TMP"/template-api-wsgi.py" $APP_HOME"/htdocs/wsgi.py"
 }
 
 # Installs static source code.
@@ -123,7 +170,7 @@ _install_source_static()
 # Installs source code.
 install_source()
 {
-	_install_source_api $1 $2
+	_install_source_api $1 $2 $3 $4
 	_install_source_static $1 $2
 }
 
@@ -151,6 +198,8 @@ stop_services()
 # Invoke action.
 $ACTION $2 $3	
 
+# Reset temporary folder.
+_reset_tmp
 
 # End.
 _echo_banner
