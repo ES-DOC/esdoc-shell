@@ -191,7 +191,7 @@ def _declare_stack(ctx):
 
 def _set_wf_session(ctx):
     """Sets the webfactional server session."""
-    _log(_WEB_FACTION_API_USER_ID, ctx.wf_pwd, ctx.wf_machine)
+    print _WEB_FACTION_API_USER_ID, ctx.wf_pwd, ctx.wf_machine
     ctx.wf = xmlrpclib.ServerProxy(_WEB_FACTION_API_URL)
     ctx.wf_session, ctx.wf_account = ctx.wf.login(_WEB_FACTION_API_USER_ID, \
                                                   ctx.wf_pwd, \
