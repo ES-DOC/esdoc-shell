@@ -101,6 +101,9 @@ _reset_tmp()
 # Installs static source code.
 _install_source_api()
 {
+	# ... create api source code folder
+	mkdir -p $API_HOME/app
+
 	# ... copy source code
 	cp -r $DIR_REPOS/esdoc-api/src/* $API_HOME/app
 
