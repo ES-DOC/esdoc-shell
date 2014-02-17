@@ -29,12 +29,6 @@ DIR_PYTHON=$DIR_VENV/python
 # Set path: source code: api
 DIR_SRC_API=$DIR_REPOS/esdoc-api/src
 
-# Set path: source code: shell
-DIR_SRC_SHELL=$DIR_REPOS/esdoc-shell/src
-
-# Set path: source code: deploy
-DIR_SRC_DEPLOY=$DIR_REPOS/esdoc-deploy
-
 # Set path: source code: meta-programming
 DIR_SRC_MP=$DIR_REPOS/esdoc-mp/src
 
@@ -66,7 +60,6 @@ ACTION_ARG=$2
 REPOS=(
 	'esdoc-api'
 	'esdoc-cv'
-	'esdoc-deploy'
 	'esdoc-docs'
 	'esdoc-js-client'
 	'esdoc-mp'
@@ -483,7 +476,7 @@ _db_restore()
 {
 	_echo "... restoring DB"
 
-	unzip -q $DIR_SRC_DEPLOY/db/db.zip -d $DIR_TMP
+	unzip -q $DIR_DB/backups/db.zip -d $DIR_TMP
 	pg_restore -U postgres -d esdoc_api $DIR_TMP/db
 	pg_restore -U postgres -d esdoc_api_test $DIR_TMP/db
 	_reset_tmp
