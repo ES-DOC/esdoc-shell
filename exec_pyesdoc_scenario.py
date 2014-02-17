@@ -104,8 +104,8 @@ simulation = pyesdoc.decode(simulation_as_json, pyesdoc.ESDOC_ENCODING_JSON)
 pyesdoc.set_output_directory(_OUTPUT_DIR)
 
 # ... write to file system.
-model_filepath = pyesdoc.write(model)
-simulation_filepath = pyesdoc.write(simulation)
+model_filepath = pyesdoc.write(model, pyesdoc.ESDOC_ENCODING_JSON)
+simulation_filepath = pyesdoc.write(simulation, pyesdoc.ESDOC_ENCODING_JSON)
 
 # ... Read from file system.
 model = pyesdoc.read(model_filepath)
