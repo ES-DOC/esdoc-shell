@@ -15,7 +15,7 @@ else:
 	import esdoc_api.lib.repo.utils as repo_utils
 	import esdoc_api.models as models
 
-from . import utils
+import utils
 
 
 # Script configuration.

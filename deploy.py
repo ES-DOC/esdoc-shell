@@ -29,6 +29,7 @@ _STACK = [
     ('app', 'static_only', 'compare'),
     ('app', 'static_only', 'search'),
     ('app', 'static_only', 'view'),
+    ('app', 'static_only', 'demo'),
     ('app', 'static_only', 'visualize'),
     ('db', 'postgresql', 'api')
 ]
@@ -47,16 +48,6 @@ _dir_repos = join(_dir, "repos")
 
 # DB backups directory.
 _dir_db_backups = join(join(_dir, "db"), "backups")
-
-# Map of repos and associated directories.
-_source = {
-    "splash": join(_dir_repos, "esdoc-splash/src"),
-    "static": join(_dir_repos, "esdoc-static"),
-    "compare": join(_dir_repos, "esdoc-js-client/demo"),
-    "visualize": join(_dir_repos, "esdoc-js-client/demo"),
-    "search": join(_dir_repos, "esdoc-js-client/demo"),
-    "view": join(_dir_repos, "esdoc-js-client/demo"),
-}
 
 
 class DeploymentContext(object):

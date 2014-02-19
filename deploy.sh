@@ -48,11 +48,12 @@ API_NAME=$2"_"$3"_api"
 # ... path to api home
 API_HOME=$DIR_WEBAPPS/$API_NAME
 
-# List of virtual environments.
+# List of tools.
 TOOLS=(
 	'compare'
 	'search'
 	'view'
+	'demo'
 	'visualize'
 )
 
