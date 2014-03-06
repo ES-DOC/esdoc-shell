@@ -54,7 +54,7 @@ component1 = pyesdoc.create(cim.v1.ModelComponent, _PROJECT, _INSTITUTE)
 component1.type = "Atmosphere.ConvectionCloudTurbulence"
 component1.short_name = "Convection Cloud Turbulence"
 component1.long_name = "Convection Cloud Turbulence"
-model.sub_components.append(component1)
+component1.sub_components.append(component1)
 
 # ... create sub-component property
 property1 = pyesdoc.create(cim.v1.ComponentProperty, _PROJECT, _INSTITUTE)
@@ -139,3 +139,4 @@ print "REPUBLISHED DOC :: ID = {0} :: VERSION = {1}".format(
 # ... unpublish
 pyesdoc.unpublish(model.doc_info.id)
 pyesdoc.unpublish(simulation.doc_info.id)
+

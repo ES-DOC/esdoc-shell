@@ -142,7 +142,7 @@ _reset_tmp()
 }
 
 # Activates a virtual environment.
-_activate_venv()
+activate_venv()
 {	
 	_echo "Activating $1 virtual environment"
 
@@ -505,7 +505,7 @@ _db_seed()
 {
 	_echo "DB: seeding ..."
 
-	_activate_venv api
+	activate_venv api
 	python ./exec.py "db-setup"
 }
 
@@ -528,7 +528,7 @@ run_db_ingest()
 {
     _echo "DB: ingesting from external sources ..."
 
-	_activate_venv api
+	activate_venv api
 	python ./exec.py "db-ingest"
 }
 
@@ -554,7 +554,7 @@ run_api()
 {
     _echo "API : running ..."
 
-	_activate_venv api	
+	activate_venv api	
 	paster serve --reload $DIR_SRC_API/esdoc_api/config/ini_files/config.ini
 }
 
@@ -563,7 +563,7 @@ run_api_tests()
 {
     _echo "API : running tests ..."
 
-	_activate_venv api
+	activate_venv api
 
 	if [ ! "$1" ]; then
 	    _echo "API :: Executing api tests"
@@ -577,7 +577,7 @@ run_api_comparator_setup()
     _echo "API : setting up comparator ..."
  
     # Generate data.
-	_activate_venv api
+	activate_venv api
 	python ./exec.py "api-setup-comparator"
 
 	# Copy to static files.
@@ -590,7 +590,7 @@ run_api_stats()
     _echo "API : writing stats ..."
  
     # Generate data.
-	_activate_venv api
+	activate_venv api
 	python ./exec.py "api-stats"
 
 	# Copy to docs.
@@ -608,7 +608,7 @@ run_api_visualizer_setup()
     _echo "API : setting up visualizer ..."
  
     # Generate data.
-	_activate_venv api
+	activate_venv api
 	python ./exec.py "api-setup-visualizer"
 
 	# Copy to static files.
@@ -626,7 +626,7 @@ run_mp()
     _echo "running mp build ..."
 
 	_echo "Step 1.  Running mp utility"
-	_activate_venv mp	
+	activate_venv mp	
 	python "$DIR_SRC_MP/esdoc_mp" -s "cim" -v "1" -l "python" -o $DIR_TMP
 
 	_echo "Step 2.  Copying generated files to pyesdoc"
@@ -647,7 +647,7 @@ run_mp_tests()
 {
 	_echo "running mp tests ..."
 
-	_activate_venv mp
+	activate_venv mp
 
 	_echo "TODO"
 }
@@ -658,7 +658,7 @@ run_mp_custom_schema()
 	_echo "running mp custom scenario ..."
 
 	_echo "Step 1.  Running mp utility"
-	_activate_venv mp	
+	activate_venv mp	
 	python "$DIR_SRC_MP/esdoc_mp" -s "test" -v "1" -l "python" -o $DIR_TMP
 
 	_echo "Generated files @ "$DIR_TMP
@@ -674,7 +674,7 @@ run_pyesdoc_tests()
 {
 	_echo "executing pyesdoc tests ..."
 
-	_activate_venv pyesdoc
+	activate_venv pyesdoc
 
 	# All tests.
 	if [ ! "$1" ]; then
@@ -691,6 +691,11 @@ run_pyesdoc_tests()
 	    _echo "pyesdoc :: Executing pyesdoc publishing tests"
 	    nosetests -v -s $DIR_TESTS_PYESDOC/test_publishing.py
 
+	# Parsing tests.
+	elif [ $1 = "pr" ]; then
+	    _echo "pyesdoc :: Executing pyesdoc parsing tests"
+	    nosetests -v -s $DIR_TESTS_PYESDOC/test_parsing.py
+
 	# General tests.
 	elif [ $1 = "g" ]; then
 	    _echo "pyesdoc :: Executing pyesdoc general tests"
@@ -703,7 +708,7 @@ run_pyesdoc_scenario()
 {
 	_echo "executing pyesdoc publishing scenario ..."
 
-	_activate_venv pyesdoc
+	activate_venv pyesdoc
 	python ./exec_pyesdoc_scenario.py $DIR_TMP
 }
 
