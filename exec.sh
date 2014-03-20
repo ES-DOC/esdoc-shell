@@ -49,6 +49,10 @@ DIR_TESTS_MP=$DIR_REPOS/esdoc-mp/tests
 
 # Set path: tests: pyesdoc
 DIR_TESTS_PYESDOC=$DIR_REPOS/esdoc-py-client/tests
+DIR_TESTS_PYESDOC1=$DIR_REPOS/esdoc-py-client
+
+# Set path: pyesdoc miscellaneous
+DIR_MISC_PYESDOC=$DIR_REPOS/esdoc-py-client/misc
 
 # Set action.
 ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
@@ -158,6 +162,7 @@ activate_venv()
 
 	elif [ $1 = "pyesdoc" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_PYESDOC
+		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_PYESDOC1
 		export PYTHONPATH=$PYTHONPATH:$DIR_TESTS_PYESDOC
 	fi
 
@@ -710,6 +715,22 @@ run_pyesdoc_scenario()
 
 	activate_venv pyesdoc
 	python ./exec_pyesdoc_scenario.py $DIR_TMP
+}
+
+run_pyesdoc_write_test_files()
+{
+	_echo "writing pyesdoc test files ..."
+
+	activate_venv pyesdoc
+	python $DIR_MISC_PYESDOC/write_test_files.py
+}
+
+run_pyesdoc_write_demo_files()
+{
+	_echo "writing pyesdoc demo files ..."
+
+	activate_venv pyesdoc
+	python $DIR_MISC_PYESDOC/write_demo_files.py
 }
 
 # ###############################################################
