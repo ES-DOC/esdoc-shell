@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ###############################################################
-# SECTION: INIT 
+# SECTION: INIT
 # ###############################################################
 
 # Set paths.
@@ -56,6 +56,9 @@ DIR_MISC_PYESDOC=$DIR_REPOS/esdoc-py-client/misc
 
 # Set action.
 ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
+if [[ $ACTION != run-* ]]; then
+	ACTION="run_"$ACTION
+fi
 
 # Set action argument.
 ACTION_ARG=$2
@@ -95,12 +98,12 @@ _echo()
 			do
 				tabs+='\t'
 			done
-	    	echo -e 'ES-DOC :: '$tabs$1	
+	    	echo -e 'ES-DOC :: '$tabs$1
 	    else
-	    	echo -e "ES-DOC :: "$1	
+	    	echo -e "ES-DOC :: "$1
 	    fi
 	else
-	    echo -e "ES-DOC ::"	
+	    echo -e "ES-DOC ::"
 	fi
 }
 
@@ -120,7 +123,7 @@ echo_config()
 
 # Outputs header information.
 _echo_script_header()
-{	
+{
 	_echo "EXEC PATH: $DIR/exec.sh"
 	_echo "EXEC COMMAND: ${1}"
 	if [ "$2" ]; then
@@ -147,7 +150,7 @@ _reset_tmp()
 
 # Activates a virtual environment.
 activate_venv()
-{	
+{
 	_echo "Activating $1 virtual environment"
 
 	if [ $1 = "api" ]; then
@@ -199,7 +202,7 @@ _bootstrap_notice()
 bootstrap()
 {
 	_echo "BOOTSTRAP STARTS"
-	_set_working_dir 
+	_set_working_dir
 	_boostrap_init_config
 	_echo "BOOTSTRAP ENDS"
 	_bootstrap_notice
@@ -217,13 +220,13 @@ _install_venv()
 		_echo "... installing virtual environment: "$1" (takes approx 1 minute)"
 	fi
 
-	TARGET_VENV=$DIR_VENV/$1	
+	TARGET_VENV=$DIR_VENV/$1
 	TARGET_REQUIREMENTS=$DIR_TEMPLATES/template-venv-$1.txt
 	rm -rf $TARGET_VENV
     mkdir -p $TARGET_VENV
     virtualenv -q $TARGET_VENV
     source $TARGET_VENV/bin/activate
-    pip install -q --allow-all-external -r $TARGET_REQUIREMENTS 
+    pip install -q --allow-all-external -r $TARGET_REQUIREMENTS
     deactivate
 }
 
@@ -243,7 +246,7 @@ _install_python()
 
 	# Download source.
 	_set_working_dir $DIR_PYTHON
-	mkdir src	
+	mkdir src
 	cd src
 	wget http://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz >/dev/null 2>&1
 	tar -xvf Python-$PYTHON_VERSION.tgz >/dev/null 2>&1
@@ -304,7 +307,7 @@ install()
 	_install_repos
 	_install_python
 	_install_venvs
-	_reset_tmp	
+	_reset_tmp
 
 	_echo "INSTALLED STACK"
 }
@@ -353,7 +356,7 @@ _update_repo()
 	_echo "... updating repo: $1"
 
 	_set_working_dir $DIR_REPOS/$1
-	git pull -q 
+	git pull -q
 	_set_working_dir
 }
 
@@ -372,7 +375,7 @@ _update_config()
 	_echo "... updating configuration"
 
 	cp ./exec.config ./exec.config-backup
-	cp ./config.json ./config.json-backup	
+	cp ./config.json ./config.json-backup
 	cp $DIR_TEMPLATES/template-config.json $DIR/config.json
 	cp $DIR_TEMPLATES/template-exec.config $DIR/exec.config
 }
@@ -382,8 +385,8 @@ update_shell()
 {
 	_echo "... updating shell"
 
-	_set_working_dir		
-	git pull -q 
+	_set_working_dir
+	git pull -q
 }
 
 # Updates stack.
@@ -394,7 +397,7 @@ update()
 	update_shell
 	_update_config
 	update_repos
-	update_venvs	
+	update_venvs
 
 	_echo "UPDATED STACK"
 
@@ -517,14 +520,14 @@ _db_seed()
 # Setup db.
 run_db_setup()
 {
-	_echo "DB: initializing ..."	
+	_echo "DB: initializing ..."
 
 	_db_drop
 	_db_create
 	_db_seed
 
 	_echo "TODO - seed test db"
-	
+
 	_echo "DB: initialized"
 }
 
@@ -559,7 +562,7 @@ run_api()
 {
     _echo "API : running ..."
 
-	activate_venv api	
+	activate_venv api
 	paster serve --reload $DIR_SRC_API/esdoc_api/config/ini_files/config.ini
 }
 
@@ -580,7 +583,7 @@ run_api_tests()
 run_api_comparator_setup()
 {
     _echo "API : setting up comparator ..."
- 
+
     # Generate data.
 	activate_venv api
 	python ./exec.py "api-setup-comparator"
@@ -593,7 +596,7 @@ run_api_comparator_setup()
 run_api_stats()
 {
     _echo "API : writing stats ..."
- 
+
     # Generate data.
 	activate_venv api
 	python ./exec.py "api-stats"
@@ -611,13 +614,13 @@ run_api_stats()
 run_api_visualizer_setup()
 {
     _echo "API : setting up visualizer ..."
- 
+
     # Generate data.
 	activate_venv api
 	python ./exec.py "api-setup-visualizer"
 
 	# Copy to static files.
-	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/visualize.setup*.* $DIR_REPOS/esdoc-static/data	
+	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/visualize.setup*.* $DIR_REPOS/esdoc-static/data
 }
 
 
@@ -631,7 +634,7 @@ run_mp()
     _echo "running mp build ..."
 
 	_echo "Step 1.  Running mp utility"
-	activate_venv mp	
+	activate_venv mp
 	python "$DIR_SRC_MP/esdoc_mp" -s "cim" -v "1" -l "python" -o $DIR_TMP
 
 	_echo "Step 2.  Copying generated files to pyesdoc"
@@ -663,7 +666,7 @@ run_mp_custom_schema()
 	_echo "running mp custom scenario ..."
 
 	_echo "Step 1.  Running mp utility"
-	activate_venv mp	
+	activate_venv mp
 	python "$DIR_SRC_MP/esdoc_mp" -s "test" -v "1" -l "python" -o $DIR_TMP
 
 	_echo "Generated files @ "$DIR_TMP
@@ -690,6 +693,11 @@ run_pyesdoc_tests()
 	elif [ $1 = "s" ]; then
 	    _echo "pyesdoc :: Executing pyesdoc serialization tests"
 	    nosetests -v -s $DIR_TESTS_PYESDOC/test_serialization.py
+
+	# Serialization non-ascii tests.
+	elif [ $1 = "s-na" ]; then
+	    _echo "pyesdoc :: Executing pyesdoc serialization non-ascii tests"
+	    nosetests -v -s $DIR_TESTS_PYESDOC/test_serialization_non_ascii.py
 
 	# Publishing tests.
 	elif [ $1 = "p" ]; then
@@ -780,7 +788,7 @@ help()
 	_echo "executes mp automated tests" 2
 	_echo "run-mp-custom-schema" 1
 	_echo "runs mp against a custom schema as proof of concept" 2
-	
+
 	_echo ""
 	_echo "PYESDOC commands :"
 	_echo "run-pyesdoc-tests" 1
@@ -790,7 +798,7 @@ help()
 
 	_echo ""
 	_echo "help" 1
-	_echo "displays help text" 2	
+	_echo "displays help text" 2
 }
 
 # ###############################################################

@@ -20,8 +20,8 @@ import pyesdoc.ontologies.cim as cim
 # ... create model
 model = pyesdoc.create(cim.v1.ModelComponent, _PROJECT, _INSTITUTE)
 model.short_name = "IPSL-CDX-LR"
-print "CREATED DOC :: ID = {0} :: VERSION = {1}".format(model.doc_info.id, 
-														model.doc_info.version)
+print "CREATED DOC :: ID = {0} :: VERSION = {1}".format(model.meta.id, 
+														model.meta.version)
 
 # ... create responsible party.
 rp = pyesdoc.create(cim.v1.ResponsibleParty, _PROJECT, _INSTITUTE)
@@ -121,22 +121,22 @@ pyesdoc.publish(model)
 pyesdoc.publish(simulation)
 
 print "PUBLISHED DOC :: ID = {0} :: VERSION = {1}".format(
-	model.doc_info.id, model.doc_info.version)
+	model.meta.id, model.meta.version)
 
 # ... retrieve
-model = pyesdoc.retrieve(model.doc_info.id)
-model = pyesdoc.retrieve(model.doc_info.id, model.doc_info.version)
+model = pyesdoc.retrieve(model.meta.id)
+model = pyesdoc.retrieve(model.meta.id, model.meta.version)
 
 # ... republish
-model_version = model.doc_info.version
+model_version = model.meta.version
 model.short_name = "IPSL-CDX-MR"
 pyesdoc.publish(model)
-assert model_version + 1 == model.doc_info.version
+assert model_version + 1 == model.meta.version
 
 print "REPUBLISHED DOC :: ID = {0} :: VERSION = {1}".format(
-	model.doc_info.id, model.doc_info.version)
+	model.meta.id, model.meta.version)
 
 # ... unpublish
-pyesdoc.unpublish(model.doc_info.id)
-pyesdoc.unpublish(simulation.doc_info.id)
+pyesdoc.unpublish(model.meta.id)
+pyesdoc.unpublish(simulation.meta.id)
 
