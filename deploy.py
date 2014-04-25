@@ -81,7 +81,7 @@ class DeploymentContext(object):
         result += str(self.wf_pwd)
         result += " | db pwd: "
         result += str(self.api_db_pwd)
-        
+
         return result
 
 
@@ -273,7 +273,7 @@ def _update_wf_websites(ctx):
     for el in [i for i in ctx.wf_stack if i.type == 'app' and i.website in ctx.wf_website_list]:
         ws = ctx.wf_website_list[el.website]
         _log('... updating website ' + el.website + ' to point towards ' + el.name)
-        
+
         update_website(ws)
         update_website(ws, el.name)
 
@@ -283,7 +283,7 @@ def _update_wf_websites(ctx):
 def _update_repos(ctx):
     """Updates source code repositories."""
     subprocess.call([_EXEC, "update_repos"])
-    
+
 
 def _install_source(ctx):
     """Installs source code."""
