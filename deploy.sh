@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ###############################################################
-# SECTION: INIT 
+# SECTION: INIT
 # ###############################################################
 
 # Set action.
@@ -72,12 +72,12 @@ _echo()
 			do
 				tabs+='\t'
 			done
-	    	echo -e 'ES-DOC :: '$tabs$1	
+	    	echo -e 'ES-DOC :: '$tabs$1
 	    else
-	    	echo -e "ES-DOC :: "$1	
+	    	echo -e "ES-DOC :: "$1
 	    fi
 	else
-	    echo -e "ES-DOC ::"	
+	    echo -e "ES-DOC ::"
 	fi
 }
 
@@ -170,7 +170,7 @@ _install_source_static()
 				rm -rf $DIR_WEBAPPS/$1_$2_$TOOL/$_TOOL*.*
 			fi
 		done
-	done	
+	done
 }
 
 # Installs source code.
@@ -202,7 +202,7 @@ stop_api()
 
 
 # Invoke action.
-$ACTION $2 $3 $4 $5	
+$ACTION $2 $3 $4 $5
 
 # Reset temporary folder.
 _reset_tmp
