@@ -215,7 +215,7 @@ run_update_shell()
 }
 
 # Updates stack.
-update()
+run_update()
 {
 	log "UPDATING STACK"
 
