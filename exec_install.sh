@@ -24,7 +24,7 @@ _bootstrap_notice()
 	log "IMPORTANT NOTICE ENDS"
 }
 
-bootstrap()
+run_bootstrap()
 {
 	log "BOOTSTRAP STARTS"
 	set_working_dir
@@ -124,7 +124,7 @@ _install_dirs()
 }
 
 # Installs stack.
-install()
+run_install()
 {
 	log "INSTALLING STACK"
 
@@ -165,7 +165,7 @@ _update_venv()
 }
 
 # updates virtual environments.
-update_venvs()
+run_update_venvs()
 {
 	export PATH=$DIR_PYTHON/bin:$PATH
 
@@ -186,7 +186,7 @@ _update_repo()
 }
 
 # Updates repos.
-update_repos()
+run_update_repos()
 {
 	for REPO in "${REPOS[@]}"
 	do
@@ -206,7 +206,7 @@ _update_config()
 }
 
 # Updates shell.
-update_shell()
+run_update_shell()
 {
 	log "... updating shell"
 
@@ -219,10 +219,10 @@ update()
 {
 	log "UPDATING STACK"
 
-	update_shell
+	run_update_shell
 	_update_config
-	update_repos
-	update_venvs
+	run_update_repos
+	run_update_venvs
 
 	log "UPDATED STACK"
 
@@ -286,7 +286,7 @@ _uninstall_venvs()
 }
 
 # Uninstalls stack.
-uninstall()
+run_uninstall()
 {
 	log "UNINSTALLING STACK"
 
