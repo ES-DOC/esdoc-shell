@@ -260,7 +260,10 @@ def _delete_wf_apps(ctx):
 
 def _update_wf_websites(ctx):
     """Updates the wf websites so that they point to the correct application."""
-    def update_website(ws, app=None):
+    def can_update(i):
+        return i.type == 'app' and i.website in ctx.wf_website_list
+
+    def update(ws, app=None):
         ws['website_apps'] = [] if app is None else [[app, '/']]
         ctx.wf.update_website(ctx.wf_session,
                               ws['name'],
@@ -270,12 +273,12 @@ def _update_wf_websites(ctx):
                               *ws['website_apps'])
 
     # For each app updated the associated website.
-    for el in [i for i in ctx.wf_stack if i.type == 'app' and i.website in ctx.wf_website_list]:
+    for el in [i for i in ctx.wf_stack if can_update(i)]:
         ws = ctx.wf_website_list[el.website]
         _log('... updating website ' + el.website + ' to point towards ' + el.name)
 
-        update_website(ws)
-        update_website(ws, el.name)
+        update(ws)
+        update(ws, el.name)
 
         _log('... updated website ' + el.website + ' to point towards ' + el.name)
 
