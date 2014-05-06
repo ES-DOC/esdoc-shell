@@ -52,7 +52,6 @@ API_HOME=$DIR_WEBAPPS/$API_NAME
 TOOLS=(
 	'compare'
 	'search'
-	'view'
 	'demo'
 	'visualize'
 )
@@ -157,6 +156,9 @@ _install_source_static()
 	# ... static files
 	cp -r $DIR_REPOS/esdoc-static/* $DIR_WEBAPPS/$1_$2_static
 	cp -r $DIR_REPOS/esdoc-js-client/demo/media/* $DIR_WEBAPPS/$1_$2_static
+
+	# ... viewer
+	cp -r $DIR_REPOS/esdoc-viewer/src/* $DIR_WEBAPPS/$1_$2_view
 
 	# ... tools
 	for TOOL in "${TOOLS[@]}"

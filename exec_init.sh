@@ -72,6 +72,7 @@ REPOS=(
 	'esdoc-questionnaire'
 	'esdoc-splash'
 	'esdoc-static'
+	'esdoc-viewer'
 )
 
 # List of virtual environments.

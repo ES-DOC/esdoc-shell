@@ -14,6 +14,11 @@ run_pyesdoc_tests()
 	    log "pyesdoc :: Executing all pyesdoc tests"
 	    nosetests -v -s $DIR_TESTS_PYESDOC
 
+	# Factory tests.
+	elif [ $1 = "f" ]; then
+	    log "pyesdoc :: Executing pyesdoc factory tests"
+	    nosetests -v -s $DIR_TESTS_PYESDOC/test_factory.py
+
 	# Serialization tests.
 	elif [ $1 = "s" ]; then
 	    log "pyesdoc :: Executing pyesdoc serialization tests"
