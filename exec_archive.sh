@@ -12,3 +12,13 @@ run_archive_build()
 
 	log "ARCHIVE : built"
 }
+
+run_archive_upload()
+{
+    log "ARCHIVE: uploading documents ..."
+
+	activate_venv api
+	python ./exec.py "archive-upload" $1
+
+    log "ARCHIVE: uploaded documents ..."
+}

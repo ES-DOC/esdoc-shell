@@ -11,8 +11,8 @@ else:
     import esdoc_api.lib.api.comparator_setup as comparator_setup
     import esdoc_api.lib.api.visualizer_setup as visualizer_setup
     import esdoc_api.db.archive as archive
-    import esdoc_api.db.ingest as ingest
     import esdoc_api.db.index as index
+    import esdoc_api.db.ingest as ingest
     import esdoc_api.db.session as session
     import esdoc_api.db.utils as repo_utils
     import esdoc_api.db.models as models
@@ -44,13 +44,16 @@ def _end_api_db_session():
     session.end()
 
 
-def _wrap_api_db_session(task):
+def _wrap_api_db_session(task, param=None):
     """Wraps a function with a call to db session start/end."""
     # Start session.
     _start_api_db_session()
 
     # Perform work.
-    task()
+    if param:
+        task(param)
+    else:
+        task()
 
     # End session.
     _end_api_db_session()
@@ -61,14 +64,14 @@ def _db_setup():
     _wrap_api_db_session(session.create_repo)
 
 
-def _db_ingest():
-    """Execute db ingestion."""
-    _wrap_api_db_session(ingest.execute)
-
-
 def _db_index():
     """Execute db indexation."""
     _wrap_api_db_session(index.execute)
+
+
+def _db_ingest():
+    """Execute db ingestion."""
+    _wrap_api_db_session(ingest.execute)
 
 
 def _db_index_reset():
@@ -90,6 +93,19 @@ def _archive_build():
         except ValueError:
             raise ValueError("Archive build throttle must be a positive integer value")
     archive.build(throttle)
+
+
+def _archive_upload():
+    """Execute archive upload."""
+    throttle = 0
+    if len(sys.argv) > 1:
+        try:
+            throttle = int(sys.argv[2])
+        except IndexError:
+            pass
+        except ValueError:
+            raise ValueError("Archive upload throttle must be a positive integer value")
+    _wrap_api_db_session(archive.upload, throttle)
 
 
 def _api_setup_comparator():
@@ -129,8 +145,8 @@ def _init_config():
 # Map of supported actions.
 _actions = {
     "archive-build": _archive_build,
+    "archive-upload": _archive_upload,
     "db-setup": _db_setup,
-    "db-ingest": _db_ingest,
     "db-index": _db_index,
     "db-index-reset": _db_index_reset,
     "api-setup-comparator": _api_setup_comparator,
