@@ -6,6 +6,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Import associated scripts.
 source $DIR/exec_init.sh
 source $DIR/exec_api.sh
+source $DIR/exec_archive.sh
 source $DIR/exec_db.sh
 source $DIR/exec_help.sh
 source $DIR/exec_install.sh

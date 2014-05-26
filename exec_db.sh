@@ -91,6 +91,24 @@ run_db_ingest()
 	python ./exec.py "db-ingest"
 }
 
+# Launches api db index job.
+run_db_index()
+{
+    log "DB: indexing ..."
+
+	activate_venv api
+	python ./exec.py "db-index"
+}
+
+# Launches api db index job.
+run_db_index_reset()
+{
+    log "DB: indexing reset ..."
+
+	activate_venv api
+	python ./exec.py "db-index-reset"
+}
+
 # Restores api db from deplyoyment backup file.
 run_db_restore()
 {

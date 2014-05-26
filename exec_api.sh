@@ -35,6 +35,9 @@ run_api_comparator_setup()
 
 	# Copy to static files.
 	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/compare.setup*.* $DIR_REPOS/esdoc-static/data
+
+	# Copy to js demo.
+	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/compare.setup*.* $DIR_REPOS/esdoc-js-client/demo
 }
 
 # Executes api stats.

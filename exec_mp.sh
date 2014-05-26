@@ -15,13 +15,14 @@ run_mp()
 	cp -r "$DIR_TMP/cim/v1" "$DIR_SRC_PYESDOC/pyesdoc/ontologies/cim"
 
 	log "Step 3.  Copying generated files to api"
-	cp -r $DIR_SRC_PYESDOC/pyesdoc $DIR_LIB_API
+	rm -rf $DIR_API/pyesdoc
+	cp -r $DIR_SRC_PYESDOC/pyesdoc $DIR_API
 
 	log "Step 4.  Cleaning up"
 	find $DIR_SRC_PYESDOC -type f -name "*.pyc" -exec rm -f {} \;
 	find $DIR_SRC_PYESDOC -type f -name "*.pye" -exec rm -f {} \;
-	find $DIR_LIB_API -type f -name "*.pyc" -exec rm -f {} \;
-	find $DIR_LIB_API -type f -name "*.pye" -exec rm -f {} \;
+	find $DIR_API/pyesdoc -type f -name "*.pyc" -exec rm -f {} \;
+	find $DIR_API/pyesdoc -type f -name "*.pye" -exec rm -f {} \;
 }
 
 # Executes meta-programming tests.

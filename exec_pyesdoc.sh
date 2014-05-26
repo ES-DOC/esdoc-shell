@@ -35,9 +35,9 @@ run_pyesdoc_tests()
 	    nosetests -v -s $DIR_TESTS_PYESDOC/test_publishing.py
 
 	# Parsing tests.
-	elif [ $1 = "pr" ]; then
-	    log "pyesdoc :: Executing pyesdoc parsing tests"
-	    nosetests -v -s $DIR_TESTS_PYESDOC/test_parsing.py
+	elif [ $1 = "e" ]; then
+	    log "pyesdoc :: Executing pyesdoc extension tests"
+	    nosetests -v -s $DIR_TESTS_PYESDOC/test_extensions.py
 
 	# Validation tests.
 	elif [ $1 = "v" ]; then
@@ -58,6 +58,15 @@ run_pyesdoc_scenario()
 
 	activate_venv pyesdoc
 	python ./exec_pyesdoc_scenario.py $DIR_TMP
+}
+
+# Executes pyesdoc miscellaneous scenario.
+run_pyesdoc_misc()
+{
+	log "executing pyesdoc publishing scenario ..."
+
+	activate_venv pyesdoc
+	python $DIR_MISC_PYESDOC/misc.py
 }
 
 run_pyesdoc_write_test_files()

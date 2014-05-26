@@ -34,8 +34,8 @@ DIR_SRC_PYESDOC=$DIR_REPOS/esdoc-py-client/src
 # Set path: source code: questionnaire
 DIR_SRC_QTN=$DIR_REPOS/esdoc-questionnaire/src
 
-# Set path: source code: api lib
-DIR_LIB_API=$DIR_SRC_API/esdoc_api/lib
+# Set path: source code: api
+DIR_API=$DIR_SRC_API/esdoc_api
 
 # Set path: tests: api
 DIR_TESTS_API=$DIR_REPOS/esdoc-api/tests
