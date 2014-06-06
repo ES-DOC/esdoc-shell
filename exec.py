@@ -82,30 +82,28 @@ def _db_index_reset():
     _wrap_api_db_session(do_index)
 
 
-def _archive_build():
-    """Execute archive build."""
-    throttle = 0
-    if len(sys.argv) > 1:
-        try:
-            throttle = int(sys.argv[2])
-        except IndexError:
-            pass
-        except ValueError:
-            raise ValueError("Archive build throttle must be a positive integer value")
-    archive.build(throttle)
+def _archive_seed():
+    """Execute archive seed."""
+    try:
+        throttle = int(sys.argv[2])
+    except IndexError:
+        throttle = 0
+    except ValueError:
+        raise ValueError("Archive seed throttle must be a positive integer value")
+
+    archive.seed(throttle)
 
 
-def _archive_upload():
-    """Execute archive upload."""
-    throttle = 0
-    if len(sys.argv) > 1:
-        try:
-            throttle = int(sys.argv[2])
-        except IndexError:
-            pass
-        except ValueError:
-            raise ValueError("Archive upload throttle must be a positive integer value")
-    _wrap_api_db_session(archive.upload, throttle)
+def _archive_organize():
+    """Execute archive organize."""
+    try:
+        throttle = int(sys.argv[2])
+    except IndexError:
+        throttle = 0
+    except ValueError:
+        raise ValueError("Archive organization throttle must be a positive integer value")
+
+    archive.organize(throttle)
 
 
 def _api_setup_comparator():
@@ -144,8 +142,8 @@ def _init_config():
 
 # Map of supported actions.
 _actions = {
-    "archive-build": _archive_build,
-    "archive-upload": _archive_upload,
+    "archive-seed": _archive_seed,
+    "archive-organize": _archive_organize,
     "db-setup": _db_setup,
     "db-index": _db_index,
     "db-index-reset": _db_index_reset,

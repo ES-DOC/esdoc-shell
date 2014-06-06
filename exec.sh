@@ -10,6 +10,7 @@ source $DIR/exec_archive.sh
 source $DIR/exec_db.sh
 source $DIR/exec_help.sh
 source $DIR/exec_install.sh
+source $DIR/exec_js_plugin.sh
 source $DIR/exec_mp.sh
 source $DIR/exec_pyesdoc.sh
 

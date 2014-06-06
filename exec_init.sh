@@ -34,6 +34,9 @@ DIR_SRC_PYESDOC=$DIR_REPOS/esdoc-py-client/src
 # Set path: source code: questionnaire
 DIR_SRC_QTN=$DIR_REPOS/esdoc-questionnaire/src
 
+# Set path: archive
+DIR_ARCHIVE=$DIR_REPOS/esdoc-archive/documents
+
 # Set path: source code: api
 DIR_API=$DIR_SRC_API/esdoc_api
 
@@ -141,8 +144,6 @@ reset_tmp()
 # Activates a virtual environment.
 activate_venv()
 {
-	log "Activating $1 virtual environment"
-
 	if [ $1 = "api" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_SRC_API
 
