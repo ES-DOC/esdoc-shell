@@ -43,9 +43,9 @@ run_archive_organize()
 }
 
 # Reorganizes the archive.
-run_archive_reorganize()
+run_archive_organize_reset()
 {
-    log "reorganizing archive ..."
+    log "resetting & reorganizing archive ..."
 
     declare -a DIRECTORIES=(organized parsed parsed_error)
     _reset_archive_directories $DIRECTORIES
@@ -57,9 +57,9 @@ run_archive_reorganize()
 }
 
 # Reseed the archive.
-run_archive_reseed()
+run_archive_seed_reset()
 {
-    log "reseeding archive ..."
+    log "resetting & reseeding archive ..."
 
     declare -a DIRECTORIES=(raw raw_error organized parsed parsed_error)
     _reset_archive_directories $DIRECTORIES
@@ -67,5 +67,5 @@ run_archive_reseed()
  	activate_venv api
 	python ./exec.py "archive-seed" $1
 
-    log "archive reseeding"
+    log "archive reset & reseeded"
 }
