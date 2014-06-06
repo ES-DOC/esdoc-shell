@@ -210,8 +210,9 @@ def _create_wf_dbs(ctx):
     for el in [i for i in ctx.wf_stack if i.type == 'db']:
         try:
             ctx.wf.create_db(ctx.wf_session, el.name, el.subtype, ctx.api_db_pwd)
-        except:
+        except Exception as exc:
             _log('... failure when creating db : ' + el.name)
+            raise exc
         else:
             _log('... created db : ' + el.name)
 
