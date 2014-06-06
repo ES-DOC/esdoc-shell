@@ -52,8 +52,6 @@ API_HOME=$DIR_WEBAPPS/$API_NAME
 TOOLS=(
 	'compare'
 	'search'
-	'demo'
-	'visualize'
 )
 
 
@@ -152,6 +150,9 @@ _install_source_static()
 {
 	# ... splash site
 	cp -r $DIR_REPOS/esdoc-splash/src/* $DIR_WEBAPPS/$1_$2_splash
+
+	# ... viewer demo
+	cp -r $DIR_REPOS/esdoc-static/src/demos/viewer/* $DIR_WEBAPPS/$1_$2_demo
 
 	# ... static files
 	cp -r $DIR_REPOS/esdoc-static/* $DIR_WEBAPPS/$1_$2_static
