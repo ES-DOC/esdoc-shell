@@ -1,5 +1,7 @@
-args.py
-db/backups/db
-tmp
+ops/logs
+ops/tmp
+ops/venv
 venv
 repos
+config.json
+config-backup.json
