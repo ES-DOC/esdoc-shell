@@ -145,10 +145,12 @@ _update_notice()
 {
 	log_banner
 	log "IMPORTANT NOTICE"
-	log "The update process created a new config file:" 1
+	log "The update process created new config files:" 1
 	log "$HOME/.esdoc" 2
-	log "It also created a backup of your old config file:" 1
+	log "$DIR/exec.sh.config" 2
+	log "It also created a backup of your old config files:" 1
 	log "$HOME/.esdoc-backup" 2
+	log "$DIR/exec.sh.config-backup" 2
 	log "Please verify your local configuration settings accordingly." 1
 	log "IMPORTANT NOTICE ENDS"
 }
@@ -198,6 +200,8 @@ _update_config()
 
 	cp $HOME/.esdoc $HOME/.esdoc-backup
 	cp $DIR_TEMPLATES/template-config.json $HOME/.esdoc
+	cp $DIR/exec.sh.config $DIR/exec.sh.config-backup
+	cp $DIR_TEMPLATES/template-exec.sh.config $DIR/exec.sh.config
 }
 
 # Updates shell.
