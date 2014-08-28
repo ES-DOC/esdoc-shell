@@ -25,18 +25,15 @@ run_help_db()
 {
 	log "DB commands :"
 	log "db-backup" 1
-	log "performs a backup of database(s)" 2
+	log "performs a backup of database" 2
 	log "db-install" 1
 	log "initializes database" 2
 	log "db-reset" 1
-	log "uninstalls & installs database(s)" 2
+	log "uninstalls & installs database" 2
 	log "db-restore" 1
-	log "restores database(s)" 2
+	log "restores database from backup" 2
 	log "db-uninstall" 1
-	log "drops database(s)" 2
-
-	log "db-server-install" 1
-	log "drops database(s)" 2
+	log "drops database" 2
 }
 
 run_help_api()
@@ -61,12 +58,12 @@ run_help_stack()
 	log "stack-install" 1
 	log "installs stack & virtual environments" 2
 	log "stack-update" 1
-	log "updates stack & virtual environments" 2
+	log "updates full stack (i.e. repos, config and virtual environments)" 2
 	log "stack-update-shell" 1
-	log "updates shell only" 2
+	log "updates shell" 2
 	log "stack-update-repos" 1
-	log "updates git repos only" 2
-	log "stack-update-venvs only" 1
+	log "updates git repos" 2
+	log "stack-update-venvs" 1
 	log "updates virtual environments" 2
 	log "stack-uninstall" 1
 	log "uninstalls stack & virtual environments" 2
