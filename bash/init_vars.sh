@@ -36,7 +36,7 @@ if [ -a $DIR/exec.sh.config ]; then
 
 	# ... set default python version.
 	if [ ! $PYTHON_VERSION ]; then
-		declare PYTHON_VERSION="2.7.6"
+		declare PYTHON_VERSION="2.7.8"
 	fi;
 
 	# ... set default db host name.
