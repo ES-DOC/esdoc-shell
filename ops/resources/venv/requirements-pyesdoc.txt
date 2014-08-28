@@ -1,0 +1,12 @@
+backports.ssl-match-hostname
+feedparser
+lxml
+nose
+python-dateutil
+requests
+six
+tornado
+wsgiref
+SQLAlchemy
+SQLAlchemy-Utils
+psycopg2

@@ -7,6 +7,7 @@
 declare DIR_BACKUPS=$DIR/ops/backups
 declare DIR_BASH=$DIR/bash
 declare DIR_DB_BACKUPS=$DIR/ops/backups/db
+declare DIR_LOGS=$DIR/ops/logs
 declare DIR_PYTHON=$DIR/ops/venv/python
 declare DIR_REPOS=$DIR/repos
 declare DIR_RESOURCES=$DIR/ops/resources

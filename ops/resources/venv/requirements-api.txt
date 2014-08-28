@@ -1,0 +1,16 @@
+SQLAlchemy
+SQLAlchemy-Utils
+argparse
+backports.ssl-match-hostname
+dateutils
+nose
+psycopg2
+python-dateutil
+pytz
+requests
+six
+toolz
+tornado
+wsgiref
+feedparser
+lxml

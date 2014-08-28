@@ -12,13 +12,15 @@ run_stack_bootstrap()
 
 	log "Initializing configuration"
 	cp $DIR_TEMPLATES/template-config.json $HOME/.esdoc
+	cp $DIR_TEMPLATES/template-exec.sh.config $DIR/exec.sh.config
 
 	log "BOOTSTRAP ENDS"
 
 	log_banner
 	log "IMPORTANT NOTICE"
-	log "The bootstrap process installs a config file:" 1
+	log "The bootstrap process installs 2 config files:" 1
 	log "$HOME/.esdoc" 2
+	log "$DIR/exec.sh.config" 2
 	log "Please review and assign settings as appropriate to your " 1
 	log "environemt prior to continuing with the installation process." 1
 	log "IMPORTANT NOTICE ENDS"
@@ -114,8 +116,9 @@ run_install_repos()
 # Sets up directories.
 _install_dirs()
 {
-	mkdir -p $DIR_REPOS
+	mkdir -p $DIR_LOGS
 	mkdir -p $DIR_PYTHON
+	mkdir -p $DIR_REPOS
 	mkdir -p $DIR_TMP
 }
 
@@ -151,7 +154,7 @@ _update_notice()
 }
 
 # Updates a virtual environment.
-_update_venv()
+run_stack_update_venv()
 {
 	log "Updating virtual environment :: $1"
 
@@ -165,12 +168,12 @@ run_stack_update_venvs()
 	export PATH=$DIR_PYTHON/bin:$PATH
 	for venv in "${VENVS[@]}"
 	do
-		_update_venv $venv
+		run_stack_update_venv $venv
 	done
 }
 
 # Updates a git repo.
-_update_repo()
+run_stack_update_repo()
 {
 	log "Updating repo: $1"
 
@@ -184,7 +187,7 @@ run_stack_update_repos()
 {
 	for repo in "${REPOS[@]}"
 	do
-		_update_repo $repo
+		run_stack_update_repo $repo
 	done
 }
 

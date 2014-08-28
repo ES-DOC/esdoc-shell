@@ -1,7 +1,5 @@
 ops/logs
 ops/tmp
 ops/venv
-venv
 repos
-config.json
-config-backup.json
+exec.sh.config
