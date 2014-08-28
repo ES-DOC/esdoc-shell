@@ -10,7 +10,7 @@ declare -a initializers=(
 	# 'run_demo'
 	'run_help'
 	# 'run_mq'
-	# 'run_stack'
+	'run_stack'
 	# 'run_tests'
 	# 'run_web'
 )
