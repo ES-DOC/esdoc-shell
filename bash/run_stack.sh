@@ -58,7 +58,7 @@ run_install_venvs()
 {
 	for venv in "${VENVS[@]}"
 	do
-		run_install_venv venv "echo"
+		run_install_venv $venv "echo"
 	done
 }
 
@@ -108,7 +108,7 @@ run_install_repos()
 {
 	for repo in "${REPOS[@]}"
 	do
-		run_install_repo repo
+		run_install_repo $repo
 	done
 }
 
@@ -166,7 +166,7 @@ run_stack_update_venvs()
 	export PATH=$DIR_PYTHON/bin:$PATH
 	for venv in "${VENVS[@]}"
 	do
-		_update_venv venv
+		_update_venv $venv
 	done
 }
 
@@ -185,7 +185,7 @@ run_stack_update_repos()
 {
 	for repo in "${REPOS[@]}"
 	do
-		_update_repo repo
+		_update_repo $repo
 	done
 }
 
@@ -248,7 +248,7 @@ _uninstall_repos()
 
 	for repo in "${REPOS[@]}"
 	do
-		_uninstall_repo repo
+		_uninstall_repo $repo
 	done
 }
 
@@ -275,7 +275,7 @@ _uninstall_venvs()
 {
 	for venv in "${VENVS[@]}"
 	do
-		_uninstall_venv venv "echo"
+		_uninstall_venv $venv "echo"
 	done
 }
 
