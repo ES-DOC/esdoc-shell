@@ -68,22 +68,21 @@ run_install_python()
 	log "Installing python "$PYTHON_VERSION" (takes approx 3 minutes)"
 
 	# Download source.
-	set_working_dir $DIR_PYTHON
-	mkdir src
-	cd src
+	mkdir -p $DIR_PYTHON/src
+	set_working_dir $DIR_PYTHON/src
 	wget http://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz --no-check-certificate
 	tar -xvf Python-$PYTHON_VERSION.tgz
 	rm Python-$PYTHON_VERSION.tgz
 
 	# Compile.
-	cd Python-$PYTHON_VERSION
+	set_working_dir $DIR_PYTHON/src/Python-$PYTHON_VERSION
 	./configure --prefix=$DIR_PYTHON
 	make
 	make install
 	export PATH=$DIR_PYTHON/bin:$PATH
 
 	# Install setuptools.
-	cd $DIR_PYTHON/src
+	set_working_dir $DIR_PYTHON/src
 	wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
 	python ez_setup.py
 

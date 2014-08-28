@@ -30,9 +30,9 @@ declare -a VENVS=(
 	'pyesdoc'
 )
 
-# Load config.
-if [ -a $DIR/exec.config ]; then
-	source $DIR/exec.config
+# Load vars from config.
+if [ -a $DIR/exec.sh.config ]; then
+	source $DIR/exec.sh.config
 
 	# ... set default python version.
 	if [ ! $PYTHON_VERSION ]; then
