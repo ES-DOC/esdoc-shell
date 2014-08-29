@@ -25,33 +25,29 @@ run_api_tests()
 	fi
 }
 
-# Executes api comparator setup.
-run_api_comparator_setup()
-{
-    log "API : setting up comparator ..."
-
-    # Generate data.
-	activate_venv api
-	python ./exec.py "api-setup-comparator"
-
-	# Copy to static files.
-	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/compare.setup*.* $DIR_REPOS/esdoc-static/data
-
-	# Copy to js demo.
-	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/compare.setup*.* $DIR_REPOS/esdoc-js-client/demo
-}
-
-# Executes api stats.
-run_api_stats()
+# Writes api stats to file system.
+run_api_write_stats()
 {
     log "API : writing stats ..."
 
-    # Generate data.
 	activate_venv api
-	python ./exec.py "api-stats"
 
-	# Copy to static files.
-	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/csv/doc_stats.* $DIR_REPOS/esdoc-static/data
-	cp $DIR_REPOS/esdoc-api/src/esdoc_api/static/json/doc_stats.* $DIR_REPOS/esdoc-static/data
+	python $DIR_JOBS/api/run_write_stats.py $DIR_WEB_STATIC/data
+
+    log "API : stats written ---> esdoc/repos/esdoc-static/data "
 }
 
+# Executes api comparator setup.
+run_api_write_comparator_setup_data()
+{
+    log "API : setting up comparator setup data ..."
+
+	activate_venv api
+
+	python $DIR_JOBS/api/run_write_comparator_setup.py $DIR_WEB_STATIC/data
+
+	cp $DIR_WEB_STATIC/data/compare.setup*.* $DIR_REPOS/esdoc-js-client/demo
+
+    log "API : comparator setup data written ---> esdoc/repos/esdoc-static/data"
+    log "API : comparator setup data written ---> esdoc/repos/esdoc-js-client/demo"
+}

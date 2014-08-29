@@ -41,11 +41,11 @@ run_help_api()
 	log "API commands :"
 	log "api" 1
 	log "launches api web application" 2
-	log "api-comparator-setup" 1
-	log "writes comparator setup data to file system" 2
 	log "api-tests" 1
 	log "executes api automated tests" 2
-	log "api-stats" 1
+	log "api-write-comparator-setup-data" 1
+	log "writes comparator setup data to file system" 2
+	log "api-write-stats" 1
 	log "writes api statistics to file system" 2
 }
 

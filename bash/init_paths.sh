@@ -7,6 +7,7 @@
 declare DIR_BACKUPS=$DIR/ops/backups
 declare DIR_BASH=$DIR/bash
 declare DIR_DB_BACKUPS=$DIR/ops/backups/db
+declare DIR_JOBS=$DIR/ops/scripts/jobs
 declare DIR_LOGS=$DIR/ops/logs
 declare DIR_PYTHON=$DIR/ops/venv/python
 declare DIR_REPOS=$DIR/repos
@@ -29,3 +30,5 @@ declare DIR_PYESDOC_TESTS1=$DIR_REPOS/esdoc-py-client
 declare DIR_PYESDOC_MISC=$DIR_REPOS/esdoc-py-client/misc
 
 declare DIR_QTN_SRC=$DIR_REPOS/esdoc-questionnaire/src
+
+declare DIR_WEB_STATIC=$DIR_REPOS/esdoc-static

@@ -8,9 +8,9 @@
 activate_venv()
 {
 	if [ $1 = "api" ]; then
-		log $DIR_PYESDOC_SRC
 		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_SRC
 		export PYTHONPATH=$PYTHONPATH:$DIR_API_SRC
+		export PYTHONPATH=$PYTHONPATH:$DIR_API_TESTS
 
 	elif [ $1 = "qtn" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_QTN_SRC
