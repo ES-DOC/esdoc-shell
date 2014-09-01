@@ -18,10 +18,10 @@ declare DIR_WEBAPPS=$DIR_HOME"/webapps"
 # Set vars:
 declare API_NAME=$2"_"$3"_api"
 declare API_HOME=$DIR_WEBAPPS/$API_NAME
-declare DB_NAME=$2"_"$3"_api"
-declare DB_USER=$2"_"$3"_api"
-declare DB_FILE=$DIR_RESOURCES"/db"
-declare DB_FILE_ZIPPED=$DB_FILE".zip"
+declare API_DB_FILE=$DIR_RESOURCES"/api-db"
+declare API_DB_FILE_ZIPPED=$API_DB_FILE".zip"
+declare API_DB_NAME=$2"_"$3"_api"
+declare API_DB_USER=$2"_"$3"_api"
 
 
 # ###############################################################
@@ -88,9 +88,9 @@ _install_source_api()
 	        perl -e "s/API_NAME/"$API_NAME"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_ENVIRONMENT/"$1"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_VERSION/"$2"/g;" -pi $(find $template -type f)
-	        perl -e "s/DB_USER/"$DB_USER"/g;" -pi $(find $template -type f)
-	        perl -e "s/DB_NAME/"$DB_NAME"/g;" -pi $(find $template -type f)
-	        perl -e "s/DB_PWD/"$3"/g;" -pi $(find $template -type f)
+	        perl -e "s/API_DB_USER/"$API_DB_USER"/g;" -pi $(find $template -type f)
+	        perl -e "s/API_DB_NAME/"$API_DB_NAME"/g;" -pi $(find $template -type f)
+	        perl -e "s/API_DB_PWD/"$3"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_PORT/"$4"/g;" -pi $(find $template -type f)
 	done
 
@@ -135,9 +135,9 @@ install_source()
 # Restores db from backup.
 restore_db()
 {
-	unzip -q $DB_FILE_ZIPPED -d $DIR_RESOURCES
-	pg_restore -U $DB_USER -d $DB_NAME $DB_FILE
-	rm $DB_FILE
+	unzip -q $API_DB_FILE_ZIPPED -d $DIR_RESOURCES
+	pg_restore -U $API_DB_USER -d $API_DB_NAME $API_DB_FILE
+	rm $API_DB_FILE
 }
 
 # Restart api.
