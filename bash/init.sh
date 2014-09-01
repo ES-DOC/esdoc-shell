@@ -7,15 +7,16 @@ declare -a initializers=(
 	'init_vars'
 	'run_api'
 	'run_api_db'
-	# 'run_db'
-	# 'run_demo'
+	'run_archive'
+	'run_js_plugin'
 	'run_help'
-	# 'run_mq'
+	'run_mp'
+	'run_pyesdoc'
 	'run_stack'
-	# 'run_tests'
-	# 'run_web'
 )
 for initializer in "${initializers[@]}"
 do
 	source $DIR/bash/$initializer.sh
 done
+
+reset_tmp

@@ -85,8 +85,8 @@ run_api_db_reset()
 {
 	log "DB : resetting ..."
 
-	run_db_uninstall
-	run_db_install
+	run_api_db_uninstall
+	run_api_db_install
 
 	log "DB : reset"
 }
@@ -100,4 +100,37 @@ run_api_db_uninstall()
 	_db_drop_users
 
 	log "DB : uninstalled"
+}
+
+run_api_db_ingest()
+{
+    log "DB: ingesting from pyesdoc archive ..."
+
+	activate_venv api
+
+	python $DIR_JOBS/api/run_db_ingest.py $1 $2
+
+    log "DB: ingested from pyesdoc archive ..."
+}
+
+run_api_db_index()
+{
+    log "DB: indexing document facets ..."
+
+	activate_venv api
+
+	python $DIR_JOBS/api/run_db_index.py
+
+    log "DB: indexed document facets ..."
+}
+
+run_api_db_index_reset()
+{
+    log "DB: resetting and indexing document facets ..."
+
+	activate_venv api
+
+	python $DIR_JOBS/api/run_db_index_reset.py
+
+    log "DB: reset and indexed document facets ..."
 }

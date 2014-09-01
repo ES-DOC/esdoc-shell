@@ -8,7 +8,7 @@ def _main():
     # Start session.
     db.session.start(config.api.db)
 
-    # Get stats.
+    # Create db.
     db.session.create_repo()
 
     # End session.

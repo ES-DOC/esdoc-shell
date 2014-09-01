@@ -8,7 +8,7 @@ cd $DIR
 source $DIR/bash/init.sh
 
 # Invoke action.
-$ACTION $ACTION_ARG $ACTION_SUBARG1 $ACTION_SUBARG2
+$ACTION $ACTION_ARG1 $ACTION_ARG2 $ACTION_ARG3
 
 # End.
 log_banner

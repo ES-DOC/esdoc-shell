@@ -1,3 +1,4 @@
+ops/resources/deployment/db
 ops/logs
 ops/tmp
 ops/venv
