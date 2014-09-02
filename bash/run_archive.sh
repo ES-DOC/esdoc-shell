@@ -11,7 +11,7 @@ _log_archive_location()
 }
 
 # Resets archival directories.
-_reset_archive_directories()
+reset_archive_directories()
 {
 	for DIRECTORY in "${DIRECTORIES[@]}"
 	do
@@ -30,7 +30,7 @@ run_archive_reset()
 	_log_archive_location
 
     declare -a DIRECTORIES=(raw raw_error organized parsed parsed_error)
-    _reset_archive_directories $DIRECTORIES
+    reset_archive_directories $DIRECTORIES
 
     log "archive reset"
 }
@@ -42,7 +42,7 @@ run_archive_seed()
 	_log_archive_location
 
     declare -a DIRECTORIES=(raw_error)
-    _reset_archive_directories $DIRECTORIES
+    reset_archive_directories $DIRECTORIES
 
 	activate_venv pyesdoc
 	python $DIR_JOBS/archive/seed.py $1
@@ -57,7 +57,7 @@ run_archive_organize()
 	_log_archive_location
 
     declare -a DIRECTORIES=(parsed_error)
-    _reset_archive_directories $DIRECTORIES
+    reset_archive_directories $DIRECTORIES
 
 	activate_venv pyesdoc
 	python $DIR_JOBS/archive/organize.py $1
@@ -72,7 +72,7 @@ run_archive_organize_reset()
 	_log_archive_location
 
     declare -a DIRECTORIES=(organized parsed parsed_error)
-    _reset_archive_directories $DIRECTORIES
+    reset_archive_directories $DIRECTORIES
 
 	activate_venv pyesdoc
 	python $DIR_JOBS/archive/organize.py $1

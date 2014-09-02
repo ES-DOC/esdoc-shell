@@ -5,13 +5,13 @@ from pyesdoc import config, db
 
 
 
-def _main(throttle, type_filter):
+def _main(throttle):
     """Main entry point."""
     # Start session.
     db.session.start(config.api.db)
 
     # Ingest documents into db.
-    db.ingest.execute(throttle, type_filter)
+    db.ingest.execute(throttle)
 
     # End session.
     db.session.end()
@@ -27,10 +27,4 @@ if __name__ == '__main__':
     except ValueError:
         raise ValueError("Throttle parameter must be a positive integer value")
 
-    # Unpack type filter.
-    try:
-        type_filter = sys.argv[2]
-    except IndexError:
-        type_filter = None
-
-    _main(throttle, type_filter)
+    _main(throttle)

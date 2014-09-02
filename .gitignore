@@ -1,7 +1,10 @@
+archive
 ops/resources/deployment/db
 ops/logs
 ops/tmp
 ops/venv
 repos
+.esdoc
+.esdoc-backup
 exec.sh.config
 exec.sh.config-backup
