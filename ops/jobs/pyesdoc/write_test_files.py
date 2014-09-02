@@ -39,9 +39,6 @@ def _write_file(dirpath, mod, doc, encoding):
 
 def _main(dirpath):
     """Main entry point."""
-    print dirpath
-    return
-    
     for mod in tt.MODULES:
         doc = tu.get_doc(mod)
         for encoding in pyesdoc.ESDOC_ENCODINGS_FILE:

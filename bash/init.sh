@@ -8,6 +8,7 @@ declare -a initializers=(
 	'run_api'
 	'run_api_db'
 	'run_archive'
+	'run_doc'
 	'run_js_plugin'
 	'run_help'
 	'run_mp'

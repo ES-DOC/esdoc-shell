@@ -12,6 +12,7 @@ run_help()
 		run_help_api
 		run_help_api_db
 		run_help_archive
+		run_help_doc
 		run_help_js_plugin
 		run_help_mp
 	)
@@ -70,6 +71,13 @@ run_help_archive()
 	log "writes parsed documents to file system in a directory structure organized by document type" 2
 	log "archive-organize-reset" 1
 	log "deletes & then rebuilds organized document archive" 2
+}
+
+run_help_doc()
+{
+	log "DOC commands :"
+	log "doc-validate" 1
+	log "validates a document upon local file system" 2
 }
 
 run_help_js_plugin()

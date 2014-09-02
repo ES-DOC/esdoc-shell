@@ -11,5 +11,4 @@ source $DIR/bash/init.sh
 $ACTION $ACTION_ARG1 $ACTION_ARG2 $ACTION_ARG3
 
 # End.
-log_banner
 exit 0

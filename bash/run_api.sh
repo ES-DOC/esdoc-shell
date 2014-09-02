@@ -11,7 +11,7 @@ run_api()
 
 	activate_venv api
 
-	python $DIR_SCRIPTS/jobs/api/run_api.py
+	python $DIR_JOBS/api/run_api.py
 }
 
 # Executes api tests.
