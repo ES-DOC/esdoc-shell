@@ -76,7 +76,8 @@ _install_source_api()
 	cp -r $DIR_REPOS/esdoc-py-client/src/* $API_HOME/app
 
 	# ... copy templates to temp folder
-	cp -r $DIR_RESOURCES/templates/*.* $DIR_TMP
+	cp -r $DIR_RESOURCES/template-*.* $DIR_TMP
+	ls $DIR_TMP
 
 	# ... format templates
 	declare -a templates=(
