@@ -83,6 +83,7 @@ _install_source_api()
 	declare -a templates=(
 	        $DIR_TMP"/template-config.json"
 	        $DIR_TMP"/template-api-httpd.conf"
+	        $DIR_TMP"/template-index.py"
 	)
 	for template in "${templates[@]}"
 	do
@@ -98,6 +99,7 @@ _install_source_api()
 	# ... copy formatted templates
 	mv $DIR_TMP"/template-config.json" $API_HOME/app"/.esdoc"
 	mv $DIR_TMP"/template-api-httpd.conf" $API_HOME"/apache2/conf/httpd.conf"
+	mv $DIR_TMP"/template-index.py" $API_HOME"/htdocs/index.py"
 
 	# ... clear up temp files.
 	reset_tmp
