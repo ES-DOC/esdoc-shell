@@ -1,5 +1,5 @@
 archive
-ops/resources/deployment/db
+ops/resources/deployment/api-db
 ops/logs
 ops/tmp
 ops/venv
