@@ -63,8 +63,8 @@ run_help_api_db()
 run_help_archive()
 {
 	log "Archive commands :"
-	log "archive-seed" 1
-	log "seeds archive with documents pulled from remote sources" 2
+	log "archive-populate" 1
+	log "populates archive with documents pulled from remote sources" 2
 	log "archive-reset" 1
 	log "deletes all document from archive" 2
 	log "archive-organize" 1

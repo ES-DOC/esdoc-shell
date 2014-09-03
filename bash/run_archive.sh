@@ -35,19 +35,34 @@ run_archive_reset()
     log "archive reset"
 }
 
-# Seeds the archive for the first time.
-run_archive_seed()
+# Pulls documents from remote sources into the archive.
+run_archive_populate()
 {
-	log "seeding archive ..."
+	log "populating archive ..."
 	_log_archive_location
 
     declare -a DIRECTORIES=(raw_error)
     reset_archive_directories $DIRECTORIES
 
 	activate_venv pyesdoc
-	python $DIR_JOBS/archive/seed.py $1
+	python $DIR_JOBS/archive/populate.py $1
 
-	log "seeded archive"
+	log "populated archive ..."
+}
+
+# Parses downloaded documents.
+run_archive_parse()
+{
+	log "parsing archive ..."
+	_log_archive_location
+
+    declare -a DIRECTORIES=(parsed_error)
+    reset_archive_directories $DIRECTORIES
+
+	activate_venv pyesdoc
+	python $DIR_JOBS/archive/parse.py $1
+
+	log "parsed archive"
 }
 
 # Organizes the archive for the first time.
