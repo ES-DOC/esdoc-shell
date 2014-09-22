@@ -1,9 +1,12 @@
 {
     "api": {
-        "db": "postgresql://postgres@localhost:5432/esdoc_api"
+        "db": "postgresql://postgres@localhost:5432/esdoc_api",
+        "cookie_secret": "p2FAdrUN3tac",
+        "host": "localhost",
+        "port": 5000
     },
     "archive": {
-        "location": "./documents",
+        "location": "/Users/macg/dev/esdoc/archive",
         "sources": [{
             "name": "metafor-q",
             "description": "Metafor CMIP5 Questionnaire"
@@ -13,6 +16,9 @@
         }, {
             "name": "esdoc-q",
             "description": "ES-DOC Questionnaire"
+        }, {
+            "name": "esmf",
+            "description": "Earth System Modelling Framework"
         }],
         "projects": [{
             "name": "cmip5",
@@ -55,6 +61,14 @@
             "feeds": [{
                 "source": "esdoc-q",
                 "url": "http://questionnaire.es-doc.org/metadata/feed/downscaling",
+                "is_active": true,
+                "encoding": "xml-metafor-cim-v1"
+            }]
+        }, {
+            "name": "test",
+            "feeds": [{
+                "source": "esmf",
+                "url": "http://earthsystemmodeling.org/xml_feed/feed.xml",
                 "is_active": true,
                 "encoding": "xml-metafor-cim-v1"
             }]
