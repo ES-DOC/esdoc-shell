@@ -30,8 +30,9 @@ run_help()
 run_help_api()
 {
 	log "API commands :"
-	log "api" 1
+	log "api [CONTAINER]" 1
 	log "launches api web application" 2
+	log "CONTAINER [ioloop | wsgi] = type of web application container that the API runs under" 2
 	log "api-tests" 1
 	log "executes api automated tests" 2
 	log "api-write-comparator-setup-data" 1
@@ -76,6 +77,10 @@ run_help_archive()
 run_help_doc()
 {
 	log "DOC commands :"
+	log "doc-convert FPATH ENCODING" 1
+	log "FPATH = file path to document being converted" 2
+	log "ENCODING = encoding to which the document will be converted" 2
+	log "converts a document to another encoding" 2
 	log "doc-validate" 1
 	log "validates a document upon local file system" 2
 }

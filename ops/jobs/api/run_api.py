@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
+import sys
+
 import esdoc_api
 
 
-
-def main():
-    """Main entry point."""
-    esdoc_api.run()
-
-
-
-# Main entry point.
-if __name__ == '__main__':
-    main()
+if len(sys.argv) > 1:
+	esdoc_api.run(sys.argv[1])
+else:
+	esdoc_api.run()

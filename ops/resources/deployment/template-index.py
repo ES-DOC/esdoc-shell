@@ -5,7 +5,7 @@ import esdoc_api
 
 def main():
     """Main entry point."""
-    esdoc_api.run()
+    esdoc_api.run('wsgi')
 
 
 

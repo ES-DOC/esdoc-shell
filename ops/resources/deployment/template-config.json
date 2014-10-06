@@ -61,6 +61,14 @@
                 "is_active": true,
                 "encoding": "xml-metafor-cim-v1"
             }]
+        }, {
+            "name": "test",
+            "feeds": [{
+                "source": "esmf",
+                "url": "http://earthsystemmodeling.org/xml_feed/feed.xml",
+                "is_active": true,
+                "encoding": "xml-metafor-cim-v1"
+            }]
         }]
     }
 }
