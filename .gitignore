@@ -1,5 +1,4 @@
 archive
-misc/resources/deployment/api-db
 ops/backups
 ops/config
 ops/data
@@ -7,3 +6,4 @@ ops/logs
 ops/tmp
 ops/venv
 repos
+misc/resources/deployment/api-db
