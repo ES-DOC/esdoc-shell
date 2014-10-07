@@ -30,7 +30,7 @@ _STACK = [
     ('app', 'static_only', 'search'),
     ('app', 'static_only', 'view'),
     ('app', 'static_only', 'demo'),
-    ('app', 'static_only', 'visualize'),
+    # ('app', 'static_only', 'visualize'),
     ('db', 'postgresql', 'api')
 ]
 

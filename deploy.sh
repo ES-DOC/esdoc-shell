@@ -110,6 +110,7 @@ _install_source_static()
 {
 	# ... comparator micro-site
 	cp -r $DIR_REPOS/esdoc-comparator/src/* $DIR_WEBAPPS/$1_$2_compare
+	rm $DIR_WEBAPPS/$1_$2_compare/index-dev.html
 
 	# ... search micro-site
 	cp -r $DIR_REPOS/esdoc-search/src/* $DIR_WEBAPPS/$1_$2_search
