@@ -10,7 +10,7 @@
 
 
 """
-import subprocess, sys, xmlrpclib
+import os, subprocess, sys, xmlrpclib
 from os.path import abspath, join, dirname
 
 
@@ -38,7 +38,7 @@ _STACK = [
 _DIR = dirname(abspath(__file__))
 
 # Home directory.
-_DIR_ESDOC_HOME = dirname(_DIR)
+_DIR_ESDOC_HOME = os.environ['HOME']
 
 # Webapps directory.
 _DIR_WEBAPPS = join(_DIR_ESDOC_HOME, "webapps")
@@ -48,6 +48,8 @@ _EXEC = join(_DIR, "exec.sh")
 
 # Path to deploy.sh.
 _DEPLOY = join(_DIR, "deploy.sh")
+
+print _DIR_ESDOC_HOME, _DIR_WEBAPPS, _DIR, _EXEC, _DEPLOY
 
 
 class DeploymentContext(object):
