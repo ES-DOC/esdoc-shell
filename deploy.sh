@@ -81,7 +81,7 @@ _install_source_api()
 
 	# ... format templates
 	declare -a templates=(
-	        $DIR_TMP"/template-config.json"
+	        $DIR_TMP"/template-esdoc.json"
 	        $DIR_TMP"/template-api-httpd.conf"
 	        $DIR_TMP"/template-index.py"
 	)
@@ -97,7 +97,7 @@ _install_source_api()
 	done
 
 	# ... copy formatted templates
-	mv $DIR_TMP"/template-config.json" $API_HOME/app"/.esdoc"
+	mv $DIR_TMP"/template-esdoc.json" $API_HOME/app"/esdoc.json"
 	mv $DIR_TMP"/template-api-httpd.conf" $API_HOME"/apache2/conf/httpd.conf"
 	mv $DIR_TMP"/template-index.py" $API_HOME"/htdocs/index.py"
 
