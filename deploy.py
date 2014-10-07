@@ -22,8 +22,8 @@ _WEB_FACTION_API_USER_ID = 'esdoc'
 
 # ESDOC stack (type, subtype, name).
 _STACK = [
-    # ('app', 'custom_app_with_port', 'api'),
-    ('app', 'mod_wsgi34-python27', 'api'),
+    ('app', 'custom_app_with_port', 'api'),
+    # ('app', 'mod_wsgi34-python27', 'api'),
     ('app', 'static_only', 'splash'),
     ('app', 'static_only', 'static'),
     ('app', 'static_only', 'compare'),
