@@ -1,10 +1,9 @@
 archive
-ops/resources/deployment/api-db
+misc/resources/deployment/api-db
+ops/backups
+ops/config
+ops/data
 ops/logs
 ops/tmp
 ops/venv
 repos
-.esdoc
-.esdoc-backup
-exec.sh.config
-exec.sh.config-backup

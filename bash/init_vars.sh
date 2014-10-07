@@ -31,9 +31,9 @@ declare -a VENVS=(
 )
 
 # Vars config.
-if [ -a $DIR/exec.sh.config ]; then
+if [ -a $DIR_CONFIG/esdoc.sh ]; then
 	# ... load config.
-	source $DIR/exec.sh.config
+	source $DIR_CONFIG/esdoc.sh
 
 	# ... set default python version.
 	if [ ! $PYTHON_VERSION ]; then

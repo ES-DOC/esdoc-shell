@@ -11,16 +11,16 @@ run_stack_bootstrap()
 	set_working_dir
 
 	log "Initializing configuration"
-	cp $DIR_TEMPLATES/template-config.json $DIR/.esdoc-config
-	cp $DIR_TEMPLATES/template-exec.sh.config $DIR/exec.sh.config
+	cp $DIR_TEMPLATES/template-esdoc.json $DIR_CONFIG/esdoc.json
+	cp $DIR_TEMPLATES/template-esdoc.sh $DIR_CONFIG/esdoc.sh
 
 	log "BOOTSTRAP ENDS"
 
 	log_banner
 	log "IMPORTANT NOTICE"
 	log "The bootstrap process installs 2 config files:" 1
-	log "$DIR/.esdoc-config" 2
-	log "$DIR/exec.sh.config" 2
+	log "$DIR_CONFIG/esdoc.json" 2
+	log "$DIR_CONFIG/esdoc.sh" 2
 	log "Please review and assign settings as appropriate to your " 1
 	log "environemt prior to continuing with the installation process." 1
 	log "IMPORTANT NOTICE ENDS"
@@ -146,11 +146,11 @@ _update_notice()
 	log_banner
 	log "IMPORTANT NOTICE"
 	log "The update process created new config files:" 1
-	log "$HOME/.esdoc" 2
-	log "$DIR/exec.sh.config" 2
-	log "It also created a backup of your old config files:" 1
-	log "$HOME/.esdoc-backup" 2
-	log "$DIR/exec.sh.config-backup" 2
+	log "$DIR_CONFIG/esdoc.json" 2
+	log "$DIR_CONFIG/prodiguer.sh" 2
+	log "It also created a backup of your old config file:" 1
+	log "$DIR_CONFIG/esdoc-backup.json" 2
+	log "$DIR_CONFIG/esdoc-backup.sh" 2
 	log "Please verify your local configuration settings accordingly." 1
 	log "IMPORTANT NOTICE ENDS"
 }
@@ -198,10 +198,13 @@ _update_config()
 {
 	log "Updating configuration"
 
-	cp $HOME/.esdoc $HOME/.esdoc-backup
-	cp $DIR_TEMPLATES/template-config.json $HOME/.esdoc
-	cp $DIR/exec.sh.config $DIR/exec.sh.config-backup
-	cp $DIR_TEMPLATES/template-exec.sh.config $DIR/exec.sh.config
+	# Create backups.
+	cp $DIR_CONFIG/esdoc.json $DIR_CONFIG/esdoc-backup.json
+	cp $DIR_CONFIG/esdoc.sh $DIR_CONFIG/esdoc-backup.sh
+
+	# Copy new config.
+	cp $DIR_TEMPLATES/template-esdoc.json $DIR_CONFIG/esdoc.json
+	cp $DIR_TEMPLATES/template-esdoc.sh $DIR_CONFIG/esdoc.sh
 }
 
 # Updates shell.
