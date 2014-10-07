@@ -6,13 +6,13 @@
 
 declare DIR_BACKUPS=$DIR/ops/backups
 declare DIR_BASH=$DIR/bash
-declare DIR_DEMOS=$DIR/ops/demos
+declare DIR_DEMOS=$DIR/misc/demos
 declare DIR_JOBS=$DIR/ops/jobs
 declare DIR_LOGS=$DIR/ops/logs
 declare DIR_PYTHON=$DIR/ops/venv/python
 declare DIR_REPOS=$DIR/repos
-declare DIR_RESOURCES=$DIR/ops/resources
-declare DIR_TEMPLATES=$DIR/ops/resources/templates
+declare DIR_RESOURCES=$DIR/misc/resources
+declare DIR_TEMPLATES=$DIR/misc/resources/templates
 declare DIR_TMP=$DIR/ops/tmp
 declare DIR_VENV=$DIR/ops/venv
 

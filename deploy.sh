@@ -132,7 +132,7 @@ _install_source_static()
 # Installs source code.
 install_source()
 {
-	_install_source_api $1 $2 $3 $4
+	# _install_source_api $1 $2 $3 $4
 	_install_source_static $1 $2
 }
 

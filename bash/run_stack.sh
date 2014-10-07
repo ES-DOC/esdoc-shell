@@ -11,7 +11,7 @@ run_stack_bootstrap()
 	set_working_dir
 
 	log "Initializing configuration"
-	cp $DIR_TEMPLATES/template-config.json $HOME/.esdoc
+	cp $DIR_TEMPLATES/template-config.json $DIR/.esdoc-config
 	cp $DIR_TEMPLATES/template-exec.sh.config $DIR/exec.sh.config
 
 	log "BOOTSTRAP ENDS"
@@ -19,7 +19,7 @@ run_stack_bootstrap()
 	log_banner
 	log "IMPORTANT NOTICE"
 	log "The bootstrap process installs 2 config files:" 1
-	log "$HOME/.esdoc" 2
+	log "$DIR/.esdoc-config" 2
 	log "$DIR/exec.sh.config" 2
 	log "Please review and assign settings as appropriate to your " 1
 	log "environemt prior to continuing with the installation process." 1
