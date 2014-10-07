@@ -8,12 +8,13 @@
 declare ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
 
 # Set paths.
+declare DIR_HOME=$HOME
+declare DIR_WEBAPPS=$DIR_HOME"/webapps"
+
 declare DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-declare DIR_HOME="$( cd "$( dirname "$DIR" )" && pwd )"
 declare DIR_REPOS=$DIR"/repos"
 declare DIR_RESOURCES=$DIR"/ops/resources/deployment"
 declare DIR_TMP=$DIR"/ops/tmp"
-declare DIR_WEBAPPS=$DIR_HOME"/webapps"
 
 # Set vars:
 declare API_NAME=$2"_"$3"_api"
