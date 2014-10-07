@@ -13,7 +13,7 @@ declare DIR_WEBAPPS=$DIR_HOME"/webapps"
 
 declare DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 declare DIR_REPOS=$DIR"/repos"
-declare DIR_RESOURCES=$DIR"/ops/resources/deployment"
+declare DIR_RESOURCES=$DIR"/misc/resources/deployment"
 declare DIR_TMP=$DIR"/ops/tmp"
 
 # Set vars:
