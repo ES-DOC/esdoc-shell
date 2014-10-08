@@ -11,6 +11,7 @@ run_stack_bootstrap()
 	set_working_dir
 
 	log "Creating ops directories"
+	mkdir -p $DIR_DEFAULT_ARCHIVE
 	mkdir -p $DIR_BACKUPS
 	mkdir -p $DIR_CONFIG
 	mkdir -p $DIR_DAEMONS
@@ -22,6 +23,16 @@ run_stack_bootstrap()
 	log "Initializing configuration"
 	cp $DIR_TEMPLATES/template-esdoc.json $DIR_CONFIG/esdoc.json
 	cp $DIR_TEMPLATES/template-esdoc.sh $DIR_CONFIG/esdoc.sh
+
+	log "Setting default archive location"
+	declare -a targets=(
+	        $DIR_CONFIG/esdoc.json
+	        $DIR_CONFIG/esdoc.sh
+	)
+	for target in "${targets[@]}"
+	do
+	        perl -e "s/DEFAULT_ARCHIVE_LOCATION/"$DIR_DEFAULT_ARCHIVE"/g;" -pi $(find $target -type f)
+	done
 
 	log "BOOTSTRAP ENDS"
 

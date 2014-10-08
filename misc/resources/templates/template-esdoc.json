@@ -6,7 +6,7 @@
         "port": 5000
     },
     "archive": {
-        "location": "/Users/macg/dev/esdoc/archive",
+        "location": "DEFAULT_ARCHIVE_LOCATION",
         "sources": [{
             "name": "metafor-q",
             "description": "Metafor CMIP5 Questionnaire"

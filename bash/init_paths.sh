@@ -4,6 +4,7 @@
 # SECTION: INITIALIZE PATHS
 # ###############################################################
 
+declare DIR_DEFAULT_ARCHIVE=$DIR/archive
 declare DIR_BACKUPS=$DIR/ops/backups
 declare DIR_BASH=$DIR/bash
 declare DIR_CONFIG=$DIR/ops/config

@@ -9,7 +9,7 @@ PYTHON_VERSION=2.7.8
 ## ARCHIVE CONFIG			##
 ##############################
 
-DIR_ARCHIVE=
+DIR_ARCHIVE=DEFAULT_ARCHIVE_LOCATION
 
 ##############################
 ## DB CONFIG				##
