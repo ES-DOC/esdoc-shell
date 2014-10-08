@@ -328,7 +328,7 @@ _actions = {
         (_install_source, "Installing source(s)"),
         (_restore_db, "Restoring database(s)"),
         (_restart_api, "Restarting services"),
-        # (_update_wf_websites, "Updating web faction websites")
+        (_update_wf_websites, "Updating web faction websites")
     ],
     'rollback' : [
         (_declare_stack, "Declaring stack"),
