@@ -103,7 +103,7 @@ _install_source_api()
 
 	# ... copy formatted templates
 	mv $DIR_TMP"/template-esdoc.json" $DIR_CONFIG"/esdoc.json"
-	mv $DIR_TMP"/template-api-supervisord.conf" $DIR_CONFIG"/template-api-supervisord.conf"
+	mv $DIR_TMP"/template-api-supervisord.conf" $DIR_CONFIG"/api-supervisord.conf"
 
 	# ... clear up temp files.
 	reset_tmp
