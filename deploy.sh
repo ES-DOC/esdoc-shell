@@ -15,14 +15,19 @@ declare DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 declare DIR_REPOS=$DIR"/repos"
 declare DIR_RESOURCES=$DIR"/misc/resources/deployment"
 declare DIR_TMP=$DIR"/ops/tmp"
+declare DIR_CONFIG=$DIR"/ops/config"
 
 # Set vars:
-declare API_NAME=$2"_"$3"_api"
+declare RELEASE_TYPE=$2
+declare RELEASE_VERSION=$3
+declare API_NAME=$RELEASE_TYPE"_"$RELEASE_VERSION"_api"
 declare API_HOME=$DIR_WEBAPPS/$API_NAME
 declare API_DB_FILE=$DIR_RESOURCES"/api-db"
 declare API_DB_FILE_ZIPPED=$API_DB_FILE".zip"
-declare API_DB_NAME=$2"_"$3"_api"
-declare API_DB_USER=$2"_"$3"_api"
+declare API_DB_NAME=$RELEASE_TYPE"_"$RELEASE_VERSION"_api"
+declare API_DB_USER=$RELEASE_TYPE"_"$RELEASE_VERSION"_api"
+declare API_DB_PWD=$4
+declare API_PORT=$5
 
 
 # ###############################################################
@@ -83,8 +88,7 @@ _install_source_api()
 	# ... format templates
 	declare -a templates=(
 	        $DIR_TMP"/template-esdoc.json"
-	        $DIR_TMP"/template-api-httpd.conf"
-	        $DIR_TMP"/template-index.py"
+	        $DIR_TMP"/template-api-supervisord.conf"
 	)
 	for template in "${templates[@]}"
 	do
@@ -98,9 +102,8 @@ _install_source_api()
 	done
 
 	# ... copy formatted templates
-	mv $DIR_TMP"/template-esdoc.json" $API_HOME/app"/esdoc.json"
-	mv $DIR_TMP"/template-api-httpd.conf" $API_HOME"/apache2/conf/httpd.conf"
-	mv $DIR_TMP"/template-index.py" $API_HOME"/htdocs/index.py"
+	mv $DIR_TMP"/template-esdoc.json" $DIR_CONFIG"/esdoc.json"
+	mv $DIR_TMP"/template-api-supervisord.conf" $DIR_CONFIG"/template-api-supervisord.conf"
 
 	# ... clear up temp files.
 	reset_tmp
@@ -133,7 +136,7 @@ _install_source_static()
 # Installs source code.
 install_source()
 {
-	# _install_source_api $1 $2 $3 $4
+	_install_source_api $1 $2 $3 $4
 	_install_source_static $1 $2
 }
 
@@ -159,7 +162,7 @@ stop_api()
 
 
 # Invoke action.
-$ACTION $2 $3 $4 $5
+$ACTION $RELEASE_TYPE $RELEASE_VERSION $API_DB_PWD $API_PORT
 
 # Reset temporary folder.
 reset_tmp
