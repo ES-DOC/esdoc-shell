@@ -24,16 +24,6 @@ run_stack_bootstrap()
 	cp $DIR_TEMPLATES/template-esdoc.json $DIR_CONFIG/esdoc.json
 	cp $DIR_TEMPLATES/template-esdoc.sh $DIR_CONFIG/esdoc.sh
 
-	log "Setting default archive location"
-	declare -a targets=(
-        $DIR_CONFIG"/esdoc.json"
-        $DIR_CONFIG"/esdoc.sh"
-	)
-	for target in "${targets[@]}"
-	do
-		perl -e "s/DEFAULT_ARCHIVE_LOCATION/"$DIR_DEFAULT_ARCHIVE"/g;" -pi $(find $target -type f)
-	done
-
 	log "BOOTSTRAP ENDS"
 
 	log_banner

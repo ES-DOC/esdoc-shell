@@ -6,7 +6,7 @@
         "port": 5000
     },
     "archive": {
-        "location": "DEFAULT_ARCHIVE_LOCATION",
+        "location": "./archive",
         "sources": [{
             "name": "metafor-q",
             "description": "Metafor CMIP5 Questionnaire"
