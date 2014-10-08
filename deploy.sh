@@ -88,6 +88,7 @@ _install_source_api()
 	# ... format templates
 	declare -a templates=(
 	        $DIR_TMP"/template-esdoc.json"
+	        $DIR_TMP"/template-esdoc.sh"
 	        $DIR_TMP"/template-api-supervisord.conf"
 	)
 	for template in "${templates[@]}"
@@ -103,6 +104,7 @@ _install_source_api()
 
 	# ... copy formatted templates
 	mv $DIR_TMP"/template-esdoc.json" $DIR_CONFIG"/esdoc.json"
+	mv $DIR_TMP"/template-esdoc.sh" $DIR_CONFIG"/esdoc.sh"
 	mv $DIR_TMP"/template-api-supervisord.conf" $DIR_CONFIG"/api-supervisord.conf"
 
 	# ... clear up temp files.
