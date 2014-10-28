@@ -2,6 +2,10 @@ archive/cmip5
 archive/dcmip-2012
 archive/qed-2013
 archive/test
+archive-1/cmip5
+archive-1/dcmip-2012
+archive-1/qed-2013
+archive-1/test
 ops/backups
 ops/config
 ops/daemons

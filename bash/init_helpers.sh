@@ -26,7 +26,6 @@ activate_venv()
 	fi
 
 	source $DIR_VENV/$1/bin/activate
-	log "Activated virtual environemnt: "$1
 }
 
 # Wraps standard echo by adding PRODIGUER prefix.

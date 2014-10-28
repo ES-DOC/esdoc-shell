@@ -1,5 +1,5 @@
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-alias alias='$DIR/exec.sh'
+DIR_ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+alias esdoc='$DIR_ESDOC_HOME/exec.sh'
 
 alias esdoc-api='esdoc api'
 alias esdoc-api-db-index='esdoc api-db-index'
@@ -8,10 +8,12 @@ alias esdoc-api-db-install='esdoc api-db-install'
 alias esdoc-api-db-reset='esdoc api-db-reset'
 alias esdoc-api-db-uninstall='esdoc api-db-uninstall'
 
-alias esdoc-archive-populate='esdoc archive-populate'
-alias esdoc-archive-reset='esdoc archive-reset'
+alias esdoc-archive-echo='esdoc archive-echo'
 alias esdoc-archive-organize='esdoc archive-organize'
 alias esdoc-archive-organize-reset='esdoc archive-organize-reset'
+alias esdoc-archive-parse='esdoc archive-parse'
+alias esdoc-archive-populate='esdoc archive-populate'
+alias esdoc-archive-reset='esdoc archive-reset'
 
 alias esdoc-doc-validate='esdoc doc-validate'
 alias esdoc-doc-convert='esdoc doc-convert'
@@ -27,3 +29,4 @@ alias esdoc-stack-uninstall='esdoc stack-uninstall'
 
 alias esdoc-help='esdoc help'
 
+alias esdoc-pyesdoc-tests='esdoc pyesdoc-tests'

@@ -1,9 +1,9 @@
 """
-.. module:: archive_organize.py
+.. module:: echo.py
    :copyright: @2013 Earth System Documentation (http://es-doc.org)
    :license: GPL/CeCIL
    :platform: Unix, Windows
-   :synopsis: Organizes document archive.
+   :synopsis: Outputs a document to stdout.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
@@ -16,16 +16,20 @@ import pyesdoc
 
 
 # Define command line options.
-define("organize_limit",
-       default=0,
-       help="Limit upon number of documents to organize (0 = unlimited)",
-       type=int)
-
+define("uid", help="Document unique identifer")
+define("version", help="Document verstion", type=int)
 
 
 def _main():
-    """Main entry point."""
-    pyesdoc.archive.organize(options.organize_limit)
+    """Main entry point.
+
+    """
+    doc = pyesdoc.archive.load(options.uid, options.version)
+
+    if not doc:
+        pyesdoc.rt.log("document not found")
+    else:
+        print doc
 
 
 

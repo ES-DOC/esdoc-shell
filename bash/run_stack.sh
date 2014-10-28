@@ -157,7 +157,7 @@ _update_notice()
 	log "IMPORTANT NOTICE"
 	log "The update process created new config files:" 1
 	log "$DIR_CONFIG/esdoc.json" 2
-	log "$DIR_CONFIG/prodiguer.sh" 2
+	log "$DIR_CONFIG/esdoc.sh" 2
 	log "It also created a backup of your old config file:" 1
 	log "$DIR_CONFIG/esdoc-backup.json" 2
 	log "$DIR_CONFIG/esdoc-backup.sh" 2

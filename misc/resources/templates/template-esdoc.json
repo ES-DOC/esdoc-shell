@@ -3,6 +3,7 @@
         "db": "postgresql://postgres@localhost:5432/esdoc_api",
         "cookie_secret": "p2FAdrUN3tac",
         "host": "localhost",
+        "mode": "test",
         "port": 5000
     },
     "archive": {
@@ -19,6 +20,12 @@
         }, {
             "name": "esmf",
             "description": "Earth System Modelling Framework"
+        }, {
+            "name": "test-unit",
+            "description": "Unit tests",
+        }, {
+            "name": "test",
+            "description": "Client tests",
         }],
         "projects": [{
             "name": "cmip5",

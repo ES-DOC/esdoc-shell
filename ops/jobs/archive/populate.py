@@ -9,24 +9,27 @@
 
 
 """
-# Module imports.
-import sys
+from tornado.options import define, options
 
 import pyesdoc
 
 
+# Define command line options.
+define("populate_limit",
+       default=0,
+       help="Limit upon number of documents to import (0 = unlimited)",
+       type=int)
 
-def _main(throttle):
-    """Main entry point."""
-    try:
-        throttle = int(throttle)
-    except ValueError:
-        msg = "Archive seed throttle must be a positive integer value"
-        raise ValueError(msg)
 
-    pyesdoc.archive.populate(throttle)
+def _main():
+    """Main entry point.
+
+    """
+    pyesdoc.archive.populate(options.populate_limit)
+
 
 
 # Entry point.
 if __name__ == '__main__':
-    _main(0 if len(sys.argv) < 2 else sys.argv[1])
+    options.parse_command_line()
+    _main()
