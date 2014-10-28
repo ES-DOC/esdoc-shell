@@ -93,6 +93,7 @@ _install_source_api()
 	)
 	for template in "${templates[@]}"
 	do
+	        perl -e "s/RELEASE_TYPE/"$RELEASE_TYPE"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_NAME/"$API_NAME"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_ENVIRONMENT/"$1"/g;" -pi $(find $template -type f)
 	        perl -e "s/API_VERSION/"$2"/g;" -pi $(find $template -type f)
