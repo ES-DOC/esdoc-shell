@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-from pyesdoc import config, db
+from pyesdoc import config
+from esdoc_api import db
 
 
 
 def _main():
-    """Main entry point."""
+    """Main entry point.
+
+    """
     # Start session.
     db.session.start(config.api.db)
 
@@ -13,6 +16,7 @@ def _main():
 
     # End session.
     db.session.end()
+
 
 
 # Main entry point.

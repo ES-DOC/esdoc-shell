@@ -11,7 +11,7 @@ run_api()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_api.py $1
+	python $DIR_JOBS/api/run_api.py
 }
 
 # Executes api tests.
@@ -34,7 +34,7 @@ run_api_write_stats()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_write_stats.py $DIR_WEB_STATIC/data
+	python $DIR_JOBS/api/run_write_stats.py --outdir=$DIR_WEB_STATIC/data
 
     log "API : stats written ---> esdoc/repos/esdoc-static/data "
 }
@@ -46,7 +46,7 @@ run_api_write_comparator_setup_data()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_write_comparator_setup.py $DIR_WEB_STATIC/data
+	python $DIR_JOBS/api/run_write_comparator_setup.py --outdir=$DIR_WEB_STATIC/data
 
 	cp $DIR_WEB_STATIC/data/compare.setup*.* $DIR_REPOS/esdoc-js-client/demo
 

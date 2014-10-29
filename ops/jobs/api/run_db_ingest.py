@@ -1,30 +1,31 @@
 # -*- coding: utf-8 -*-
-import sys
+from tornado.options import define, options
 
-from pyesdoc import config, db
+from pyesdoc import config
+from esdoc_api import db
 
 
 
-def _main(throttle):
-    """Main entry point."""
+# Define command line options.
+define("throttle", help="Limit upon number of documents to ingest", type=int, default=0)
+
+
+def _main():
+    """Main entry point.
+
+    """
     # Start session.
     db.session.start(config.api.db)
 
     # Ingest documents into db.
-    db.ingest.execute(throttle)
+    db.ingest.execute(options.throttle)
 
     # End session.
     db.session.end()
 
 
+
 # Main entry point.
 if __name__ == '__main__':
-    # Unpack throttle.
-    try:
-        throttle = int(sys.argv[1])
-    except IndexError:
-        throttle = 0
-    except ValueError:
-        raise ValueError("Throttle parameter must be a positive integer value")
-
-    _main(throttle)
+    options.parse_command_line()
+    _main()

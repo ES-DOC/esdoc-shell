@@ -47,9 +47,9 @@ run_archive_populate()
 	activate_venv pyesdoc
 
 	if [ "$1" ]; then
-		python $DIR_JOBS/archive/populate.py --populate_limit=$1
+		python $DIR_JOBS/archive/run_populate.py --populate_limit=$1
 	else
-		python $DIR_JOBS/archive/populate.py --populate_limit=0
+		python $DIR_JOBS/archive/run_populate.py --populate_limit=0
 	fi
 
 	log "populated archive ..."
@@ -67,9 +67,9 @@ run_archive_organize()
 	activate_venv pyesdoc
 
 	if [ "$1" ]; then
-		python $DIR_JOBS/archive/organize.py --organize_limit=$1
+		python $DIR_JOBS/archive/run_organize.py --organize_limit=$1
 	else
-		python $DIR_JOBS/archive/organize.py --organize_limit=0
+		python $DIR_JOBS/archive/run_organize.py --organize_limit=0
 	fi
 
     log "archive organized"
@@ -85,7 +85,12 @@ run_archive_organize_reset()
     reset_archive_directories $DIRECTORIES
 
 	activate_venv pyesdoc
-	python $DIR_JOBS/archive/organize.py $1
+
+	if [ "$1" ]; then
+		python $DIR_JOBS/archive/run_organize.py --organize_limit=$1
+	else
+		python $DIR_JOBS/archive/run_organize.py --organize_limit=0
+	fi
 
     log "archive reorganized"
 }
@@ -94,5 +99,5 @@ run_archive_organize_reset()
 run_archive_echo()
 {
 	activate_venv pyesdoc
-	python $DIR_JOBS/archive/echo.py --uid=$1 --version=$2
+	python $DIR_JOBS/archive/run_echo.py --uid=$1 --version=$2
 }

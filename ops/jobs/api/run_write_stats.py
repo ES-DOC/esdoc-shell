@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
-import json, os, sys
+import json, os
 
-from pyesdoc import config, db
+from tornado.options import define, options
 
+from pyesdoc import config
+from esdoc_api import db
+
+
+
+# Define command line options.
+define("outdir", help="Path to directory to which to write outputs")
 
 
 def _get_stat(stat):
-    """Returns a stat in dictionary format."""
+    """Returns a stat in dictionary format.
+
+    """
     return {
         "project": stat[1],
         "institute": stat[2],
@@ -15,18 +24,22 @@ def _get_stat(stat):
     }
 
 
-def _write_json(dirpath, stats):
-    """Writes stats in json format."""
-    fpath = os.path.join(dirpath, "doc_stats.json")
+def _write_json(stats):
+    """Writes stats in json format.
+
+    """
+    fpath = os.path.join(options.outdir, "doc_stats.json")
     stats = [_get_stat(s) for s in stats]
 
     with open(fpath, 'w') as io_stream:
         json.dump(stats, io_stream, encoding="ISO-8859-1")
 
 
-def _write_jsonp(dirpath, stats):
-    """Writes stats in jsonp format."""
-    fpath = os.path.join(dirpath, "doc_stats.jsonp")
+def _write_jsonp(stats):
+    """Writes stats in jsonp format.
+
+    """
+    fpath = os.path.join(options.outdir, "doc_stats.jsonp")
     stats = [_get_stat(s) for s in stats]
 
     with open(fpath, 'w') as io_stream:
@@ -35,9 +48,11 @@ def _write_jsonp(dirpath, stats):
         io_stream.write(');')
 
 
-def _write_csv(dirpath, stats):
-    """Writes stats in csv format."""
-    fpath = os.path.join(dirpath, "doc_stats.csv")
+def _write_csv(stats):
+    """Writes stats in csv format.
+
+    """
+    fpath = os.path.join(options.outdir, "doc_stats.csv")
     line_template = "{0}, {1}, {2}, {3}\n"
 
     with open(fpath, 'w') as io_stream:
@@ -47,8 +62,10 @@ def _write_csv(dirpath, stats):
             io_stream.write(line)
 
 
-def _main(dirpath):
-    """Main entry point."""
+def _main():
+    """Main entry point.
+
+    """
     # Start session.
     db.session.start(config.api.db)
 
@@ -60,10 +77,12 @@ def _main(dirpath):
 
     # Write files.
     for writer in (_write_csv, _write_json, _write_jsonp):
-        writer(dirpath, stats)
+        writer(stats)
+
 
 
 # Main entry point.
 if __name__ == '__main__':
-    _main(sys.argv[1])
+    options.parse_command_line()
+    _main()
 

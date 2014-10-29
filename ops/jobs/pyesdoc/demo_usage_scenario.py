@@ -1,9 +1,25 @@
-import sys
+"""
+.. module:: demo_usage_scenario.py
+   :copyright: @2013 Earth System Documentation (http://es-doc.org)
+   :license: GPL/CeCIL
+   :platform: Unix, Windows
+   :synopsis: Demonstrates usage of pyesdoc library
+
+.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
+
+
+"""
+from tornado.options import define, options
+
+
+# Define command line options.
+define("outdir", help="Path to directory to which to write outputs")
+options.parse_command_line()
 
 # Constants.
 _INSTITUTE = 'IPSL'
 _PROJECT = 'CMIP5'
-_OUTPUT_DIR = sys.argv[1]
+_OUTPUT_DIR = options.outdir
 
 
 # **********************************************************************

@@ -7,11 +7,17 @@
 run_doc_validate()
 {
 	activate_venv pyesdoc
-	python $DIR_JOBS/pyesdoc/validate_document.py $1 $2
+
+	if [ "$2" ]; then
+		python $DIR_JOBS/pyesdoc/run_validate_document.py --file=$1 --outfile=$2
+	else
+		python $DIR_JOBS/pyesdoc/run_validate_document.py --file=$1
+	fi
 }
 
 run_doc_convert()
 {
 	activate_venv pyesdoc
-	python $DIR_JOBS/pyesdoc/convert_document.py $1 $2
+
+	python $DIR_JOBS/pyesdoc/run_convert_document.py --file=$1 --encoding=$2
 }

@@ -111,7 +111,11 @@ run_api_db_ingest()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_db_ingest.py $1 $2
+	if [ "$1" ]; then
+		python $DIR_JOBS/api/run_db_ingest.py --throttle=$1
+	else
+		python $DIR_JOBS/api/run_db_ingest.py --throttle=0
+	fi
 
     log "DB: ingested from pyesdoc archive ..."
 }
