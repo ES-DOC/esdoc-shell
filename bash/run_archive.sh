@@ -29,7 +29,7 @@ run_archive_reset()
     log "resetting archive ..."
 	_log_archive_location
 
-    declare -a DIRECTORIES=(raw raw_error organized parsed parsed_error)
+    declare -a DIRECTORIES=(ingested ingested_error organized organized_error parsed parsed_error raw raw_error)
     reset_archive_directories $DIRECTORIES
 
     log "archive reset"
@@ -45,7 +45,12 @@ run_archive_populate()
     reset_archive_directories $DIRECTORIES
 
 	activate_venv pyesdoc
-	python $DIR_JOBS/archive/populate.py --populate_limit=$1
+
+	if [ "$1" ]; then
+		python $DIR_JOBS/archive/populate.py --populate_limit=$1
+	else
+		python $DIR_JOBS/archive/populate.py --populate_limit=0
+	fi
 
 	log "populated archive ..."
 }
@@ -56,11 +61,16 @@ run_archive_organize()
     log "organizing archive ..."
 	_log_archive_location
 
-    declare -a DIRECTORIES=(organized_error)
+    declare -a DIRECTORIES=(parsed_error organized_error)
     reset_archive_directories $DIRECTORIES
 
 	activate_venv pyesdoc
-	python $DIR_JOBS/archive/organize.py --organize_limit=$1
+
+	if [ "$1" ]; then
+		python $DIR_JOBS/archive/organize.py --organize_limit=$1
+	else
+		python $DIR_JOBS/archive/organize.py --organize_limit=0
+	fi
 
     log "archive organized"
 }
@@ -71,7 +81,7 @@ run_archive_organize_reset()
     log "resetting & reorganizing archive ..."
 	_log_archive_location
 
-    declare -a DIRECTORIES=(organized parsed parsed_error)
+    declare -a DIRECTORIES=(organized organized_error parsed parsed_error)
     reset_archive_directories $DIRECTORIES
 
 	activate_venv pyesdoc

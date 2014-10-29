@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
 
-from pyesdoc import db
 import esdoc_api
+from esdoc_api import db
 
 
 
