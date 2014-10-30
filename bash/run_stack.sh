@@ -21,8 +21,8 @@ run_stack_bootstrap()
 	mkdir -p $DIR_VENV
 
 	log "Initializing configuration"
-	cp $DIR_TEMPLATES/template-esdoc.json $DIR_CONFIG/esdoc.json
-	cp $DIR_TEMPLATES/template-esdoc.sh $DIR_CONFIG/esdoc.sh
+	cp $DIR_RESOURCES/user/template-esdoc.json $DIR_CONFIG/esdoc.json
+	cp $DIR_RESOURCES/user/template-esdoc.sh $DIR_CONFIG/esdoc.sh
 
 	log "BOOTSTRAP ENDS"
 
@@ -58,7 +58,7 @@ run_install_venv()
 
     # Build dependencies.
     source $TARGET_VENV/bin/activate
-	declare TARGET_REQUIREMENTS=$DIR_RESOURCES/venv/requirements-$1.txt
+	declare TARGET_REQUIREMENTS=DIR_RESOURCES/venv/requirements-$1.txt
     pip install -q --allow-all-external -r $TARGET_REQUIREMENTS
 
     # Cleanup.
@@ -213,8 +213,8 @@ _update_config()
 	cp $DIR_CONFIG/esdoc.sh $DIR_CONFIG/esdoc-backup.sh
 
 	# Copy new config.
-	cp $DIR_TEMPLATES/template-esdoc.json $DIR_CONFIG/esdoc.json
-	cp $DIR_TEMPLATES/template-esdoc.sh $DIR_CONFIG/esdoc.sh
+	cp $DIR_RESOURCES/user/template-esdoc.json $DIR_CONFIG/esdoc.json
+	cp $DIR_RESOURCES/user/template-esdoc.sh $DIR_CONFIG/esdoc.sh
 }
 
 # Updates shell.

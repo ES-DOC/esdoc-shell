@@ -13,8 +13,7 @@ declare DIR_JOBS=$DIR/ops/jobs
 declare DIR_LOGS=$DIR/ops/logs
 declare DIR_PYTHON=$DIR/ops/venv/python
 declare DIR_REPOS=$DIR/repos
-declare DIR_RESOURCES=$DIR/misc/resources
-declare DIR_TEMPLATES=$DIR/misc/resources/templates
+declare DIR_RESOURCES=$DIR/resources
 declare DIR_TMP=$DIR/ops/tmp
 declare DIR_VENV=$DIR/ops/venv
 
