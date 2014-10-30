@@ -64,7 +64,7 @@ run_install_venv()
 
     # Build dependencies.
     source $TARGET_VENV/bin/activate
-	declare TARGET_REQUIREMENTS=DIR_RESOURCES/venv/requirements-$1.txt
+	declare TARGET_REQUIREMENTS=$DIR_RESOURCES/venv/requirements-$1.txt
     pip install -q --allow-all-external -r $TARGET_REQUIREMENTS
 
     # Cleanup.
