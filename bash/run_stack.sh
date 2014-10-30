@@ -4,6 +4,13 @@
 # SECTION: BOOTSTRAP
 # ###############################################################
 
+# Copies configuration templates from resources to ops/config.
+_copy_config_templates()
+{
+	cp $DIR_RESOURCES/user/template-api.conf $DIR_CONFIG/api.conf
+	cp $DIR_RESOURCES/user/template-pyesdoc.conf $DIR_CONFIG/pyesdoc.conf
+}
+
 # Run stack bootstrapper.
 run_stack_bootstrap()
 {
@@ -21,18 +28,17 @@ run_stack_bootstrap()
 	mkdir -p $DIR_VENV
 
 	log "Initializing configuration"
-	cp $DIR_RESOURCES/user/template-esdoc.json $DIR_CONFIG/esdoc.json
-	cp $DIR_RESOURCES/user/template-esdoc.sh $DIR_CONFIG/esdoc.sh
+	_copy_config_templates
 
 	log "BOOTSTRAP ENDS"
 
 	log_banner
 	log "IMPORTANT NOTICE"
 	log "The bootstrap process installs 2 config files:" 1
-	log "$DIR_CONFIG/esdoc.json" 2
-	log "$DIR_CONFIG/esdoc.sh" 2
+	log "$DIR_CONFIG/api.conf" 2
+	log "$DIR_CONFIG/pyesdoc.conf" 2
 	log "Please review and assign settings as appropriate to your " 1
-	log "environemt prior to continuing with the installation process." 1
+	log "environment prior to continuing with the installation process." 1
 	log "IMPORTANT NOTICE ENDS"
 }
 
@@ -156,11 +162,11 @@ _update_notice()
 	log_banner
 	log "IMPORTANT NOTICE"
 	log "The update process created new config files:" 1
-	log "$DIR_CONFIG/esdoc.json" 2
-	log "$DIR_CONFIG/esdoc.sh" 2
+	log "$DIR_CONFIG/api.conf" 2
+	log "$DIR_CONFIG/pyesdoc.conf" 2
 	log "It also created a backup of your old config file:" 1
-	log "$DIR_CONFIG/esdoc-backup.json" 2
-	log "$DIR_CONFIG/esdoc-backup.sh" 2
+	log "$DIR_CONFIG/api.conf-backup" 2
+	log "$DIR_CONFIG/pyesdoc.conf-backup" 2
 	log "Please verify your local configuration settings accordingly." 1
 	log "IMPORTANT NOTICE ENDS"
 }
@@ -209,12 +215,11 @@ _update_config()
 	log "Updating configuration"
 
 	# Create backups.
-	cp $DIR_CONFIG/esdoc.json $DIR_CONFIG/esdoc-backup.json
-	cp $DIR_CONFIG/esdoc.sh $DIR_CONFIG/esdoc-backup.sh
+	cp $DIR_CONFIG/api.conf $DIR_CONFIG/api.conf-backup
+	cp $DIR_CONFIG/pyesdoc.conf $DIR_CONFIG/pyesdoc.conf-backup
 
 	# Copy new config.
-	cp $DIR_RESOURCES/user/template-esdoc.json $DIR_CONFIG/esdoc.json
-	cp $DIR_RESOURCES/user/template-esdoc.sh $DIR_CONFIG/esdoc.sh
+	_copy_config_templates
 }
 
 # Updates shell.

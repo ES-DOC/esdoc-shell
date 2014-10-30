@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from tornado.options import define, options
 
-from pyesdoc import config
-from esdoc_api import db
+from esdoc_api import db, config
 
 
 
@@ -15,7 +14,7 @@ def _main():
 
     """
     # Start session.
-    db.session.start(config.api.db)
+    db.session.start(config.db)
 
     # Ingest documents into db.
     db.ingest.execute(options.throttle)

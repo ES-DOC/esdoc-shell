@@ -136,7 +136,7 @@ def _do_io(doc):
 	return doc
 
 # ... set output path.
-pyesdoc.set_output_directory(_OUTPUT_DIR)
+pyesdoc.set_option("ouput_dir", _OUTPUT_DIR)
 
 # ... perform document io.
 model = _do_io(model)

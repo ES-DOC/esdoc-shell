@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-from pyesdoc import config
-from esdoc_api import db
+from esdoc_api import db, config
 
 
 
 def _main():
     """Main entry point."""
     # Start session.
-    db.session.start(config.api.db)
+    db.session.start(config.db)
 
     # Index document facets.
     db.index.execute(True)

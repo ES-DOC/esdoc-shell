@@ -66,8 +66,6 @@ run_help_archive()
 	log "Archive commands :"
 	log "archive-populate" 1
 	log "populates archive with documents pulled from remote sources" 2
-	log "archive-reset" 1
-	log "deletes all document from archive" 2
 	log "archive-organize" 1
 	log "writes parsed documents to file system in a directory structure organized by document type" 2
 	log "archive-organize-reset" 1

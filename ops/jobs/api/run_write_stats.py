@@ -3,8 +3,7 @@ import json, os
 
 from tornado.options import define, options
 
-from pyesdoc import config
-from esdoc_api import db
+from esdoc_api import db, config
 
 
 
@@ -67,7 +66,7 @@ def _main():
 
     """
     # Start session.
-    db.session.start(config.api.db)
+    db.session.start(config.db)
 
     # Get stats.
     stats = db.dao.get_document_counts()

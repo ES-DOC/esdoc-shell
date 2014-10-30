@@ -106,9 +106,6 @@ run_api_db_ingest()
 {
     log "DB: ingesting from pyesdoc archive ..."
 
-    declare -a DIRECTORIES=(ingested_error)
-    reset_archive_directories $DIRECTORIES
-
 	activate_venv api
 
 	if [ "$1" ]; then

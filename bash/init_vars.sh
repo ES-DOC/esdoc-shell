@@ -49,9 +49,4 @@ if [ -a $DIR_CONFIG/esdoc.sh ]; then
 	if [ ! $DB_USERNAME ]; then
 		declare DB_USERNAME="postgres"
 	fi;
-
-	# ... set default document archive location.
-	if [ ! $DIR_ARCHIVE ]; then
-		declare DIR_ARCHIVE=$DIR_PYESDOC_SRC/pyesdoc/archive/documents
-	fi;
 fi
