@@ -1,4 +1,5 @@
 ops
 repos
 resources/deployment/api-db
+resources/deployment/api-db-tmp.zip
 resources/archive/raw.zip
