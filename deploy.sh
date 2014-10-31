@@ -82,14 +82,15 @@ _install_source_api()
 	cp -r $DIR_REPOS/esdoc-py-client/src/* $API_HOME/app
 
 	# ... copy templates to temp folder
-	cp -r $DIR_RESOURCES/template-*.* $DIR_TMP
+	cp -r $DIR_RESOURCES/deployment/template-*.* $DIR_TMP
 	ls $DIR_TMP
 
 	# ... format templates
 	declare -a templates=(
-	        $DIR_TMP"/template-esdoc.json"
-	        $DIR_TMP"/template-esdoc.sh"
 	        $DIR_TMP"/template-api-supervisord.conf"
+	        $DIR_TMP"/template-api.conf"
+	        $DIR_TMP"/template-esdoc.sh"
+	        $DIR_TMP"/template-pyesdoc.conf"
 	)
 	for template in "${templates[@]}"
 	do
@@ -104,9 +105,10 @@ _install_source_api()
 	done
 
 	# ... copy formatted templates
-	mv $DIR_TMP"/template-esdoc.json" $DIR_CONFIG"/esdoc.json"
-	mv $DIR_TMP"/template-esdoc.sh" $DIR_CONFIG"/esdoc.sh"
 	mv $DIR_TMP"/template-api-supervisord.conf" $DIR_CONFIG"/api-supervisord.conf"
+	mv $DIR_TMP"/template-api.conf" $DIR_CONFIG"/api.conf"
+	mv $DIR_TMP"/template-esdoc.sh" $DIR_CONFIG"/esdoc.sh"
+	mv $DIR_TMP"/template-pyesdoc.conf" $DIR_CONFIG"/pyesdoc.conf"
 
 	# ... clear up temp files.
 	reset_tmp
