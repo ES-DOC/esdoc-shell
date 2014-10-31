@@ -16,6 +16,10 @@ declare DIR_REPOS=$DIR"/repos"
 declare DIR_RESOURCES=$DIR"/resources/deployment"
 declare DIR_TMP=$DIR"/ops/tmp"
 declare DIR_CONFIG=$DIR"/ops/config"
+declare DIR_VENV=$DIR"/ops/venv"
+
+declare DIR_API_SRC=$DIR_REPOS/esdoc-api/src
+declare DIR_PYESDOC_SRC=$DIR_REPOS/esdoc-py-client/src
 
 # Set vars:
 declare RELEASE_TYPE=$2
@@ -153,16 +157,27 @@ restore_db()
 	rm $API_DB_FILE
 }
 
-# Restart api.
-restart_api()
+# Activate API virtual environment.
+_activate_api_venv()
 {
-	log "TODO - restart api"
+	export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_SRC
+	export PYTHONPATH=$PYTHONPATH:$DIR_API_SRC
+	source $DIR_VENV/api/bin/activate
 }
 
-# Stop api.
-stop_api()
+# Start api daemon.
+start_api_dameon()
 {
-	log "TODO - stop api"
+	_activate_api_venv
+	supervisord -c $DIR_CONFIG/api-supervisord.conf
+}
+
+# Stop api daemon.
+stop_api_dameon()
+{
+	_activate_api_venv
+	supervisorctl -c $DIR_CONFIG/api-supervisord.conf stop api
+	log "TODO - kill supervisord process"
 }
 
 

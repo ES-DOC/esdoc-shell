@@ -14,6 +14,7 @@ import os, subprocess, sys, xmlrpclib
 from os.path import abspath, join, dirname
 
 
+
 # Web faction api url.
 _WEB_FACTION_API_URL = 'https://api.webfaction.com/'
 
@@ -23,14 +24,12 @@ _WEB_FACTION_API_USER_ID = 'esdoc'
 # ESDOC stack (type, subtype, name).
 _STACK = [
     ('app', 'custom_app_with_port', 'api'),
-    # ('app', 'mod_wsgi34-python27', 'api'),
     ('app', 'static_only', 'splash'),
     ('app', 'static_only', 'static'),
     ('app', 'static_only', 'compare'),
     ('app', 'static_only', 'search'),
     ('app', 'static_only', 'view'),
     ('app', 'static_only', 'demo'),
-    # ('app', 'static_only', 'visualize'),
     ('db', 'postgresql', 'api')
 ]
 
@@ -137,19 +136,25 @@ class StackElement(object):
 
 
 def _log(msg, tabs=0):
-    """Outpus a message to logging."""
+    """Outpus a message to logging.
+
+    """
     for _ in range(tabs):
         msg = "\t" + msg
     print "ESDOC - DEPLOY: {0}".format(msg)
 
 
 def _declare_stack(ctx):
-    """Sets the ESDOC webfaction application stack list."""
+    """Sets the ESDOC webfaction application stack list.
+
+    """
     ctx.wf_stack = [StackElement(ctx, i) for i in _STACK]
 
 
 def _set_wf_session(ctx):
-    """Sets the webfactional server session."""
+    """Sets the webfactional server session.
+
+    """
     ctx.wf = xmlrpclib.ServerProxy(_WEB_FACTION_API_URL)
     ctx.wf_session, ctx.wf_account = ctx.wf.login(_WEB_FACTION_API_USER_ID, \
                                                   ctx.wf_pwd, \
@@ -158,7 +163,9 @@ def _set_wf_session(ctx):
 
 
 def _refresh_wf_session(ctx):
-    """Refreshes the webfactional server session."""
+    """Refreshes the webfactional server session.
+
+    """
     ctx.wf_app_list = {}
     for i in ctx.wf.list_apps(ctx.wf_session):
         ctx.wf_app_list[i['name']] = i
@@ -168,13 +175,17 @@ def _refresh_wf_session(ctx):
 
 
 def _set_api_port(ctx):
-    """Assigns the ESDOC api webfaction port number stack."""
+    """Assigns the ESDOC api webfaction port number stack.
+
+    """
     api = StackElement.get_name(ctx, 'api')
     ctx.api_port = str(ctx.wf_app_list[api]['port'])
 
 
 def _create_wf_dbs(ctx):
-    """Creates ESDOC databases upon target webfactional server."""
+    """Creates ESDOC databases upon target webfactional server.
+
+    """
     for elem in [i for i in ctx.wf_stack if i.type == 'db']:
         try:
             ctx.wf.create_db(ctx.wf_session,
@@ -189,7 +200,9 @@ def _create_wf_dbs(ctx):
 
 
 def _create_wf_apps(ctx):
-    """Creates ESDOC apps upon target webfactional server."""
+    """Creates ESDOC apps upon target webfactional server.
+
+    """
     for elem in [i for i in ctx.wf_stack if i.type == 'app']:
         try:
             ctx.wf.create_app(ctx.wf_session,
@@ -205,7 +218,9 @@ def _create_wf_apps(ctx):
 
 
 def _delete_wf_dbs(ctx):
-    """Deletes ESDOC databases from target webfactional server."""
+    """Deletes ESDOC databases from target webfactional server.
+
+    """
     for elem in [i for i in ctx.wf_stack if i.type == 'db']:
         # ... delete db.
         try:
@@ -225,7 +240,9 @@ def _delete_wf_dbs(ctx):
 
 
 def _delete_wf_apps(ctx):
-    """Deletes ESDOC apps from target webfactional server."""
+    """Deletes ESDOC apps from target webfactional server.
+
+    """
     for elem in [i for i in ctx.wf_stack if i.type == 'app']:
         try:
             ctx.wf.delete_app(ctx.wf_session, elem.name)
@@ -236,7 +253,9 @@ def _delete_wf_apps(ctx):
 
 
 def _update_wf_websites(ctx):
-    """Updates the wf websites so that they point to the correct application."""
+    """Updates the wf websites so that they point to the correct application.
+
+    """
     def _can_update(elem):
         """Predicate returning true if a stack element can be updated."""
         return elem.type == 'app' and elem.website in ctx.wf_website_list
@@ -265,7 +284,9 @@ def _update_wf_websites(ctx):
 
 
 def _update_repos(ctx):
-    """Updates source code repositories."""
+    """Updates source code repositories.
+
+    """
     subprocess.call([
         _EXEC,
         "stack-update-repos"
@@ -273,7 +294,9 @@ def _update_repos(ctx):
 
 
 def _install_source(ctx):
-    """Installs source code."""
+    """Installs source code.
+
+    """
     subprocess.call([
         _DEPLOY,
         "install_source",
@@ -285,7 +308,9 @@ def _install_source(ctx):
 
 
 def _restore_db(ctx):
-    """Installs databases from backups."""
+    """Installs databases from backups.
+
+    """
     subprocess.call([
         _DEPLOY,
         "restore_db",
@@ -295,28 +320,32 @@ def _restore_db(ctx):
         ])
 
 
-def _restart_api(ctx):
-    """Restarts API."""
+def _start_api_dameon(ctx):
+    """Starts API daemon.
+
+    """
     subprocess.call([
         _DEPLOY,
-        "restart_api",
+        "start_api_dameon",
         ctx.environment,
         ctx.release_id
         ])
 
 
-def _stop_api(ctx):
-    """Stops API."""
+def _stop_api_dameon(ctx):
+    """Stops API daemon.
+
+    """
     subprocess.call([
         _DEPLOY,
-        "stop_api",
+        "stop_api_dameon",
         ctx.environment,
         ctx.release_id
         ])
 
 
 # Set of actions.
-_actions = {
+_ACTIONS = {
     'rollout' : [
         (_declare_stack, "Declaring stack"),
         (_set_wf_session, "Initialising web faction session"),
@@ -327,13 +356,13 @@ _actions = {
         (_update_repos, "Updating repositories"),
         (_install_source, "Installing source(s)"),
         (_restore_db, "Restoring database(s)"),
-        (_restart_api, "Restarting API"),
+        (_start_api_dameon, "Starting API daemon"),
         (_update_wf_websites, "Updating web faction websites")
     ],
     'rollback' : [
         (_declare_stack, "Declaring stack"),
         (_set_wf_session, "Initialising web faction session"),
-        (_stop_api, "Stopping API"),
+        (_stop_api_dameon, "Stopping API daemon"),
         (_delete_wf_apps, "Deleting apps from web faction server"),
         (_delete_wf_dbs, "Deleting databases from web faction server")
     ]
@@ -341,7 +370,9 @@ _actions = {
 
 
 def _main(action, environment, version, wf_machine, wf_pwd, api_db_pwd):
-    """Main entry point."""
+    """Main entry point.
+
+    """
     # Instantiate processing context.
     ctx = DeploymentContext(environment,
                             version,
@@ -350,7 +381,7 @@ def _main(action, environment, version, wf_machine, wf_pwd, api_db_pwd):
                             api_db_pwd)
 
     # Execute actions.
-    for index, action_info in enumerate(_actions[action]):
+    for index, action_info in enumerate(_ACTIONS[action]):
         func = action_info[0]
         desc = action_info[1]
         msg = "Step {0}. {1}.".format(index, desc)
@@ -362,7 +393,7 @@ def _main(action, environment, version, wf_machine, wf_pwd, api_db_pwd):
 if __name__ == "__main__":
     if len(sys.argv) != 7:
         raise DeploymentError("Expecting 6 deployment arguments.")
-    if sys.argv[1] not in _actions:
+    if sys.argv[1] not in _ACTIONS:
         raise DeploymentError("Deployment method unrecognised.")
 
     _main(sys.argv[1],
