@@ -154,13 +154,13 @@ restore_db()
 # Restart api.
 restart_api()
 {
-	$DIR_WEBAPPS/$API_NAME/apache2/bin/restart
+	log "TODO - restart api"
 }
 
 # Stop api.
 stop_api()
 {
-	$DIR_WEBAPPS/$API_NAME/apache2/bin/stop
+	log "TODO - stop api"
 }
 
 

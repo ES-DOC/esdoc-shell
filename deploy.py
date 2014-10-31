@@ -327,13 +327,13 @@ _actions = {
         (_update_repos, "Updating repositories"),
         (_install_source, "Installing source(s)"),
         (_restore_db, "Restoring database(s)"),
-        (_restart_api, "Restarting services"),
+        (_restart_api, "Restarting API"),
         (_update_wf_websites, "Updating web faction websites")
     ],
     'rollback' : [
         (_declare_stack, "Declaring stack"),
         (_set_wf_session, "Initialising web faction session"),
-        (_stop_api, "Stopping services"),
+        (_stop_api, "Stopping API"),
         (_delete_wf_apps, "Deleting apps from web faction server"),
         (_delete_wf_dbs, "Deleting databases from web faction server")
     ]
