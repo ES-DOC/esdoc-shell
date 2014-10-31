@@ -197,6 +197,7 @@ run_stack_update_repo()
 
 	set_working_dir $DIR_REPOS/$1
 	git pull -q
+	remove_files "*.pyc"
 	set_working_dir
 }
 
@@ -229,6 +230,7 @@ run_stack_update_shell()
 
 	set_working_dir
 	git pull -q
+	remove_files "*.pyc"
 }
 
 # Updates stack.

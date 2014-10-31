@@ -69,3 +69,9 @@ set_working_dir()
 		cd $DIR
 	fi
 }
+
+# Removes all files of passed type in current working directory.
+remove_files()
+{
+	find . -name $1 -exec rm -rf {} \;
+}
