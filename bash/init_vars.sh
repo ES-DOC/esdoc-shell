@@ -37,7 +37,7 @@ if [ -a $DIR_CONFIG/esdoc.sh ]; then
 
 	# ... set default python version.
 	if [ ! $PYTHON_VERSION ]; then
-		declare PYTHON_VERSION="2.7.8"
+		declare PYTHON_VERSION="2.7.9"
 	fi;
 
 	# ... set default db host name.

@@ -68,8 +68,6 @@ run_help_archive()
 	log "populates archive with documents pulled from remote sources" 2
 	log "archive-organize" 1
 	log "writes parsed documents to file system in a directory structure organized by document type" 2
-	log "archive-organize-reset" 1
-	log "deletes & then rebuilds organized document archive" 2
 }
 
 run_help_doc()

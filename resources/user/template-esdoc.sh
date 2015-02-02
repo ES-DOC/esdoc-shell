@@ -3,7 +3,7 @@
 ##############################
 
 # Version of python.
-PYTHON_VERSION=2.7.8
+PYTHON_VERSION=2.7.9
 
 ##############################
 ## DB CONFIG				##
