@@ -34,19 +34,19 @@ declare -a VENVS=(
 if [ -a $DIR_CONFIG/esdoc.sh ]; then
 	# ... load config.
 	source $DIR_CONFIG/esdoc.sh
-
-	# ... set default python version.
-	if [ ! $PYTHON_VERSION ]; then
-		declare PYTHON_VERSION="2.7.9"
-	fi;
-
-	# ... set default db host name.
-	if [ ! $DB_HOSTNAME ]; then
-		declare DB_HOSTNAME="localhost"
-	fi;
-
-	# ... set default db user name.
-	if [ ! $DB_USERNAME ]; then
-		declare DB_USERNAME="postgres"
-	fi;
 fi
+
+# ... set default python version.
+if [ ! $PYTHON_VERSION ]; then
+	declare PYTHON_VERSION="2.7.8"
+fi;
+
+# ... set default db host name.
+if [ ! $DB_HOSTNAME ]; then
+	declare DB_HOSTNAME="localhost"
+fi;
+
+# ... set default db user name.
+if [ ! $DB_USERNAME ]; then
+	declare DB_USERNAME="postgres"
+fi;

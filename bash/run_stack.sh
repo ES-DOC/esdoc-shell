@@ -9,6 +9,7 @@ _copy_config_templates()
 {
 	cp $DIR_RESOURCES/user/template-api.conf $DIR_CONFIG/api.conf
 	cp $DIR_RESOURCES/user/template-pyesdoc.conf $DIR_CONFIG/pyesdoc.conf
+	cp $DIR_RESOURCES/user/template-esdoc.sh $DIR_CONFIG/esdoc.sh
 }
 
 # Run stack bootstrapper.
@@ -34,9 +35,10 @@ run_stack_bootstrap()
 
 	log_banner
 	log "IMPORTANT NOTICE"
-	log "The bootstrap process installs 2 config files:" 1
+	log "The bootstrap process installs 3 config files:" 1
 	log "$DIR_CONFIG/api.conf" 2
 	log "$DIR_CONFIG/pyesdoc.conf" 2
+	log "$DIR_CONFIG/esdoc.sh" 2
 	log "Please review and assign settings as appropriate to your " 1
 	log "environment prior to continuing with the installation process." 1
 	log "IMPORTANT NOTICE ENDS"
