@@ -62,6 +62,7 @@ run_install_venv()
 
     # Initialise venv.
     export PATH=$DIR_PYTHON/bin:$PATH
+	export PYTHONPATH=$PYTHONPATH:$DIR_PYTHON
     virtualenv -q $TARGET_VENV
 
     # Build dependencies.
