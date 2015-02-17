@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import csv, json, os
-from collections import defaultdict
+
+from tornado.options import define, options
 
 from esdoc_api import db, config
 from esdoc_api.utils import rt
 
 
-_OUTPUT_DIR = '/Users/macg/dev/esdoc/repos/esdoc-static/data'
+# Set command line options.
+define("output_dir", help="Output directory", type=str)
 
 
 METAFOR_ESDOC_MODEL_COMPONENT_MAP = {
@@ -128,8 +130,8 @@ def _dump(nodeset, node_type, cols, row_factory, row_predicate=None):
     rows = [row_factory(n) for n in nodeset]
 
     # Dump csv file.
-    fpath = os.path.join(_OUTPUT_DIR, 'cv-dump-{}.csv'.format(node_type)).lower()
-    rt.log_db("dumping {0} --> {1}".format(node_type, fpath).lower())
+    fpath = os.path.join(options.output_dir, 'cv-dump-{}.csv'.format(node_type).lower())
+    rt.log_db("dumping {0} --> {1}".format(node_type, fpath))
     with open(fpath, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=cols)
         writer.writeheader()
@@ -137,8 +139,8 @@ def _dump(nodeset, node_type, cols, row_factory, row_predicate=None):
             writer.writerow(row)
 
     # Dump json file.
-    fpath = os.path.join(_OUTPUT_DIR, 'cv-dump-{}.json'.format(node_type)).lower()
-    rt.log_db("dumping {0} --> {1}".format(node_type, fpath).lower())
+    fpath = os.path.join(options.output_dir, 'cv-dump-{}.json'.format(node_type).lower())
+    rt.log_db("dumping {0} --> {1}".format(node_type, fpath))
     with open(fpath, 'w') as jsonfile:
         jsonfile.write(json.dumps(rows, indent=4))
 
@@ -244,4 +246,5 @@ def _main():
 
 # Main entry point.
 if __name__ == '__main__':
+    options.parse_command_line()
     _main()

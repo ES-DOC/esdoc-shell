@@ -145,7 +145,7 @@ run_api_db_facet_dump()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_db_facet_dump.py
+	python $DIR_JOBS/api/run_db_facet_dump.py --output-dir=$DIR_WEB_STATIC/data
 
     log "DB: reset and indexed document facets ..."
 }
