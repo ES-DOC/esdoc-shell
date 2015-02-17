@@ -7,10 +7,11 @@
 # List of git repos.
 declare -a REPOS=(
 	'esdoc-api'
-	'esdoc-cv'
 	'esdoc-cim'
 	'esdoc-cim-cv'
 	'esdoc-comparator'
+	'esdoc-contrib'
+	'esdoc-cv'
 	'esdoc-docs'
 	'esdoc-js-client'
 	'esdoc-mp'
