@@ -1,6 +1,9 @@
-ops
+ops/config
+ops/daemons
+ops/logs
+ops/tmp
+ops/venv
 repos
 resources/deployment/api-db
 resources/deployment/api-db-tmp.zip
 resources/archive/raw.zip
-.ipynb_checkpoints
