@@ -138,3 +138,14 @@ run_api_db_index_reset()
 
     log "DB: reset and indexed document facets ..."
 }
+
+run_api_db_facet_dump()
+{
+    log "DB: dumping facets to file system ..."
+
+	activate_venv api
+
+	python $DIR_JOBS/api/run_db_facet_dump.py
+
+    log "DB: reset and indexed document facets ..."
+}
