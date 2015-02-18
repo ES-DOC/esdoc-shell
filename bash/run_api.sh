@@ -48,8 +48,8 @@ run_api_write_comparator_setup_data()
 
 	python $DIR_JOBS/api/run_write_comparator_setup.py --outdir=$DIR_WEB_STATIC/data
 
-	cp $DIR_WEB_STATIC/data/compare.setup*.* $DIR_REPOS/esdoc-js-client/demo
+	cp $DIR_WEB_STATIC/data/compare.setup*.* $DIR_WEB_COMPARATOR/src/data
 
     log "API : comparator setup data written ---> esdoc/repos/esdoc-static/data"
-    log "API : comparator setup data written ---> esdoc/repos/esdoc-js-client/demo"
+    log "API : comparator setup data written ---> esdoc/repos/esdoc-comparator/src/data"
 }

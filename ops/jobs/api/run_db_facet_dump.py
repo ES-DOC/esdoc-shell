@@ -3,6 +3,7 @@ import csv, json, os
 
 from tornado.options import define, options
 
+from pyesdoc.extensions.cim.v1.software_model_component_type_map import ESDOC_METAFOR_MODEL_COMPONENT_MAP
 from esdoc_api import db, config
 from esdoc_api.utils import rt
 
@@ -10,84 +11,6 @@ from esdoc_api.utils import rt
 # Set command line options.
 define("output_dir", help="Output directory", type=str)
 
-
-METAFOR_ESDOC_MODEL_COMPONENT_MAP = {
-    # Aerosols
-    'Aerosols': 'Aerosols',
-    'AerosolEmissionAndConc' : 'Aerosols > Emission & Concentration',
-    'AerosolModel' :  'Aerosols > Model',
-    'AerosolTransport' :  'Aerosols > Transport',
-
-    # Atmosphere
-    'Atmosphere': 'Atmosphere',
-    'AtmosConvectTurbulCloud' : 'Atmosphere > Convection Cloud Turbulence',
-    'AtmosCloudScheme' : 'Atmosphere > Convection Cloud Turbulence > Cloud Scheme',
-    'CloudSimulator' : 'Atmosphere > Convection Cloud Turbulence > Cloud Simulator',
-    'AtmosDynamicalCore' : 'Atmosphere > Dynamical Core',
-    'AtmosAdvection' : 'Atmosphere > Dynamical Core > Advection',
-    'AtmosOrographyAndWaves' : 'Atmosphere > Orography & Waves',
-    'AtmosRadiation' : 'Atmosphere > Radiation',
-
-    # Atmospheric Chemistry
-    'AtmosphericChemistry' : 'Atmospheric Chemistry',
-    'AtmChemTransport' : 'Atmospheric Chemistry > Transport',
-    'AtmChemPhotoChemistry' : 'Atmospheric Chemistry > Photo Chemistry',
-    'AtmChemHeterogenChemistry' : 'Atmospheric Chemistry > Heterogen Chemistry',
-    'StratosphericHeterChem' : 'Atmospheric Chemistry > Heterogen Chemistry > Stratospheric',
-    'TroposphericHeterChem' : 'Atmospheric Chemistry > Heterogen Chemistry > Tropospheric',
-    'AtmChemGasPhaseChemistry' : 'Atmospheric Chemistry > Gas Phase Chemistry',
-    'AtmChemEmissionAndConc' : 'Atmospheric Chemistry > Emission & Concentration',
-
-    # Land Ice
-    'LandIce' : 'Land Ice',
-    'LandIceGlaciers' : 'Land Ice > Glaciers',
-    'LandIceSheet' : 'Land Ice > Sheet',
-    'IceSheetDynamics' : 'Land Ice > Sheet > IceSheetDynamics',
-    'LandIceShelves' : 'Land Ice > Shelves',
-    'LandIceShelvesDynamics' : 'Land Ice > Shelves > LandIceShelvesDynamics',
-
-    # Land Surface
-    'LandSurface' : 'Land Surface',
-    'LandSurfaceAlbedo' : 'Land Surface > Albedo',
-    'LandSurfaceCarbonCycle' : 'Land Surface > Carbon Cycle',
-    'LandSurfaceEnergyBalance' : 'Land Surface > Energy Balance',
-    'VegetationCarbonCycle' : 'Land Surface > Carbon Cycle > Vegetation',
-    'LandSurfaceLakes' : 'Land Surface > Lakes',
-    'LandSurfaceSnow' : 'Land Surface > Snow',
-    'LandSurfaceSoil' : 'Land Surface > Soil',
-    'LandSurfaceVegetation' : 'Land Surface > Vegetation',
-    'LandSurfSoilHeatTreatment' : 'Land Surface > Soil > Heat Treatment',
-    'LandSurfSoilHydrology' : 'Land Surface > Soil > Hydrology',
-    'RiverRouting': 'Land Surface > RiverRouting',
-
-    # Ocean
-    'Ocean' : 'Ocean',
-    'OceanAdvection' : 'Ocean > Advection',
-    'OceanBoundaryForcing' : 'Ocean > Boundary Forcing',
-    'OceanBoundForcingTracers' : 'Ocean > Boundary Forcing > Tracers',
-    'OceanInteriorMixing' : 'Ocean > Vertical Physics > Interior Mixing',
-    'OceanLateralPhysics' : 'Ocean > Lateral Physics',
-    'OceanLateralPhysMomentum' : 'Ocean > Lateral Physics > Momentum',
-    'OceanLateralPhysTracers' : 'Ocean > Lateral Physics > Tracers',
-    'OceanMixedLayer' : 'Ocean > Vertical Physics > Mixed Layer',
-    'OceanUpAndLowBoundaries' : 'Ocean > Up & Low Boundaries',
-    'OceanVerticalPhysics' : 'Ocean > Vertical Physics',
-
-    # Ocean Bio-Geo Chemistry
-    'OceanBiogeoChemistry' : 'Ocean Bio-Geo Chemistry',
-    'OceanBioBoundaryForcing' : 'Ocean Bio-Geo Chemistry > Boundary Forcing',
-    'OceanBioChemistry' : 'Ocean Bio-Geo Chemistry > Chemistry',
-    'OceanBioGasExchange' : 'Ocean Bio-Geo Chemistry > Gas Exchange',
-    'OceanBioTracers' : 'Ocean Bio-Geo Chemistry > Tracers',
-    'OceanBioTracersEcosystem' : 'Ocean Bio-Geo Chemistry > Tracers > Ecosystem',
-
-    # Sea Ice
-    'SeaIce' : 'Sea Ice',
-    'SeaIceDynamics' : 'Sea Ice > Dynamics',
-    'SeaIceThermodynamics' : 'Sea Ice > Thermodynamics'
-}
-ESDOC_METAFOR_MODEL_COMPONENT_MAP = \
-    {v: k for k, v in METAFOR_ESDOC_MODEL_COMPONENT_MAP.items()}
 
 
 def _get_nodeset():
