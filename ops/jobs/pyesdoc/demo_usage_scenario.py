@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 .. module:: demo_usage_scenario.py
    :copyright: @2013 Earth System Documentation (http://es-doc.org)
@@ -136,7 +138,7 @@ def _do_io(doc):
 	return doc
 
 # ... set output path.
-pyesdoc.set_option("ouput_dir", _OUTPUT_DIR)
+pyesdoc.set_option("output_dir", _OUTPUT_DIR)
 
 # ... perform document io.
 model = _do_io(model)

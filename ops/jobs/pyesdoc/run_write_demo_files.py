@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 .. module:: write_demo_files.py
    :copyright: @2013 Earth System Documentation (http://es-doc.org)
