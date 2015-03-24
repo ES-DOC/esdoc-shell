@@ -28,3 +28,5 @@ alias esdoc-stack-uninstall='esdoc stack-uninstall'
 alias esdoc-help='esdoc help'
 
 alias esdoc-pyesdoc-tests='esdoc pyesdoc-tests'
+
+alias esdoc-js-plugin-compile='esdoc js-plugin-compile'

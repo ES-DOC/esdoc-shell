@@ -1,4 +1,5 @@
-#! /usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 .. module:: deploy.py
    :copyright: @2013 Earth System Documentation (http://es-doc.org)
