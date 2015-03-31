@@ -1,6 +1,8 @@
+# Root alias.
 DIR_ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 alias esdoc='$DIR_ESDOC_HOME/exec.sh'
 
+# API operations.
 alias esdoc-api='esdoc api'
 alias esdoc-api-db-index='esdoc api-db-index'
 alias esdoc-api-db-index-reset='esdoc api-db-index-reset'
@@ -9,15 +11,19 @@ alias esdoc-api-db-install='esdoc api-db-install'
 alias esdoc-api-db-reset='esdoc api-db-reset'
 alias esdoc-api-db-uninstall='esdoc api-db-uninstall'
 
+# Archive operations.
 alias esdoc-archive-echo='esdoc archive-echo'
 alias esdoc-archive-organize='esdoc archive-organize'
 alias esdoc-archive-populate='esdoc archive-populate'
 
+# Document operations.
 alias esdoc-doc-validate='esdoc doc-validate'
 alias esdoc-doc-convert='esdoc doc-convert'
 
+# Meta-programming operations.
 alias esdoc-mp='esdoc mp'
 
+# Stack operations.
 alias esdoc-stack-install='esdoc stack-install'
 alias esdoc-stack-update='esdoc stack-update'
 alias esdoc-stack-update-shell='esdoc stack-update-shell'
@@ -25,8 +31,12 @@ alias esdoc-stack-update-repos='esdoc stack-update-repos'
 alias esdoc-stack-update-venvs='esdoc stack-update-venvs'
 alias esdoc-stack-uninstall='esdoc stack-uninstall'
 
+# Help.
 alias esdoc-help='esdoc help'
 
 alias esdoc-pyesdoc-tests='esdoc pyesdoc-tests'
 
 alias esdoc-js-plugin-compile='esdoc js-plugin-compile'
+
+# Deployment operations.
+alias esdoc-shells-view='ps -ef | grep esdoc/shells'

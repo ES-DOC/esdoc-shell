@@ -1,8 +1,6 @@
 arrow
 feedparser
 ipython
-ipython[notebook]
-ipython[parallel]
 lxml
 nose
 requests
