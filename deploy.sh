@@ -166,18 +166,18 @@ _activate_api_venv()
 }
 
 # Start api daemon.
-start_api_dameon()
+start_api_daemon()
 {
 	_activate_api_venv
 	supervisord -c $DIR_CONFIG/api-supervisord.conf
 }
 
 # Stop api daemon.
-stop_api_dameon()
+stop_api_daemon()
 {
 	_activate_api_venv
 	supervisorctl -c $DIR_CONFIG/api-supervisord.conf stop api
-	log "TODO - kill supervisord process"
+	supervisorctl -c $DIR_CONFIG/api-supervisord.conf shutdown
 }
 
 

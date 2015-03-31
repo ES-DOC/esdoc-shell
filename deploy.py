@@ -321,25 +321,25 @@ def _restore_db(ctx):
         ])
 
 
-def _start_api_dameon(ctx):
+def _start_api_daemon(ctx):
     """Starts API daemon.
 
     """
     subprocess.call([
         _DEPLOY,
-        "start_api_dameon",
+        "start_api_daemon",
         ctx.environment,
         ctx.release_id
         ])
 
 
-def _stop_api_dameon(ctx):
+def _stop_api_daemon(ctx):
     """Stops API daemon.
 
     """
     subprocess.call([
         _DEPLOY,
-        "stop_api_dameon",
+        "stop_api_daemon",
         ctx.environment,
         ctx.release_id
         ])
@@ -357,13 +357,13 @@ _ACTIONS = {
         (_update_repos, "Updating repositories"),
         (_install_source, "Installing source(s)"),
         (_restore_db, "Restoring database(s)"),
-        (_start_api_dameon, "Starting API daemon"),
+        (_start_api_daemon, "Starting API daemon"),
         (_update_wf_websites, "Updating web faction websites")
     ],
     'rollback' : [
         (_declare_stack, "Declaring stack"),
         (_set_wf_session, "Initialising web faction session"),
-        (_stop_api_dameon, "Stopping API daemon"),
+        (_stop_api_daemon, "Stopping API daemon"),
         (_delete_wf_apps, "Deleting apps from web faction server"),
         (_delete_wf_dbs, "Deleting databases from web faction server")
     ]
