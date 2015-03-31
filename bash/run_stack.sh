@@ -31,6 +31,10 @@ run_stack_bootstrap()
 	log "Initializing configuration"
 	_copy_config_templates
 
+	log "Setting shell script permissions"
+	chmod a+x $DIR/exec.sh
+	chmod a+x $DIR/deploy.sh
+
 	log "BOOTSTRAP ENDS"
 
 	log_banner
