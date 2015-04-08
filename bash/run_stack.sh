@@ -191,6 +191,7 @@ run_stack_update_venv()
 run_stack_update_venvs()
 {
 	export PATH=$DIR_PYTHON/bin:$PATH
+	export PYTHONPATH=$PYTHONPATH:$DIR_PYTHON
 	for venv in "${VENVS[@]}"
 	do
 		run_stack_update_venv $venv
