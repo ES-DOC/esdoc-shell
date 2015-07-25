@@ -14,10 +14,10 @@ run_mp()
 	activate_venv mp
 	python "$DIR_MP/esdoc_mp" -s $ontology -v $version -l $language -o $DIR_TMP
 
-	cp -r "$DIR_TMP/$ontology/v$version" "$DIR_PYESDOC_SRC/pyesdoc/ontologies/$ontology"
+	cp -r "$DIR_TMP/$ontology/v$version" "$DIR_PYESDOC/pyesdoc/ontologies/$ontology"
 
-	find $DIR_PYESDOC_SRC -type f -name "*.pyc" -exec rm -f {} \;
-	find $DIR_PYESDOC_SRC -type f -name "*.pye" -exec rm -f {} \;
+	find $DIR_PYESDOC -type f -name "*.pyc" -exec rm -f {} \;
+	find $DIR_PYESDOC -type f -name "*.pye" -exec rm -f {} \;
 }
 
 # Executes meta-programming tests.

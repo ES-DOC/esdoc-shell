@@ -17,15 +17,13 @@ declare DIR_RESOURCES=$DIR/resources
 declare DIR_TMP=$DIR/ops/tmp
 declare DIR_VENV=$DIR/ops/venv
 
-declare DIR_API=$DIR_REPOS/esdoc_api
-declare DIR_API_SRC=$DIR_REPOS/esdoc-api/src
+declare DIR_API=$DIR_REPOS/esdoc-api
 declare DIR_API_TESTS=$DIR_REPOS/esdoc-api/tests
 
 declare DIR_MP=$DIR_REPOS/esdoc-mp
 declare DIR_MP_TESTS=$DIR_REPOS/esdoc-mp/tests
 
 declare DIR_PYESDOC=$DIR_REPOS/esdoc-py-client
-declare DIR_PYESDOC_SRC=$DIR_REPOS/esdoc-py-client/src
 declare DIR_PYESDOC_TESTS=$DIR_REPOS/esdoc-py-client/tests
 
 declare DIR_QTN_SRC=$DIR_REPOS/esdoc-questionnaire/src

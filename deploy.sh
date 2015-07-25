@@ -18,8 +18,8 @@ declare DIR_TMP=$DIR"/ops/tmp"
 declare DIR_CONFIG=$DIR"/ops/config"
 declare DIR_VENV=$DIR"/ops/venv"
 
-declare DIR_API_SRC=$DIR_REPOS/esdoc-api/src
-declare DIR_PYESDOC_SRC=$DIR_REPOS/esdoc-py-client/src
+declare DIR_API=$DIR_REPOS/esdoc-api
+declare DIR_PYESDOC=$DIR_REPOS/esdoc-py-client
 
 # Set vars:
 declare RELEASE_TYPE=$2
@@ -160,8 +160,8 @@ restore_db()
 # Activate API virtual environment.
 _activate_api_venv()
 {
-	export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_SRC
-	export PYTHONPATH=$PYTHONPATH:$DIR_API_SRC
+	export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC
+	export PYTHONPATH=$PYTHONPATH:$DIR_API
 	source $DIR_VENV/api/bin/activate
 }
 

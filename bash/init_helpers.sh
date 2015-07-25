@@ -8,8 +8,8 @@
 activate_venv()
 {
 	if [ $1 = "api" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_SRC
-		export PYTHONPATH=$PYTHONPATH:$DIR_API_SRC
+		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC
+		export PYTHONPATH=$PYTHONPATH:$DIR_API
 		export PYTHONPATH=$PYTHONPATH:$DIR_API_TESTS
 
 	elif [ $1 = "qtn" ]; then
@@ -21,7 +21,6 @@ activate_venv()
 
 	elif [ $1 = "pyesdoc" ]; then
 		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC
-		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_SRC
 		export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC_TESTS
 	fi
 
