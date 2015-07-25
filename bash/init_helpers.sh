@@ -16,7 +16,7 @@ activate_venv()
 		export PYTHONPATH=$PYTHONPATH:$DIR_QTN_SRC
 
 	elif [ $1 = "mp" ]; then
-		export PYTHONPATH=$PYTHONPATH:$DIR_MP_SRC
+		export PYTHONPATH=$PYTHONPATH:$DIR_MP
 		export PYTHONPATH=$PYTHONPATH:$DIR_MP_TESTS
 
 	elif [ $1 = "pyesdoc" ]; then

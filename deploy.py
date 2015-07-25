@@ -49,8 +49,6 @@ _EXEC = join(_DIR, "exec.sh")
 # Path to deploy.sh.
 _DEPLOY = join(_DIR, "deploy.sh")
 
-print _DIR_ESDOC_HOME, _DIR_WEBAPPS, _DIR, _EXEC, _DEPLOY
-
 
 class DeploymentContext(object):
     """Encapsulates deployment contextual information.

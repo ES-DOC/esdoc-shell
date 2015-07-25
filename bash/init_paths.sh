@@ -21,7 +21,7 @@ declare DIR_API=$DIR_REPOS/esdoc_api
 declare DIR_API_SRC=$DIR_REPOS/esdoc-api/src
 declare DIR_API_TESTS=$DIR_REPOS/esdoc-api/tests
 
-declare DIR_MP_SRC=$DIR_REPOS/esdoc-mp/src
+declare DIR_MP=$DIR_REPOS/esdoc-mp
 declare DIR_MP_TESTS=$DIR_REPOS/esdoc-mp/tests
 
 declare DIR_PYESDOC=$DIR_REPOS/esdoc-py-client

@@ -12,7 +12,7 @@ run_mp()
 	declare language=$3
 
 	activate_venv mp
-	python "$DIR_MP_SRC/esdoc_mp" -s $ontology -v $version -l $language -o $DIR_TMP
+	python "$DIR_MP/esdoc_mp" -s $ontology -v $version -l $language -o $DIR_TMP
 
 	cp -r "$DIR_TMP/$ontology/v$version" "$DIR_PYESDOC_SRC/pyesdoc/ontologies/$ontology"
 
@@ -37,7 +37,7 @@ run_mp_custom_schema()
 
 	log "Step 1.  Running mp utility"
 	activate_venv mp
-	python "$DIR_MP_SRC/esdoc_mp" -s "test" -v "1" -l "python" -o $DIR_TMP
+	python "$DIR_MP/esdoc_mp" -s "test" -v "1" -l "python" -o $DIR_TMP
 
 	log "Generated files @ "$DIR_TMP
 }
