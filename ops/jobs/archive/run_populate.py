@@ -17,17 +17,16 @@ import pyesdoc
 
 
 # Define command line options.
-define("populate_limit",
-       default=0,
-       help="Limit upon number of documents to import (0 = unlimited)",
-       type=int)
+define("throttle", help="Limit upon number of documents to populate", type=int, default=0)
+define("project", help="Project code of documents to be populated", type=str, default=None)
+
 
 
 def _main():
     """Main entry point.
 
     """
-    pyesdoc.archive.populate(options.populate_limit)
+    pyesdoc.archive.populate(options.throttle, options.project)
 
 
 

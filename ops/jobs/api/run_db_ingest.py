@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
-from tornado.options import define, options
-
 from esdoc_api import db, config
 
-
-
-# Define command line options.
-define("throttle", help="Limit upon number of documents to ingest", type=int, default=0)
 
 
 def _main():
@@ -17,7 +11,7 @@ def _main():
     db.session.start(config.db)
 
     # Ingest documents into db.
-    db.ingest.execute(options.throttle)
+    db.ingest.execute()
 
     # End session.
     db.session.end()
@@ -26,5 +20,4 @@ def _main():
 
 # Main entry point.
 if __name__ == '__main__':
-    options.parse_command_line()
     _main()

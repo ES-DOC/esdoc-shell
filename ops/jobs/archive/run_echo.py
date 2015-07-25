@@ -26,13 +26,11 @@ def _main():
     """Main entry point.
 
     """
-    doc = pyesdoc.archive.load(options.uid, options.version)
-
-    if not doc:
+    document = pyesdoc.archive.load(options.uid, options.version)
+    if not document:
         pyesdoc.rt.log("document not found")
     else:
-        print doc
-
+        print document
 
 
 # Entry point.

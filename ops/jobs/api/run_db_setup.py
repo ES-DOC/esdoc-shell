@@ -17,7 +17,6 @@ def _main():
     db.session.end()
 
 
-
 # Main entry point.
 if __name__ == '__main__':
     _main()

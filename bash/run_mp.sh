@@ -7,16 +7,15 @@
 # Executes meta-programming build process.
 run_mp()
 {
-    log "running mp build ..."
+	declare ontology=$1
+	declare version=$2
+	declare language=$3
 
-	log "Step 1.  Running mp utility"
 	activate_venv mp
-	python "$DIR_MP_SRC/esdoc_mp" -s "cim" -v "1" -l "python" -o $DIR_TMP
+	python "$DIR_MP_SRC/esdoc_mp" -s $ontology -v $version -l $language -o $DIR_TMP
 
-	log "Step 2.  Copying generated files to pyesdoc"
-	cp -r "$DIR_TMP/cim/v1" "$DIR_PYESDOC_SRC/pyesdoc/ontologies/cim"
+	cp -r "$DIR_TMP/$ontology/v$version" "$DIR_PYESDOC_SRC/pyesdoc/ontologies/$ontology"
 
-	log "Step 3.  Cleaning up"
 	find $DIR_PYESDOC_SRC -type f -name "*.pyc" -exec rm -f {} \;
 	find $DIR_PYESDOC_SRC -type f -name "*.pye" -exec rm -f {} \;
 }

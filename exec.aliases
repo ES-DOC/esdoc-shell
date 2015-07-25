@@ -10,10 +10,10 @@ alias esdoc-api-db-ingest='esdoc api-db-ingest'
 alias esdoc-api-db-install='esdoc api-db-install'
 alias esdoc-api-db-reset='esdoc api-db-reset'
 alias esdoc-api-db-uninstall='esdoc api-db-uninstall'
+alias esdoc-api-db-insert-project='esdoc api-db-insert-project'
 
 # Archive commands.
 alias esdoc-archive-echo='esdoc archive-echo'
-alias esdoc-archive-organize='esdoc archive-organize'
 alias esdoc-archive-populate='esdoc archive-populate'
 
 # Document commands.

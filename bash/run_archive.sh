@@ -12,20 +12,15 @@ run_archive_echo()
 	python $DIR_JOBS/archive/run_echo.py --uid=$1 --version=$2
 }
 
-# Organizes the archive for the first time.
-run_archive_organize()
+# Deletes ingest files from the archive.
+_run_archive_delete_ingest_files()
 {
-    log "organizing archive ..."
+    log "deleting ingest files from archive ..."
 
 	activate_venv pyesdoc
+	python $DIR_JOBS/archive/run_delete_ingest_files.py
 
-	if [ "$1" ]; then
-		python $DIR_JOBS/archive/run_organize.py --organize_limit=$1
-	else
-		python $DIR_JOBS/archive/run_organize.py --organize_limit=0
-	fi
-
-    log "archive organized"
+    log "deleted ingest files from archive ..."
 }
 
 # Pulls documents from remote sources into the archive.
@@ -33,13 +28,19 @@ run_archive_populate()
 {
 	log "populating archive ..."
 
-	activate_venv pyesdoc
-
 	if [ "$1" ]; then
-		python $DIR_JOBS/archive/run_populate.py --populate_limit=$1
+		declare throttle=$1
 	else
-		python $DIR_JOBS/archive/run_populate.py --populate_limit=0
+		declare throttle=0
 	fi
+	if [ "$2" ]; then
+		declare project=$2
+	else
+		declare project=""
+	fi
+
+	activate_venv pyesdoc
+	python $DIR_JOBS/archive/run_populate.py --throttle=$throttle --project=$project
 
 	log "populated archive ..."
 }
