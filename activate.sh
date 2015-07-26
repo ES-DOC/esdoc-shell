@@ -47,7 +47,8 @@ alias esdoc-help='esdoc help'
 
 # Deployment commands.
 alias esdoc-shells-view='ps -ef | grep esdoc/shells'
-alias esdoc-deploy=$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/deploy.py'
+alias esdoc-rollback=$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/bash/deploy.py rollback'
+alias esdoc-rollout=$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/bash/deploy.py rollout'
 
 # Misc commands.
 alias esdoc-pyesdoc-tests='esdoc pyesdoc-tests'
