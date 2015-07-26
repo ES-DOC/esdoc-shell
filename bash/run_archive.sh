@@ -44,3 +44,11 @@ run_archive_populate()
 
 	log "populated archive ..."
 }
+
+run_archive_compress()
+{
+	set_working_dir $DIR_RESOURCES/archive
+	rm -rf docs_*
+	tar cz esdoc | split -b 10m - docs_
+	set_working_dir
+}
