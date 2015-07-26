@@ -7,11 +7,15 @@
 # Set action.
 declare ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
 
+# Set root path.
+declare DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd ..
+declare DIR="$( pwd )"
+
 # Set paths.
 declare DIR_HOME=$HOME
 declare DIR_WEBAPPS=$DIR_HOME"/webapps"
 
-declare DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 declare DIR_REPOS=$DIR"/repos"
 declare DIR_RESOURCES=$DIR"/resources/deployment"
 declare DIR_TMP=$DIR"/ops/tmp"

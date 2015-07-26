@@ -5,7 +5,7 @@ DIR_ESDOC_API=$DIR_ESDOC_HOME/repos/esdoc-api
 DIR_ESDOC_STATIC=$DIR_ESDOC_HOME/repos/esdoc-static
 
 # Root alias.
-alias esdoc=$DIR_ESDOC_HOME'/exec.sh'
+alias esdoc=$DIR_ESDOC_HOME'/bash/exec.sh'
 
 # API commands.
 alias esdoc-api='esdoc api'

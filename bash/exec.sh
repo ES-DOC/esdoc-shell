@@ -1,8 +1,11 @@
 #!/bin/bash
 
 # Set root path.
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $DIR
+declare DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd ..
+declare DIR="$( pwd )"
+
+echo $DIR
 
 # Initialise shell.
 source $DIR/bash/init.sh
