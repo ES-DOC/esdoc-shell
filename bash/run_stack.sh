@@ -33,7 +33,7 @@ run_stack_bootstrap()
 
 	log "Setting shell script permissions"
 	chmod a+x $DIR/exec.sh
-	chmod a+x $DIR/deploy.sh
+	chmod a+x $DIR_BASH/deploy.sh
 
 	log "BOOTSTRAP ENDS"
 }
