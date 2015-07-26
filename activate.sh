@@ -32,12 +32,13 @@ alias esdoc-doc-convert='esdoc doc-convert'
 alias esdoc-mp='esdoc mp'
 
 # Stack commands.
-alias esdoc-stack-bootstrap='esdoc stack-bootstrap'
+alias esdoc-stack-bootstrap='esdoc stack-bootstrap-with-notice'
 alias esdoc-stack-install='esdoc stack-install'
 alias esdoc-stack-update='esdoc stack-update'
 alias esdoc-stack-update-shell='esdoc stack-update-shell'
 alias esdoc-stack-update-repo='esdoc stack-update-repo'
 alias esdoc-stack-update-repos='esdoc stack-update-repos'
+alias esdoc-stack-update-source='esdoc stack-update-source'
 alias esdoc-stack-update-venv='esdoc stack-update-venv'
 alias esdoc-stack-update-venvs='esdoc stack-update-venvs'
 alias esdoc-stack-uninstall='esdoc stack-uninstall'
@@ -45,10 +46,13 @@ alias esdoc-stack-uninstall='esdoc stack-uninstall'
 # Help commands.
 alias esdoc-help='esdoc help'
 
-# Deployment commands.
+# ???.
 alias esdoc-shells-view='ps -ef | grep esdoc/shells'
-alias esdoc-rollback=$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/bash/deploy.py rollback'
-alias esdoc-rollout=$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/bash/deploy.py rollout'
+
+# Deployment commands.
+alias esdoc-deploy-install='esdoc stack-bootstrap && esdoc-stack-install'
+alias esdoc-deploy-rollback=$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/bash/deploy.py rollback'
+alias esdoc-deploy-rollout=$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/bash/deploy.py rollout'
 
 # Misc commands.
 alias esdoc-pyesdoc-tests='esdoc pyesdoc-tests'

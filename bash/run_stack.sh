@@ -36,7 +36,12 @@ run_stack_bootstrap()
 	chmod a+x $DIR/deploy.sh
 
 	log "BOOTSTRAP ENDS"
+}
 
+# Run stack bootstrapper.
+run_stack_bootstrap_with_notice()
+{
+	run_bootstrapper
 	log_banner
 	log "IMPORTANT NOTICE"
 	log "The bootstrap process installs 3 config files:" 1
@@ -239,6 +244,13 @@ run_stack_update_shell()
 	set_working_dir
 	git pull -q
 	remove_files "*.pyc"
+}
+
+# Updates source code.
+run_stack_update_source()
+{
+	run_stack_update_shell
+	run_stack_update_repos
 }
 
 # Updates stack.
