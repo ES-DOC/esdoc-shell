@@ -1,6 +1,11 @@
-# Root alias.
+# Set paths.
 DIR_ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-alias esdoc='$DIR_ESDOC_HOME/exec.sh'
+DIR_ESDOC_PYESDOC=$DIR_ESDOC_HOME/repos/esdoc-py-client
+DIR_ESDOC_API=$DIR_ESDOC_HOME/repos/esdoc-api
+DIR_ESDOC_STATIC=$DIR_ESDOC_HOME/repos/esdoc-static
+
+# Root alias.
+alias esdoc=$DIR_ESDOC_HOME'/exec.sh'
 
 # API commands.
 alias esdoc-api='esdoc api'
@@ -11,6 +16,7 @@ alias esdoc-api-db-install='esdoc api-db-install'
 alias esdoc-api-db-reset='esdoc api-db-reset'
 alias esdoc-api-db-uninstall='esdoc api-db-uninstall'
 alias esdoc-api-db-insert-project='esdoc api-db-insert-project'
+alias esdoc-api-db-write-stats='python '$DIR_ESDOC_API'/jobs/run_write_stats.py --outdir='$DIR_ESDOC_STATIC'/data'
 
 # Archive commands.
 alias esdoc-archive-echo='esdoc archive-echo'
@@ -44,3 +50,9 @@ alias esdoc-deploy='$DIR_ESDOC_HOME/ops/venv/python/bin/python $DIR_ESDOC_HOME/d
 # Misc commands.
 alias esdoc-pyesdoc-tests='esdoc pyesdoc-tests'
 alias esdoc-js-plugin-compile='esdoc js-plugin-compile'
+
+# Unset variables
+unset DIR_ESDOC_HOME
+unset DIR_ESDOC_PYESDOC
+unset DIR_ESDOC_API
+unset DIR_ESDOC_STATIC

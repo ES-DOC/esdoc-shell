@@ -60,7 +60,7 @@ _db_setup()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_db_setup.py
+	python $DIR_API/jobs/run_db_setup.py
 }
 
 # ---------------------------------------------------------------
@@ -87,7 +87,7 @@ run_api_db_reset()
 
 	run_api_db_uninstall
 	run_api_db_install
-	_run_archive_delete_ingest_files
+	# _run_archive_delete_ingest_files
 
 	log "DB : reset"
 }
@@ -108,7 +108,7 @@ run_api_db_ingest()
     log "DB: ingesting from pyesdoc archive ..."
 
 	activate_venv api
-	python $DIR_JOBS/api/run_db_ingest.py
+	python $DIR_API/jobs/run_db_ingest.py
 
     log "DB: ingested from pyesdoc archive ..."
 }
@@ -119,7 +119,7 @@ run_api_db_index()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_db_index.py
+	python $DIR_API/jobs/run_db_index.py
 
     log "DB: indexed document facets ..."
 }
@@ -130,7 +130,7 @@ run_api_db_index_reset()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_db_index_reset.py
+	python $DIR_API/jobs/run_db_index_reset.py
 
     log "DB: reset and indexed document facets ..."
 }
@@ -141,7 +141,7 @@ run_api_db_facet_dump()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_db_facet_dump.py --output-dir=$DIR_WEB_STATIC/data
+	python $DIR_API/jobs/run_db_facet_dump.py --output-dir=$DIR_WEB_STATIC/data
 
     log "DB: reset and indexed document facets ..."
 }
@@ -152,7 +152,7 @@ run_api_db_insert_project()
 
 	activate_venv api
 
-	python $DIR_JOBS/api/run_db_insert_project.py --name=$1 --description=$2 --homepage=$3
+	python $DIR_API/jobs/run_db_insert_project.py --name=$1 --description=$2 --homepage=$3
 
     log "DB: added project to API database ..."
 }

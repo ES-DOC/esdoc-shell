@@ -1,8 +1,4 @@
-ops/config
-ops/daemons
-ops/logs
-ops/tmp
-ops/venv
+ops
 repos
 resources/deployment/api-db
 resources/deployment/api-db-tmp.zip
