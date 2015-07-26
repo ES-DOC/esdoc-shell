@@ -6,8 +6,6 @@ cd $DIR
 cd ..
 declare DIR="$( pwd )"
 
-echo $DIR
-
 # Initialise shell.
 source $DIR/bash/init.sh
 

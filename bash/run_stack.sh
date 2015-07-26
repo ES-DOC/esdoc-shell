@@ -32,7 +32,7 @@ run_stack_bootstrap()
 	_copy_config_templates
 
 	log "Setting shell script permissions"
-	chmod a+x $DIR/exec.sh
+	chmod a+x $DIR_BASH/exec.sh
 	chmod a+x $DIR_BASH/deploy.sh
 
 	log "BOOTSTRAP ENDS"
