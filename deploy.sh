@@ -82,8 +82,8 @@ _install_source_api()
 	mkdir -p $API_HOME/app
 
 	# ... copy source code
-	cp -r $DIR_REPOS/esdoc-api/src/* $API_HOME/app
-	cp -r $DIR_REPOS/esdoc-py-client/src/* $API_HOME/app
+	cp -r $DIR_REPOS/esdoc-api/esdoc_api $API_HOME/app
+	cp -r $DIR_REPOS/esdoc-py-client/pyesdoc $API_HOME/app
 
 	# ... copy templates to temp folder
 	cp -r $DIR_RESOURCES/template-*.* $DIR_TMP
