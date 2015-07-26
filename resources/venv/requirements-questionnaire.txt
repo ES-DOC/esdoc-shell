@@ -5,4 +5,3 @@ django-mptt==0.6.0
 lxml==3.2.4
 pytz==2014.2
 python-memcached==1.53
-
