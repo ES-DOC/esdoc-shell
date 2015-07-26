@@ -52,3 +52,10 @@ run_archive_compress()
 	tar cz esdoc | split -b 10m - docs_
 	set_working_dir
 }
+
+run_archive_uncompress()
+{
+	set_working_dir $DIR_RESOURCES/archive
+	cat docs_* | tar xz
+	set_working_dir
+}

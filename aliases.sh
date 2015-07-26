@@ -22,6 +22,7 @@ alias esdoc-api-db-write-stats='python '$DIR_ESDOC_API'/jobs/run_write_stats.py 
 alias esdoc-archive-compress='esdoc archive-compress'
 alias esdoc-archive-echo='esdoc archive-echo'
 alias esdoc-archive-populate='esdoc archive-populate'
+alias esdoc-archive-uncompress='esdoc archive-uncompress'
 
 # Document commands.
 alias esdoc-doc-validate='esdoc doc-validate'
