@@ -50,7 +50,8 @@ alias esdoc-help='esdoc help'
 alias esdoc-shells-view='ps -ef | grep esdoc/shells'
 
 # Deployment commands.
-alias esdoc-deploy='esdoc stack-bootstrap && esdoc-stack-install && esdoc-archive-uncompress && '$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/bash/deploy.py rollout'
+alias esdoc-deploy-phase-1='esdoc stack-bootstrap && esdoc-stack-install && esdoc-archive-uncompress'
+alias esdoc-deploy-phase-2=$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/bash/deploy.py rollout'
 alias esdoc-deploy-rollback=$DIR_ESDOC_HOME'/ops/venv/python/bin/python '$DIR_ESDOC_HOME'/bash/deploy.py rollback'
 
 # Misc commands.
