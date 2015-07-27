@@ -185,7 +185,6 @@ stop_api_daemon()
 	supervisorctl -c $DIR_CONFIG/api-supervisord.conf shutdown
 }
 
-
 # Invoke action.
 $ACTION $RELEASE_TYPE $RELEASE_VERSION $API_DB_PWD $API_PORT
 
