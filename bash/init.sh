@@ -6,6 +6,7 @@ declare -a initializers=(
 	'init_paths'
 	'init_vars'
 	'run_api'
+	'run_api_daemon'
 	'run_api_db'
 	'run_archive'
 	'run_doc'
