@@ -18,6 +18,17 @@ alias esdoc-api-db-uninstall='esdoc api-db-uninstall'
 alias esdoc-api-db-insert-project='esdoc api-db-insert-project'
 alias esdoc-api-db-write-stats='python '$DIR_ESDOC_API'/jobs/run_write_stats.py --outdir='$DIR_ESDOC_STATIC'/data'
 
+# API damemon management.
+alias esdoc-api-daemon-init='esdoc api-daemon-init'
+alias esdoc-api-daemon-kill='esdoc api-daemon-kill'
+alias esdoc-api-daemon-refresh='esdoc api-daemon-refresh'
+alias esdoc-api-daemon-reset-logs='esdoc api-daemon-reset-logs'
+alias esdoc-api-daemon-restart='esdoc api-daemon-restart'
+alias esdoc-api-daemon-start='esdoc api-daemon-start'
+alias esdoc-api-daemon-status='esdoc api-daemon-status'
+alias esdoc-api-daemon-stop='esdoc api-daemon-stop'
+alias esdoc-api-daemon-update-config='esdoc api-daemon-update-config'
+
 # Archive commands.
 alias esdoc-archive-compress='esdoc archive-compress'
 alias esdoc-archive-echo='esdoc archive-echo'
