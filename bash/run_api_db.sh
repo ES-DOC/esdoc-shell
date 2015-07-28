@@ -163,7 +163,7 @@ run_api_db_insert_institute()
 
 	activate_venv api
 
-	python $DIR_API/jobs/run_db_insert_institute.py --name=$1 --long-name=$2 --country-code=$3 --homepage=$4
+	python $DIR_API/jobs/run_db_insert_institute.py --name=$1 --description=$2 --country=$3 --homepage=$4
 
     log "DB: added institute to API database ..."
 }
