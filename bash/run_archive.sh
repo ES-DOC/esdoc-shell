@@ -4,12 +4,11 @@
 # SECTION: ARCHIVE FUNCTIONS
 # ###############################################################
 
-
 # Echos contents of an archived file.
 run_archive_echo()
 {
 	activate_venv pyesdoc
-	python $DIR_JOBS/pyesdoc/run_archive_echo.py --uid=$1 --version=$2
+	python $DIR_PYESDOC/jobs/run_archive_echo.py --uid=$1 --version=$2
 }
 
 # Deletes ingest files from the archive.
@@ -18,7 +17,7 @@ _run_archive_delete_ingest_files()
     log "deleting ingest files from archive ..."
 
 	activate_venv pyesdoc
-	python $DIR_JOBS/pyesdoc/run_archive_delete_ingest_files.py
+	python $DIR_PYESDOC/jobs/run_archive_delete_ingest_files.py
 
     log "deleted ingest files from archive ..."
 }
@@ -40,7 +39,7 @@ run_archive_populate()
 	fi
 
 	activate_venv pyesdoc
-	python $DIR_JOBS/pyesdoc/run_archive_populate.py --throttle=$throttle --project=$project
+	python $DIR_PYESDOC/jobs/run_archive_populate.py --throttle=$throttle --project=$project
 
 	log "populated archive ..."
 }

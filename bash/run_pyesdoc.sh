@@ -9,7 +9,7 @@ run_pyesdoc_usage_scenario()
 	log "executing pyesdoc usage scenario ..."
 
 	activate_venv pyesdoc
-	python $DIR_JOBS/pyesdoc/demo_usage_scenario.py --outdir=$DIR_TMP
+	python $DIR_PYESDOC/jobs/demo_usage_scenario.py --outdir=$DIR_TMP
 }
 
 run_pyesdoc_write_demo_files()
@@ -17,7 +17,7 @@ run_pyesdoc_write_demo_files()
 	log "writing pyesdoc demo files ..."
 
 	activate_venv pyesdoc
-	python $DIR_JOBS/pyesdoc/run_write_demo_files.py --outdir=$DIR_WEB_VIEWER/src/media/html
+	python $DIR_PYESDOC/jobs/run_write_demo_files.py --outdir=$DIR_WEB_VIEWER/src/media/html
 }
 
 run_pyesdoc_write_test_files()
@@ -25,7 +25,7 @@ run_pyesdoc_write_test_files()
 	log "writing pyesdoc test files ..."
 
 	activate_venv pyesdoc
-	python $DIR_JOBS/pyesdoc/run_write_test_files.py --outdir=$DIR_PYESDOC_TESTS/files
+	python $DIR_PYESDOC/jobs/run_write_test_files.py --outdir=$DIR_PYESDOC_TESTS/files
 }
 
 run_pyesdoc_tests()
