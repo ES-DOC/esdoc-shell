@@ -47,7 +47,7 @@ run_api_daemon_start()
 {
     activate_venv api
 
-    supervisorctl -c $DIR_CONFIG/web/api-supervisord.conf start all
+    supervisorctl -c $DIR_CONFIG/api-supervisord.conf start all
 }
 
 # Launches API daemons.
@@ -66,7 +66,7 @@ run_api_daemon_stop()
     supervisorctl -c $DIR_CONFIG/api-supervisord.conf stop all
 }
 
-# Updates the web supervisord config file.
+# Updates the API supervisord config file.
 run_api_daemon_update_config()
 {
     cp $DIR_RESOURCES/deployment/template-api-supervisord.conf $DIR_CONFIG/api-supervisord.conf
