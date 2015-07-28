@@ -98,6 +98,7 @@ _install_source_api()
 	declare -a templates=(
 	        $DIR_TMP"/template-api-supervisord.conf"
 	        $DIR_TMP"/template-api.conf"
+	        $DIR_TMP"/template-api-crontab.txt"
 	        $DIR_TMP"/template-esdoc.sh"
 	        $DIR_TMP"/template-pyesdoc.conf"
 	)
@@ -116,6 +117,7 @@ _install_source_api()
 	# ... copy formatted templates
 	mv $DIR_TMP"/template-api-supervisord.conf" $DIR_CONFIG"/api-supervisord.conf"
 	mv $DIR_TMP"/template-api.conf" $DIR_CONFIG"/api.conf"
+	mv $DIR_TMP"/template-api-crontab.txt" $DIR_CONFIG"/api-crontab.txt"
 	mv $DIR_TMP"/template-esdoc.sh" $DIR_CONFIG"/esdoc.sh"
 	mv $DIR_TMP"/template-pyesdoc.conf" $DIR_CONFIG"/pyesdoc.conf"
 
@@ -152,6 +154,12 @@ install_source()
 {
 	_install_source_api $1 $2 $3 $4
 	_install_source_static $1 $2
+}
+
+# Updates cron tabe.
+update_crontab()
+{
+	crontab $DIR_CONFIG/api-crontab.txt
 }
 
 # Restores db from backup.

@@ -282,6 +282,16 @@ def _update_wf_websites(ctx):
         _log(msg.format(elem.website, elem.name))
 
 
+def _update_cron_tab(ctx):
+    """Updates cron tab (prod only).
+
+    """
+    subprocess.call([
+        _DEPLOY,
+        "update_crontab"
+        ])
+
+
 def _update_repos(ctx):
     """Updates source code repositories.
 
@@ -356,7 +366,8 @@ _ACTIONS = {
         (_install_source, "Installing source(s)"),
         (_restore_db, "Restoring database(s)"),
         (_start_api_daemon, "Starting API daemon"),
-        (_update_wf_websites, "Updating web faction websites")
+        (_update_wf_websites, "Updating web faction websites"),
+        (_update_cron_tab, "Updating cron tab"),
     ],
     'rollback' : [
         (_declare_stack, "Declaring stack"),

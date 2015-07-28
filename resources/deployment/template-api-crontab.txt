@@ -1,0 +1,2 @@
+* 6,18 * * 0,1,2,3,4,5,6 $HOME/shells/API_ENVIRONMENT/API_VERSION/bash/exec.sh archive-populate > $HOME/shells/API_ENVIRONMENT/API_VERSION/ops/logs/cron.archive.populate.log
+* 8,20 * * 0,1,2,3,4,5,6 $HOME/shells/API_ENVIRONMENT/API_VERSION/bash/exec.sh api-db-ingest > $HOME/shells/API_ENVIRONMENT/API_VERSION/ops/logs/cron.api.db.ingest.log
