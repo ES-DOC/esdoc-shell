@@ -15,6 +15,7 @@ alias esdoc-api-db-ingest='esdoc api-db-ingest'
 alias esdoc-api-db-install='esdoc api-db-install'
 alias esdoc-api-db-reset='esdoc api-db-reset'
 alias esdoc-api-db-uninstall='esdoc api-db-uninstall'
+alias esdoc-api-db-insert-institute='esdoc api-db-insert-institute'
 alias esdoc-api-db-insert-project='esdoc api-db-insert-project'
 alias esdoc-api-db-write-stats='python '$DIR_ESDOC_API'/jobs/run_write_stats.py --outdir='$DIR_ESDOC_STATIC'/data'
 
