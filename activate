@@ -1,0 +1,76 @@
+# Set home path
+export ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+declare DIR=$ESDOC_HOME
+
+# API commands.
+alias esdoc-api=$ESDOC_HOME/bash/api/run_web_service.sh
+alias esdoc-api-daemons-init=$ESDOC_HOME/bash/api/daemons_init.sh
+alias esdoc-api-daemons-kill=$ESDOC_HOME/bash/api/daemons_kill.sh
+alias esdoc-api-daemons-reset-logs=$ESDOC_HOME/bash/api/daemons_reset_logs.sh
+alias esdoc-api-daemons-status=$ESDOC_HOME/bash/api/daemons_status.sh
+alias esdoc-api-daemons-update-config=$ESDOC_HOME/bash/api/daemons_update_config.sh
+alias esdoc-api-daemons-update-config-for-debug=$ESDOC_HOME/bash/api/daemons_update_config_for_debug.sh
+alias esdoc-api-db-index=$ESDOC_HOME/bash/api/db_index.sh
+alias esdoc-api-db-index-reset=$ESDOC_HOME/bash/api/db_index_reset.sh
+alias esdoc-api-db-ingest=$ESDOC_HOME/bash/api/db_ingest.sh
+alias esdoc-api-db-insert-institute=$ESDOC_HOME/bash/api/db_insert_institute.sh
+alias esdoc-api-db-insert-project=$ESDOC_HOME/bash/api/db_insert_project.sh
+alias esdoc-api-db-install=$ESDOC_HOME/bash/api/db_install.sh
+alias esdoc-api-db-reset=$ESDOC_HOME/bash/api/db_reset.sh
+alias esdoc-api-db-uninstall=$ESDOC_HOME/bash/api/db_uninstall.sh
+alias esdoc-api-db-write-comparator-setup-data=$ESDOC_HOME/bash/api/db_write_comparator_setup_data.sh
+alias esdoc-api-db-write-facets=$ESDOC_HOME/bash/api/db_write_facets.sh
+alias esdoc-api-db-write-stats=$ESDOC_HOME/bash/api/db_write_stats.sh
+
+# Archive commands.
+alias esdoc-archive-compress=$ESDOC_HOME/bash/archive/compress.sh
+alias esdoc-archive-delete-document=$ESDOC_HOME/bash/archive/delete_document.sh
+alias esdoc-archive-echo=$ESDOC_HOME/bash/archive/echo.sh
+alias esdoc-archive-populate=$ESDOC_HOME/bash/archive/populate.sh
+alias esdoc-archive-uncompress=$ESDOC_HOME/bash/archive/uncompress.sh
+
+# Deployment commands.
+alias esdoc-deploy-display-active-shells=$ESDOC_HOME/bash/deployment/display_active_shells.sh
+alias esdoc-deploy-rollback=$ESDOC_HOME/bash/deployment/rollback.sh
+alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
+
+# Meta-programming commands.
+alias esdoc-mp=$ESDOC_HOME/bash/mp/generate.sh
+alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
+
+# Misc commands.
+alias esdoc-js-plugin-compile=$ESDOC_HOME/bash/misc/compile_js_plugin.sh
+
+# pyesdoc commands.
+alias esdoc-pyesdoc-convert=$ESDOC_HOME/bash/pyesdoc/convert.sh
+alias esdoc-pyesdoc-tests=$ESDOC_HOME/bash/pyesdoc/run_tests.sh
+alias esdoc-pyesdoc-validate=$ESDOC_HOME/bash/pyesdoc/validate.sh
+alias esdoc-pyesdoc-write-demo-files=$ESDOC_HOME/bash/pyesdoc/write_demo_files.sh
+alias esdoc-pyesdoc-write-test-files=$ESDOC_HOME/bash/pyesdoc/write_test_files.sh
+
+# Root alias.
+alias esdoc=$ESDOC_HOME'/bash/exec.sh'
+
+# Stack commands.
+alias esdoc-stack-bootstrap='esdoc stack-bootstrap-with-notice'
+alias esdoc-stack-install='esdoc stack-install'
+alias esdoc-stack-update='esdoc stack-update'
+alias esdoc-stack-update-shell='esdoc stack-update-shell'
+alias esdoc-stack-update-repo='esdoc stack-update-repo'
+alias esdoc-stack-update-repos='esdoc stack-update-repos'
+alias esdoc-stack-update-source='esdoc stack-update-source'
+alias esdoc-stack-update-venv='esdoc stack-update-venv'
+alias esdoc-stack-update-venvs='esdoc stack-update-venvs'
+alias esdoc-stack-uninstall='esdoc stack-uninstall'
+
+# Composite commands.
+alias esdoc-deploy-setup='esdoc stack-bootstrap && esdoc-stack-install && esdoc-archive-uncompress'
+
+
+# Ensure target scripts are executable.
+chmod a+x $ESDOC_HOME/bash/api/*.sh
+chmod a+x $ESDOC_HOME/bash/archive/*.sh
+chmod a+x $ESDOC_HOME/bash/deployment/*.sh
+chmod a+x $ESDOC_HOME/bash/misc/*.sh
+chmod a+x $ESDOC_HOME/bash/mp/*.sh
+chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh

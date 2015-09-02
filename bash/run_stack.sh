@@ -9,7 +9,6 @@ _copy_config_templates()
 {
 	cp $DIR_RESOURCES/user/template-api.conf $DIR_CONFIG/api.conf
 	cp $DIR_RESOURCES/user/template-pyesdoc.conf $DIR_CONFIG/pyesdoc.conf
-	cp $DIR_RESOURCES/user/template-esdoc.sh $DIR_CONFIG/esdoc.sh
 }
 
 # Run stack bootstrapper.
@@ -47,7 +46,6 @@ run_stack_bootstrap_with_notice()
 	log "The bootstrap process installs 3 config files:" 1
 	log "$DIR_CONFIG/api.conf" 2
 	log "$DIR_CONFIG/pyesdoc.conf" 2
-	log "$DIR_CONFIG/esdoc.sh" 2
 	log "Please review and assign settings as appropriate to your " 1
 	log "environment prior to continuing with the installation process." 1
 	log "IMPORTANT NOTICE ENDS"
@@ -95,6 +93,9 @@ run_install_venvs()
 # Installs a python executable primed with setuptools, pip & virtualenv.
 run_install_python()
 {
+	# Version of python used by stack.
+	declare PYTHON_VERSION=2.7.10
+
 	log "Installing python "$PYTHON_VERSION" (takes approx 3 minutes)"
 
 	# Download source.
@@ -278,7 +279,7 @@ _uninstall_shell()
 {
 	log "Uninstalling shell"
 
-	rm -rf $DIR
+	rm -rf $ESDOC_HOME
 }
 
 # Uninstalls git repo.
