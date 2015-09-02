@@ -30,6 +30,7 @@ alias esdoc-archive-populate=$ESDOC_HOME/bash/archive/populate.sh
 alias esdoc-archive-uncompress=$ESDOC_HOME/bash/archive/uncompress.sh
 
 # Deployment commands.
+alias esdoc-deploy-compile-js-plugin=$ESDOC_HOME/bash/deployment/compile_js_plugin.sh
 alias esdoc-deploy-display-active-shells=$ESDOC_HOME/bash/deployment/display_active_shells.sh
 alias esdoc-deploy-rollback=$ESDOC_HOME/bash/deployment/rollback.sh
 alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
@@ -37,9 +38,6 @@ alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
 # Meta-programming commands.
 alias esdoc-mp=$ESDOC_HOME/bash/mp/generate.sh
 alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
-
-# Misc commands.
-alias esdoc-js-plugin-compile=$ESDOC_HOME/bash/misc/compile_js_plugin.sh
 
 # pyesdoc commands.
 alias esdoc-pyesdoc-convert=$ESDOC_HOME/bash/pyesdoc/convert.sh
@@ -71,6 +69,6 @@ alias esdoc-deploy-setup='esdoc stack-bootstrap && esdoc-stack-install && esdoc-
 chmod a+x $ESDOC_HOME/bash/api/*.sh
 chmod a+x $ESDOC_HOME/bash/archive/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
-chmod a+x $ESDOC_HOME/bash/misc/*.sh
 chmod a+x $ESDOC_HOME/bash/mp/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
+chmod a+x $ESDOC_HOME/bash/stack/*.sh
