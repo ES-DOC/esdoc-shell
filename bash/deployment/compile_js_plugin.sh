@@ -11,7 +11,7 @@ if [ ! "$VERSION" ]; then
 fi
 
 # Set paths.
-declare YUICOMPRESSOR=$ESDOC_DIR_RESOURCES"/deployment/yuicompressor-2.4.7.jar"
+declare YUICOMPRESSOR=$ESDOC_DIR_RESOURCES"/yuicompressor-2.4.7.jar"
 declare SRC=$ESDOC_DIR_WEB_PLUGIN/src
 declare BIN=$ESDOC_DIR_WEB_PLUGIN/bin
 

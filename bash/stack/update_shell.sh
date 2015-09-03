@@ -6,10 +6,11 @@ source $ESDOC_HOME/bash/init.sh
 # Main entry point.
 main()
 {
-	set_working_dir $ESDOC_DIR_ARCHIVE
-	rm -rf docs_*
-	tar cz esdoc | split -b 10m - docs_
+	log "UPDATING SHELL"
 	set_working_dir
+	git pull -q
+	remove_files "*.pyc"
+	log "UPDATED SHELL"
 }
 
 # Invoke entry point.

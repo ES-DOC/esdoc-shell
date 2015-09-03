@@ -1,7 +1,6 @@
-tmp
+archive/esdoc
 ops
 repos
-resources/deployment/api-db
-resources/deployment/api-db-tmp.zip
-resources/archive/raw.zip
-resources/archive/esdoc
+resources/api-db
+resources/api-db-tmp.zip
+tmp

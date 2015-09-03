@@ -50,20 +50,17 @@ alias esdoc-pyesdoc-write-test-files=$ESDOC_HOME/bash/pyesdoc/write_test_files.s
 alias esdoc=$ESDOC_HOME'/bash/exec.sh'
 
 # Stack commands.
-alias esdoc-stack-bootstrap='esdoc stack-bootstrap-with-notice'
-alias esdoc-stack-install='esdoc stack-install'
-alias esdoc-stack-update='esdoc stack-update'
-alias esdoc-stack-update-shell='esdoc stack-update-shell'
-alias esdoc-stack-update-repo='esdoc stack-update-repo'
-alias esdoc-stack-update-repos='esdoc stack-update-repos'
-alias esdoc-stack-update-source='esdoc stack-update-source'
-alias esdoc-stack-update-venv='esdoc stack-update-venv'
-alias esdoc-stack-update-venvs='esdoc stack-update-venvs'
-alias esdoc-stack-uninstall='esdoc stack-uninstall'
+alias esdoc-stack-install=$ESDOC_HOME/bash/stack/install.sh
+alias esdoc-stack-uninstall=$ESDOC_HOME/bash/stack/uninstall.sh
+alias esdoc-stack-update=$ESDOC_HOME/bash/stack/update.sh
+alias esdoc-stack-update-config=$ESDOC_HOME/bash/stack/update_config.sh
+alias esdoc-stack-update-repos=$ESDOC_HOME/bash/stack/update_repos.sh
+alias esdoc-stack-update-shell=$ESDOC_HOME/bash/stack/update_shell.sh
+walias esdoc-stack-upgrade-venvs=$ESDOC_HOME/bash/stack/upgrade_venvs.sh
 
 # Composite commands.
-alias esdoc-deploy-setup='esdoc stack-bootstrap && esdoc-stack-install && esdoc-archive-uncompress'
-
+alias esdoc-stack-update-source='esdoc-stack-update-shell && esdoc-stack-update-repos'
+alias esdoc-deploy-setup='esdoc-stack-install && esdoc-archive-uncompress'
 
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_HOME/bash/api/*.sh

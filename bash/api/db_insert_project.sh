@@ -8,7 +8,7 @@ main()
 {
     log "API-DB: adding project to API database ..."
 	activate_venv api
-	python $DIR_API/jobs/run_db_insert_project.py --name=$1 --description=$2 --homepage=$3
+	python $ESDOC_DIR_API/jobs/run_db_insert_project.py --name=$1 --description=$2 --homepage=$3
     log "API-DB: added project to API database"
 }
 

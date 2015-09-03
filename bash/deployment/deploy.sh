@@ -17,14 +17,14 @@ declare DIR="$( pwd )"
 declare DIR_HOME=$HOME
 declare DIR_WEBAPPS=$DIR_HOME"/webapps"
 
-declare DIR_REPOS=$DIR"/repos"
-declare DIR_RESOURCES=$DIR"/resources/deployment"
+declare ESDOC_DIR_REPOS=$DIR"/repos"
+declare DIR_RESOURCES=$DIR"/resources"
 declare DIR_TMP=$DIR"/ops/tmp"
-declare DIR_CONFIG=$DIR"/ops/config"
-declare DIR_VENV=$DIR"/ops/venv"
+declare ESDOC_DIR_CONFIG=$DIR"/ops/config"
+declare ESDOC_DIR_VENV=$DIR"/ops/venv"
 
-declare DIR_API=$DIR_REPOS/esdoc-api
-declare DIR_PYESDOC=$DIR_REPOS/esdoc-py-client
+declare ESDOC_DIR_API=$ESDOC_DIR_REPOS/esdoc-api
+declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
 
 # Set vars:
 declare RELEASE_TYPE=$2
@@ -87,19 +87,19 @@ _install_source_api()
 	mkdir -p $API_HOME/app
 
 	# ... copy source code
-	cp -r $DIR_REPOS/esdoc-api/esdoc_api $API_HOME/app
-	cp -r $DIR_REPOS/esdoc-py-client/pyesdoc $API_HOME/app
+	cp -r $ESDOC_DIR_REPOS/esdoc-api/esdoc_api $API_HOME/app
+	cp -r $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc $API_HOME/app
 
 	# ... copy templates to temp folder
-	cp -r $DIR_RESOURCES/template-*.* $DIR_TMP
+	cp -r $DIR_RESOURCES/template-webfaction-*.* $DIR_TMP
 	ls $DIR_TMP
 
 	# ... format templates
 	declare -a templates=(
-	        $DIR_TMP"/template-api-supervisord.conf"
-	        $DIR_TMP"/template-api.conf"
-	        $DIR_TMP"/template-api-crontab.txt"
-	        $DIR_TMP"/template-pyesdoc.conf"
+	        $DIR_TMP"/template-webfaction-api-crontab.txt"
+	        $DIR_TMP"/template-webfaction-api-supervisord.conf"
+	        $DIR_TMP"/template-webfaction-api.conf"
+	        $DIR_TMP"/template-webfaction-pyesdoc.conf"
 	)
 	for template in "${templates[@]}"
 	do
@@ -114,10 +114,10 @@ _install_source_api()
 	done
 
 	# ... copy formatted templates
-	mv $DIR_TMP"/template-api-supervisord.conf" $DIR_CONFIG"/api-supervisord.conf"
-	mv $DIR_TMP"/template-api.conf" $DIR_CONFIG"/api.conf"
-	mv $DIR_TMP"/template-api-crontab.txt" $DIR_CONFIG"/api-crontab.txt"
-	mv $DIR_TMP"/template-pyesdoc.conf" $DIR_CONFIG"/pyesdoc.conf"
+	mv $DIR_TMP"/template-webfaction-api-crontab.txt" $ESDOC_DIR_CONFIG"/api-crontab.txt"
+	mv $DIR_TMP"/template-webfaction-api-supervisord.conf" $ESDOC_DIR_CONFIG"/api-supervisord.conf"
+	mv $DIR_TMP"/template-webfaction-api.conf" $ESDOC_DIR_CONFIG"/api.conf"
+	mv $DIR_TMP"/template-webfaction-pyesdoc.conf" $ESDOC_DIR_CONFIG"/pyesdoc.conf"
 
 	# ... clear up temp files.
 	reset_tmp
@@ -127,24 +127,24 @@ _install_source_api()
 _install_source_static()
 {
 	# ... comparator micro-site
-	cp -r $DIR_REPOS/esdoc-comparator/src/* $DIR_WEBAPPS/$1_$2_compare
+	cp -r $ESDOC_DIR_REPOS/esdoc-comparator/src/* $DIR_WEBAPPS/$1_$2_compare
 	rm $DIR_WEBAPPS/$1_$2_compare/index-dev.html
 
 	# ... search micro-site
-	cp -r $DIR_REPOS/esdoc-search/src/* $DIR_WEBAPPS/$1_$2_search
+	cp -r $ESDOC_DIR_REPOS/esdoc-search/src/* $DIR_WEBAPPS/$1_$2_search
 
 	# ... splash micro-site
-	cp -r $DIR_REPOS/esdoc-splash/src/* $DIR_WEBAPPS/$1_$2_splash
+	cp -r $ESDOC_DIR_REPOS/esdoc-splash/src/* $DIR_WEBAPPS/$1_$2_splash
 
 	# ... static files
-	cp -r $DIR_REPOS/esdoc-static/* $DIR_WEBAPPS/$1_$2_static
-	cp -r $DIR_REPOS/esdoc-js-client/bin/latest/* $DIR_WEBAPPS/$1_$2_static
+	cp -r $ESDOC_DIR_REPOS/esdoc-static/* $DIR_WEBAPPS/$1_$2_static
+	cp -r $ESDOC_DIR_REPOS/esdoc-js-client/bin/latest/* $DIR_WEBAPPS/$1_$2_static
 
 	# ... viewer micro-site
-	cp -r $DIR_REPOS/esdoc-viewer/src/* $DIR_WEBAPPS/$1_$2_view
+	cp -r $ESDOC_DIR_REPOS/esdoc-viewer/src/* $DIR_WEBAPPS/$1_$2_view
 
 	# ... viewer demo micro-site
-	cp -r $DIR_REPOS/esdoc-static/demos/viewer/* $DIR_WEBAPPS/$1_$2_demo
+	cp -r $ESDOC_DIR_REPOS/esdoc-static/demos/viewer/* $DIR_WEBAPPS/$1_$2_demo
 }
 
 # Installs source code.
@@ -157,7 +157,7 @@ install_source()
 # Updates cron tabe.
 update_crontab()
 {
-	crontab $DIR_CONFIG/api-crontab.txt
+	crontab $ESDOC_DIR_CONFIG/api-crontab.txt
 }
 
 # Restores db from backup.
@@ -171,24 +171,24 @@ restore_db()
 # Activate API virtual environment.
 _activate_api_venv()
 {
-	export PYTHONPATH=$PYTHONPATH:$DIR_PYESDOC
-	export PYTHONPATH=$PYTHONPATH:$DIR_API
-	source $DIR_VENV/api/bin/activate
+	export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYESDOC
+	export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_API
+	source $ESDOC_DIR_VENV/api/bin/activate
 }
 
 # Start api daemon.
 start_api_daemon()
 {
 	_activate_api_venv
-	supervisord -c $DIR_CONFIG/api-supervisord.conf
+	supervisord -c $ESDOC_DIR_CONFIG/api-supervisord.conf
 }
 
 # Stop api daemon.
 stop_api_daemon()
 {
 	_activate_api_venv
-	supervisorctl -c $DIR_CONFIG/api-supervisord.conf stop api
-	supervisorctl -c $DIR_CONFIG/api-supervisord.conf shutdown
+	supervisorctl -c $ESDOC_DIR_CONFIG/api-supervisord.conf stop api
+	supervisorctl -c $ESDOC_DIR_CONFIG/api-supervisord.conf shutdown
 }
 
 # Invoke action.

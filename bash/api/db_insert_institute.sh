@@ -8,7 +8,7 @@ main()
 {
     log "API-DB: adding institute to API database ..."
 	activate_venv api
-	python $DIR_API/jobs/run_db_insert_institute.py --name=$1 --description=$2 --country=$3 --homepage=$4
+	python $ESDOC_DIR_API/jobs/run_db_insert_institute.py --name=$1 --description=$2 --country=$3 --homepage=$4
     log "API-DB: added institute to API database"
 }
 
