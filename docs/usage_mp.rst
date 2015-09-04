@@ -1,0 +1,25 @@
+============================
+Prodiguer Shell Meta-Programming Commands
+============================
+
+esdoc-mp
+----------------------------
+
+Generates (forward engineers) code from an ontology's schema definition.
+
+**ONTOLOGY-NAME**
+
+	Name of ontology schema from which to generate code.
+
+**ONTOLOGY-VERSION**
+
+	Version of ontology schema from which to generate code.
+
+**PROGRAMMING-LANGUAGE**
+
+	Target programming language (supported = python).
+
+esdoc-tests
+----------------------------
+
+Executes Meta-Programming framework unit tests.

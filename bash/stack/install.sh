@@ -109,6 +109,7 @@ _install_configuration()
 {
 	cp $DIR_RESOURCES/template-user-api.conf $ESDOC_DIR_CONFIG/api.conf
 	cp $DIR_RESOURCES/template-user-pyesdoc.conf $ESDOC_DIR_CONFIG/pyesdoc.conf
+	cp $DIR_RESOURCES/template-user-api-supervisord.conf $ESDOC_DIR_DAEMONS/api/supervisord.conf
 }
 
 # Sets up script permissions.
