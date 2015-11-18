@@ -43,9 +43,6 @@ _DIR_ESDOC_HOME = os.environ['HOME']
 # Webapps directory.
 _DIR_WEBAPPS = join(_DIR_ESDOC_HOME, "webapps")
 
-# Path to exec.sh.
-_EXEC = join(_DIR, "exec.sh")
-
 # Path to deploy.sh.
 _DEPLOY = join(_DIR, "deploy.sh")
 
@@ -292,16 +289,6 @@ def _update_cron_tab(ctx):
         ])
 
 
-def _update_repos(ctx):
-    """Updates source code repositories.
-
-    """
-    subprocess.call([
-        _EXEC,
-        "stack-update-repos"
-        ])
-
-
 def _install_source(ctx):
     """Installs source code.
 
@@ -362,7 +349,6 @@ _ACTIONS = {
         (_create_wf_dbs, "Creating databases upon web faction server"),
         (_refresh_wf_session, "Refreshing web faction session"),
         (_set_api_port, "Assigning API port"),
-        (_update_repos, "Updating repositories"),
         (_install_source, "Installing source(s)"),
         (_restore_db, "Restoring database(s)"),
         (_start_api_daemon, "Starting API daemon"),
