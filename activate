@@ -60,7 +60,7 @@ alias esdoc-stack-upgrade-venvs=$ESDOC_HOME/bash/stack/upgrade_venvs.sh
 
 # Composite commands.
 alias esdoc-stack-update-source='esdoc-stack-update-shell && esdoc-stack-update-repos'
-alias esdoc-deploy-setup='esdoc-stack-install && esdoc-archive-uncompress'
+alias esdoc-deploy-setup='esdoc-stack-install && esdoc-deploy-archive-uncompress'
 
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_HOME/bash/api/*.sh
