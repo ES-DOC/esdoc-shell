@@ -88,15 +88,15 @@ _install_source_api()
 	cp -r $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc $API_HOME/app
 
 	# ... copy templates to temp folder
-	cp -r $ESDOC_DIR_RESOURCES/template-webfaction-*.* #ESDOC_DIR_TMP
-	ls #ESDOC_DIR_TMP
+	cp -r $ESDOC_DIR_RESOURCES/template-webfaction-*.* $ESDOC_DIR_TMP
+	ls $ESDOC_DIR_TMP
 
 	# ... format templates
 	declare -a templates=(
-	        #ESDOC_DIR_TMP"/template-webfaction-api-crontab.txt"
-	        #ESDOC_DIR_TMP"/template-webfaction-api-supervisord.conf"
-	        #ESDOC_DIR_TMP"/template-webfaction-api.conf"
-	        #ESDOC_DIR_TMP"/template-webfaction-pyesdoc.conf"
+	        $ESDOC_DIR_TMP"/template-webfaction-api-crontab.txt"
+	        $ESDOC_DIR_TMP"/template-webfaction-api-supervisord.conf"
+	        $ESDOC_DIR_TMP"/template-webfaction-api.conf"
+	        $ESDOC_DIR_TMP"/template-webfaction-pyesdoc.conf"
 	)
 	for template in "${templates[@]}"
 	do
@@ -111,10 +111,10 @@ _install_source_api()
 	done
 
 	# ... copy formatted templates
-	mv #ESDOC_DIR_TMP"/template-webfaction-api-crontab.txt" $ESDOC_DIR_CONFIG"/api-crontab.txt"
-	mv #ESDOC_DIR_TMP"/template-webfaction-api-supervisord.conf" $ESDOC_DIR_CONFIG"/api-supervisord.conf"
-	mv #ESDOC_DIR_TMP"/template-webfaction-api.conf" $ESDOC_DIR_CONFIG"/api.conf"
-	mv #ESDOC_DIR_TMP"/template-webfaction-pyesdoc.conf" $ESDOC_DIR_CONFIG"/pyesdoc.conf"
+	mv $ESDOC_DIR_TMP"/template-webfaction-api-crontab.txt" $ESDOC_DIR_CONFIG"/api-crontab.txt"
+	mv $ESDOC_DIR_TMP"/template-webfaction-api-supervisord.conf" $ESDOC_DIR_CONFIG"/api-supervisord.conf"
+	mv $ESDOC_DIR_TMP"/template-webfaction-api.conf" $ESDOC_DIR_CONFIG"/api.conf"
+	mv $ESDOC_DIR_TMP"/template-webfaction-pyesdoc.conf" $ESDOC_DIR_CONFIG"/pyesdoc.conf"
 
 	# ... clear up temp files.
 	reset_tmp
