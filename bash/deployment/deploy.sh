@@ -91,7 +91,7 @@ _install_source_api()
 	cp -r $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc $API_HOME/app
 
 	# ... copy templates to temp folder
-	cp -r $DIR_RESOURCES/template-webfaction-*.* $DIR_TMP
+	cp -r $ESDOC_DIR_RESOURCES/template-webfaction-*.* $DIR_TMP
 	ls $DIR_TMP
 
 	# ... format templates
@@ -163,7 +163,7 @@ update_crontab()
 # Restores db from backup.
 restore_db()
 {
-	unzip -q $API_DB_FILE_ZIPPED -d $DIR_RESOURCES
+	unzip -q $API_DB_FILE_ZIPPED -d $ESDOC_DIR_RESOURCES
 	pg_restore -U $API_DB_USER -d $API_DB_NAME $API_DB_FILE
 	rm $API_DB_FILE
 }

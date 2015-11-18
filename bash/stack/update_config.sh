@@ -8,8 +8,8 @@ main()
 {
 	cp $ESDOC_DIR_CONFIG/api.conf $ESDOC_DIR_CONFIG/api.conf-backup
 	cp $ESDOC_DIR_CONFIG/pyesdoc.conf $ESDOC_DIR_CONFIG/pyesdoc.conf-backup
-	cp $DIR_RESOURCES/template-user-api.conf $ESDOC_DIR_CONFIG/api.conf
-	cp $DIR_RESOURCES/template-user-pyesdoc.conf $ESDOC_DIR_CONFIG/pyesdoc.conf
+	cp $ESDOC_DIR_RESOURCES/template-user-api.conf $ESDOC_DIR_CONFIG/api.conf
+	cp $ESDOC_DIR_RESOURCES/template-user-pyesdoc.conf $ESDOC_DIR_CONFIG/pyesdoc.conf
 	log "UPDATED CONFIG"
 	log "The update process created new config files:" 1
 	log "$ESDOC_DIR_CONFIG/api.conf" 2
