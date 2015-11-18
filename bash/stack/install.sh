@@ -132,8 +132,8 @@ main()
 	_install_configuration
 	_install_script_permissions
 	_install_repos
-	_install_python_executable
-	_install_venvs
+	# _install_python_executable
+	# _install_venvs
 
 	log "INSTALLED STACK"
 }
