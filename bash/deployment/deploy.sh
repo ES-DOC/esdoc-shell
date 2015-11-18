@@ -10,7 +10,7 @@ declare ACTION=`echo $1 | tr '[:upper:]' '[:lower:]' | tr '-' '_'`
 # Set root path.
 declare DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
-cd ..
+cd ../..
 declare DIR="$( pwd )"
 
 # Set paths.
