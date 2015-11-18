@@ -14,15 +14,12 @@ cd ..
 declare DIR="$( pwd )"
 
 # Set paths.
-declare DIR_HOME=$HOME
-declare DIR_WEBAPPS=$DIR_HOME"/webapps"
-
+declare ESDOC_DIR_WEBAPPS=$HOME"/webapps"
 declare ESDOC_DIR_REPOS=$DIR"/repos"
-declare DIR_RESOURCES=$DIR"/resources"
-declare DIR_TMP=$DIR"/ops/tmp"
+declare ESDOC_DIR_RESOURCES=$DIR"/resources"
+declare ESDOC_DIR_TMP=$DIR"/ops/tmp"
 declare ESDOC_DIR_CONFIG=$DIR"/ops/config"
 declare ESDOC_DIR_VENV=$DIR"/ops/venv"
-
 declare ESDOC_DIR_API=$ESDOC_DIR_REPOS/esdoc-api
 declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
 
@@ -30,8 +27,8 @@ declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
 declare RELEASE_TYPE=$2
 declare RELEASE_VERSION=$3
 declare API_NAME=$RELEASE_TYPE"_"$RELEASE_VERSION"_api"
-declare API_HOME=$DIR_WEBAPPS/$API_NAME
-declare API_DB_FILE=$DIR_RESOURCES"/api-db"
+declare API_HOME=$ESDOC_DIR_WEBAPPS/$API_NAME
+declare API_DB_FILE=$ESDOC_DIR_RESOURCES"/api-db"
 declare API_DB_FILE_ZIPPED=$API_DB_FILE".zip"
 declare API_DB_NAME=$RELEASE_TYPE"_"$RELEASE_VERSION"_api"
 declare API_DB_USER=$RELEASE_TYPE"_"$RELEASE_VERSION"_api"
@@ -71,8 +68,8 @@ log_banner()
 # Resets temporary folder.
 reset_tmp()
 {
-	rm -rf $DIR_TMP/*
-	mkdir -p $DIR_TMP
+	rm -rf $ESDOC_DIR_TMP/*
+	mkdir -p $ESDOC_DIR_TMP
 }
 
 # ###############################################################
@@ -127,24 +124,24 @@ _install_source_api()
 _install_source_static()
 {
 	# ... comparator micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-comparator/src/* $DIR_WEBAPPS/$1_$2_compare
-	rm $DIR_WEBAPPS/$1_$2_compare/index-dev.html
+	cp -r $ESDOC_DIR_REPOS/esdoc-comparator/src/* $ESDOC_DIR_WEBAPPS/$1_$2_compare
+	rm $ESDOC_DIR_WEBAPPS/$1_$2_compare/index-dev.html
 
 	# ... search micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-search/src/* $DIR_WEBAPPS/$1_$2_search
+	cp -r $ESDOC_DIR_REPOS/esdoc-search/src/* $ESDOC_DIR_WEBAPPS/$1_$2_search
 
 	# ... splash micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-splash/src/* $DIR_WEBAPPS/$1_$2_splash
+	cp -r $ESDOC_DIR_REPOS/esdoc-splash/src/* $ESDOC_DIR_WEBAPPS/$1_$2_splash
 
 	# ... static files
-	cp -r $ESDOC_DIR_REPOS/esdoc-static/* $DIR_WEBAPPS/$1_$2_static
-	cp -r $ESDOC_DIR_REPOS/esdoc-js-client/bin/latest/* $DIR_WEBAPPS/$1_$2_static
+	cp -r $ESDOC_DIR_REPOS/esdoc-static/* $ESDOC_DIR_WEBAPPS/$1_$2_static
+	cp -r $ESDOC_DIR_REPOS/esdoc-js-client/bin/latest/* $ESDOC_DIR_WEBAPPS/$1_$2_static
 
 	# ... viewer micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-viewer/src/* $DIR_WEBAPPS/$1_$2_view
+	cp -r $ESDOC_DIR_REPOS/esdoc-viewer/src/* $ESDOC_DIR_WEBAPPS/$1_$2_view
 
 	# ... viewer demo micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-static/demos/viewer/* $DIR_WEBAPPS/$1_$2_demo
+	cp -r $ESDOC_DIR_REPOS/esdoc-static/demos/viewer/* $ESDOC_DIR_WEBAPPS/$1_$2_demo
 }
 
 # Installs source code.
