@@ -22,6 +22,7 @@ declare ESDOC_DIR_CONFIG=$DIR"/ops/config"
 declare ESDOC_DIR_VENV=$DIR"/ops/venv"
 declare ESDOC_DIR_API=$ESDOC_DIR_REPOS/esdoc-api
 declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
+declare ESDOC_DIR_DAEMONS=$DIR"/ops/daemons"
 
 # Set vars:
 declare RELEASE_TYPE=$2
@@ -112,7 +113,7 @@ _install_source_api()
 
 	# ... copy formatted templates
 	mv $ESDOC_DIR_TMP"/template-webfaction-api-crontab.txt" $ESDOC_DIR_CONFIG"/api-crontab.txt"
-	mv $ESDOC_DIR_TMP"/template-webfaction-api-supervisord.conf" $ESDOC_DIR_CONFIG"/api-supervisord.conf"
+	mv $ESDOC_DIR_TMP"/template-webfaction-api-supervisord.conf" $ESDOC_DIR_DAEMONS"/api/supervisord.conf"
 	mv $ESDOC_DIR_TMP"/template-webfaction-api.conf" $ESDOC_DIR_CONFIG"/api.conf"
 	mv $ESDOC_DIR_TMP"/template-webfaction-pyesdoc.conf" $ESDOC_DIR_CONFIG"/pyesdoc.conf"
 
@@ -177,15 +178,15 @@ _activate_api_venv()
 start_api_daemon()
 {
 	_activate_api_venv
-	supervisord -c $ESDOC_DIR_CONFIG/api-supervisord.conf
+	supervisord -c $ESDOC_DIR_DAEMONS/api/supervisord.conf
 }
 
 # Stop api daemon.
 stop_api_daemon()
 {
 	_activate_api_venv
-	supervisorctl -c $ESDOC_DIR_CONFIG/api-supervisord.conf stop api
-	supervisorctl -c $ESDOC_DIR_CONFIG/api-supervisord.conf shutdown
+	supervisorctl -c $ESDOC_DIR_DAEMONS/api/supervisord.conf stop api
+	supervisorctl -c $ESDOC_DIR_DAEMONS/api/supervisord.conf shutdown
 }
 
 # Invoke action.
