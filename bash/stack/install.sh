@@ -22,7 +22,7 @@ _install_venv()
 
     # Build dependencies.
     source $TARGET_VENV/bin/activate
-	declare TARGET_REQUIREMENTS=$ESDOC_DIR_RESOURCE/venv-requirements-$1.txt
+	declare TARGET_REQUIREMENTS=$ESDOC_DIR_RESOURCES/venv-requirements-$1.txt
     pip install -q --allow-all-external -r $TARGET_REQUIREMENTS
 
     # Cleanup.
