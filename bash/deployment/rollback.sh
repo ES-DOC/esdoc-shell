@@ -6,7 +6,7 @@ source $ESDOC_HOME/bash/init.sh
 # Main entry point.
 main()
 {
-	$ESDOC_HOME'/ops/venv/python/bin/python '$ESDOC_HOME'/bash/deployment/deploy.py' 'rollback' $1 $2 $3 $4 $5
+	$ESDOC_HOME/ops/venv/python/bin/python $ESDOC_HOME/bash/deployment/deploy.py rollback $1 $2 $3 $4 $5
 }
 
 # Invoke entry point.
