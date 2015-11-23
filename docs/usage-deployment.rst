@@ -33,7 +33,7 @@ Rollbacks a previous deployment.
 
 **ENVIRONMENT**
 
-test | prod
+	test | prod
 
 **VERSION**
 
