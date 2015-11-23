@@ -51,5 +51,7 @@ Uninstalling
 esdoc-stack-uninstall
 ```
 
-## Executing commands
+Executing commands
+------------------------------
+
 To see the list of commands upported by the shell simply open a new command lines session and type esdoc-help.  Each of the supported commands along with their expected parameters are listed.
