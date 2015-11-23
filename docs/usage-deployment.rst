@@ -37,6 +37,20 @@ Rollbacks a previous deployment.
 
 **VERSION**
 
+	e.g. 0_9_0_1_1
+
+	0 = Major identifier
+
+	9 = Minor identifier
+
+	0 = Revision identifier
+
+	1 = Patch identifier
+
+	1 = Deployment identifier
+
+**VERSION**
+
 e.g. 0_9_0_1_1
 
 0 = Major identifier
