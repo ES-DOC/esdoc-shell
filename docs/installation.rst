@@ -47,9 +47,9 @@ Please update whenever you receive notification of an ES-DOC release.
 Uninstalling
 ------------------------------
 
-```
+``
 esdoc-stack-uninstall
-```
+``
 
 Executing commands
 ------------------------------
