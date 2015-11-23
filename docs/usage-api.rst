@@ -1,5 +1,5 @@
 ============================
-Prodiguer API (Web Service) Commands
+ES-DOC shell - api (web service) commands
 ============================
 
 esdoc-api

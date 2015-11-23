@@ -1,5 +1,5 @@
 ============================
-Prodiguer Shell Meta-Programming Commands
+ES-DOC shell - meta-programming commands
 ============================
 
 esdoc-mp

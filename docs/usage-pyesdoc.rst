@@ -1,5 +1,5 @@
 ============================
-Prodiguer Shell PYESDOC Commands
+ES-DOC shell - pyesdoc commands
 ============================
 
 esdoc-pyesdoc-convert

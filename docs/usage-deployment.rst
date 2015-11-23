@@ -1,5 +1,5 @@
 ============================
-Prodiguer Shell Deployment Commands
+ES-DOC shell - deployment commands
 ============================
 
 esdoc-deploy-archive-compress

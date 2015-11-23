@@ -1,5 +1,5 @@
 ============================
-ES-DOC Shell Stack Commands
+ES-DOC shell - stack commands
 ============================
 
 esdoc-stack-install

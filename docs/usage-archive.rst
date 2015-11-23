@@ -1,5 +1,5 @@
 ============================
-Prodiguer Shell Archive Commands
+ES-DOC shell - archive commands
 ============================
 
 esdoc-archive-delete-document
