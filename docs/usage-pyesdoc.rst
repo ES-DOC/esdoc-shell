@@ -31,10 +31,10 @@ esdoc-pyesdoc-publish-cmip6-documents
 
 Publishes CMIP6 documents from spreadsheets.
 
-**--archive-dir**
+**-ARCHIVE DIRECTORY**
 
 	Folder upon file system to which documents will be archived.
 
-**--worksheet**
+**SPREADSHEET FILE PATH**
 
 	Path to spreadsheet used to document CMIP6 experiments.
