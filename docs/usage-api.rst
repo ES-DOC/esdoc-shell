@@ -30,7 +30,12 @@ Display status of all API daemon processes.
 esdoc-api-daemons-update-config
 ----------------------------
 
-Updates supervisord.conf file for the API daemon processes.
+Updates API daemon process supervisord config file.
+
+esdoc-api-daemons-update-config-for-debug
+----------------------------
+
+Updates API daemon process supervisord config file with a file that ensures all logging output is immediately written.
 
 esdoc-api-db-index
 ----------------------------

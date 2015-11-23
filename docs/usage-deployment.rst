@@ -87,3 +87,8 @@ Password of web faction server to which stack will be deployed.
 **API_DB_PWD**
 
 Password to be used to connect to API database upon WebFaction database server.
+
+esdoc-deploy-setup
+----------------------------
+
+Command to setup a shell for deployments.
