@@ -2,6 +2,8 @@
 ES-DOC shell - api (web service) commands
 ============================
 
+**NOTE** - The api config file is found: $ESDOC_HOME/ops/config/api.conf.
+
 esdoc-api
 ----------------------------
 
@@ -57,10 +59,18 @@ esdoc-api-db-insert-institute
 
 Inserts an entry into the institute database table.
 
+**CODE**
+
+	Code of institute to be added, e.g. IPSL.
+
 esdoc-api-db-insert-project
 ----------------------------
 
 Inserts an entry into the project database table.
+
+**CODE**
+
+	Code of project to be added, e.g. CMIP6.
 
 esdoc-api-db-install
 ----------------------------

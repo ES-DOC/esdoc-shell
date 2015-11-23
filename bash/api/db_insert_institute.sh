@@ -8,9 +8,9 @@ main()
 {
     log "API-DB: adding institute to API database ..."
 	activate_venv api
-	python $ESDOC_DIR_API/jobs/run_db_insert_institute.py --name=$1 --description=$2 --country=$3 --homepage=$4
+	python $ESDOC_DIR_API/jobs/run_db_insert_institute.py --name=$1
     log "API-DB: added institute to API database"
 }
 
 # Invoke entry point.
-main $1 $2 $3 $4
+main $1
