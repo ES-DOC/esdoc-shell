@@ -18,4 +18,3 @@ Generates (forward engineers) code from an ontology's schema definition.
 **PROGRAMMING-LANGUAGE**
 
 	Target programming language (supported = python).
-
