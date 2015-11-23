@@ -50,16 +50,16 @@ Rollbacks a previous deployment.
 	1 = Deployment identifier
 
 
-	**WEB-FACTION-MACHINE-NAME**
+**WEB-FACTION-MACHINE-NAME**
 
 	Name of web faction server to which stack will be deployed.
 
 
-	**WEB-FACTION-MACHINE-PASSWORD**
+**WEB-FACTION-MACHINE-PASSWORD**
 
 	Password of web faction server to which stack will be deployed.
 
-	**API_DB_PWD**
+**API_DB_PWD**
 
 	Password to be used to connect to API database upon WebFaction database server.
 
