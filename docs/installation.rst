@@ -35,7 +35,8 @@ source YOUR_WORKING_DIRECTORY/esdoc/activate
 
 Remember to start a new bash session.
 
-## Updating
+Updating
+------------------------------
 
 ```
 esdoc-stack-update
@@ -43,7 +44,8 @@ esdoc-stack-update
 
 Please update whenever you receive notification of an ES-DOC release.
 
-## Uninstalling
+Uninstalling
+------------------------------
 
 ```
 esdoc-stack-uninstall
