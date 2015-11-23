@@ -70,29 +70,35 @@ Rollout a new deployment.
 
 **ENVIRONMENT**
 
-test | prod
+	test | prod
 
 **VERSION**
 
-e.g. 0_9_0_1_1
+	e.g. 0_9_0_1_1
 
-0 = Major identifier
-9 = Minor identifier
-0 = Revision identifier
-1 = Patch identifier
-1 = Deployment identifier
+	0 = Major identifier
+
+	9 = Minor identifier
+
+	0 = Revision identifier
+
+	1 = Patch identifier
+
+	1 = Deployment identifier
+
 
 **WEB-FACTION-MACHINE-NAME**
 
-Name of web faction server to which stack will be deployed.
+	Name of web faction server to which stack will be deployed.
+
 
 **WEB-FACTION-MACHINE-PASSWORD**
 
-Password of web faction server to which stack will be deployed.
+	Password of web faction server to which stack will be deployed.
 
 **API_DB_PWD**
 
-Password to be used to connect to API database upon WebFaction database server.
+	Password to be used to connect to API database upon WebFaction database server.
 
 esdoc-deploy-setup
 ----------------------------
