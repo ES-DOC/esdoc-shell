@@ -81,7 +81,6 @@ remove_files()
 # ###############################################################
 
 # Define core directories.
-declare ESDOC_DIR_ARCHIVE=$ESDOC_HOME/archive
 declare ESDOC_DIR_BASH=$ESDOC_HOME/bash
 declare ESDOC_DIR_DOCS=$ESDOC_HOME/docs
 declare ESDOC_DIR_OPS=$ESDOC_HOME/ops
@@ -100,6 +99,7 @@ declare ESDOC_DIR_VENV=$ESDOC_DIR_OPS/venv
 # Define repo directories.
 declare ESDOC_DIR_API=$ESDOC_DIR_REPOS/esdoc-api
 declare ESDOC_DIR_API_TESTS=$ESDOC_DIR_REPOS/esdoc-api/tests
+declare ESDOC_DIR_ARCHIVE=$ESDOC_DIR_REPOS/esdoc-archive
 declare ESDOC_DIR_MP=$ESDOC_DIR_REPOS/esdoc-mp
 declare ESDOC_DIR_MP_TESTS=$ESDOC_DIR_REPOS/esdoc-mp/tests
 declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
@@ -145,6 +145,7 @@ declare -a ESDOC_OPS_DIRS=(
 # Set of git repos.
 declare -a ESDOC_REPOS=(
 	'esdoc-api'
+	'esdoc-archive'
 	'esdoc-cim'
 	'esdoc-cim-cv'
 	'esdoc-comparator'
