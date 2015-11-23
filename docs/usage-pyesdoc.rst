@@ -9,11 +9,11 @@ Converts a document upon the file system from one encoding to another.
 
 **FILE-PATH**
 
-Path to a file upon local file system that is to be converted.
+	Path to a file upon local file system that is to be converted.
 
 **ENCODING**
 
-Encoding to which the file wll be converted (HTML | JSON | XML).
+	Encoding to which the file wll be converted (HTML | JSON | XML).
 
 
 esdoc-pyesdoc-validate
@@ -23,7 +23,7 @@ Validates a document and emits a validation report.
 
 **FILE-PATH**
 
-Path to a file upon local file system that is to be validated.
+	Path to a file upon local file system that is to be validated.
 
 
 esdoc-pyesdoc-publish-cmip6-documents
@@ -33,8 +33,8 @@ Publishes CMIP6 documents from spreadsheets.
 
 **--archive-dir**
 
-Folder upon file system to which documents will be archived.
+	Folder upon file system to which documents will be archived.
 
 **--worksheet**
 
-Path to spreadsheet used to document CMIP6 experiments.
+	Path to spreadsheet used to document CMIP6 experiments.
