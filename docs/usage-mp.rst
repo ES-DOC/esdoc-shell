@@ -19,7 +19,3 @@ Generates (forward engineers) code from an ontology's schema definition.
 
 	Target programming language (supported = python).
 
-esdoc-tests
-----------------------------
-
-Executes Meta-Programming framework unit tests.
