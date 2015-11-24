@@ -35,6 +35,6 @@ Publishes CMIP6 documents from spreadsheets.
 
 	Folder upon file system to which documents will be archived.
 
-**SPREADSHEET FILE PATH**
+**SPREADSHEET**
 
 	Path to spreadsheet used to document CMIP6 experiments.
