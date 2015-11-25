@@ -40,13 +40,14 @@ alias esdoc-mp=$ESDOC_HOME/bash/mp/generate.sh
 alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
 
 # pyesdoc commands.
+alias esdoc-pyesdoc-archive-cmip6-documents=$ESDOC_HOME/bash/pyesdoc/archive_cmip6_documents.sh
 alias esdoc-pyesdoc-convert=$ESDOC_HOME/bash/pyesdoc/convert.sh
 alias esdoc-pyesdoc-peek=$ESDOC_HOME/bash/pyesdoc/peek.sh
 alias esdoc-pyesdoc-tests=$ESDOC_HOME/bash/pyesdoc/run_tests.sh
 alias esdoc-pyesdoc-validate=$ESDOC_HOME/bash/pyesdoc/validate.sh
 alias esdoc-pyesdoc-write-demo-files=$ESDOC_HOME/bash/pyesdoc/write_demo_files.sh
 alias esdoc-pyesdoc-write-test-files=$ESDOC_HOME/bash/pyesdoc/write_test_files.sh
-alias esdoc-pyesdoc-publish-cmip6-documents=$ESDOC_HOME/bash/pyesdoc/publish_cmip6_documents.sh
+alias esdoc-pyesdoc-write-cmip6-documents=$ESDOC_HOME/bash/pyesdoc/write_cmip6_documents.sh
 
 # Root alias.
 alias esdoc=$ESDOC_HOME'/bash/exec.sh'
