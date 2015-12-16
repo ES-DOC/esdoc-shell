@@ -46,6 +46,7 @@ alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
 
 # Notebook commands.
 alias esdoc-nb-rewrite-cim-2-schema=$ESDOC_HOME/bash/nb/rewrite_cim2_schema.sh
+alias esdoc-nb-rewrite-cmip6-vocab=$ESDOC_HOME/bash/nb/rewrite_cmip6_vocab.sh
 
 # pyesdoc commands.
 alias esdoc-pyesdoc-convert=$ESDOC_HOME/bash/pyesdoc/convert.sh
