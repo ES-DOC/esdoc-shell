@@ -79,7 +79,20 @@ _install_repo()
 {
 	log "Installing repo: $1"
 	rm -rf $ESDOC_DIR_REPOS/$1
-	git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/$1
+
+	if [ $ESDOC_GIT_PROTOCOL = "ssh" ]; then
+		if [ $1 = "esdoc-nb" ]; then
+			git clone -q git@bitbucket.org:bnlawrence/esdoc-nb.git $DIR_LOCAL_REPOS/esdoc-nb
+		else
+			git clone -q git@github.com:ES-DOC/$1.git $DIR_LOCAL_REPOS/$1
+		fi
+	else
+		if [ $1 = "esdoc-nb" ]; then
+			git clone -q https://bitbucket.org/bnlawrence/esdoc-nb.git $DIR_LOCAL_REPOS/esdoc-nb
+		else
+			git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/$1
+		fi
+	fi
 }
 
 # Installs git repos.
