@@ -114,6 +114,22 @@ _TYPE_BLACKLIST = {
 }
 
 
+def _format_doc_string(doc_string):
+    """Returns a formatted document string.
+
+    """
+    if doc_string is None:
+        return "None"
+
+    result = doc_string.strip()
+    if result[-1] != ".":
+        result += "."
+    result = result.replace('"', "'")
+
+    return result
+
+
+
 class _TypeFactory(object):
     """Wraps an otology type factory.
 
@@ -133,11 +149,7 @@ class _TypeFactory(object):
         """Returns type declaration doc string.
 
         """
-        result = self.factory.__doc__.strip()
-        if result[-1] != ".":
-            result += "."
-
-        return result
+        return _format_doc_string(self.factory.__doc__)
 
 
     @property
@@ -279,19 +291,18 @@ class _ClassTypeFactory(_TypeFactory):
             """
             # Derive from property definition.
             if len(member) == 4:
-                doc = member[3].strip()
+                doc_string = member[3]
             # Derive from doc_strings definition.
             elif member[0] in self.definition.get("doc_strings", dict()):
-                doc = self.definition["doc_strings"][member[0]].strip()
+                doc_string = self.definition["doc_strings"][member[0]]
             # Undefined.
             else:
                 print "WARNING: property without doc string: {}.{} --> {}".format(self.package, self.name, member[0])
-                doc = "None"
+                doc_string = None
 
-            if doc:
-                doc = doc.replace('"', "'")
+            doc_string = _format_doc_string(doc_string)
 
-            return '\n            "{}": "{}"'.format(member[0].strip(), doc)
+            return '\n            "{}": "{}"'.format(member[0].strip(), doc_string)
 
 
         def _get_doc_strings(members):
