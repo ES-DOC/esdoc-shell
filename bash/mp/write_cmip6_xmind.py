@@ -110,7 +110,7 @@ def _write_vocab_group(parent_topic, mod, title):
     parent_topic.addSubTopic(topic)
 
 
-def _write_domain_process(sheet, mod):
+def _write_process(sheet, mod):
     """Writes a worksheet that represents a scientific process.
 
     """
@@ -146,7 +146,7 @@ def _write_domain(mod, dest):
     for idx, mod in enumerate(_get_sub_modules(mod)):
         sheet = book.getPrimarySheet() if idx == 0 else book.createSheet()
         book.addSheet(sheet)
-        _write_domain_process(sheet, mod)
+        _write_process(sheet, mod)
 
     # Save workbook.
     xmind.save(book, fpath)
