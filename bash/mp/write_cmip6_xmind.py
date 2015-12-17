@@ -34,6 +34,8 @@ _DOMAINS = {
     sea_ice
 }
 
+_URL = "https://github.com/ES-DOC/esdoc-cv/tree/master/cmip6/definitions"
+
 
 def _get_sub_modules(mod):
     """Returns set of sub-modules derived from inspecting a module's members.
@@ -53,15 +55,14 @@ def _get_process_url(process_name):
     """Returns URL to a scientific process definition.
 
     """
-    return "https://github.com/ES-DOC/esdoc-cv/tree/master/cmip6/sea_ice/{}".format(process_name)
+    return "{}/sea_ice/{}".format(_URL, process_name)
 
 
 def _get_vocab_group_url(process_name, group_name):
     """Returns URL to a scientific process definition.
 
     """
-    return "https://github.com/ES-DOC/esdoc-cv/tree/master/cmip6/sea_ice/{}/{}.py".format(process_name, group_name)
-
+    return "{}/sea_ice/{}/{}.py".format(_URL, process_name, group_name)
 
 
 def _write_vocab_item(parent_topic, title, description):
