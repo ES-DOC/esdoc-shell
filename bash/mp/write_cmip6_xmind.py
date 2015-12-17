@@ -34,6 +34,7 @@ _DOMAINS = {
     sea_ice
 }
 
+# Base url for linking back to meta-definitions.
 _URL = "https://github.com/ES-DOC/esdoc-cv/tree/master/cmip6/definitions"
 
 
