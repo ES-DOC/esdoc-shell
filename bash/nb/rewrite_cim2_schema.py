@@ -3,7 +3,7 @@
 """
 .. module:: rewrite_cim2_schema.py
    :platform: Unix, Windows
-   :synopsis: Rewrites cim 2 ontology schema to be esdoc-mp compliant.
+   :synopsis: Rewrites esdoc-nb cim 2 ontology schema definitions to esdoc-mp.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 

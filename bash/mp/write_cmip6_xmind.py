@@ -84,6 +84,7 @@ def _write_vocab_set(parent_topic, name, description, definition):
     """
     topic = TopicElement()
     topic.setTitle(name)
+    topic.addMarker("symbol-right")
     if description:
         topic.setPlainNotes(description)
     for label, description in definition['choices']:
