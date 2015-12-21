@@ -256,7 +256,10 @@ class _ClassTypeFactory(_TypeFactory):
             typeof = _get_property_type(name, member[1].strip())
             cardinality = member[2].strip()
 
-            return '\n            ("{}", "{}", "{}")'.format(name, typeof, cardinality)
+            result = '\n            '
+            result += '("{}", "{}", "{}")'.format(name, typeof, cardinality)
+
+            return result
 
 
         def _get_linkedto_properties(members):
@@ -267,10 +270,9 @@ class _ClassTypeFactory(_TypeFactory):
             for member in [m for m in members if m[1].startswith('linked_to')]:
                 name = member[0].strip()
                 cardinality = member[2].strip()
-                if cardinality.endswith("N"):
-                    result.append('\n            ("{}_references", "shared.doc_reference", "{}")'.format(name, cardinality))
-                else:
-                    result.append('\n            ("{}_reference", "shared.doc_reference", "{}")'.format(name, cardinality))
+                expression = '\n            '
+                expression += '("link_to_{}", "shared.doc_reference", "{}")'.format(name, cardinality)
+                result.append(expression)
 
             return result
 
