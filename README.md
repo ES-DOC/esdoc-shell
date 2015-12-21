@@ -31,12 +31,12 @@ Anyone who wishes to install and use es-doc tools & api's from the command line.
 Installation
 --------
 
-For guide to installation please refer to [installation documentation](https://github.com/ES-DOC/esdoc-shell/wiki/Installation).
+For guide to installation please refer to [installation documentation](https://github.com/ES-DOC/esdoc-shell/blob/master/docs/installation.rst).
 
-Supported commands
+Usage
 --------
 
-For guide to supported commands please refer to  [supported commands documentation](https://github.com/ES-DOC/esdoc-shell/wiki/Supported-Commands).
+For usage guide to supported commands please refer to  [supported commands documentation](https://github.com/ES-DOC/esdoc-shell/blob/master/docs/usage.rst).
 
 Further Information ?
 --------------------------------------
