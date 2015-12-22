@@ -55,16 +55,11 @@ _MODULE_SET = set([
 
 
 # Code template for module header.
-_MOD_HEADER = '''
-# -*- coding: utf-8 -*-
+_MOD_HEADER = '''# -*- coding: utf-8 -*-
 
 """
 .. module:: {mod_name}.py
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Set of CIM v2 ontology schema definitions.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
+   :synopsis: Set of CIM v2 ontology type definitions.
 
 """
 '''
@@ -76,25 +71,23 @@ _TYPE_FACTORY = '''def {func_name}():
 
     """
     return {
-        "type": "{func_type}",
+        'type': '{func_type}',
         {func_body}
     }
 '''
 
 # Code template for class factory.
 _CLASS = '''
-        "base": {base_class},
-        "is_abstract": {is_abstract},
-        "properties": [{properties}
-        ],
-        "doc_strings": {{doc_strings}
-        }
+        'base': {base_class},
+        'is_abstract': {is_abstract},{pstr}
+        'properties': [{properties}
+        ]
 '''
 
 # Code template for enum factory.
 _ENUM = '''
-        "is_open": {is_open},
-        "members": [{members}]
+        'is_open': {is_open},
+        'members': [{members}]
 '''
 
 # Map of reformtted base class names.
@@ -211,7 +204,18 @@ class _ClassTypeFactory(_TypeFactory):
             except KeyError:
                 pass
 
-            return '"{}"'.format(base)
+            return "'{}'".format(base)
+
+
+        def _get_print_string():
+            """Returns code snippet for a class print string.
+
+            """
+            pstr = self.definition.get('pstr', None)
+            if pstr is None:
+                return ""
+
+            return "\n        'pstr': {},".format(pstr)
 
 
         def _get_property_type(prop_name, prop_type):
@@ -248,45 +252,6 @@ class _ClassTypeFactory(_TypeFactory):
             return prop_type
 
 
-        def _get_property(member):
-            """Returns code snippet for a class property.
-
-            """
-            name = member[0].strip()
-            typeof = _get_property_type(name, member[1].strip())
-            cardinality = member[2].strip()
-
-            result = '\n            '
-            result += '("{}", "{}", "{}")'.format(name, typeof, cardinality)
-
-            return result
-
-
-        def _get_linkedto_properties(members):
-            """Returns inter-document link properties.
-
-            """
-            result = []
-            for member in [m for m in members if m[1].startswith('linked_to')]:
-                name = member[0].strip()
-                cardinality = member[2].strip()
-                expression = '\n            '
-                expression += '("link_to_{}", "shared.doc_reference", "{}")'.format(name, cardinality)
-                result.append(expression)
-
-            return result
-
-
-        def _get_properties(members):
-            """Returns code snippet for a set of class properties.
-
-            """
-            properties = [_get_property(m) for m in members]
-            properties += _get_linkedto_properties(members)
-
-            return ",".join(sorted(properties))
-
-
         def _get_doc_string(member):
             """Returns code snippet for a class doc string.
 
@@ -302,24 +267,59 @@ class _ClassTypeFactory(_TypeFactory):
                 print "WARNING: property without doc string: {}.{} --> {}".format(self.package, self.name, member[0])
                 doc_string = None
 
-            doc_string = _format_doc_string(doc_string)
-
-            return '\n            "{}": "{}"'.format(member[0].strip(), doc_string)
+            return _format_doc_string(doc_string)
 
 
-        def _get_doc_strings(members):
-            """Returns code snippet for a set of class doc strings.
+        def _get_property(member):
+            """Returns code snippet for a class property.
 
             """
-            doc_strings = [_get_doc_string(m) for m in members]
+            name = member[0].strip()
+            typeof = _get_property_type(name, member[1].strip())
+            cardinality = member[2].strip()
+            doc_string = _get_doc_string(member)
 
-            return ",".join(sorted(doc_strings))
+            result = '\n            '
+            result += "('{}', '{}', '{}',".format(name, typeof, cardinality)
+            result += '\n                '
+            result += '"{}")'.format(doc_string)
+
+            return result
+
+
+        def _get_linkedto_properties(members):
+            """Returns inter-document link properties.
+
+            """
+            result = []
+            for member in [m for m in members if m[1].startswith('linked_to')]:
+                name = member[0].strip()
+                cardinality = member[2].strip()
+                expression = '\n            '
+                expression += "('link_to_{}', 'shared.doc_reference', '{}',".format(name, cardinality)
+                expression += '\n                '
+                expression += '"{}")'.format("Reference to linked document(s).")
+
+                result.append(expression)
+
+            return result
+
+
+        def _get_properties(members):
+            """Returns code snippet for a set of class properties.
+
+            """
+            properties = [_get_property(m) for m in members]
+            properties += _get_linkedto_properties(members)
+
+            return ",".join(sorted(properties))
+
 
         result = _CLASS
         result = result.replace("{base_class}", _get_base_class())
+        result = result.replace("{pstr}", _get_print_string())
         result = result.replace("{is_abstract}", "{}".format(self.definition.get("is_abstract", False)))
         result = result.replace("{properties}", _get_properties(self.definition.get("properties", [])))
-        result = result.replace("{doc_strings}", _get_doc_strings(self.definition.get("properties", [])))
 
         return result
 
