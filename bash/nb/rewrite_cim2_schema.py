@@ -287,30 +287,11 @@ class _ClassTypeFactory(_TypeFactory):
             return result
 
 
-        def _get_linkedto_properties(members):
-            """Returns inter-document link properties.
-
-            """
-            result = []
-            for member in [m for m in members if m[1].startswith('linked_to')]:
-                name = member[0].strip()
-                cardinality = member[2].strip()
-                expression = '\n            '
-                expression += "('link_to_{}', 'shared.doc_reference', '{}',".format(name, cardinality)
-                expression += '\n                '
-                expression += '"{}")'.format("Reference to linked document(s).")
-
-                result.append(expression)
-
-            return result
-
-
         def _get_properties(members):
             """Returns code snippet for a set of class properties.
 
             """
             properties = [_get_property(m) for m in members]
-            properties += _get_linkedto_properties(members)
 
             return ",".join(sorted(properties))
 
@@ -339,9 +320,9 @@ class _EnumTypeFactory(_TypeFactory):
             name = member[0].strip()
             doc = member[1]
             if doc:
-                doc = doc.strip()
+                doc = '"{}"'.format(doc.strip())
 
-            return '\n            ("{}", "{}")'.format(name, doc)
+            return '\n            ("{}", {})'.format(name, doc)
 
 
         def _get_members(members):
