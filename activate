@@ -10,6 +10,7 @@ alias esdoc-api-daemons-reset-logs=$ESDOC_HOME/bash/api/daemons_reset_logs.sh
 alias esdoc-api-daemons-status=$ESDOC_HOME/bash/api/daemons_status.sh
 alias esdoc-api-daemons-update-config=$ESDOC_HOME/bash/api/daemons_update_config.sh
 alias esdoc-api-daemons-update-config-for-debug=$ESDOC_HOME/bash/api/daemons_update_config_for_debug.sh
+alias esdoc-api-db-flush=$ESDOC_HOME/bash/api/db_flush.sh
 alias esdoc-api-db-index=$ESDOC_HOME/bash/api/db_index.sh
 alias esdoc-api-db-index-reset=$ESDOC_HOME/bash/api/db_index_reset.sh
 alias esdoc-api-db-ingest=$ESDOC_HOME/bash/api/db_ingest.sh
@@ -17,7 +18,6 @@ alias esdoc-api-db-insert-institute=$ESDOC_HOME/bash/api/db_insert_institute.sh
 alias esdoc-api-db-insert-project=$ESDOC_HOME/bash/api/db_insert_project.sh
 alias esdoc-api-db-install=$ESDOC_HOME/bash/api/db_install.sh
 alias esdoc-api-db-reset=$ESDOC_HOME/bash/api/db_reset.sh
-alias esdoc-api-db-uningest=$ESDOC_HOME/bash/api/db_uningest.sh
 alias esdoc-api-db-uninstall=$ESDOC_HOME/bash/api/db_uninstall.sh
 alias esdoc-api-db-write-comparator-setup-data=$ESDOC_HOME/bash/api/db_write_comparator_setup_data.sh
 alias esdoc-api-db-write-facets=$ESDOC_HOME/bash/api/db_write_facets.sh
@@ -77,7 +77,7 @@ alias esdoc-deploy-setup='esdoc-stack-install && esdoc-deploy-archive-uncompress
 # CMIP6 commands.
 alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/pyesdoc/archive_cmip6_documents.sh
 alias esdoc-cmip6-write-documents=$ESDOC_HOME/bash/pyesdoc/write_cmip6_documents.sh
-alias esdoc-cmip6-reset='esdoc-archive-delete-documents cmip6-draft && esdoc-api-db-uningest cmip6-draft && esdoc-cmip6-write-documents && esdoc-cmip6-archive-documents && esdoc-api-db-ingest'
+alias esdoc-cmip6-reset='esdoc-archive-delete-documents cmip6-draft && esdoc-api-db-flush cmip6-draft && esdoc-cmip6-write-documents && esdoc-cmip6-archive-documents && esdoc-api-db-ingest'
 
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_HOME/bash/api/*.sh
