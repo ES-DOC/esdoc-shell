@@ -353,7 +353,7 @@ _ACTIONS = {
         (_restore_db, "Restoring database(s)"),
         (_start_api_daemon, "Starting API daemon"),
         (_update_wf_websites, "Updating web faction websites"),
-        # (_update_cron_tab, "Updating cron tab"),
+        (_update_cron_tab, "Updating cron tab"),
     ],
     'rollback' : [
         (_declare_stack, "Declaring stack"),
