@@ -166,7 +166,6 @@ declare -a ESDOC_REPOS=(
 	'esdoc-docs-cmip6'
 	'esdoc-js-client'
 	'esdoc-mp'
-	'esdoc-nb'
 	'esdoc-py-client'
 	'esdoc-questionnaire'
 	'esdoc-search'

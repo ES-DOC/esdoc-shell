@@ -33,7 +33,7 @@ alias esdoc-archive-populate=$ESDOC_HOME/bash/archive/populate.sh
 alias esdoc-deploy-archive-compress=$ESDOC_HOME/bash/deployment/archive_compress.sh
 alias esdoc-deploy-archive-uncompress=$ESDOC_HOME/bash/deployment/archive_uncompress.sh
 alias esdoc-deploy-compile-js-plugin=$ESDOC_HOME/bash/deployment/compile_js_plugin.sh
-alias esdoc-deploy-display-active-shells=$ESDOC_HOME/bash/deployment/display_active_shells.sh
+alias esdoc-deploy-list-active-shells=$ESDOC_HOME/bash/deployment/list_active_shells.sh
 alias esdoc-deploy-rollback=$ESDOC_HOME/bash/deployment/rollback.sh
 alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
 
@@ -73,6 +73,16 @@ alias esdoc-stack-upgrade-venvs=$ESDOC_HOME/bash/stack/upgrade_venvs.sh
 # Composite commands.
 alias esdoc-stack-update-source='esdoc-stack-update-shell && esdoc-stack-update-repos'
 alias esdoc-deploy-setup='esdoc-stack-install && esdoc-deploy-archive-uncompress'
+
+# Reset project assets composite command.
+_reset_project_assets()
+{
+	esdoc-api-db-flush $1
+	esdoc-archive-delete-documents $1
+	esdoc-archive-populate
+	esdoc-api-db-ingest
+}
+alias esdoc-reset-project-assets=_reset_project_assets
 
 # CMIP6 commands.
 alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/pyesdoc/archive_cmip6_documents.sh
