@@ -15,7 +15,7 @@ git clone https://github.com/ES-DOC/esdoc-shell.git YOUR_WORKING_DIRECTORY/esdoc
 **Step 2: Run installer**
 
 ```
-source YOUR_WORKING_DIRECTORY/esdoc/activate
+source YOUR_WORKING_DIRECTORY/esdoc/activate  
 esdoc-stack-install
 ```
 
