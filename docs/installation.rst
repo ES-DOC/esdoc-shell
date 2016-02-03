@@ -15,9 +15,7 @@ git clone https://github.com/ES-DOC/esdoc-shell.git YOUR_WORKING_DIRECTORY/esdoc
 **Step 2: Run installer**
 
 ```
-source YOUR_WORKING_DIRECTORY/esdoc/activate
-
-esdoc-stack-install
+source YOUR_WORKING_DIRECTORY/esdoc/activate && esdoc-stack-install
 ```
 
 This downloads the full ES-DOC stack source code, creates a local python executable, creates a local virtual environment, creates local configuration files.  It takes approx. 10 minutes to execute.
