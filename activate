@@ -42,7 +42,7 @@ alias esdoc-mp-generate-cim-v1=$ESDOC_HOME/bash/mp/generate_cim_1.sh
 alias esdoc-mp-generate-cim-v2=$ESDOC_HOME/bash/mp/generate_cim_2.sh
 alias esdoc-mp-validate-cim-v1=$ESDOC_HOME/bash/mp/validate_cim_1.sh
 alias esdoc-mp-validate-cim-v2=$ESDOC_HOME/bash/mp/validate_cim_2.sh
-alias esdoc-mp-write-cmip6-xmind=$ESDOC_HOME/bash/mp/write_cmip6_xmind.sh
+alias esdoc-mp-write-cmip6-mindmap=$ESDOC_HOME/bash/mp/write_cmip6_mindmap.sh
 alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
 
 # Notebook commands.
