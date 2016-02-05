@@ -116,10 +116,11 @@ declare ESDOC_DIR_NB=$ESDOC_DIR_REPOS/esdoc-nb
 declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
 declare ESDOC_DIR_PYESDOC_TESTS=$ESDOC_DIR_REPOS/esdoc-py-client/tests
 declare ESDOC_DIR_QTN=$ESDOC_DIR_REPOS/esdoc-questionnaire
-declare ESDOC_DIR_WEB_COMPARATOR=$ESDOC_DIR_REPOS/esdoc-comparator
-declare ESDOC_DIR_WEB_PLUGIN=$ESDOC_DIR_REPOS/esdoc-js-client
-declare ESDOC_DIR_WEB_STATIC=$ESDOC_DIR_REPOS/esdoc-static
-declare ESDOC_DIR_WEB_VIEWER=$ESDOC_DIR_REPOS/esdoc-viewer
+
+declare ESDOC_DIR_WEB_COMPARATOR=$ESDOC_DIR_REPOS/esdoc-web/comparator
+declare ESDOC_DIR_WEB_PLUGIN=$ESDOC_DIR_REPOS/esdoc-web/plugin
+declare ESDOC_DIR_WEB_STATIC=$ESDOC_DIR_REPOS/esdoc-web/static
+declare ESDOC_DIR_WEB_VIEWER=$ESDOC_DIR_REPOS/esdoc-web/viewer
 
 # Set of ops sub-directories.
 declare -a ESDOC_OPS_DIRS=(
@@ -159,19 +160,13 @@ declare -a ESDOC_REPOS=(
 	'esdoc-archive'
 	'esdoc-cim'
 	'esdoc-cim-cv'
-	'esdoc-comparator'
 	'esdoc-contrib'
-	'esdoc-cv'
 	'esdoc-docs'
 	'esdoc-docs-cmip6'
-	'esdoc-js-client'
 	'esdoc-mp'
 	'esdoc-py-client'
 	'esdoc-questionnaire'
-	'esdoc-search'
-	'esdoc-splash'
-	'esdoc-static'
-	'esdoc-viewer'
+	'esdoc-web'
 )
 
 # Set of virtual environments.
