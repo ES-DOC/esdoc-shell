@@ -16,7 +16,7 @@ main()
 
 	# Invoke mindmap generator.
 	activate_venv mp
-	python $ESDOC_DIR_MP"/esdoc_mp/vocabs/cmip6/mindmap.py" --dest=$dest  --domain=$1 --stylesheet=$stylesheet
+	python $ESDOC_DIR_MP"/esdoc_mp/vocabs/cmip6/mindmap.py" --dest=$dest --domain=$1 --stylesheet=$stylesheet
 
 	# Copy mindmaps to esdoc-docs repo.
 	cp $ESDOC_DIR_REPOS/esdoc-cim/vocabs/cmip6/mindmaps/* $ESDOC_DIR_REPOS/esdoc-docs/cmip6/mindmaps
