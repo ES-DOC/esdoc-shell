@@ -6,6 +6,8 @@ source $ESDOC_HOME/bash/init.sh
 # Main entry point.
 main()
 {
+	log "writing cmip6 mindmap(s) ..."
+
 	# Set stylesheet & I/O destination.
 	if [ "$2" ]; then
 		declare stylesheet=$2
@@ -20,6 +22,8 @@ main()
 
 	# Copy mindmaps to esdoc-docs repo.
 	cp $ESDOC_DIR_REPOS/esdoc-cim/vocabs/cmip6/mindmaps/* $ESDOC_DIR_REPOS/esdoc-docs/cmip6/mindmaps
+
+	log "written cmip6 mindmap(s) ..."
 }
 
 # Invoke entry point.
