@@ -283,10 +283,11 @@ def _update_cron_tab(ctx):
     """Updates cron tab (prod only).
 
     """
-    subprocess.call([
-        _DEPLOY,
-        "update_crontab"
-        ])
+    if ctx.environment == 'prod':
+        subprocess.call([
+            _DEPLOY,
+            "update_crontab"
+            ])
 
 
 def _install_source(ctx):

@@ -36,19 +36,19 @@ _ARGS.add_argument(
     )
 
 
-_NOTE = """
+_NOTES = """
 <html>
   <head></head>
   <body>
     <dl>
-      <dt><b>Coffee</b></dt>
-      <dd>Black hot drink</dd>
-      <dt>Milk</dt>
-      <dd>White cold drink</dd>
+        {}
     </dl>
   </body>
 </html>
 """
+
+_NOTE = "<dt><b>{}</b></dt><dd>{}</dd>"
+
 
 
 class _VocabParserConfiguration(object):
@@ -93,7 +93,7 @@ class _VocabParser(VocabParser):
         return self.maps.values()
 
 
-    def _set_node(self, parent, owner, text=None, url=None, style=None, position=None):
+    def _set_node(self, parent, owner, text=None, style=None, position=None):
         """Sets a mindmap node.
 
         """
@@ -109,18 +109,13 @@ class _VocabParser(VocabParser):
         if position:
             atts['POSITION'] = position
 
-        try:
-            url = url or owner.url
-        except AttributeError:
-            pass
-        else:
-            atts['LINK'] = url
-
         if not isinstance(parent, ET.Element):
             parent = self.nodes[parent]
 
         self.nodes[owner] = ET.SubElement(parent, 'node', atts)
         self._set_font(owner)
+
+        self._set_notes(owner)
 
 
     def _set_font(self, owner):
@@ -140,15 +135,19 @@ class _VocabParser(VocabParser):
         """Set notes associated with a node.
 
         """
-        print ET.fromstring(_NOTE)
-        content = ET.SubElement(self.nodes[owner], 'richcontent', {"TYPE": "NOTE"})
-        content.append(ET.fromstring(_NOTE))
+        # Skip if owner does not define notes.
+        try:
+            notes = owner.notes
+        except AttributeError:
+            return
 
-        # html = ET.SubElement(content, 'html')
-        # head = ET.SubElement(html, 'head')
-        # body = ET.SubElement(html, 'body')
-        # p = ET.SubElement(body, 'p')
-        # p.text = _NOTE
+        # Convert notes to HTML.
+        notes = [_NOTE.format(k, v) for k, v in owner.notes]
+        notes = _NOTES.format("".join(notes))
+
+        # Inject notes into mindmap.
+        content = ET.SubElement(self.nodes[owner], 'richcontent', {"TYPE": "NOTE"})
+        content.append(ET.fromstring(notes))
 
 
     def on_domain_parse(self, domain):
@@ -188,17 +187,17 @@ class _VocabParser(VocabParser):
         """On detail property parse event handler.
 
         """
-        text = "{} .. {}"
-        if self.positions[owner] == 'left':
-            text = text.format(detail_property.name, detail_property.cardinality)
-        else:
-            text = text.format(detail_property.cardinality, detail_property.name)
 
-        self._set_node(owner, detail_property, text=text)
+        # text = "{}:{} .. {}"
+        # if self.positions[owner] == 'left':
+        #     text = text.format(detail_property.name, detail_property.cardinality, detail_property.type_)
+        # else:
+        #     text = text.format(detail_property.type_, detail_property.cardinality, detail_property.name)
 
+        self._set_node(owner, detail_property)
+        self._set_notes(detail_property)
         for choice in detail_property.choices:
             self._set_node(detail_property, choice, text=choice.value)
-
 
 
 def _main(args):
