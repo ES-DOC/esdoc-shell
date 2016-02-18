@@ -42,7 +42,6 @@ alias esdoc-mp-generate-cim-v1=$ESDOC_HOME/bash/mp/generate_cim_1.sh
 alias esdoc-mp-generate-cim-v2=$ESDOC_HOME/bash/mp/generate_cim_2.sh
 alias esdoc-mp-validate-cim-v1=$ESDOC_HOME/bash/mp/validate_cim_1.sh
 alias esdoc-mp-validate-cim-v2=$ESDOC_HOME/bash/mp/validate_cim_2.sh
-alias esdoc-mp-write-cmip6-mindmap=$ESDOC_HOME/bash/mp/write_cmip6_mindmap.sh
 alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
 
 # Notebook commands.
@@ -85,10 +84,11 @@ _reset_project_assets()
 alias esdoc-reset-project-assets=_reset_project_assets
 
 # CMIP6 commands.
-alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/pyesdoc/archive_cmip6_documents.sh
-alias esdoc-cmip6-write-documents=$ESDOC_HOME/bash/pyesdoc/write_cmip6_documents.sh
-alias esdoc-cmip6-reset='esdoc-archive-delete-documents cmip6-draft && esdoc-api-db-flush cmip6-draft && esdoc-cmip6-write-documents && esdoc-cmip6-archive-documents && esdoc-api-db-ingest'
-alias esdoc-cmip6-write-mindmap=$ESDOC_HOME/bash/mp/write_cmip6_mindmap.sh
+alias esdoc-cmip6-reset='esdoc-archive-delete-documents cmip6-draft && esdoc-api-db-flush cmip6-draft && esdoc-cmip6-write-experiments && esdoc-cmip6-archive-documents && esdoc-api-db-ingest'
+
+alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/cmip6/archive_documents.sh
+alias esdoc-cmip6-write-mindmap=$ESDOC_HOME/bash/cmip6/write_mindmap.sh
+alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
 
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_HOME/bash/api/*.sh
