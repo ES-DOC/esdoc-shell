@@ -125,26 +125,26 @@ _install_source_api()
 _install_source_static()
 {
 	# ... comparator micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-comparator/* $ESDOC_DIR_WEBAPPS/$1_$2_compare
+	cp -r $ESDOC_DIR_REPOS/esdoc-web/comparator/* $ESDOC_DIR_WEBAPPS/$1_$2_compare
 	rm $ESDOC_DIR_WEBAPPS/$1_$2_compare/index-dev.html
 
 	# ... search micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-search/* $ESDOC_DIR_WEBAPPS/$1_$2_search
+	cp -r $ESDOC_DIR_REPOS/esdoc-web/search/* $ESDOC_DIR_WEBAPPS/$1_$2_search
 
 	# ... splash micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-splash/* $ESDOC_DIR_WEBAPPS/$1_$2_splash
+	cp -r $ESDOC_DIR_REPOS/esdoc-web/splash/* $ESDOC_DIR_WEBAPPS/$1_$2_splash
 
 	# ... static files
-	cp -r $ESDOC_DIR_REPOS/esdoc-static/* $ESDOC_DIR_WEBAPPS/$1_$2_static
-	cp -r $ESDOC_DIR_REPOS/esdoc-js-client/bin/latest/* $ESDOC_DIR_WEBAPPS/$1_$2_static
+	cp -r $ESDOC_DIR_REPOS/esdoc-web/static/* $ESDOC_DIR_WEBAPPS/$1_$2_static
+	cp -r $ESDOC_DIR_REPOS/esdoc-web/plugin/bin/latest/* $ESDOC_DIR_WEBAPPS/$1_$2_static
 	mkdir -p $ESDOC_DIR_WEBAPPS/$1_$2_static/ontologies/cim/1
-	cp -r $ESDOC_DIR_REPOS/esdoc-cim/*.xsd $ESDOC_DIR_WEBAPPS/$1_$2_static/ontologies/cim/1
+	cp -r $ESDOC_DIR_REPOS/esdoc-cim/ontologies/v1/*.xsd $ESDOC_DIR_WEBAPPS/$1_$2_static/ontologies/cim/1
 
 	# ... viewer micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-viewer/* $ESDOC_DIR_WEBAPPS/$1_$2_view
+	cp -r $ESDOC_DIR_REPOS/esdoc-web/viewer/* $ESDOC_DIR_WEBAPPS/$1_$2_view
 
 	# ... viewer demo micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-static/demos/viewer/* $ESDOC_DIR_WEBAPPS/$1_$2_demo
+	cp -r $ESDOC_DIR_REPOS/esdoc-web/viewer-demo/* $ESDOC_DIR_WEBAPPS/$1_$2_demo
 }
 
 # Installs source code.
