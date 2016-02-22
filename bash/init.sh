@@ -171,7 +171,6 @@ declare -a ESDOC_REPOS=(
 declare -a ESDOC_VENVS=(
 	'api'
 	'mp'
-	'nb'
 	'questionnaire'
 	'pyesdoc'
 )
