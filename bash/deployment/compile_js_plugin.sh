@@ -12,7 +12,7 @@ fi
 
 # Set paths.
 declare YUICOMPRESSOR=$ESDOC_DIR_RESOURCES"/yuicompressor-2.4.7.jar"
-declare SRC=$ESDOC_DIR_WEB_PLUGIN/src
+declare SRC=$ESDOC_DIR_WEB_PLUGIN
 declare BIN=$ESDOC_DIR_WEB_PLUGIN/bin
 
 # Set javascript fileset (N.B. order is important).
@@ -99,27 +99,27 @@ declare -a IMAGES=(
 declare -a jstargets=(
     $BIN'/latest/esdoc.js'
     $BIN'/'$VERSION'/esdoc.js'
-    $ESDOC_DIR_WEB_COMPARATOR'/src/media/esdoc.js'
+    $ESDOC_DIR_WEB_COMPARATOR'/media/esdoc.js'
 )
 declare -a jstargets_min=(
     $BIN'/latest/esdoc-min.js'
     $BIN'/'$VERSION'/esdoc-min.js'
-    $ESDOC_DIR_WEB_COMPARATOR'/src/media/esdoc-min.js'
+    $ESDOC_DIR_WEB_COMPARATOR'/media/esdoc-min.js'
 )
 declare -a csstargets=(
     $BIN'/latest/esdoc.css'
     $BIN'/'$VERSION'/esdoc.css'
-    $ESDOC_DIR_WEB_COMPARATOR'/src/media/esdoc.css'
+    $ESDOC_DIR_WEB_COMPARATOR'/media/esdoc.css'
 )
 declare -a csstargets_min=(
     $BIN'/latest/esdoc-min.css'
     $BIN'/'$VERSION'/esdoc-min.css'
-    $ESDOC_DIR_WEB_COMPARATOR'/src/media/esdoc-min.css'
+    $ESDOC_DIR_WEB_COMPARATOR'/media/esdoc-min.css'
 )
 declare -a imagetargets=(
     $BIN'/latest'
     $BIN'/'$VERSION
-    $ESDOC_DIR_WEB_COMPARATOR'/src/media'
+    $ESDOC_DIR_WEB_COMPARATOR'/media'
 )
 
 # Set Legal notice.
@@ -145,10 +145,10 @@ _reset_output_folders()
 {
     rm -rf $BIN/latest
     rm -rf $BIN/$VERSION
-    rm -rf $ESDOC_DIR_WEB_COMPARATOR'/src/media'
+    rm -rf $ESDOC_DIR_WEB_COMPARATOR'/media'
     mkdir -p $BIN/latest/images
     mkdir -p $BIN/$VERSION/images
-    mkdir -p $ESDOC_DIR_WEB_COMPARATOR'/src/media/images'
+    mkdir -p $ESDOC_DIR_WEB_COMPARATOR'/media/images'
 }
 
 # Make tmp folders.

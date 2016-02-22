@@ -13,18 +13,19 @@ import argparse
 import inspect
 import os
 
-from esdoc_nb.mp.cim2 import activity_classes
-from esdoc_nb.mp.cim2 import data_classes
-from esdoc_nb.mp.cim2 import designing_classes
-from esdoc_nb.mp.cim2 import drs_entities
-from esdoc_nb.mp.cim2 import platform_classes
-from esdoc_nb.mp.cim2 import science_classes
-from esdoc_nb.mp.cim2 import science_enums
-from esdoc_nb.mp.cim2 import shared_classes
-from esdoc_nb.mp.cim2 import shared_classes_doc
-from esdoc_nb.mp.cim2 import shared_classes_time
-from esdoc_nb.mp.cim2 import software_classes
-from esdoc_nb.mp.cim2 import software_enums
+from esdoc_nb.mp.core.schema.cim2 import activity_classes
+from esdoc_nb.mp.core.schema.cim2 import data_classes
+from esdoc_nb.mp.core.schema.cim2 import designing_classes
+from esdoc_nb.mp.core.schema.cim2 import drs_entities
+from esdoc_nb.mp.core.schema.cim2 import platform_classes
+from esdoc_nb.mp.core.schema.cim2 import science_classes
+from esdoc_nb.mp.core.schema.cim2 import science_enums
+from esdoc_nb.mp.core.schema.cim2 import shared_classes
+# from esdoc_nb.mp.core.schema.cim2 import shared_classes_doc
+from esdoc_nb.mp.core.schema.cim2 import shared_classes_time
+from esdoc_nb.mp.core.schema.cim2 import software_classes
+from esdoc_nb.mp.core.schema.cim2 import software_enums
+
 
 
 # Define command line options.
@@ -47,7 +48,7 @@ _MODULE_SET = set([
     science_classes,
     science_enums,
     shared_classes,
-    shared_classes_doc,
+    # shared_classes_doc,
     shared_classes_time,
     software_classes,
     software_enums
@@ -120,7 +121,6 @@ def _format_doc_string(doc_string):
     result = result.replace('"', "'")
 
     return result
-
 
 
 class _TypeFactory(object):
@@ -357,32 +357,11 @@ class _Module(object):
         """Instance constructor.
 
         """
+        self.name = mod.__name__.split(".")[-1]
+        self.package = self.name.split("_")[0]
         self.mod = mod
         self.dest = os.path.join(dest, self.name) + ".py"
-
-
-    @property
-    def name(self):
-        """Gets module name.
-
-        """
-        return self.mod.__name__.split(".")[-1]
-
-
-    @property
-    def package(self):
-        """Returns associated ontology package name.
-
-        """
-        return self.name.split("_")[0]
-
-
-    @property
-    def code_header(self):
-        """Gets module code header.
-
-        """
-        return _MOD_HEADER.replace("{mod_name}", self.name)
+        self.code_header = _MOD_HEADER.replace("{mod_name}", self.name)
 
 
     def yield_type_factories(self):
@@ -399,11 +378,13 @@ class _Module(object):
         """Writes code to file system.
 
         """
+        print self.dest
         with open(self.dest, 'w') as output:
             output.write(self.code_header)
-            for type_factory in self.yield_type_factories():
-                output.write("\n\n")
-                output.write(type_factory.get_code())
+
+            # for type_factory in self.yield_type_factories():
+            #     output.write("\n\n")
+            #     output.write(type_factory.get_code())
 
 
 def _main(args):
@@ -411,6 +392,7 @@ def _main(args):
 
     """
     modules = [_Module(m, args.dest) for m in _MODULE_SET]
+    return
     for mod in modules:
         mod.write()
 

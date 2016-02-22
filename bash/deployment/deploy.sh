@@ -125,14 +125,14 @@ _install_source_api()
 _install_source_static()
 {
 	# ... comparator micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-comparator/src/* $ESDOC_DIR_WEBAPPS/$1_$2_compare
+	cp -r $ESDOC_DIR_REPOS/esdoc-comparator/* $ESDOC_DIR_WEBAPPS/$1_$2_compare
 	rm $ESDOC_DIR_WEBAPPS/$1_$2_compare/index-dev.html
 
 	# ... search micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-search/src/* $ESDOC_DIR_WEBAPPS/$1_$2_search
+	cp -r $ESDOC_DIR_REPOS/esdoc-search/* $ESDOC_DIR_WEBAPPS/$1_$2_search
 
 	# ... splash micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-splash/src/* $ESDOC_DIR_WEBAPPS/$1_$2_splash
+	cp -r $ESDOC_DIR_REPOS/esdoc-splash/* $ESDOC_DIR_WEBAPPS/$1_$2_splash
 
 	# ... static files
 	cp -r $ESDOC_DIR_REPOS/esdoc-static/* $ESDOC_DIR_WEBAPPS/$1_$2_static
@@ -141,7 +141,7 @@ _install_source_static()
 	cp -r $ESDOC_DIR_REPOS/esdoc-cim/*.xsd $ESDOC_DIR_WEBAPPS/$1_$2_static/ontologies/cim/1
 
 	# ... viewer micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-viewer/src/* $ESDOC_DIR_WEBAPPS/$1_$2_view
+	cp -r $ESDOC_DIR_REPOS/esdoc-viewer/* $ESDOC_DIR_WEBAPPS/$1_$2_view
 
 	# ... viewer demo micro-site
 	cp -r $ESDOC_DIR_REPOS/esdoc-static/demos/viewer/* $ESDOC_DIR_WEBAPPS/$1_$2_demo
