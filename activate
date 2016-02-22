@@ -2,6 +2,10 @@
 export ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 declare DIR=$ESDOC_HOME
 
+# Update prommpt.
+PS1="(`basename \"$ESDOC_HOME\"`)$PS1"
+export PS1
+
 # API commands.
 alias esdoc-api=$ESDOC_HOME/bash/api/run_web_service.sh
 alias esdoc-api-daemons-init=$ESDOC_HOME/bash/api/daemons_init.sh
@@ -40,6 +44,7 @@ alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
 # Meta-programming commands.
 alias esdoc-mp-generate-cim-v1=$ESDOC_HOME/bash/mp/generate_cim_1.sh
 alias esdoc-mp-generate-cim-v2=$ESDOC_HOME/bash/mp/generate_cim_2.sh
+alias esdoc-mp-generate-cim-v2-q=$ESDOC_HOME/bash/mp/generate_cim_2_q.sh
 alias esdoc-mp-validate-cim-v1=$ESDOC_HOME/bash/mp/validate_cim_1.sh
 alias esdoc-mp-validate-cim-v2=$ESDOC_HOME/bash/mp/validate_cim_2.sh
 alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
