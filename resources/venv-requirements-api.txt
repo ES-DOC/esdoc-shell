@@ -17,3 +17,4 @@ toolz==0.7.0
 tornado==4.0.1
 wsgiref==0.1.2
 arrow
+reportlab

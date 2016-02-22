@@ -288,6 +288,8 @@ def _update_cron_tab(ctx):
             _DEPLOY,
             "update_crontab"
             ])
+    else:
+        _log("... cron tab only updated in prod mode")
 
 
 def _install_source(ctx):
