@@ -162,6 +162,7 @@ declare -a ESDOC_REPOS=(
 	'esdoc-contrib'
 	'esdoc-docs'
 	'esdoc-mp'
+	'esdoc-nb'
 	'esdoc-py-client'
 	'esdoc-questionnaire'
 	'esdoc-web'
