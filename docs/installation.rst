@@ -53,4 +53,4 @@ esdoc-stack-uninstall
 Usage
 ------------------------------
 
-Usage instructions are `here Stack management commands <https://github.com/ES-DOC/esdoc-shell/blob/master/docs/usage.rst>`
+For usage instructions please see `here <https://github.com/ES-DOC/esdoc-shell/blob/master/docs/usage.rst>`
