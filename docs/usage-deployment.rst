@@ -2,16 +2,6 @@
 ES-DOC shell - deployment commands
 ============================
 
-esdoc-deploy-archive-compress
-----------------------------
-
-Compresses set of documents within local archive prior to deployment.
-
-esdoc-deploy-archive-uncompress
-----------------------------
-
-Decompresses set of documents within local archive.
-
 esdoc-deploy-compile-js-plugin
 ----------------------------
 
@@ -21,7 +11,7 @@ Compiles the ES-DOC javascript plugin.
 
 	Version of plugin to be compiled.
 
-esdoc-deploy-display-active-shells
+esdoc-deploy-list-active-shells
 ----------------------------
 
 Displays the set of currently active shells upon the WebFacetion server.

@@ -25,16 +25,3 @@ Validates a document and emits a validation report.
 
 	Path to a file upon local file system that is to be validated.
 
-
-esdoc-pyesdoc-publish-cmip6-documents
-----------------------------
-
-Publishes CMIP6 documents from spreadsheets.
-
-**-ARCHIVE DIRECTORY**
-
-	Folder upon file system to which documents will be archived.
-
-**SPREADSHEET**
-
-	Path to spreadsheet used to document CMIP6 experiments.
