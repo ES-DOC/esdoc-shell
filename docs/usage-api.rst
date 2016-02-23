@@ -39,6 +39,19 @@ esdoc-api-daemons-update-config-for-debug
 
 Updates API daemon process supervisord config file with a file that ensures all logging output is immediately written.
 
+esdoc-api-db-flush
+----------------------------
+
+Flushes a set of project documents from the database.
+
+**PROJECT**
+
+	Project code, e.g. cmip6.
+
+**SOURCE**
+
+	Source code, e.g. experiments-spreadsheet.
+
 esdoc-api-db-index
 ----------------------------
 
