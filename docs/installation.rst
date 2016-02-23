@@ -50,7 +50,7 @@ Uninstalling
 esdoc-stack-uninstall
 ```
 
-Executing commands
+Usage
 ------------------------------
 
-To see the list of commands upported by the shell simply open a new command lines session and type esdoc-help.  Each of the supported commands along with their expected parameters are listed.
+Usage instructions are `here Stack management commands <https://github.com/ES-DOC/esdoc-shell/blob/master/docs/usage.rst>`
