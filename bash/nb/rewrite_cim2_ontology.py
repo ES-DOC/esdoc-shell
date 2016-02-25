@@ -12,6 +12,7 @@
 import argparse
 import inspect
 import os
+from collections import defaultdict
 
 from esdoc_nb.mp.core.schema.cim2 import activity_classes
 from esdoc_nb.mp.core.schema.cim2 import data_classes
@@ -21,7 +22,6 @@ from esdoc_nb.mp.core.schema.cim2 import platform_classes
 from esdoc_nb.mp.core.schema.cim2 import science_classes
 from esdoc_nb.mp.core.schema.cim2 import science_enums
 from esdoc_nb.mp.core.schema.cim2 import shared_classes
-# from esdoc_nb.mp.core.schema.cim2 import shared_classes_doc
 from esdoc_nb.mp.core.schema.cim2 import shared_classes_time
 from esdoc_nb.mp.core.schema.cim2 import software_classes
 from esdoc_nb.mp.core.schema.cim2 import software_enums
@@ -38,6 +38,12 @@ _ARGS.add_argument(
     )
 
 
+# Report line break.
+_LINE_BREAK = '\n'
+
+# Report section break.
+_SECTION_BREAK = '------------------------------------------------------------------------------\n'
+
 # Set of modules to be rewritten.
 _MODULE_SET = set([
     activity_classes,
@@ -48,7 +54,6 @@ _MODULE_SET = set([
     science_classes,
     science_enums,
     shared_classes,
-    # shared_classes_doc,
     shared_classes_time,
     software_classes,
     software_enums
@@ -91,11 +96,6 @@ _ENUM = '''
         'members': [{members}]
 '''
 
-# Map of reformtted base class names.
-_BASE_CLASS_REFORMAT_MAP = {
-    "designing.activity": 'activity.activity'
-}
-
 # Map of package names to reformatted package names.
 _PACKAGE_REFORMAT_MAP = {
     "shared_time": 'shared'
@@ -135,6 +135,13 @@ class _TypeFactory(object):
         self.mod = mod
         self.name = name
         self.factory = factory
+
+
+    def __repr__(self):
+        """Instance representation.
+
+        """
+        return self.full_name
 
 
     @property
@@ -178,6 +185,13 @@ class _ClassTypeFactory(_TypeFactory):
     """A type factory that returns a class definition compatible with esdoc-mp.
 
     """
+    @property
+    def ommitted_keys(self):
+        return [k for k in self.definition.keys() if k not in {
+            'base', 'is_abstract', 'properties', 'type'
+        }]
+
+
     def get_definition(self):
         """Gets new class definition compatible with esdoc-mp.
 
@@ -198,11 +212,10 @@ class _ClassTypeFactory(_TypeFactory):
             if base and len(base.split('.')) != 2:
                 base = "{0}.{1}".format(self.package, base)
 
-            # Remap where appropriate.
-            try:
-                base = _BASE_CLASS_REFORMAT_MAP[base]
-            except KeyError:
-                pass
+            # Remap package where appropriate.
+            if base.split(".")[0] in _PACKAGE_REFORMAT_MAP:
+                base = "{0}.{1}".format(_PACKAGE_REFORMAT_MAP[base.split(".")[0]],
+                                        base.split(".")[1])
 
             return "'{}'".format(base)
 
@@ -218,6 +231,27 @@ class _ClassTypeFactory(_TypeFactory):
             return "\n        'pstr': {},".format(pstr)
 
 
+        def _get_linked_to_property_type(prop_type):
+            """Reformats a linked to property type definition.
+
+            """
+            # ... extract linked to fields
+            defn = [i.strip() for i in prop_type[10:-1].split(",")]
+            target = defn[0]
+            qualifier = None if len(defn) == 1 else defn[1]
+
+            # ... reset property type
+            if target.find(".") == -1:
+                target = "{}.{}".format(self.package, target)
+            if qualifier and qualifier.find(".") == -1:
+                qualifier = "{}.{}".format(self.package, qualifier)
+
+            if qualifier:
+                return "linked_to({}, {})".format(target, qualifier)
+
+            return "linked_to({})".format(target)
+
+
         def _get_property_type(prop_name, prop_type):
             """Reformats a property type definition.
 
@@ -229,18 +263,16 @@ class _ClassTypeFactory(_TypeFactory):
             # Ensure property types are lower case.
             prop_type = prop_type.lower()
 
-            # Ensure linked_to references are stripped out.
+            # Linked to properties.
             if prop_type.startswith('linked_to'):
-                prop_type = prop_type[10:-1]
-                if prop_type.find(".") == -1:
-                    prop_type = "{}.{}".format(self.package, prop_type)
+                return _get_linked_to_property_type(prop_type)
 
             # Override text type.
-            if prop_type in ('text', 'shared.cimtext'):
-                prop_type = 'str'
+            elif prop_type in ('text', 'shared.cimtext'):
+                return 'str'
 
             # Override complex type reference.
-            if len(prop_type.split(".")) == 2:
+            elif len(prop_type.split(".")) == 2:
                 pkg, cls = prop_type.split(".")
                 try:
                     pkg = _PACKAGE_REFORMAT_MAP[pkg]
@@ -309,6 +341,13 @@ class _EnumTypeFactory(_TypeFactory):
     """A type factory that returns an enum definition compatible with esdoc-mp.
 
     """
+    @property
+    def ommitted_keys(self):
+        return [k for k in self.definition.keys() if k not in {
+            'is_open', 'members', 'type'
+        }]
+
+
     def get_definition(self):
         """Gets new enum definition compatible with esdoc-mp.
 
@@ -319,7 +358,9 @@ class _EnumTypeFactory(_TypeFactory):
             """
             name = member[0].strip()
             doc = member[1]
-            if doc:
+            if not doc:
+                doc = "None"
+            else:
                 doc = '"{}"'.format(doc.strip())
 
             return '\n            ("{}", {})'.format(name, doc)
@@ -343,7 +384,8 @@ class _EnumTypeFactory(_TypeFactory):
         return result
 
 
-_TYPE_FACTORY_MAP = {
+# Map of definition types to factories.
+_DEFINITION_TYPE_FACTORY_MAP = {
     "class": _ClassTypeFactory,
     "enum": _EnumTypeFactory
 }
@@ -371,31 +413,56 @@ class _Module(object):
         for name, factory in inspect.getmembers(self.mod, inspect.isfunction):
             definition = factory()
             if "{}.{}".format(self.package, name) not in _TYPE_BLACKLIST:
-                yield _TYPE_FACTORY_MAP[definition['type']](self.mod, name, factory, definition)
+                yield _DEFINITION_TYPE_FACTORY_MAP[definition['type']](self.mod, name, factory, definition)
 
 
-    def write(self):
+    def write(self, ommitted):
         """Writes code to file system.
 
         """
-        print self.dest
         with open(self.dest, 'w') as output:
             output.write(self.code_header)
+            for type_factory in self.yield_type_factories():
+                output.write("\n\n")
+                output.write(type_factory.get_code())
+                # Remember definitions ommitted from rewrite.
+                for key in type_factory.ommitted_keys:
+                    ommitted[key].add(type_factory)
 
-            # for type_factory in self.yield_type_factories():
-            #     output.write("\n\n")
-            #     output.write(type_factory.get_code())
+
+def _write_ommitted_definitions(ommitted):
+    """Writes to stdout the set of ommitted definitions.
+
+    """
+    fpath = __file__.replace(".py", ".txt")
+    if os.path.exists(fpath):
+        os.remove(fpath)
+
+    with open(fpath, 'w') as report:
+        for key in sorted(ommitted.keys()):
+            report.write(_SECTION_BREAK)
+            report.write("Skipped key = {}".format(key))
+            report.write(_LINE_BREAK)
+            for type_factory in sorted(ommitted[key], key=lambda i: i.full_name):
+                if isinstance(type_factory, _ClassTypeFactory):
+                    report.write("\t{} (cls)".format(type_factory.full_name))
+                else:
+                    report.write("\t{} (enum)".format(type_factory.full_name))
+                report.write(_LINE_BREAK)
+            report.write(_LINE_BREAK)
 
 
 def _main(args):
     """Main entry point.
 
     """
+    ommitted = defaultdict(set)
     modules = [_Module(m, args.dest) for m in _MODULE_SET]
-    return
     for mod in modules:
-        mod.write()
+        mod.write(ommitted)
 
+    if ommitted:
+        _write_ommitted_definitions(ommitted)
 
 
 # Entry point.

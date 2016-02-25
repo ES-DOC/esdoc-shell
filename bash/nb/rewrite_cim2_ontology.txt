@@ -1,0 +1,122 @@
+------------------------------------------------------------------------------
+Skipped key = alternatives
+	designing.numerical_requirement (cls)
+	shared.datetime_set (cls)
+
+------------------------------------------------------------------------------
+Skipped key = base
+	activity.ensemble_types (enum)
+	activity.forcing_types (enum)
+	data.data_association_types (enum)
+	designing.ensemble_types (enum)
+	designing.experimental_relationships (enum)
+	designing.forcing_types (enum)
+	drs.drs_frequency_types (enum)
+	drs.drs_geographical_operators (enum)
+	drs.drs_realms (enum)
+	drs.drs_time_suffixes (enum)
+	platform.storage_systems (enum)
+	platform.volume_units (enum)
+	science.grid_layouts (enum)
+	science.grid_types (enum)
+	science.model_types (enum)
+	science.selection_cardinality (enum)
+	shared.calendar_types (enum)
+	shared.document_types (enum)
+	shared.nil_reason (enum)
+	shared.period_date_types (enum)
+	shared.quality_status (enum)
+	shared.role_code (enum)
+	shared.slicetime_units (enum)
+	shared.text_code (enum)
+	shared.time_units (enum)
+	software.coupling_framework (enum)
+	software.programming_language (enum)
+
+------------------------------------------------------------------------------
+Skipped key = cimType
+	activity.ensemble_types (enum)
+	designing.simulation_plan (cls)
+	platform.machine (cls)
+	platform.storage_volume (cls)
+	shared.calendar_types (enum)
+	shared.period_date_types (enum)
+	shared.time_period (cls)
+	shared.time_units (enum)
+	shared.timeslice_list (cls)
+	software.gridspec (cls)
+
+------------------------------------------------------------------------------
+Skipped key = constraints
+	activity.conformance (cls)
+	activity.ensemble (cls)
+	activity.uber_ensemble (cls)
+	data.downscaling (cls)
+	data.simulation (cls)
+	designing.domain_properties (cls)
+	designing.ensemble_requirement (cls)
+	designing.forcing_constraint (cls)
+	designing.multi_ensemble (cls)
+	designing.multi_time_ensemble (cls)
+	designing.numerical_experiment (cls)
+	designing.numerical_requirement (cls)
+	designing.output_temporal_requirement (cls)
+	designing.project (cls)
+	designing.simulation_plan (cls)
+	designing.temporal_constraint (cls)
+	drs.drs_atomic_dataset (cls)
+
+------------------------------------------------------------------------------
+Skipped key = derived
+	platform.compute_pool (cls)
+
+------------------------------------------------------------------------------
+Skipped key = doc
+	activity.ensemble_types (enum)
+	designing.ensemble_requirement (cls)
+	designing.multi_ensemble (cls)
+	designing.multi_time_ensemble (cls)
+	designing.simulation_plan (cls)
+	designing.temporal_constraint (cls)
+	platform.machine (cls)
+	platform.storage_pool (cls)
+	platform.storage_volume (cls)
+	platform.volume_units (enum)
+	shared.calendar_types (enum)
+	shared.datetime_set (cls)
+	shared.irregular_dateset (cls)
+	shared.period_date_types (enum)
+	shared.regular_timeset (cls)
+	shared.slicetime_units (enum)
+	shared.time_period (cls)
+	shared.time_units (enum)
+	shared.timeslice_list (cls)
+	software.gridspec (cls)
+	software.programming_language (enum)
+
+------------------------------------------------------------------------------
+Skipped key = is_abstract
+	science.selection_cardinality (enum)
+
+------------------------------------------------------------------------------
+Skipped key = is_child
+	data.dataset (cls)
+
+------------------------------------------------------------------------------
+Skipped key = pstr
+	activity.ensemble_axis (cls)
+	platform.component_performance (cls)
+	platform.performance (cls)
+	platform.storage_volume (cls)
+	science.extent (cls)
+	shared.association_class (cls)
+	shared.calendar (cls)
+	shared.cimtext (cls)
+	shared.date_time (cls)
+	shared.external_document (cls)
+	shared.key_float (cls)
+	shared.number_array (cls)
+	shared.regular_timeset (cls)
+	shared.responsibility (cls)
+	shared.time_period (cls)
+
