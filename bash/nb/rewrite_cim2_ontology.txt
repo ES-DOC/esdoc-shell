@@ -17,8 +17,6 @@ Skipped key = base
 	drs.drs_time_suffixes (enum)
 	platform.storage_systems (enum)
 	platform.volume_units (enum)
-	science.grid_layouts (enum)
-	science.grid_types (enum)
 	science.model_types (enum)
 	science.selection_cardinality (enum)
 	shared.calendar_types (enum)
