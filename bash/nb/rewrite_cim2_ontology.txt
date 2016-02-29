@@ -65,10 +65,6 @@ Skipped key = constraints
 	drs.drs_atomic_dataset (cls)
 
 ------------------------------------------------------------------------------
-Skipped key = derived
-	platform.compute_pool (cls)
-
-------------------------------------------------------------------------------
 Skipped key = doc
 	activity.ensemble_types (enum)
 	designing.ensemble_requirement (cls)
