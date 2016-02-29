@@ -87,7 +87,7 @@ _CLASS = '''
         'base': {base_class},
         'is_abstract': {is_abstract},{pstr}
         'properties': [{properties}
-        ]
+        ]{derived}
 '''
 
 # Code template for enum factory.
@@ -328,11 +328,36 @@ class _ClassTypeFactory(_TypeFactory):
             return ",".join(sorted(properties))
 
 
+        def _get_derived(members):
+            """Returns code snippet for a set of derived properties.
+
+            """
+            def _get_snippet(member):
+                """Returns code snippet for a derived member.
+
+                """
+                name, derivation = member
+
+                return "            ('{}', '{}')".format(name, derivation)
+
+
+            if not members:
+                return ""
+
+            code = ",\n"
+            code += "        'derived': [\n"
+            code += ",\n".join(_get_snippet(m) for m in sorted(members, key=lambda m: m[0]))
+            code += "\n"
+            code += "        ]\n"
+
+            return code
+
         result = _CLASS
         result = result.replace("{base_class}", _get_base_class())
         result = result.replace("{pstr}", _get_print_string())
         result = result.replace("{is_abstract}", "{}".format(self.definition.get("is_abstract", False)))
         result = result.replace("{properties}", _get_properties(self.definition.get("properties", [])))
+        result = result.replace("{derived}", _get_derived(self.definition.get("derived", [])))
 
         return result
 
