@@ -59,6 +59,15 @@ _MODULE_SET = set([
     software_enums
     ])
 
+# Set of class constructs imported from notebook.
+_CLASS_CONSTRUCTS = {
+    'base', 'constraints', 'derived', 'is_abstract', 'properties', 'type'
+}
+
+# Set of enum constructs imported from notebook.
+_ENUM_CONSTRUCTS = {
+    'is_open', 'members', 'type'
+}
 
 # Code template for module header.
 _MOD_HEADER = '''# -*- coding: utf-8 -*-
@@ -87,7 +96,7 @@ _CLASS = '''
         'base': {base_class},
         'is_abstract': {is_abstract},{pstr}
         'properties': [{properties}
-        ]{derived}
+        ]{constraints}{derived}
 '''
 
 # Code template for enum factory.
@@ -187,9 +196,7 @@ class _ClassTypeFactory(_TypeFactory):
     """
     @property
     def ommitted_keys(self):
-        return [k for k in self.definition.keys() if k not in {
-            'base', 'is_abstract', 'properties', 'type', 'derived'
-        }]
+        return [k for k in self.definition.keys() if k not in _CLASS_CONSTRUCTS]
 
 
     def get_definition(self):
@@ -328,25 +335,53 @@ class _ClassTypeFactory(_TypeFactory):
             return ",".join(sorted(properties))
 
 
+        def _get_derived_property(member):
+            """Returns code snippet for a derived member.
+
+            """
+            name, derivation = member
+
+            return "            ('{}', '{}')".format(name, derivation)
+
+
+        def _get_constrained_property(member):
+            """Returns code snippet for a constrained member.
+
+            """
+            if member[1] == 'hidden':
+                member = (member[0], "cardinality", "0.0")
+
+            name, typeof, value = member
+
+            return "            ('{}', '{}', '{}')".format(name, typeof, value)
+
+
+        def _get_constraints(members):
+            """Returns code snippet for a set of constrained properties.
+
+            """
+            if not members:
+                return ""
+
+            code = ",\n"
+            code += "        'constraints': [\n"
+            code += ",\n".join(_get_constrained_property(m) for m in sorted(members, key=lambda m: m[0]))
+            code += "\n"
+            code += "        ]\n"
+
+            return code
+
+
         def _get_derived(members):
             """Returns code snippet for a set of derived properties.
 
             """
-            def _get_snippet(member):
-                """Returns code snippet for a derived member.
-
-                """
-                name, derivation = member
-
-                return "            ('{}', '{}')".format(name, derivation)
-
-
             if not members:
                 return ""
 
             code = ",\n"
             code += "        'derived': [\n"
-            code += ",\n".join(_get_snippet(m) for m in sorted(members, key=lambda m: m[0]))
+            code += ",\n".join(_get_derived_property(m) for m in sorted(members, key=lambda m: m[0]))
             code += "\n"
             code += "        ]\n"
 
@@ -358,6 +393,7 @@ class _ClassTypeFactory(_TypeFactory):
         result = result.replace("{is_abstract}", "{}".format(self.definition.get("is_abstract", False)))
         result = result.replace("{properties}", _get_properties(self.definition.get("properties", [])))
         result = result.replace("{derived}", _get_derived(self.definition.get("derived", [])))
+        result = result.replace("{constraints}", _get_constraints(self.definition.get("constraints", [])))
 
         return result
 
@@ -368,9 +404,7 @@ class _EnumTypeFactory(_TypeFactory):
     """
     @property
     def ommitted_keys(self):
-        return [k for k in self.definition.keys() if k not in {
-            'is_open', 'members', 'type'
-        }]
+        return [k for k in self.definition.keys() if k not in _ENUM_CONSTRUCTS]
 
 
     def get_definition(self):
