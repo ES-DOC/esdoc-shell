@@ -188,7 +188,7 @@ class _ClassTypeFactory(_TypeFactory):
     @property
     def ommitted_keys(self):
         return [k for k in self.definition.keys() if k not in {
-            'base', 'is_abstract', 'properties', 'type'
+            'base', 'is_abstract', 'properties', 'type', 'derived'
         }]
 
 
