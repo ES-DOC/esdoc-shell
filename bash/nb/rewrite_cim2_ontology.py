@@ -500,7 +500,7 @@ def _write_ommitted_definitions(ommitted):
     with open(fpath, 'w') as report:
         for key in sorted(ommitted.keys()):
             report.write(_SECTION_BREAK)
-            report.write("Skipped key = {}".format(key))
+            report.write("Skipped construct = {}".format(key))
             report.write(_LINE_BREAK)
             for type_factory in sorted(ommitted[key], key=lambda i: i.full_name):
                 if isinstance(type_factory, _ClassTypeFactory):
