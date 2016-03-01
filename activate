@@ -38,6 +38,7 @@ alias esdoc-deploy-rollback=$ESDOC_HOME/bash/deployment/rollback.sh
 alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
 
 # Meta-programming commands.
+alias esdoc-mp=$ESDOC_HOME/bash/mp/generate.sh
 alias esdoc-mp-generate-cim-v1-typeset=$ESDOC_HOME/bash/mp/generate_cim_1.sh
 alias esdoc-mp-generate-cim-v2-typeset=$ESDOC_HOME/bash/mp/generate_cim_2.sh
 alias esdoc-mp-validate-cim-v1=$ESDOC_HOME/bash/mp/validate_cim_1.sh
