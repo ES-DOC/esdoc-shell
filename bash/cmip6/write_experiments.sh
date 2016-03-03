@@ -9,7 +9,7 @@ main()
 	log "PYESDOC : writing cmip6 experiments ..."
 
 	declare io_dir=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/experiments/extracted
-	declare spreadsheet=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/experiments/cmip6-experiments-v8.xlsx
+	declare spreadsheet=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/experiments/cmip6-experiments-v$1.xlsx
 
 	rm -rf $io_dir/*.json
 	rm -rf $io_dir/*.xml
@@ -21,4 +21,4 @@ main()
 }
 
 # Invoke entry point.
-main
+main $1
