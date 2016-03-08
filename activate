@@ -2,6 +2,9 @@
 export ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 declare DIR=$ESDOC_HOME
 
+# Set repo path.
+export ESDOC_CMIP6=$ESDOC_HOME/repos/esdoc-docs/cmip6
+
 # API commands.
 alias esdoc-api=$ESDOC_HOME/bash/api/run_web_service.sh
 alias esdoc-api-daemons-init=$ESDOC_HOME/bash/api/daemons_init.sh
@@ -89,11 +92,13 @@ alias esdoc-cmip6-reset='esdoc-archive-delete-documents cmip6-draft && esdoc-api
 
 alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/cmip6/archive_documents.sh
 alias esdoc-cmip6-write-mindmap=$ESDOC_HOME/bash/cmip6/write_mindmap.sh
+alias esdoc-cmip6-write-typeset=$ESDOC_HOME/bash/cmip6/write_typeset.sh
 alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
 
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_HOME/bash/api/*.sh
 chmod a+x $ESDOC_HOME/bash/archive/*.sh
+chmod a+x $ESDOC_HOME/bash/cmip6/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
 chmod a+x $ESDOC_HOME/bash/mp/*.sh
 chmod a+x $ESDOC_HOME/bash/nb/*.sh
