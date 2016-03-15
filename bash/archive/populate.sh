@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Activate shell (if necessary).
+if [ ! "$ESDOC_HOME" ]; then
+	source "$( dirname "$( dirname "$( dirname "${BASH_SOURCE[0]}" )" )" )"/activate
+fi
+
 # Import utils.
 source $ESDOC_HOME/bash/init.sh
 
@@ -21,6 +26,7 @@ main()
 
 	activate_venv pyesdoc
 	python $ESDOC_DIR_PYESDOC/jobs/run_archive_populate.py --throttle=$throttle --project=$project
+    deactivate
 
 	log "populated archive ..."
 }
