@@ -124,12 +124,15 @@ def _format_doc_string(doc_string):
     if doc_string is None:
         return "None"
 
-    result = doc_string.strip()
-    if result[-1] != ".":
-        result += "."
-    result = result.replace('"', "'")
+    doc_string = doc_string.strip()
+    if len(doc_string) == 0:
+        return "None"
 
-    return result
+    if doc_string[-1] != ".":
+        doc_string += "."
+    doc_string = doc_string.replace('"', "'")
+
+    return doc_string
 
 
 class _TypeFactory(object):
@@ -158,6 +161,8 @@ class _TypeFactory(object):
         """Returns type declaration doc string.
 
         """
+        if not self.factory.__doc__ or not self.factory.__doc__.strip():
+            print "WARNING: function without doc string: {}.{}".format(self.package, self.name)
         return _format_doc_string(self.factory.__doc__)
 
 
