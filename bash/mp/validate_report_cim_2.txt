@@ -1,10 +1,6 @@
 ------------------------------------------------------------------------------
-ES-DOC cim 2 SCHEMA VALIDATION REPORT @ 2016-03-16 15:55:18.810447
+ES-DOC cim 2 SCHEMA VALIDATION REPORT @ 2016-03-17 10:31:00.186282
 ------------------------------------------------------------------------------
 
 Invalid property: cim.v2.shared.quality_review.[target_document] --> type format must be lower_case_underscore (for class references a "." is expected)
-Invalid class: cim.v2.drs.drs_atomic_dataset --> base class "drs.drs_publication_dataset" is unrecognized
-Invalid class property: cim.v2.data.dataset.[drs_datasets] --> type reference "drs.drs_publication_dataset" is unrecognized
-Invalid class property: cim.v2.drs.drs_atomic_dataset.[frequency] --> type reference "drs.frequency_types" is unrecognized
-Invalid class property: cim.v2.drs.drs_experiment.[axis_identifer] --> type reference "designing.axis_member" is unrecognized
 Invalid class property: cim.v2.shared.quality_review.[target_document] --> type reference "shared." is unrecognized
