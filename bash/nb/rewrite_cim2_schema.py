@@ -61,7 +61,7 @@ _MODULE_SET = set([
 
 # Set of class constructs imported from notebook.
 _CLASS_CONSTRUCTS = {
-    'base', 'constraints', 'derived', 'is_abstract', 'properties', 'type'
+    'base', 'constraints', 'derived', 'is_abstract', 'properties', 'type', 'pstr'
 }
 
 # Set of enum constructs imported from notebook.
@@ -239,6 +239,8 @@ class _ClassTypeFactory(_TypeFactory):
             pstr = self.definition.get('pstr', None)
             if pstr is None:
                 return ""
+
+            pstr = (pstr[0].replace("%s", "{}"), pstr[1])
 
             return "\n        'pstr': {},".format(pstr)
 

@@ -4,14 +4,6 @@ Skipped construct = alternatives
 	shared.datetime_set (cls)
 
 ------------------------------------------------------------------------------
-Skipped construct = base
-	drs.drs_frequency_types (enum)
-	drs.drs_geographical_operators (enum)
-	drs.drs_realms (enum)
-	drs.drs_time_suffixes (enum)
-	science.selection_cardinality (enum)
-
-------------------------------------------------------------------------------
 Skipped construct = cimType
 	designing.simulation_plan (cls)
 	shared.time_period (cls)
@@ -40,21 +32,4 @@ Skipped construct = is_abstract
 ------------------------------------------------------------------------------
 Skipped construct = is_child
 	data.dataset (cls)
-
-------------------------------------------------------------------------------
-Skipped construct = pstr
-	activity.ensemble_axis (cls)
-	platform.component_performance (cls)
-	platform.performance (cls)
-	platform.storage_volume (cls)
-	science.extent (cls)
-	shared.calendar (cls)
-	shared.cimtext (cls)
-	shared.citation_target (cls)
-	shared.date_time (cls)
-	shared.key_float (cls)
-	shared.number_array (cls)
-	shared.regular_timeset (cls)
-	shared.responsibility (cls)
-	shared.time_period (cls)
 
