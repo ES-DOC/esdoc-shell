@@ -51,7 +51,7 @@ alias esdoc-mp-validate-cim-v2='esdoc-mp-synch-cim-v2 && $ESDOC_HOME/bash/mp/val
 alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
 
 # Notebook commands.
-alias esdoc-nb-rewrite-cim-2-ontology=$ESDOC_HOME/bash/nb/rewrite_cim2_ontology.sh
+alias esdoc-nb-rewrite-cim-2-schema=$ESDOC_HOME/bash/nb/rewrite_cim2_schema.sh
 alias esdoc-nb-rewrite-cmip6-specializations=$ESDOC_HOME/bash/nb/rewrite_cmip6_specializations.sh
 
 # pyesdoc commands.
