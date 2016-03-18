@@ -42,10 +42,12 @@ alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
 
 # Meta-programming commands.
 alias esdoc-mp=$ESDOC_HOME/bash/mp/generate.sh
-alias esdoc-mp-generate-cim-v1-typeset=$ESDOC_HOME/bash/mp/generate_cim_1.sh
-alias esdoc-mp-generate-cim-v2-typeset=$ESDOC_HOME/bash/mp/generate_cim_2.sh
-alias esdoc-mp-validate-cim-v1=$ESDOC_HOME/bash/mp/validate_cim_1.sh
-alias esdoc-mp-validate-cim-v2=$ESDOC_HOME/bash/mp/validate_cim_2.sh
+alias esdoc-mp-synch-cim-v1=$ESDOC_HOME/bash/mp/synch_cim_v1.sh
+alias esdoc-mp-synch-cim-v2=$ESDOC_HOME/bash/mp/synch_cim_v2.sh
+alias esdoc-mp-generate-cim-v1='esdoc-mp-synch-cim-v1 && $ESDOC_HOME/bash/mp/generate_cim_1.sh'
+alias esdoc-mp-generate-cim-v2='esdoc-mp-synch-cim-v2 && $ESDOC_HOME/bash/mp/generate_cim_2.sh'
+alias esdoc-mp-validate-cim-v1='esdoc-mp-synch-cim-v1 && $ESDOC_HOME/bash/mp/validate_cim_1.sh'
+alias esdoc-mp-validate-cim-v2='esdoc-mp-synch-cim-v2 && $ESDOC_HOME/bash/mp/validate_cim_2.sh'
 alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
 
 # Notebook commands.

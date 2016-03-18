@@ -1,6 +1,0 @@
-------------------------------------------------------------------------------
-ES-DOC cim 2 SCHEMA VALIDATION REPORT @ 2016-03-18 10:27:48.064503
-------------------------------------------------------------------------------
-
-Invalid property: cim.v2.shared.quality_review.[target_document] --> type format must be lower_case_underscore (for class references a "." is expected)
-Invalid class property: cim.v2.shared.quality_review.[target_document] --> type reference "shared." is unrecognized
