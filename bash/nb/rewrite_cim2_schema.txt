@@ -1,14 +1,13 @@
 ------------------------------------------------------------------------------
 Skipped construct = alternatives
 	designing.numerical_requirement (cls)
-	shared.datetime_set (cls)
+	time.datetime_set (cls)
 
 ------------------------------------------------------------------------------
 Skipped construct = cimType
-	designing.simulation_plan (cls)
-	shared.time_period (cls)
-	shared.timeslice_list (cls)
 	software.gridspec (cls)
+	time.time_period (cls)
+	time.timeslice_list (cls)
 
 ------------------------------------------------------------------------------
 Skipped construct = doc
@@ -18,12 +17,12 @@ Skipped construct = doc
 	designing.start_date_ensemble (cls)
 	designing.temporal_constraint (cls)
 	platform.storage_volume (cls)
-	shared.datetime_set (cls)
-	shared.irregular_dateset (cls)
-	shared.regular_timeset (cls)
-	shared.time_period (cls)
-	shared.timeslice_list (cls)
 	software.gridspec (cls)
+	time.datetime_set (cls)
+	time.irregular_dateset (cls)
+	time.regular_timeset (cls)
+	time.time_period (cls)
+	time.timeslice_list (cls)
 
 ------------------------------------------------------------------------------
 Skipped construct = is_abstract

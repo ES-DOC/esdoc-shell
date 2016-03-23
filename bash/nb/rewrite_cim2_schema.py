@@ -22,9 +22,9 @@ from esdoc_nb.mp.core.schema.cim2 import platform_classes
 from esdoc_nb.mp.core.schema.cim2 import science_classes
 from esdoc_nb.mp.core.schema.cim2 import science_enums
 from esdoc_nb.mp.core.schema.cim2 import shared_classes
-from esdoc_nb.mp.core.schema.cim2 import shared_classes_time
 from esdoc_nb.mp.core.schema.cim2 import software_classes
 from esdoc_nb.mp.core.schema.cim2 import software_enums
+from esdoc_nb.mp.core.schema.cim2 import time as time_classes
 
 
 
@@ -54,10 +54,11 @@ _MODULE_SET = set([
     science_classes,
     science_enums,
     shared_classes,
-    shared_classes_time,
     software_classes,
-    software_enums
+    software_enums,
+    time_classes
     ])
+
 
 # Set of class constructs imported from notebook.
 _CLASS_CONSTRUCTS = {
