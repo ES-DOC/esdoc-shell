@@ -7,7 +7,6 @@ Skipped construct = alternatives
 Skipped construct = cimType
 	software.gridspec (cls)
 	time.time_period (cls)
-	time.timeslice_list (cls)
 
 ------------------------------------------------------------------------------
 Skipped construct = doc
@@ -18,15 +17,6 @@ Skipped construct = doc
 	designing.temporal_constraint (cls)
 	platform.storage_volume (cls)
 	software.gridspec (cls)
-	time.datetime_set (cls)
-	time.irregular_dateset (cls)
-	time.regular_timeset (cls)
-	time.time_period (cls)
-	time.timeslice_list (cls)
-
-------------------------------------------------------------------------------
-Skipped construct = is_abstract
-	science.selection_cardinality (enum)
 
 ------------------------------------------------------------------------------
 Skipped construct = is_child

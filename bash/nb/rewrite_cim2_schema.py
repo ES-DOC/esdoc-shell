@@ -3,7 +3,7 @@
 """
 .. module:: rewrite_cim2_schema.py
    :platform: Unix, Windows
-   :synopsis: Rewrites esdoc-nb cim 2 ontology schema definitions to esdoc-mp.
+   :synopsis: Rewrites esdoc-nb cim 2 ontology schema definitions to esdoc-cim.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
@@ -276,7 +276,7 @@ class _ClassTypeFactory(_TypeFactory):
                 return "shared.doc_meta_info"
 
             # Ensure property types are lower case.
-            prop_type = prop_type.lower()
+            prop_type = prop_type.strip().lower()
 
             # Linked to properties.
             if prop_type.startswith('linked_to'):
