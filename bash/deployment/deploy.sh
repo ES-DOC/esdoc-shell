@@ -90,7 +90,6 @@ _install_source_api()
 
 	# ... copy templates to temp folder
 	cp -r $ESDOC_DIR_RESOURCES/template-webfaction-*.* $ESDOC_DIR_TMP
-	ls $ESDOC_DIR_TMP
 
 	# ... format templates
 	declare -a templates=(
