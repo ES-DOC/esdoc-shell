@@ -65,6 +65,11 @@ _CLASS_CONSTRUCTS = {
     'base', 'constraints', 'derived', 'is_abstract', 'properties', 'type', 'pstr'
 }
 
+# Set of unsupported class constraints.
+_CLASS_CONSTRAINT_BLACKLIST = {
+    'mutually_exclusive'
+}
+
 # Set of enum constructs imported from notebook.
 _ENUM_CONSTRUCTS = {
     'is_open', 'members', 'type'
@@ -202,7 +207,19 @@ class _ClassTypeFactory(_TypeFactory):
     """
     @property
     def ommitted_keys(self):
+        """Gets collection of unsupported definition keys.
+
+        """
         return [k for k in self.definition.keys() if k not in _CLASS_CONSTRUCTS]
+
+
+    @property
+    def ommitted_constraints(self):
+        """Gets collection of unsupported definition constraints.
+
+        """
+        return [c for c in self.definition.get("constraints", [])
+                if c[0] in _CLASS_CONSTRAINT_BLACKLIST or c[1] in _CLASS_CONSTRAINT_BLACKLIST]
 
 
     def get_definition(self):
@@ -371,6 +388,8 @@ class _ClassTypeFactory(_TypeFactory):
             if not members:
                 return ""
 
+            members = [m for m in members if m[0] not in _CLASS_CONSTRAINT_BLACKLIST]
+
             code = ",\n"
             code += "        'constraints': [\n"
             code += ",\n".join(_get_constrained_property(m) for m in sorted(members, key=lambda m: m[0]))
@@ -412,6 +431,9 @@ class _EnumTypeFactory(_TypeFactory):
     """
     @property
     def ommitted_keys(self):
+        """Gets collection of unsupported definition keys.
+
+        """
         return [k for k in self.definition.keys() if k not in _ENUM_CONSTRUCTS]
 
 
@@ -495,6 +517,11 @@ class _Module(object):
                 # Remember definitions ommitted from rewrite.
                 for key in type_factory.ommitted_keys:
                     ommitted[key].add(type_factory)
+                try:
+                    for constraint in type_factory.ommitted_constraints:
+                        print "WARNING:: unsupported constraint:", constraint
+                except AttributeError:
+                    pass
 
 
 def _write_ommitted_definitions(ommitted):
