@@ -17,7 +17,6 @@ alias esdoc-api-db-flush=$ESDOC_HOME/bash/api/db_flush.sh
 alias esdoc-api-db-index=$ESDOC_HOME/bash/api/db_index.sh
 alias esdoc-api-db-index-reset=$ESDOC_HOME/bash/api/db_index_reset.sh
 alias esdoc-api-db-ingest=$ESDOC_HOME/bash/api/db_ingest.sh
-alias esdoc-api-db-insert-institute=$ESDOC_HOME/bash/api/db_insert_institute.sh
 alias esdoc-api-db-install=$ESDOC_HOME/bash/api/db_install.sh
 alias esdoc-api-db-reset=$ESDOC_HOME/bash/api/db_reset.sh
 alias esdoc-api-db-uninstall=$ESDOC_HOME/bash/api/db_uninstall.sh
