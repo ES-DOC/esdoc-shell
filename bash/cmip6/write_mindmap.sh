@@ -14,14 +14,14 @@ main()
 	else
 		declare stylesheet=$ESDOC_DIR_BASH/cmip6/write_mindmap.conf
 	fi
-	declare dest=$ESDOC_DIR_REPOS/esdoc-cim/vocabs/cmip6/mindmaps
+	declare dest=$ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/mindmaps
 
 	# Invoke mindmap generator.
 	activate_venv mp
-	python $ESDOC_DIR_MP"/esdoc_mp/vocabs/cmip6/generators/mindmap.py" --dest=$dest --realm=$1 --stylesheet=$stylesheet
+	python $ESDOC_DIR_MP"/esdoc_mp/specializations/cmip6/generators/mindmap.py" --dest=$dest --realm=$1 --stylesheet=$stylesheet
 
 	# Copy mindmaps to esdoc-docs repo.
-	cp $ESDOC_DIR_REPOS/esdoc-cim/vocabs/cmip6/mindmaps/* $ESDOC_DIR_REPOS/esdoc-docs/cmip6/mindmaps
+	cp $dest/* $ESDOC_DIR_REPOS/esdoc-docs/cmip6/mindmaps
 
 	log "written cmip6 mindmap(s) ..."
 }

@@ -156,6 +156,9 @@ declare -a ESDOC_OPS_DIRS=(
 
 # Set of git repos.
 declare -a ESDOC_REPOS=(
+	'cmip6-specializations-atmosphere'
+	'cmip6-specializations-ocean'
+	'cmip6-specializations-seaice'
 	'esdoc-api'
 	'esdoc-archive'
 	'esdoc-cim'
