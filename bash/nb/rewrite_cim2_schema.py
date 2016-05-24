@@ -502,7 +502,8 @@ class _Module(object):
         for name, factory in inspect.getmembers(self.mod, inspect.isfunction):
             definition = factory()
             if "{}.{}".format(self.package, name) not in _TYPE_BLACKLIST:
-                yield _DEFINITION_TYPE_FACTORY_MAP[definition['type']](self.mod, name, factory, definition)
+                yield _DEFINITION_TYPE_FACTORY_MAP[definition['type']](
+                    self.mod, name, factory, definition)
 
 
     def write(self, ommitted):

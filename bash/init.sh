@@ -161,6 +161,8 @@ declare -a ESDOC_REPOS=(
 	'esdoc-cim'
 	'esdoc-contrib'
 	'esdoc-docs'
+	'esdoc-errata-fe'
+	'esdoc-errata-ws'
 	'esdoc-mp'
 	'esdoc-nb'
 	'esdoc-py-client'
