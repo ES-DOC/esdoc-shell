@@ -61,14 +61,16 @@ _install_python_executable()
 	make install
 	export PATH=$ESDOC_DIR_PYTHON/bin:$PATH
 	export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYTHON
+	export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYTHON/lib/python2.7/site-packages
 
 	# Install setuptools.
 	cd $ESDOC_DIR_PYTHON/src
-	wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
+	wget https://bootstrap.pypa.io/ez_setup.py
 	python ez_setup.py
 
 	# Install pip.
 	easy_install --prefix $ESDOC_DIR_PYTHON pip
+	pip install --upgrade pip
 
 	# Install virtualenv.
 	pip install virtualenv
