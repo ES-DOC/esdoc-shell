@@ -77,6 +77,28 @@ reset_tmp()
 # SECTION: MAIN
 # ###############################################################
 
+# Updates source code.
+_update_source()
+{
+	# Update web-service code.
+	rm -rf $API_HOME/app/esdoc_api
+	cp -r $ESDOC_DIR_REPOS/esdoc-api/esdoc_api $API_HOME/app
+	rm -rf $API_HOME/app/pyesdoc
+	cp -r $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc $API_HOME/app
+
+	# Update web-apps code.
+	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_compare/*
+	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_search/*
+	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_splash/*
+	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_static/*
+	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_view/*
+	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_demo/*
+	_install_source_static $1 $2
+
+	# ... clear up temp files.
+	reset_tmp
+}
+
 
 # Installs static source code.
 _install_source_api()

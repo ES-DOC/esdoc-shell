@@ -306,6 +306,18 @@ def _install_source(ctx):
         ])
 
 
+def _update_source(ctx):
+    """Updates source code.
+
+    """
+    subprocess.call([
+        _DEPLOY,
+        "update_source",
+        ctx.environment,
+        ctx.release_id
+        ])
+
+
 def _restore_db(ctx):
     """Installs databases from backups.
 
@@ -345,7 +357,7 @@ def _stop_api_daemon(ctx):
 
 # Set of actions.
 _ACTIONS = {
-    'rollout' : [
+    'rollout': [
         (_declare_stack, "Declaring stack"),
         (_set_wf_session, "Initialising web faction session"),
         (_create_wf_apps, "Creating apps upon web faction server"),
@@ -358,12 +370,18 @@ _ACTIONS = {
         (_update_wf_websites, "Updating web faction websites"),
         (_update_cron_tab, "Updating cron tab"),
     ],
-    'rollback' : [
+    'rollback': [
         (_declare_stack, "Declaring stack"),
         (_set_wf_session, "Initialising web faction session"),
         (_stop_api_daemon, "Stopping API daemon"),
         (_delete_wf_apps, "Deleting apps from web faction server"),
         (_delete_wf_dbs, "Deleting databases from web faction server")
+    ],
+    'update': [
+        (_declare_stack, "Declaring stack"),
+        (_stop_api_daemon, "Stopping API daemon"),
+        (_update_source, "Updating source(s)"),
+        (_start_api_daemon, "Starting API daemon")
     ]
 }
 
