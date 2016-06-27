@@ -16,7 +16,6 @@ _db_create()
 {
 	log "Creating DB"
 	createdb -U esdoc_db_admin -e -O esdoc_db_admin -T template0 esdoc_api
-	createdb -U esdoc_db_admin -e -O esdoc_db_admin -T template0 esdoc_api_test
 }
 
 # Grant db permissions.
@@ -24,7 +23,6 @@ _db_grant_permissions()
 {
 	log "Granting DB permissions"
 	psql -U esdoc_db_admin -d esdoc_api -a -f $ESDOC_DIR_BASH/api/db_grant_permissions.sql
-	psql -U esdoc_db_admin -d esdoc_api_test -a -f $ESDOC_DIR_BASH/api/db_grant_permissions.sql
 }
 
 # Seed db.

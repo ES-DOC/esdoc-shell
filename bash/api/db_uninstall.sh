@@ -18,7 +18,6 @@ _db_drop()
 	log "Dropping DB"
 
 	dropdb -U esdoc_db_admin esdoc_api
-	dropdb -U esdoc_db_admin esdoc_api_test
 }
 
 # Main entry point.
