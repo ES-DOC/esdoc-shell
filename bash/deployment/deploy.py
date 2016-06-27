@@ -413,9 +413,25 @@ if __name__ == "__main__":
     if sys.argv[1] not in _ACTIONS:
         raise DeploymentError("Deployment method unrecognised.")
 
-    _main(sys.argv[1],
-          sys.argv[2],
-          sys.argv[3],
-          sys.argv[4],
-          sys.argv[5],
-          sys.argv[6])
+    action = sys.argv[1]
+    environment = sys.argv[2]
+    version = sys.argv[3]
+    try:
+        wf_machine = sys.argv[4]
+    except IndexError:
+        wf_machine = None
+    try:
+        wf_pwd = sys.argv[5]
+    except IndexError:
+        wf_pwd = None
+    try:
+        api_db_pwd = sys.argv[6]
+    except IndexError:
+        api_db_pwd = None
+
+    _main(action,
+          environment,
+          version,
+          wf_machine,
+          wf_pwd,
+          api_db_pwd)

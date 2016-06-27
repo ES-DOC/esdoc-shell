@@ -37,6 +37,7 @@ alias esdoc-deploy-compile-js-plugin=$ESDOC_HOME/bash/deployment/compile_js_plug
 alias esdoc-deploy-list-active-shells=$ESDOC_HOME/bash/deployment/list_active_shells.sh
 alias esdoc-deploy-rollback=$ESDOC_HOME/bash/deployment/rollback.sh
 alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
+alias esdoc-deploy-update=$ESDOC_HOME/bash/deployment/update.sh
 
 # Meta-programming commands.
 alias esdoc-mp=$ESDOC_HOME/bash/mp/generate.sh
