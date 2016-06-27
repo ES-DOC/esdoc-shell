@@ -78,7 +78,7 @@ reset_tmp()
 # ###############################################################
 
 # Updates source code.
-_update_source()
+update_source()
 {
 	# Update web-service code.
 	rm -rf $API_HOME/app/esdoc_api
