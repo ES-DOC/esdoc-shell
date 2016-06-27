@@ -408,8 +408,6 @@ def _main(action, environment, version, wf_machine, wf_pwd, api_db_pwd):
 
 # Main entry point.
 if __name__ == "__main__":
-    if len(sys.argv) != 7:
-        raise DeploymentError("Expecting 6 deployment arguments.")
     if sys.argv[1] not in _ACTIONS:
         raise DeploymentError("Deployment method unrecognised.")
 
