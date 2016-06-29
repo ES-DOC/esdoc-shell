@@ -6,7 +6,7 @@ source $ESDOC_HOME/bash/init.sh
 # Main entry point.
 main()
 {
-	activate_venv server
+	activate_venv api
 	supervisorctl -c $ESDOC_DIR_DAEMONS/api/supervisord.conf status all
 }
 
