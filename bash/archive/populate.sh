@@ -25,7 +25,7 @@ main()
 	fi
 
 	activate_venv pyesdoc
-	python $ESDOC_DIR_PYESDOC/jobs/run_archive_populate.py --throttle=$throttle --project=$project
+	python $ESDOC_HOME/bash/archive/populate.py --throttle=$throttle --project=$project
     deactivate
 
 	log "populated archive ..."

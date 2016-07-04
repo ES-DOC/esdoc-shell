@@ -8,7 +8,7 @@ main()
 {
 	log "PYESDOC : converting document ..."
 	activate_venv pyesdoc
-	python $ESDOC_DIR_PYESDOC/jobs/run_convert_document.py --file=$1 --encoding=$2
+	python $ESDOC_HOME/bash/pyesdoc/convert.py --file=$1 --encoding=$2
 }
 
 # Invoke entry point.

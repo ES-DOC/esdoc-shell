@@ -7,7 +7,7 @@ source $ESDOC_HOME/bash/init.sh
 main()
 {
 	activate_venv pyesdoc
-	python $ESDOC_DIR_PYESDOC/jobs/run_archive_echo.py --uid=$1 --version=$2
+	python $ESDOC_HOME/bash/archive/echo.py --uid=$1 --version=$2
 }
 
 # Invoke entry point.

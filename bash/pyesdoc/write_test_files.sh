@@ -8,7 +8,7 @@ main()
 {
 	log "PYESDOC : writing test files ..."
 	activate_venv pyesdoc
-	python $ESDOC_DIR_PYESDOC/jobs/run_write_test_files.py --outdir=$ESDOC_DIR_PYESDOC_TESTS/files
+	python $ESDOC_HOME/bash/pyesdoc/write_test_files.py --outdir=$ESDOC_DIR_PYESDOC_TESTS/files
 	log "PYESDOC : test files written to "$ESDOC_DIR_PYESDOC_TESTS/files
 }
 

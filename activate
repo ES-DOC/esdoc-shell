@@ -93,6 +93,7 @@ alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/cmip6/archive_documents.sh
 alias esdoc-cmip6-write-mindmap=$ESDOC_HOME/bash/cmip6/write_mindmap.sh
 alias esdoc-cmip6-write-typeset=$ESDOC_HOME/bash/cmip6/write_typeset.sh
 alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
+alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experiments_config.sh
 alias esdoc-cmip6-sync-specializations=$ESDOC_HOME/bash/cmip6/sync_specializations.sh
 
 _reset_cmip6_assets()
