@@ -30,20 +30,31 @@ main()
 		# ... remove previous
 		rm $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/mindmaps/$specialization.mm
 		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/mindmaps/$specialization.mm
+
 		rm $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/config/$specialization.json
+
 		rm $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/csv/$specialization*.csv
+		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/vocab-mappings/$specialization/*.csv
+
 		# ... regenerate
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=mm
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=json
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=ids-level-1
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=ids-level-2
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=ids-level-3
+
 		# ... copy generated
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization-ids-level-1.csv $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/csv/$specialization-ids-level-1.csv
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization-ids-level-2.csv $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/csv/$specialization-ids-level-2.csv
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization-ids-level-3.csv $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/csv/$specialization-ids-level-3.csv
+
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization-ids-level-1.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/vocab-mappings/$specialization/$specialization-ids-level-1.csv
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization-ids-level-2.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/vocab-mappings/$specialization/$specialization-ids-level-2.csv
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization-ids-level-3.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/vocab-mappings/$specialization/$specialization-ids-level-3.csv
+
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization.mm $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/mindmaps/$specialization.mm
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization.mm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/mindmaps/$specialization.mm
+
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization.json $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/config/$specialization.json
 	done
 
