@@ -41,6 +41,9 @@ _DOC_CACHE = {}
 # Cache of experiment definitions to be written to file system.
 _OUTPUT = {}
 
+# Viewer url.
+_VIEWER_URL = "http://view.es-doc.org?renderMethod=id&project=cmip6-draft&id={}&version=latest&client=mohc"
+
 
 def _yield_documents(input_dir, doc_type):
     """Yields set of document for further processing.
@@ -51,23 +54,23 @@ def _yield_documents(input_dir, doc_type):
 
 
 def _get_requirement(r_ref):
+    """Returns a cached requirement.
+
+    """
     r = _DOC_CACHE[r_ref.id]
     r.meta.type = r_ref.type
 
     return r
 
 
-def _yield_experiments(input_dir):
-    """Yields set of experiments to be written to file system.
+def _get_cached_documents(doc_type):
+    """Returns cached document set.
 
     """
-    for e in _yield_documents(input_dir, "cim.2.designing.NumericalExperiment"):
-        e.requirements = [_get_requirement(rr) for rr in e.requirements]
-
-        yield e, json.dumps(_map_experiment(e), indent=4)
+    return [i for i in _DOC_CACHE.values() if i.meta.type == doc_type]
 
 
-def _map_requirement(r):
+def _map_requirement(i):
     """Returns a requirement document mapped to a dictionary.
 
     """
@@ -75,67 +78,98 @@ def _map_requirement(r):
         """Returns a shortened requirement type description.
 
         """
-        if len(r.meta.type.split(":")) == 2:
-            return r.meta.type.split(":")[1].replace("_", "-")
-        elif isinstance(r, cim.v2.ForcingConstraint):
+        if len(i.meta.type.split(":")) == 2:
+            return i.meta.type.split(":")[1].replace("_", "-")
+        elif isinstance(i, cim.v2.ForcingConstraint):
             return "forcing-constraint"
-        elif isinstance(r, cim.v2.TemporalConstraint):
+        elif isinstance(i, cim.v2.TemporalConstraint):
             return "temporal-constraint"
-        elif isinstance(r, cim.v2.EnsembleRequirement):
+        elif isinstance(i, cim.v2.EnsembleRequirement):
             return "ensemble"
-        elif isinstance(r, cim.v2.EnsembleRequirement):
+        elif isinstance(i, cim.v2.EnsembleRequirement):
             return "ensemble"
-        elif isinstance(r, cim.v2.MultiEnsemble):
+        elif isinstance(i, cim.v2.MultiEnsemble):
             return "multi-ensemble"
 
         return "unknown"
 
 
     result = OrderedDict()
-    result['description'] = r.description
-    result['isConformanceRequested'] = r.is_conformance_requested
-    result['keywords'] = r.keywords
-    result['name'] = r.name
+    result['canonical_name'] = i.name
+    result['description'] = i.description
+    result['isConformanceRequested'] = i.is_conformance_requested
+    result['keywords'] = i.keywords
+    result['label'] = i.name
     result['type'] = get_requirement_type()
 
     return result
 
 
-def _map_experiment(e):
-    """Returns an experiment document mapped to a dictionary.
+def _map_related_experiment(i):
+    """Returns a related experiment document mapped to a dictionary.
 
     """
     result = OrderedDict()
-    result['canonical_name'] = e.canonical_name
-    result['description'] = e.description
-    result['keywords'] = e.keywords
-    result['long_name'] = e.long_name
+    result['canonical_name'] = i.name
     result['mip_era'] = "cmip6"
-    result['rationale'] = e.rationale
-    result['related_experiments'] = [{
-            "mip_era": "cmip6",
-            "name": i.name,
-            "uid": i.id
-        } for i in e.related_experiments]
-    result['requirements'] = [_map_requirement(i) for i in e.requirements]
-    result['uid'] = e.meta.id
-    result['viewerURL'] = "http://view.es-doc.org?renderMethod=id&project=cmip6-draft&id={}&version=latest&client=mohc".format(e.meta.id)
+    result['uid'] = i.id
+    result['viewerURL'] = _VIEWER_URL.format(i.id)
 
     return result
 
 
-def _cache_requirements(input_dir):
-    """Caches set of experiment requirements for later processing.
+def _map_experiment(i):
+    """Returns an experiment document mapped to a dictionary.
 
     """
-    for requirement_type in {
+    i.requirements = [_get_requirement(j) for j in i.requirements]
+
+    result = OrderedDict()
+    result['canonical_name'] = i.canonical_name
+    result['description'] = i.description
+    result['keywords'] = i.keywords
+    result['long_name'] = i.long_name
+    result['mip_era'] = "cmip6"
+    result['rationale'] = i.rationale
+    result['related_experiments'] = sorted([j.name for j in i.related_experiments])
+    result['requirements'] = [_map_requirement(j) for j in i.requirements]
+    result['uid'] = i.meta.id
+    result['viewerURL'] = _VIEWER_URL.format(i.meta.id)
+
+    return result
+
+
+def _map_mip(i):
+    """Returns an MIP document mapped to a dictionary.
+
+    """
+    result = OrderedDict()
+    result['canonical_name'] = i.canonical_name
+    result['description'] = i.description
+    result['experiments'] = sorted([j.name for j in i.requires_experiments])
+    result['keywords'] = i.keywords
+    result['long_name'] = i.long_name
+    result['label'] = i.name
+    result['rationale'] = i.rationale
+    result['uid'] = i.meta.id
+
+    return result
+
+
+def _load_cache(input_dir):
+    """Caches set of documents for later processing.
+
+    """
+    for doc_type in {
         "cim.2.designing.EnsembleRequirement",
         "cim.2.designing.ForcingConstraint",
         "cim.2.designing.MultiEnsemble",
+        "cim.2.designing.NumericalExperiment",
         "cim.2.designing.NumericalRequirement",
+        "cim.2.designing.Project",
         "cim.2.designing.TemporalConstraint"
     }:
-        for doc in _yield_documents(input_dir, requirement_type):
+        for doc in _yield_documents(input_dir, doc_type):
             _DOC_CACHE[doc.meta.id] = doc
 
 
@@ -148,15 +182,20 @@ def _main(args):
     if not os.path.isdir(args.output_dir):
         raise ValueError("Output directory does not exist")
 
-    # Step 1: cache requirements.
-    _cache_requirements(args.input_dir)
+    # Step 1: cache documents.
+    _load_cache(args.input_dir)
 
     # Step 2: map experiments & write to file system.
-    for e, e_json in _yield_experiments(args.input_dir):
-        fpath = "{}/cmip6-experiment-{}.json".format(args.output_dir, e.canonical_name.lower())
+    for i in _get_cached_documents('cim.2.designing.NumericalExperiment'):
+        fpath = "{}/experiment_{}.json".format(args.output_dir, i.canonical_name.lower())
         with open(fpath, 'w') as fstream:
-            fstream.write(e_json)
+            fstream.write(json.dumps(_map_experiment(i), indent=4))
 
+    # Step 3: map mip & write to file system.
+    for i in _get_cached_documents('cim.2.designing.Project'):
+        fpath = "{}/mip_{}.json".format(args.output_dir, i.canonical_name.lower())
+        with open(fpath, 'w') as fstream:
+            fstream.write(json.dumps(_map_mip(i), indent=4))
 
 # Entry point.
 if __name__ == '__main__':
