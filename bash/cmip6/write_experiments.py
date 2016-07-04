@@ -723,7 +723,7 @@ class DocumentSet(object):
             me.ensemble_axis = _convert_names(me.ensemble_axis, self.numerical_requirements)
 
 
-    def set_doc_links(self):
+    def set_document_links(self):
         """Sets inter document references.
 
         """
@@ -809,7 +809,7 @@ def _main(args):
         Spreadsheet(args.spreadsheet_filepath, DocumentIdentifiers(args.identifiers))
             )
     docs.set_document_connections()
-    docs.set_doc_links()
+    docs.set_document_links()
     docs.write(args.io_dir)
 
 
