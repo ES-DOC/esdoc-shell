@@ -9,12 +9,12 @@ main()
 	log "PYESDOC : syncing cmip6 specializations ..."
 
 	# Set of specializations.
-	declare -a CMIP6_SPECIALIZATIONS=(
+	declare -a SPECIALIZATIONS=(
 		'ocean'
 	)
 
 	# Sync definitions.
-	for specialization in "${CMIP6_SPECIALIZATIONS[@]}"
+	for specialization in "${SPECIALIZATIONS[@]}"
 	do
 		# ... remove previous
 		rm $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/definitions/$specialization*.py
@@ -25,7 +25,7 @@ main()
 	done
 
 	# Sync generated.
-	for specialization in "${CMIP6_SPECIALIZATIONS[@]}"
+	for specialization in "${SPECIALIZATIONS[@]}"
 	do
 		# ... remove previous
 		rm $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations/cmip6/mindmaps/$specialization.mm
