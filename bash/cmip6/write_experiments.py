@@ -14,6 +14,7 @@ import os
 import uuid
 from collections import defaultdict
 from operator import add
+from datetime import datetime as dt
 
 import xlrd
 
@@ -106,6 +107,10 @@ _DOC_AUTHOR.name = u"Charlotte Pascoe"
 _DOC_AUTHOR_REFERENCE = cim.v2.DocReference()
 _DOC_AUTHOR_REFERENCE.uid = _DOC_AUTHOR.meta.id
 _DOC_AUTHOR_REFERENCE.version = _DOC_AUTHOR.meta.version
+
+# Default document create / update dates.
+_DOC_CREATE_DATE = dt.strptime("2016-07-04 13:00:00", "%Y-%m-%d %H:%M:%S")
+_DOC_UPDATE_DATE = _DOC_CREATE_DATE
 
 
 
@@ -502,6 +507,15 @@ class Spreadsheet(object):
                              version=1,
                              uid=doc_uid)
 
+        # Assign document dates.
+        try:
+            doc.meta
+        except AttributeError:
+            pass
+        else:
+            doc.meta.create_date = _DOC_CREATE_DATE
+            doc.meta.update_date = _DOC_UPDATE_DATE
+
         # Assign document author.
         try:
             doc.meta.author = _DOC_AUTHOR_REFERENCE
@@ -703,6 +717,7 @@ class DocumentSet(object):
             for project in self[_WS_PROJECT]:
                 if e.canonical_name in project.requires_experiments:
                     e.meta.sub_projects.append(project.name)
+                    e.related_mips.append(project)
             e.meta.sub_projects = sorted(e.meta.sub_projects)
 
         # Set additional experimental requirements.
@@ -755,6 +770,10 @@ class DocumentSet(object):
         for r in self[_WS_REQUIREMENT]:
             r.additional_requirements = [self._get_doc_link(d) for d in r.additional_requirements]
 
+        # Experiment to mip.
+        for e in self[_WS_EXPERIMENT]:
+            e.related_mips = [self._get_doc_link(d) for d in e.related_mips]
+
         # Project to sub-projects.
         for p in self[_WS_PROJECT]:
             p.sub_projects = [self._get_doc_link(d) for d in p.sub_projects]
@@ -768,21 +787,11 @@ class DocumentSet(object):
         """Writes documents to file system.
 
         """
-        def _get_filepath(doc, encoding):
-            """Returns path to document file.
-
-            """
-            fname = pyesdoc.get_filename(doc, encoding)
-            fpath = os.path.join(io_dir, fname)
-
-            return fpath
-
-
         def _write(doc, encoding):
             """Writes document to file system.
 
             """
-            pyesdoc.write(doc, encoding=encoding, fpath=_get_filepath(doc, encoding))
+            pyesdoc.write(doc, io_dir, encoding=encoding)
 
         # Remove helper attributes that do not need to be serialzed.
         for experiment in self[_WS_EXPERIMENT]:

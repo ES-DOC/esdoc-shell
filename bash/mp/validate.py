@@ -72,10 +72,10 @@ def _main(args):
 	# Display report.
 	if errors:
 		fpath = _write_report(errors, args.ontology, args.version)
-		print("ES-DOC NOTEBOOK [WARNING] :: {} {} schema is invalid !!! :: {} ERROR(S)".format(args.ontology, args.version, len(errors)))
-		print("ES-DOC NOTEBOOK [INFO] :: {} {} schema validation report written to {}".format(args.ontology, args.version, fpath))
+		print("ES-DOC MP [WARNING] :: {} {} schema is invalid !!! :: {} ERROR(S)".format(args.ontology, args.version, len(errors)))
+		print("ES-DOC MP [INFO] :: {} {} schema validation report written to {}".format(args.ontology, args.version, fpath))
 	else:
-		print("ES-DOC NOTEBOOK [INFO] :: {} {} schema is valid".format(args.ontology, args.version))
+		print("ES-DOC MP [INFO] :: {} {} schema is valid".format(args.ontology, args.version))
 
 
 

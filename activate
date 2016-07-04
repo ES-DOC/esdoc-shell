@@ -96,7 +96,7 @@ alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
 alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experiments_config.sh
 alias esdoc-cmip6-sync-specializations=$ESDOC_HOME/bash/cmip6/sync_specializations.sh
 
-_reset_cmip6_assets()
+_reset_cmip6()
 {
 	esdoc-archive-delete-documents cmip6-draft
 	esdoc-api-db-flush cmip6-draft
@@ -104,7 +104,7 @@ _reset_cmip6_assets()
 	esdoc-cmip6-archive-documents
 	esdoc-api-db-ingest
 }
-alias esdoc-cmip6-reset=_reset_cmip6_assets
+alias esdoc-cmip6-reset=_reset_cmip6
 
 _update_cim_v2()
 {

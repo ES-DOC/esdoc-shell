@@ -38,7 +38,7 @@ def _main(source_dir, target_dir):
 
     """
     if not os.path.isdir(source_dir):
-        raise ValueError("Source directory does not exist")
+        raise ValueError("Source directory does not exist: {}".format(source_dir))
     if not os.path.isdir(target_dir):
         raise ValueError("Target directory does not exist")
 
