@@ -8,7 +8,7 @@ main()
 {
 	export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_NB
 
-	python $ESDOC_HOME/bash/nb/rewrite_cmip6_specializations.py --dest=$ESDOC_DIR_REPOS/esdoc-mp/esdoc_mp/specializations/cmip6
+	python $ESDOC_HOME/bash/nb/rewrite_cmip6_specializations.py --dest=$ESDOC_DIR_REPOS/esdoc-mp/esdoc_mp/specializations-cmip6
 }
 
 # Invoke entry point.
