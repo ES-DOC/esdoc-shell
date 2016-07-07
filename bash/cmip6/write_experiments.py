@@ -16,6 +16,7 @@ from collections import defaultdict
 from operator import add
 from datetime import datetime as dt
 
+import dreq
 import xlrd
 
 import pyesdoc
@@ -562,6 +563,7 @@ class DocumentSet(object):
         self.docs = defaultdict(list)
         for sheet in _WS_SHEETS:
             self[sheet] = spreadsheet[sheet]
+        self._set_dreq_info()
 
 
     def __getitem__(self, ws_name):
@@ -670,6 +672,20 @@ class DocumentSet(object):
                 break
 
         return reference
+
+
+    def _set_dreq_info(self):
+        """Sets information dervied from the data request.
+
+        """
+        dreq.initialize()
+        for p in self[_WS_PROJECT]:
+            mip = dreq.query('mip', p.canonical_name)
+            if mip:
+                if mip.url != 'None':
+                    p.homepage = mip.url
+                p.objectives = ["{}: {}".format(o.label, o.description) for o in mip.objectives]
+                p.objectives = sorted(p.objectives)
 
 
     def set_document_connections(self):

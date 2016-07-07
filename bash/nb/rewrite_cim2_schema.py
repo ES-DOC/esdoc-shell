@@ -67,7 +67,7 @@ _CLASS_CONSTRUCTS = {
 
 # Set of unsupported class constraints.
 _CLASS_CONSTRAINT_BLACKLIST = {
-    'mutually_exclusive'
+    # 'mutually_exclusive'
 }
 
 # Set of enum constructs imported from notebook.
@@ -376,9 +376,11 @@ class _ClassTypeFactory(_TypeFactory):
             if member[1] == 'hidden':
                 member = (member[0], "cardinality", "0.0")
 
-            name, typeof, value = member
+            typeof, name, value = member
 
-            return "            ('{}', '{}', '{}')".format(name, typeof, value)
+            if typeof == 'mutually_exclusive':
+                return "            ('{}', {}, '{}')".format(typeof, name, value)
+            return "            ('{}', '{}', '{}')".format(typeof, name, value)
 
 
         def _get_constraints(members):
