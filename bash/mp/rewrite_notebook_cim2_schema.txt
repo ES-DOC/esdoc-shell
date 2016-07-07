@@ -18,7 +18,3 @@ Skipped construct = doc
 	platform.storage_volume (cls)
 	software.gridspec (cls)
 
-------------------------------------------------------------------------------
-Skipped construct = is_child
-	data.dataset (cls)
-
