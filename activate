@@ -41,16 +41,14 @@ alias esdoc-deploy-update=$ESDOC_HOME/bash/deployment/update.sh
 
 # Meta-programming commands.
 alias esdoc-mp=$ESDOC_HOME/bash/mp/generate.sh
+alias esdoc-mp-rewrite-notebook-cim-2-schema=$ESDOC_HOME/bash/mp/rewrite_notebook_cim2_schema.sh
+alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
 alias esdoc-mp-synch-cim-v1=$ESDOC_HOME/bash/mp/synch_cim_v1.sh
 alias esdoc-mp-synch-cim-v2=$ESDOC_HOME/bash/mp/synch_cim_v2.sh
 alias esdoc-mp-generate-cim-v1='esdoc-mp-synch-cim-v1 && $ESDOC_HOME/bash/mp/generate_cim_1.sh'
 alias esdoc-mp-generate-cim-v2='esdoc-mp-synch-cim-v2 && $ESDOC_HOME/bash/mp/generate_cim_2.sh'
 alias esdoc-mp-validate-cim-v1='esdoc-mp-synch-cim-v1 && $ESDOC_HOME/bash/mp/validate_cim_1.sh'
 alias esdoc-mp-validate-cim-v2='esdoc-mp-synch-cim-v2 && $ESDOC_HOME/bash/mp/validate_cim_2.sh'
-alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
-
-# Notebook commands.
-alias esdoc-nb-rewrite-cim-2-schema=$ESDOC_HOME/bash/nb/rewrite_cim2_schema.sh
 
 # pyesdoc commands.
 alias esdoc-pyesdoc-convert=$ESDOC_HOME/bash/pyesdoc/convert.sh
@@ -121,6 +119,5 @@ chmod a+x $ESDOC_HOME/bash/archive/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
 chmod a+x $ESDOC_HOME/bash/mp/*.sh
-chmod a+x $ESDOC_HOME/bash/nb/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
 chmod a+x $ESDOC_HOME/bash/stack/*.sh

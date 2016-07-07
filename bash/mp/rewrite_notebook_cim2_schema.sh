@@ -10,7 +10,7 @@ main()
 
 	declare dest=$ESDOC_DIR_REPOS/esdoc-cim/v2/schema
 	rm $dest/*.py
-	python $ESDOC_HOME/bash/nb/rewrite_cim2_schema.py --dest=$dest
+	python $ESDOC_HOME/bash/mp/rewrite_notebook_cim2_schema.py --dest=$dest
 }
 
 # Invoke entry point.
