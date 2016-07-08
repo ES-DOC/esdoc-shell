@@ -62,8 +62,15 @@ _MODULE_SET = set([
 
 # Set of class constructs imported from notebook.
 _CLASS_CONSTRUCTS = {
-    'base', 'constraints', 'derived', 'is_abstract', 'properties', 'type', 'pstr'
-}
+    'alternatives',
+    'base',
+    'constraints',
+    'derived',
+    'is_abstract',
+    'properties',
+    'type',
+    'pstr'
+    }
 
 # Set of unsupported class constraints.
 _CLASS_CONSTRAINT_BLACKLIST = {

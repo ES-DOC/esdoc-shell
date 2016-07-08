@@ -161,6 +161,7 @@ declare -a ESDOC_REPOS=(
 	'cmip6-specializations-seaice'
 	'esdoc-api'
 	'esdoc-archive'
+	'esdoc-cdf2cim'
 	'esdoc-cim'
 	'esdoc-contrib'
 	'esdoc-docs'
