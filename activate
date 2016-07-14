@@ -19,6 +19,7 @@ alias esdoc-api-db-index-reset=$ESDOC_HOME/bash/api/db_index_reset.sh
 alias esdoc-api-db-ingest=$ESDOC_HOME/bash/api/db_ingest.sh
 alias esdoc-api-db-install=$ESDOC_HOME/bash/api/db_install.sh
 alias esdoc-api-db-reset=$ESDOC_HOME/bash/api/db_reset.sh
+alias esdoc-api-tests=$ESDOC_HOME/bash/api/run_tests.sh
 alias esdoc-api-db-uninstall=$ESDOC_HOME/bash/api/db_uninstall.sh
 alias esdoc-api-db-write-comparator-setup-data=$ESDOC_HOME/bash/api/db_write_comparator_setup_data.sh
 alias esdoc-api-db-write-facets=$ESDOC_HOME/bash/api/db_write_facets.sh

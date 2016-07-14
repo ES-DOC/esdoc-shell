@@ -107,7 +107,7 @@ _TYPE_FACTORY = '''def {func_name}():
 # Code template for class factory.
 _CLASS = '''
         'base': {base_class},
-        'is_abstract': {is_abstract},{pstr}
+        'is_abstract': {is_abstract},{pstr}{alternatives}
         'properties': [{properties}
         ]{constraints}{derived}
 '''
@@ -270,6 +270,23 @@ class _ClassTypeFactory(_TypeFactory):
             return "\n        'pstr': {},".format(pstr)
 
 
+        def _get_alternatives():
+            """Returns code snippet for a class alternatives set.
+
+            """
+            alternatives = self.definition.get('alternatives', None)
+            if alternatives is None:
+                return ""
+
+            result = "\n        'alternatives': ["
+            for idx, i in enumerate(alternatives):
+                result += "\n            '{}'".format(i)
+                if idx + 1 != len(alternatives):
+                    result += ","
+
+            return "{}\n        ],".format(result)
+
+
         def _get_linked_to_property_type(prop_type):
             """Reformats a linked to property type definition.
 
@@ -426,6 +443,7 @@ class _ClassTypeFactory(_TypeFactory):
         result = _CLASS
         result = result.replace("{base_class}", _get_base_class())
         result = result.replace("{pstr}", _get_print_string())
+        result = result.replace("{alternatives}", _get_alternatives())
         result = result.replace("{is_abstract}", "{}".format(self.definition.get("is_abstract", False)))
         result = result.replace("{properties}", _get_properties(self.definition.get("properties", [])))
         result = result.replace("{derived}", _get_derived(self.definition.get("derived", [])))
