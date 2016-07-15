@@ -24,6 +24,8 @@ alias esdoc-api-db-uninstall=$ESDOC_HOME/bash/api/db_uninstall.sh
 alias esdoc-api-db-write-comparator-setup-data=$ESDOC_HOME/bash/api/db_write_comparator_setup_data.sh
 alias esdoc-api-db-write-facets=$ESDOC_HOME/bash/api/db_write_facets.sh
 alias esdoc-api-db-write-stats=$ESDOC_HOME/bash/api/db_write_stats.sh
+alias esdoc-api-db-vacuum=$ESDOC_HOME/bash/api/db_vacuum.sh
+alias esdoc-api-db-vacuum-full=$ESDOC_HOME/bash/api/db_vacuum_full.sh
 
 # Archive commands.
 alias esdoc-archive-compress=$ESDOC_HOME/bash/archive/compress.sh
