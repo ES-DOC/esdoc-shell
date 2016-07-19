@@ -1,4 +1,5 @@
 arrow
+dreq
 feedparser
 ipython
 lxml
