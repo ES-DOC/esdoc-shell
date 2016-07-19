@@ -56,7 +56,7 @@ _WS_TEMPORAL_CONSTRAINT = "TemporalConstraint"
 _WS_ENSEMBLE_REQUIREMENT = "EnsembleRequirement"
 _WS_MULTI_ENSEMBLE = "MultiEnsemble"
 _WS_START_DATE_ENSEMBLE = "StartDateEnsemble"
-_WS_REFERENCES = "references"
+_WS_CITATIONS = "references"
 _WS_PARTY = "party"
 _WS_URL = "url"
 
@@ -70,7 +70,7 @@ _WS_ROW_OFFSETS = {
     _WS_ENSEMBLE_REQUIREMENT: 2,
     _WS_MULTI_ENSEMBLE: 2,
     _WS_START_DATE_ENSEMBLE: 2,
-    _WS_REFERENCES: 1,
+    _WS_CITATIONS: 1,
     _WS_PARTY: 1,
     _WS_URL: 1
 }
@@ -85,7 +85,7 @@ _WS_SHEETS = [
     _WS_ENSEMBLE_REQUIREMENT,
     _WS_MULTI_ENSEMBLE,
     _WS_START_DATE_ENSEMBLE,
-    _WS_REFERENCES,
+    _WS_CITATIONS,
     _WS_PARTY,
     _WS_URL
 ]
@@ -266,7 +266,7 @@ _WS_MAPS = {
             ("description", 5),
             ("rationale", 6),
             ("responsible_parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
-            ("references", range(11, 15 + 1)),
+            ("citations", range(11, 15 + 1)),
             ("sub_projects", range(19, 36 + 1)),
             ("requires_experiments", range(37, 70 + 1)),
         ]),
@@ -281,7 +281,7 @@ _WS_MAPS = {
             ("description", 6),
             ("rationale", 7),
             ("responsible_parties", [8], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
-            ("references", range(12, 17 + 1)),
+            ("citations", range(12, 17 + 1)),
             ("related_experiments", range(19, 24 + 1)),
             ("temporal_constraints", range(25, 26 + 1)),
             ("ensembles", range(27, 30 + 1)),
@@ -299,7 +299,7 @@ _WS_MAPS = {
             ("description", 5),
             ("rationale", 6),
             ("responsible_parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
-            ("references", range(11, 12 + 1)),
+            ("citations", range(11, 12 + 1)),
             ("is_conformance_requested", 14, _convert_to_bool),
             ("additional_requirements", range(15, 24 + 1))
         ]),
@@ -312,7 +312,7 @@ _WS_MAPS = {
             ("description", 5),
             ("rationale", 6),
             ("responsible_parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
-            ("references", range(11, 14 + 1)),
+            ("citations", range(11, 14 + 1)),
             ("is_conformance_requested", 16, _convert_to_bool),
             ("forcing_type", 17)
         ]),
@@ -324,7 +324,7 @@ _WS_MAPS = {
             ("keywords", 4),
             ("description", 5),
             ("responsible_parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
-            ("references", range(10, 10 + 1)),
+            ("citations", range(10, 10 + 1)),
             ("is_conformance_requested", 12, _convert_to_bool),
             ("required_duration", 13, _convert_to_cim_v2_time_period),
             ("required_calendar", 14, _convert_to_cim_v2_calendar),
@@ -340,7 +340,7 @@ _WS_MAPS = {
             ("keywords", 4),
             ("description", 5),
             ("responsible_parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
-            ("references", range(10, 10 + 1)),
+            ("citations", range(10, 10 + 1)),
             ("is_conformance_requested", 12, _convert_to_bool),
             ("ensemble_type", 13),
             ("minimum_size", 14, _convert_to_int),
@@ -356,7 +356,7 @@ _WS_MAPS = {
             ("keywords", 4),
             ("description", 5),
             ("responsible_parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
-            ("references", range(10, 10 + 1)),
+            ("citations", range(10, 10 + 1)),
             ("is_conformance_requested", 14, _convert_to_bool),
             ("ensemble_axis", range(13, 14 + 1))
         ]),
@@ -369,7 +369,7 @@ _WS_MAPS = {
             ("keywords", 4),
             ("description", 5),
             ("responsible_parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
-            ("references", range(10, 10 + 1)),
+            ("citations", range(10, 10 + 1)),
             ("is_conformance_requested", 12, _convert_to_bool),
             # TODO: verify target attributes
             ("regular_timeset_start_date", 13),
@@ -378,7 +378,7 @@ _WS_MAPS = {
             ("irregular_dateset", 16),
         ]),
 
-    _WS_REFERENCES: (cim.v2.Citation, [
+    _WS_CITATIONS: (cim.v2.Citation, [
             ("doi", 1),
             ("title", 2),
             ("context", 3),
@@ -588,7 +588,7 @@ class DocumentSet(object):
         return self[_WS_PROJECT] + \
                self[_WS_EXPERIMENT] + \
                self.numerical_requirements + \
-               self[_WS_REFERENCES] + \
+               self[_WS_CITATIONS] + \
                self[_WS_PARTY]
 
 
@@ -620,7 +620,7 @@ class DocumentSet(object):
         """Gets full set of managed objects that have citation collections.
 
         """
-        return self[_WS_PARTY] + self[_WS_REFERENCES]
+        return self[_WS_PARTY] + self[_WS_CITATIONS]
 
 
     @property
@@ -698,7 +698,7 @@ class DocumentSet(object):
 
         # Set citations.
         for x in self.citation_containers:
-            x.references = _convert_names(x.references, self[_WS_REFERENCES])
+            x.citations = _convert_names(x.citations, self[_WS_CITATIONS])
 
         # Set responsibility parties.
         for rp in self.responsible_parties:
@@ -755,22 +755,22 @@ class DocumentSet(object):
 
 
     def set_document_links(self):
-        """Sets inter document references.
+        """Sets inter document links.
 
         """
-        # Responsibility to party references.
+        # Various --> Party.
         for rp in self.responsible_parties:
             rp.party = [self._get_doc_link(d) for d in rp.party]
 
-        # Responsibility to party references.
+        # Various --> Citation.
         for c in self.citation_containers:
-            c.references = [self._get_doc_link(d) for d in c.references]
+            c.citations = [self._get_doc_link(d) for d in c.citations]
 
-        # Experiment to related experiment references.
+        # Experiment --> Experiment.
         for e in self[_WS_EXPERIMENT]:
             e.related_experiments = [self._get_doc_link(d) for d in e.related_experiments]
 
-        # Experiment to requirement references.
+        # Experiment --> Requirement.
         for e in self[_WS_EXPERIMENT]:
             e.requirements += [self._get_doc_link(d) for d in e.temporal_constraints]
             for fc in e.forcing_constraints:
@@ -782,19 +782,19 @@ class DocumentSet(object):
             e.requirements += [self._get_doc_link(d, "model_configuration") for d in e.model_configurations]
             e.requirements += [self._get_doc_link(d) for d in e.multi_ensembles]
 
-        # Set additional experimental requirements.
+        # Requirement --> Requirement.
         for r in self[_WS_REQUIREMENT]:
             r.additional_requirements = [self._get_doc_link(d) for d in r.additional_requirements]
 
-        # Experiment to mip.
+        # Experiment --> MIP.
         for e in self[_WS_EXPERIMENT]:
             e.related_mips = [self._get_doc_link(d) for d in e.related_mips]
 
-        # Project to sub-projects.
+        # Project --> Project.
         for p in self[_WS_PROJECT]:
             p.sub_projects = [self._get_doc_link(d) for d in p.sub_projects]
 
-        # Project to required experiments.
+        # Project --> Experiment.
         for p in self[_WS_PROJECT]:
             p.requires_experiments = [self._get_doc_link(d) for d in p.requires_experiments]
 
