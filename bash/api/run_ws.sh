@@ -7,8 +7,9 @@ source $ESDOC_HOME/bash/init.sh
 main()
 {
     log "API : running ..."
+
 	activate_venv api
-	python $ESDOC_DIR_API/jobs/run_api.py
+    python $ESDOC_HOME/bash/api/run_ws.py
 }
 
 # Invoke entry point.

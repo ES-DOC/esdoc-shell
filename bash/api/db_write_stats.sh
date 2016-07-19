@@ -7,8 +7,10 @@ source $ESDOC_HOME/bash/init.sh
 main()
 {
     log "API : writing stats ..."
+
 	activate_venv api
-	python $ESDOC_DIR_API/jobs/run_write_stats.py --outdir=$ESDOC_DIR_WEB_STATIC/data
+	python $ESDOC_HOME/bash/api/db_write_stats.py --outdir=$ESDOC_DIR_WEB_STATIC/data
+
     log "API : stats written ---> "$ESDOC_DIR_WEB_STATIC/data
 }
 

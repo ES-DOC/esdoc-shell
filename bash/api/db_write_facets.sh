@@ -7,8 +7,10 @@ source $ESDOC_HOME/bash/init.sh
 main()
 {
     log "API-DB: dumping facets to file system ..."
+
 	activate_venv api
-	python $ESDOC_DIR_API/jobs/run_db_facet_dump.py --output-dir=$ESDOC_DIR_WEB_STATIC/data
+    python $ESDOC_HOME/bash/api/db_write_facets.py --output-dir=$ESDOC_DIR_WEB_STATIC/data
+
     log "API-DB: dumped facets to file system"
 }
 

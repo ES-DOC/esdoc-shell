@@ -7,8 +7,10 @@ source $ESDOC_HOME/bash/init.sh
 main()
 {
     log "API-DB: resetting and indexing document facets ..."
+
 	activate_venv api
-	python $ESDOC_DIR_API/jobs/run_db_index_reset.py
+	python $ESDOC_HOME/bash/api/db_index_reset.py
+
     log "API-DB: reset and indexed document facets"
 }
 

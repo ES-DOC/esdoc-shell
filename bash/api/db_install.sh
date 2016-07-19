@@ -29,8 +29,9 @@ _db_grant_permissions()
 _db_setup()
 {
 	log "Seeding DB"
-	activate_venv api
-	python $ESDOC_DIR_API/jobs/run_db_setup.py
+
+    activate_venv api
+    python $ESDOC_HOME/bash/api/db_install.py
 }
 
 # Main entry point.
