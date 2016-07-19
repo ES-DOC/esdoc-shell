@@ -6,7 +6,7 @@ source $ESDOC_HOME/bash/init.sh
 # Main entry point.
 main()
 {
-	log "deleting archived documents ..."
+	log "ARCHIVE: deleting archived documents ..."
 
 	if [ "$2" ]; then
 		declare target=$ESDOC_DIR_ARCHIVE/esdoc/$1/$2
@@ -16,7 +16,7 @@ main()
 		rm -rf $target
 	fi
 
-	log "deleted archived documents from "$target
+	log "ARCHIVE: deleted archived documents from "$target
 }
 
 # Invoke entry point.
