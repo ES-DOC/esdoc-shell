@@ -265,7 +265,7 @@ _WS_MAPS = {
             ("keywords", 4),
             ("description", 5),
             ("rationale", 6),
-            ("responsible_parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
+            ("parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
             ("citations", range(11, 15 + 1)),
             ("sub_projects", range(19, 36 + 1)),
             ("requires_experiments", range(37, 70 + 1)),
@@ -280,7 +280,7 @@ _WS_MAPS = {
             ("keywords", 5),
             ("description", 6),
             ("rationale", 7),
-            ("responsible_parties", [8], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
+            ("parties", [8], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
             ("citations", range(12, 17 + 1)),
             ("related_experiments", range(19, 24 + 1)),
             ("temporal_constraints", range(25, 26 + 1)),
@@ -298,7 +298,7 @@ _WS_MAPS = {
             ("keywords", 4),
             ("description", 5),
             ("rationale", 6),
-            ("responsible_parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
+            ("parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
             ("citations", range(11, 12 + 1)),
             ("is_conformance_requested", 14, _convert_to_bool),
             ("additional_requirements", range(15, 24 + 1))
@@ -311,7 +311,7 @@ _WS_MAPS = {
             ("keywords", 4),
             ("description", 5),
             ("rationale", 6),
-            ("responsible_parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
+            ("parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
             ("citations", range(11, 14 + 1)),
             ("is_conformance_requested", 16, _convert_to_bool),
             ("forcing_type", 17)
@@ -323,7 +323,7 @@ _WS_MAPS = {
             ("canonical_name", 3),
             ("keywords", 4),
             ("description", 5),
-            ("responsible_parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
+            ("parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
             ("citations", range(10, 10 + 1)),
             ("is_conformance_requested", 12, _convert_to_bool),
             ("required_duration", 13, _convert_to_cim_v2_time_period),
@@ -339,7 +339,7 @@ _WS_MAPS = {
             ("canonical_name", 3),
             ("keywords", 4),
             ("description", 5),
-            ("responsible_parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
+            ("parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
             ("citations", range(10, 10 + 1)),
             ("is_conformance_requested", 12, _convert_to_bool),
             ("ensemble_type", 13),
@@ -355,7 +355,7 @@ _WS_MAPS = {
             ("canonical_name", 3),
             ("keywords", 4),
             ("description", 5),
-            ("responsible_parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
+            ("parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
             ("citations", range(10, 10 + 1)),
             ("is_conformance_requested", 14, _convert_to_bool),
             ("ensemble_axis", range(13, 14 + 1))
@@ -368,7 +368,7 @@ _WS_MAPS = {
             ("canonical_name", 3),
             ("keywords", 4),
             ("description", 5),
-            ("responsible_parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
+            ("parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
             ("citations", range(10, 10 + 1)),
             ("is_conformance_requested", 12, _convert_to_bool),
             # TODO: verify target attributes
@@ -624,7 +624,7 @@ class DocumentSet(object):
 
 
     @property
-    def responsible_party_containers(self):
+    def party_containers(self):
         """Gets full set of managed objects that have responsible partie collections.
 
         """
@@ -634,11 +634,11 @@ class DocumentSet(object):
 
 
     @property
-    def responsible_parties(self):
-        """Gets full set of managed responsible parties.
+    def parties(self):
+        """Gets full set of managed parties.
 
         """
-        return reduce(add, [i.responsible_parties for i in self.responsible_party_containers])
+        return reduce(add, [i.parties for i in self.party_containers])
 
 
     @property
@@ -701,8 +701,8 @@ class DocumentSet(object):
             x.citations = _convert_names(x.citations, self[_WS_CITATIONS])
 
         # Set responsibility parties.
-        for rp in self.responsible_parties:
-            rp.party = _convert_names(rp.party, self[_WS_PARTY])
+        for p in self.parties:
+            p.party = _convert_names(p.party, self[_WS_PARTY])
 
         # Set experiment related experiments.
         for e in self[_WS_EXPERIMENT]:
@@ -759,8 +759,8 @@ class DocumentSet(object):
 
         """
         # Various --> Party.
-        for rp in self.responsible_parties:
-            rp.party = [self._get_doc_link(d) for d in rp.party]
+        for p in self.parties:
+            p.party = [self._get_doc_link(d) for d in p.party]
 
         # Various --> Citation.
         for c in self.citation_containers:
