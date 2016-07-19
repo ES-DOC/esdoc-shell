@@ -10,17 +10,9 @@ _install_repo()
 	rm -rf $ESDOC_DIR_REPOS/$1
 
 	if [ $ESDOC_GIT_PROTOCOL = "ssh" ]; then
-		if [ $1 = "esdoc-nb" ]; then
-			git clone -q git@bitbucket.org:bnlawrence/esdoc-nb.git $DIR_LOCAL_REPOS/$1
-		else
-			git clone -q git@github.com:ES-DOC/$1.git $DIR_LOCAL_REPOS/$1
-		fi
+		git clone -q git@github.com:ES-DOC/$1.git $DIR_LOCAL_REPOS/$1
 	else
-		if [ $1 = "esdoc-nb" ]; then
-			git clone -q https://bitbucket.org/bnlawrence/esdoc-nb.git $DIR_LOCAL_REPOS/$1
-		else
-			git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/$1
-		fi
+		git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/$1
 	fi
 }
 
