@@ -118,20 +118,6 @@ declare ESDOC_DIR_WEB_PLUGIN=$ESDOC_DIR_REPOS/esdoc-web/plugin
 declare ESDOC_DIR_WEB_STATIC=$ESDOC_DIR_REPOS/esdoc-web/static
 declare ESDOC_DIR_WEB_VIEWER=$ESDOC_DIR_REPOS/esdoc-web/viewer
 
-# Set of ops sub-directories.
-declare -a ESDOC_OPS_DIRS=(
-	$ESDOC_DIR_OPS
-	$ESDOC_DIR_BACKUPS
-	$ESDOC_DIR_CONFIG
-	$ESDOC_DIR_DAEMONS
-	$ESDOC_DIR_DAEMONS/api
-	$ESDOC_DIR_LOGS
-	$ESDOC_DIR_LOGS/api
-	$ESDOC_DIR_TMP
-	$ESDOC_DIR_VENV
-	$ESDOC_DIR_PYTHON
-)
-
 # ###############################################################
 # SECTION: INITIALIZE VARS
 # ###############################################################
@@ -161,6 +147,7 @@ declare -a ESDOC_REPOS=(
 	'esdoc-cim'
 	'esdoc-contrib'
 	'esdoc-docs'
+	'esdoc-errata-client'
 	'esdoc-errata-fe'
 	'esdoc-errata-ws'
 	'esdoc-mp'
