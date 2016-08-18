@@ -1,6 +1,5 @@
 # Set home path
 export ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-declare DIR=$ESDOC_HOME
 
 # Set repo path.
 export ESDOC_CMIP6=$ESDOC_HOME/repos/esdoc-docs/cmip6
