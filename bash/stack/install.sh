@@ -42,7 +42,7 @@ _install_venvs()
 _install_python_executable()
 {
 	# Version of python used by stack.
-	declare PYTHON_VERSION=2.7.11
+	declare PYTHON_VERSION=2.7.12
 
 	log "Installing python "$PYTHON_VERSION" (takes approx 2 minutes)"
 
