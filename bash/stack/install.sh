@@ -42,7 +42,7 @@ _install_venvs()
 _install_python_executable()
 {
 	# Version of python used by stack.
-	declare PYTHON_VERSION=2.7.10
+	declare PYTHON_VERSION=2.7.11
 
 	log "Installing python "$PYTHON_VERSION" (takes approx 2 minutes)"
 
@@ -50,7 +50,7 @@ _install_python_executable()
 	set_working_dir $ESDOC_DIR_PYTHON
 	mkdir src
 	cd src
-	wget http://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz --no-check-certificate
+	wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz --no-check-certificate
 	tar -xvf Python-$PYTHON_VERSION.tgz
 	rm Python-$PYTHON_VERSION.tgz
 
