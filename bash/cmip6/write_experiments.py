@@ -177,13 +177,7 @@ def _convert_to_cim_v2_time_period(value):
         return
 
     instance = cim.v2.TimePeriod()
-    try:
-        int(value.split(" ")[0])
-    except ValueError:
-        print "WARNING", "time-period length is not an integer:", value
-        instance.length = value.split(" ")[0]
-    else:
-        instance.length = int(value.split(" ")[0])
+    instance.length = value.split(" ")[0]
     instance.units = value.split(" ")[1]
     instance.date_type = u'unused'
 
@@ -688,6 +682,13 @@ class DocumentSet(object):
                 p.objectives = sorted(p.objectives)
 
 
+    def ignore_documents(self):
+        """Filters out documents deemed unwirthy of persisting.
+
+        """
+        self[_WS_EXPERIMENT] = [e for e in self[_WS_EXPERIMENT] if e.canonical_name and e.canonical_name.lower() != "n/a"]
+
+
     def set_document_connections(self):
         """Sets inter document connections.
 
@@ -833,6 +834,7 @@ def _main(args):
     docs = DocumentSet(
         Spreadsheet(args.spreadsheet_filepath, DocumentIdentifiers(args.identifiers))
             )
+    docs.ignore_documents()
     docs.set_document_connections()
     docs.set_document_links()
     docs.write(args.io_dir)
