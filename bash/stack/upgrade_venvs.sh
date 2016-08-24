@@ -9,7 +9,7 @@ _upgrade_venv()
 	log "Upgrading virtual environment :: $1"
 	declare TARGET_VENV=$ESDOC_DIR_VENV/$1
     source $TARGET_VENV/bin/activate
-    pip install -q --force-reinstall --no-cache-dir --upgrade -r $ESDOC_DIR_RESOURCES/venv-requirements-$1.txt
+    pip install -q --no-cache-dir --upgrade -r $ESDOC_DIR_RESOURCES/venv-requirements-$1.txt
 }
 
 
