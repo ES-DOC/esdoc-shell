@@ -10,7 +10,7 @@ _upgrade_venv()
 	declare TARGET_VENV=$ESDOC_DIR_VENV/$1
 	declare TARGET_VENV_REQUIREMENTS=$ESDOC_DIR_RESOURCES/venv-requirements-$1.txt
     source $TARGET_VENV/bin/activate
-    pip install -q --allow-all-external --upgrade -r $TARGET_VENV_REQUIREMENTS
+    pip install -q --allow-all-external --no-cache-dir --upgrade -r $TARGET_VENV_REQUIREMENTS
 }
 
 
