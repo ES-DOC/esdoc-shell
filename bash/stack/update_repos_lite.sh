@@ -32,7 +32,7 @@ main()
 	log "UPDATING REPOS (LITE)"
 	for repo in "${ESDOC_REPOS[@]}"
 	do
-		if [ $ESDOC_GIT_PROTOCOL != "archive" ]; then
+		if [ $ESDOC_GIT_PROTOCOL != "esdoc-archive" ]; then
 			if [ -d "$ESDOC_DIR_REPOS/$repo" ]; then
 				_update_repo $repo
 			else
