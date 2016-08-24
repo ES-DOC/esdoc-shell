@@ -22,8 +22,7 @@ _install_venv()
 
     # Build dependencies.
     source $TARGET_VENV/bin/activate
-	declare TARGET_REQUIREMENTS=$ESDOC_DIR_RESOURCES/venv-requirements-$1.txt
-    pip install -q --allow-all-external --no-cache-dir -r $TARGET_REQUIREMENTS
+    pip install -q --force-reinstall --no-cache-dir --upgrade -r $ESDOC_DIR_RESOURCES/venv-requirements-$1.txt
 
     # Cleanup.
     deactivate
