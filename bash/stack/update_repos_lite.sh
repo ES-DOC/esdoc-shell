@@ -30,14 +30,12 @@ _update_repo()
 main()
 {
 	log "UPDATING REPOS (LITE)"
-	for repo in "${ESDOC_REPOS[@]}"
+	for repo in "${ESDOC_REPOS_LITE[@]}"
 	do
-		if [ $ESDOC_GIT_PROTOCOL != "esdoc-archive" ]; then
-			if [ -d "$ESDOC_DIR_REPOS/$repo" ]; then
-				_update_repo $repo
-			else
-				_install_repo $repo
-			fi
+		if [ -d "$ESDOC_DIR_REPOS/$repo" ]; then
+			_update_repo $repo
+		else
+			_install_repo $repo
 		fi
 	done
 	log "UPDATED REPOS (LITE)"

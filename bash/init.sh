@@ -156,6 +156,24 @@ declare -a ESDOC_REPOS=(
 	'esdoc-web'
 )
 
+# Set of git repos considered to be large.
+declare -a ESDOC_REPOS_LITE=(
+	'cmip6-specializations-atmosphere'
+	'cmip6-specializations-ocean'
+	'cmip6-specializations-seaice'
+	'esdoc-api'
+	'esdoc-cdf2cim'
+	'esdoc-cim'
+	'esdoc-contrib'
+	'esdoc-docs'
+	'esdoc-errata-client'
+	'esdoc-errata-fe'
+	'esdoc-errata-ws'
+	'esdoc-mp'
+	'esdoc-py-client'
+	'esdoc-web'
+)
+
 # Set of virtual environments.
 declare -a ESDOC_VENVS=(
 	'api'
