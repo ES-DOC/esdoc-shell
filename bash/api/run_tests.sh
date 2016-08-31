@@ -7,6 +7,8 @@ source $ESDOC_HOME/bash/init.sh
 main()
 {
     log "API-TESTS : running ..."
+
+    mkdir -p $ESDOC_DIR_ARCHIVE/esdoc/test-project/unit-test
 	activate_venv api
     nosetests -v -s $ESDOC_DIR_API_TESTS
 

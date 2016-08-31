@@ -18,7 +18,7 @@ alias esdoc-api-db-index-reset=$ESDOC_HOME/bash/api/db_index_reset.sh
 alias esdoc-api-db-ingest=$ESDOC_HOME/bash/api/db_ingest.sh
 alias esdoc-api-db-install=$ESDOC_HOME/bash/api/db_install.sh
 alias esdoc-api-db-reset=$ESDOC_HOME/bash/api/db_reset.sh
-alias esdoc-api-tests=$ESDOC_HOME/bash/api/tests_run.sh
+alias esdoc-api-tests=$ESDOC_HOME/bash/api/run_tests.sh
 alias esdoc-api-db-uninstall=$ESDOC_HOME/bash/api/db_uninstall.sh
 alias esdoc-api-db-write-comparator-setup-data=$ESDOC_HOME/bash/api/db_write_comparator_setup_data.sh
 alias esdoc-api-db-write-facets=$ESDOC_HOME/bash/api/db_write_facets.sh
@@ -89,9 +89,9 @@ alias esdoc-reset-project-assets=_reset_project_assets
 
 # CMIP6 commands.
 alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/cmip6/archive_documents.sh
-alias esdoc-cmip6-write-typeset=$ESDOC_HOME/bash/cmip6/write_typeset.sh
 alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
 alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experiments_config.sh
+alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/write_model_notebooks.sh
 alias esdoc-cmip6-sync-specializations=$ESDOC_HOME/bash/cmip6/sync_specializations.sh
 alias esdoc-cmip6-sync-specializations-tooling=$ESDOC_HOME/bash/cmip6/sync_specializations_tooling.sh
 

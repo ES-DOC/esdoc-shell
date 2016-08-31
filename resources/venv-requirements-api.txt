@@ -19,3 +19,4 @@ wsgiref==0.1.2
 arrow
 reportlab
 cerberus
+jsonschema
