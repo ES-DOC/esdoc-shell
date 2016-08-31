@@ -91,7 +91,7 @@ def _get_property_value(prp, output):
 
     """
     if prp.short_id(2) not in output:
-        return "\"\""
+        return ""
     else:
         return output[prp.short_id(2)]
 
@@ -114,7 +114,7 @@ def _get_property_hint(prp):
         if prp.typeof not in ('bool', 'enum'):
             return "ARRAY" if prp.is_collection else ""
 
-        output = " - choose {} from:"
+        output = "- choose {} from:"
 
         return output.format("MANY") if prp.is_collection else output.format("ONE")
 
@@ -152,6 +152,7 @@ def _get_content(realm, institute, model, output):
         institute=institute,
         model=model,
         r=realm,
+        escape=lambda s: s.strip().replace('"', "'"),
         now=dt.datetime.now()
         )
 
