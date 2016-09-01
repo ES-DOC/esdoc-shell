@@ -43,13 +43,6 @@ _ARGS.add_argument(
     type=str,
     default="{}.conf".format(__file__.split(".")[0])
     )
-_ARGS.add_argument(
-    "--merge",
-    help="Path to a confguration file driving how notebook outputs are merged.",
-    dest="merge_fpath",
-    type=str,
-    default="{}.merge".format(__file__.split(".")[0])
-    )
 
 
 # The mip-era for which notebooks are to be generated.
@@ -61,14 +54,6 @@ _REALM_TEMPLATES = {}
 
 def _get_config(fpath):
     """Returns associated configuration file converted to a dictionary.
-
-    """
-    with open(fpath, 'r') as fstream:
-        return json.loads(fstream.read())
-
-
-def _get_merge_config(fpath):
-    """Returns associated merge configuration file converted to a dictionary.
 
     """
     with open(fpath, 'r') as fstream:
@@ -91,7 +76,7 @@ def _get_property_value(prp, output):
 
     """
     if prp.short_id(2) not in output:
-        return ""
+        return ''
     else:
         return output[prp.short_id(2)]
 
