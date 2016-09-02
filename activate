@@ -94,6 +94,7 @@ alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experime
 alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/write_model_notebooks.sh
 alias esdoc-cmip6-sync-specializations=$ESDOC_HOME/bash/cmip6/sync_specializations.sh
 alias esdoc-cmip6-sync-specializations-tooling=$ESDOC_HOME/bash/cmip6/sync_specializations_tooling.sh
+alias esdoc-cmip6-sync-specializations-templates=$ESDOC_HOME/bash/cmip6/sync_specializations_templates.sh
 
 _reset_cmip6()
 {

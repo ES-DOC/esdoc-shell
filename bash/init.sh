@@ -140,7 +140,9 @@ declare -a ESDOC_OPS_DIRS=(
 declare -a ESDOC_REPOS=(
 	'cmip6-specializations-atmosphere'
 	'cmip6-specializations-ocean'
+	'cmip6-specializations-ocean-bgc'
 	'cmip6-specializations-seaice'
+	'cmip6-specializations-toplevel'
 	'esdoc-api'
 	'esdoc-archive'
 	'esdoc-cdf2cim'

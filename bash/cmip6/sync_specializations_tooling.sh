@@ -11,7 +11,9 @@ main()
 	# Set of specializations.
 	declare -a SPECIALIZATIONS=(
 		'atmosphere'
+		'ocean-bgc'
 		'seaice'
+		'toplevel'
 	)
 
 	# Sync definitions.
