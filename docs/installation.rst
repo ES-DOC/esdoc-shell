@@ -43,12 +43,6 @@ esdoc-stack-update-source
 
 Execute this command regularly to ensure that the shell and associated repos are upto date.
 
-```
-esdoc-stack-update
-```
-
-Execute this command if you wish to update virtual environments as well as the source.
-
 Uninstalling
 ------------------------------
 
