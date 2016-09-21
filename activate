@@ -4,6 +4,10 @@ export ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Set repo path.
 export ESDOC_CMIP6=$ESDOC_HOME/repos/esdoc-docs/cmip6
 
+# Update prommpt.
+PS1="(`basename \"$ESDOC_HOME\"`)$PS1"
+export PS1
+
 # API commands.
 alias esdoc-api=$ESDOC_HOME/bash/api/run_ws.sh
 alias esdoc-api-daemons-init=$ESDOC_HOME/bash/api/daemons_init.sh
