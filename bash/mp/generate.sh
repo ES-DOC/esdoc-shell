@@ -13,7 +13,7 @@ main()
 	if [ $language = "python" ]; then
 		declare dest=$ESDOC_DIR_PYESDOC/pyesdoc/ontologies/$ontology
 	elif [ $language = "qxml" ]; then
-		declare dest=$ESDOC_DIR_RESOURCES/qtn-$ontology-v$version.xml
+		declare dest=$ESDOC_DIR_QTN/media/ontologies/$ontology"_"$version.xml
 	fi
 	if [ $language = "python" ]; then
 		declare data=$ESDOC_DIR_TMP/$ontology/v$version
