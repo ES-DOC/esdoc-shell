@@ -628,11 +628,11 @@ class DocumentSet(object):
 
 
     @property
-    def parties(self):
-        """Gets full set of managed parties.
+    def responsible_parties(self):
+        """Gets full set of managed responsible parties.
 
         """
-        return reduce(add, [i.parties for i in self.party_containers])
+        return reduce(add, [i.responsible_parties for i in self.party_containers])
 
 
     @property
@@ -702,7 +702,7 @@ class DocumentSet(object):
             x.citations = _convert_names(x.citations, self[_WS_CITATIONS])
 
         # Set responsibility parties.
-        for p in self.parties:
+        for p in self.responsible_parties:
             p.party = _convert_names(p.party, self[_WS_PARTY])
 
         # Set experiment related experiments.
@@ -759,8 +759,8 @@ class DocumentSet(object):
         """Sets inter document links.
 
         """
-        # Various --> Party.
-        for p in self.parties:
+        # Various --> Responsible Parties.
+        for p in self.responsible_parties:
             p.party = [self._get_doc_link(d) for d in p.party]
 
         # Various --> Citation.
