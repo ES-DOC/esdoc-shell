@@ -11,11 +11,6 @@ main()
 	declare language=$3
 
 	if [ $language = "python" ]; then
-		declare dest=$ESDOC_DIR_PYESDOC/pyesdoc/ontologies/$ontology
-	elif [ $language = "qxml" ]; then
-		declare dest=$ESDOC_DIR_RESOURCES/qtn-$ontology-v$version.xml
-	fi
-	if [ $language = "python" ]; then
 		declare data=$ESDOC_DIR_TMP/$ontology/v$version
 	elif [ $language = "qxml" ]; then
 		declare data=$ESDOC_DIR_TMP/$ontology/v$version/$ontology"_"$version.xml
@@ -23,10 +18,17 @@ main()
 
 	activate_venv mp
 	python "$ESDOC_DIR_MP/esdoc_mp" -s $ontology -v $version -l $language -o $ESDOC_DIR_TMP
-	cp -r $data $dest
 
 	log_banner
-	log "generated artefacts copied to @ "$dest
+	if [ $language = "python" ]; then
+		declare dest=$ESDOC_DIR_PYESDOC/pyesdoc/ontologies/$ontology
+		cp -r $data $dest
+		log "generated artefacts copied to @ "$dest
+	elif [ $language = "qxml" ]; then
+		declare dest=$ESDOC_DIR_CIM/v$version/questionnaire/$ontology-v$version-q-config.xml
+		cp -r $data $dest
+		log "generated artefacts copied to @ "$dest
+	fi
 	log_banner
 
 	find $ESDOC_DIR_PYESDOC -type f -name "*.pyc" -exec rm -f {} \;

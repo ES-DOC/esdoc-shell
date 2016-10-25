@@ -107,6 +107,7 @@ declare ESDOC_DIR_VENV=$ESDOC_DIR_OPS/venv
 declare ESDOC_DIR_API=$ESDOC_DIR_REPOS/esdoc-api
 declare ESDOC_DIR_API_TESTS=$ESDOC_DIR_REPOS/esdoc-api/tests
 declare ESDOC_DIR_ARCHIVE=$ESDOC_DIR_REPOS/esdoc-archive
+declare ESDOC_DIR_CIM=$ESDOC_DIR_REPOS/esdoc-cim
 declare ESDOC_DIR_MP=$ESDOC_DIR_REPOS/esdoc-mp
 declare ESDOC_DIR_MP_TESTS=$ESDOC_DIR_REPOS/esdoc-mp/tests
 declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
