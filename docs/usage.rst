@@ -15,3 +15,5 @@ Upon successful `installation <https://github.com/ES-DOC/esdoc-shell/blob/master
 -	`Pyesdoc commands <https://github.com/ES-DOC/esdoc-shell/blob/master/docs/usage-pyesdoc.rst>`_
 
 -	`Stack management commands <https://github.com/ES-DOC/esdoc-shell/blob/master/docs/usage-stack.rst>`_
+
+-	`CMIP6 specific commands <https://github.com/ES-DOC/esdoc-shell/blob/master/docs/usage-cmip6.rst>`_

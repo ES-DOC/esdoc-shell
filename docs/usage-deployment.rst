@@ -93,4 +93,9 @@ Rollout a new deployment.
 esdoc-deploy-setup
 ----------------------------
 
-Command to setup a shell for deployments.
+Prepares machine for deployment installation.
+
+esdoc-deploy-update
+----------------------------
+
+Updates deployment source code.

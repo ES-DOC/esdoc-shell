@@ -97,3 +97,7 @@ esdoc-api-db-write-stats
 
 Writes statistics of documents indexed within the database.
 
+esdoc-api-db-vacuum
+----------------------------
+
+Vacuums API database (i.e. removes obsolete db objects).

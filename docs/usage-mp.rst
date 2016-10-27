@@ -19,23 +19,32 @@ Generates (forward engineers) code from an ontology's schema definition.
 
 	Target programming language (supported = python|qxml).
 
-
-esdoc-mp-generate-cim-v1-typeset
+esdoc-mp-cim-v1-synch
 ----------------------------
 
-Generates (forward engineers) CIM v1 typeset from it's ontology definitions.
+Copies CIM v1 ontology definitions from esdoc-cim to esdoc-mp.
 
-esdoc-mp-generate-cim-v2-typeset
+esdoc-mp-cim-v2-synch
 ----------------------------
 
-Generates (forward engineers) CIM v1 typeset from it's ontology definitions.
+Copies CIM v2 ontology definitions from esdoc-cim to esdoc-mp.
 
-esdoc-mp-validate-cim-v1
+esdoc-mp-cim-v1-validate
 ----------------------------
 
 Validates CIM v1 ontology definitions.
 
-esdoc-mp-validate-cim-v2
+esdoc-mp-cim-v2-validate
 ----------------------------
 
 Validates CIM v2 ontology definitions.
+
+esdoc-mp-cim-v1-generate
+----------------------------
+
+Generates CIM v1 artefacts from ontology definitions.
+
+esdoc-mp-cim-v2-generate
+----------------------------
+
+Generates CIM v1 artefacts from ontology definitions.
