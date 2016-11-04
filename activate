@@ -49,6 +49,7 @@ alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-synch && $ESDOC_HOME/bash/mp/gen
 alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-synch && $ESDOC_HOME/bash/mp/generate_cim_2.sh'
 alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-synch && $ESDOC_HOME/bash/mp/validate_cim_1.sh'
 alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-synch && $ESDOC_HOME/bash/mp/validate_cim_2.sh'
+alias esdoc-mp-pipify=$ESDOC_HOME/bash/mp/pipify.sh
 
 # pyesdoc commands.
 alias esdoc-pyesdoc-convert=$ESDOC_HOME/bash/pyesdoc/convert.sh
