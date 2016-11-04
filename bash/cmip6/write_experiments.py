@@ -205,11 +205,11 @@ def _convert_to_cim_2_responsibilty(role, row, col_idx=6):
     if role is None:
         return
 
-    party = cim.v2.Responsibility()
-    party.role = _convert_to_unicode(role)
-    party.party = [r for r in [row(col_idx), row(col_idx + 1), row(col_idx + 2)] if r]
+    responsibility = cim.v2.Responsibility()
+    responsibility.role = _convert_to_unicode(role)
+    responsibility.parties = [r for r in [row(col_idx), row(col_idx + 1), row(col_idx + 2)] if r]
 
-    return party
+    return responsibility
 
 
 def _convert_name(name, collection):
@@ -618,7 +618,7 @@ class DocumentSet(object):
 
 
     @property
-    def party_containers(self):
+    def responsible_party_containers(self):
         """Gets full set of managed objects that have responsible partie collections.
 
         """
@@ -632,7 +632,7 @@ class DocumentSet(object):
         """Gets full set of managed responsible parties.
 
         """
-        return reduce(add, [i.responsible_parties for i in self.party_containers])
+        return reduce(add, [i.responsible_parties for i in self.responsible_party_containers])
 
 
     @property
@@ -703,7 +703,7 @@ class DocumentSet(object):
 
         # Set responsibility parties.
         for p in self.responsible_parties:
-            p.party = _convert_names(p.party, self[_WS_PARTY])
+            p.parties = _convert_names(p.parties, self[_WS_PARTY])
 
         # Set experiment related experiments.
         for e in self[_WS_EXPERIMENT]:
@@ -760,8 +760,8 @@ class DocumentSet(object):
 
         """
         # Various --> Responsible Parties.
-        for p in self.responsible_parties:
-            p.party = [self._get_doc_link(d) for d in p.party]
+        for rp in self.responsible_parties:
+            rp.parties = [self._get_doc_link(d) for d in rp.parties]
 
         # Various --> Citation.
         for c in self.citation_containers:
