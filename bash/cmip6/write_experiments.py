@@ -185,6 +185,16 @@ def _convert_to_cim_v2_time_period(value):
     return instance
 
 
+def _convert_to_cim_v2_numerical_requirement_delivery_order(value):
+    """Converts a cell value to a cim.v2.NumericalRequirementScope enum value.
+
+    """
+    return {
+        1: "pre-simulation",
+        2: "post-simulation",
+    }[value]
+
+
 def _convert_to_cim_v2_numerical_requirement_scope(value):
     """Converts a cell value to a cim.v2.NumericalRequirementScope enum value.
 
@@ -331,6 +341,7 @@ _WS_MAPS = {
             ("name", "A"),
             ("long_name", "B"),
             ("canonical_name", "C"),
+            ("delivery_order", "D", _convert_to_cim_v2_numerical_requirement_delivery_order),
             ("scope", "E", _convert_to_cim_v2_numerical_requirement_scope),
             ("keywords", "F"),
             ("description", "G"),
