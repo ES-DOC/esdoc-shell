@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
 
 """
 .. module:: run_publish_cmip6_documents.py
@@ -11,6 +11,7 @@
 """
 import argparse
 import os
+import string
 import uuid
 from collections import defaultdict
 from operator import add
@@ -126,7 +127,7 @@ def _convert_to_unicode(value):
     """Converts a cell value to a boolean.
 
     """
-    if value is not None:
+    if value is None:
         return
 
     value = unicode(value)
@@ -184,6 +185,18 @@ def _convert_to_cim_v2_time_period(value):
     return instance
 
 
+def _convert_to_cim_v2_numerical_requirement_scope(value):
+    """Converts a cell value to a cim.v2.NumericalRequirementScope enum value.
+
+    """
+    return {
+        1: "mip-era",
+        2: "mip-group",
+        3: "mip",
+        4: "experiment",
+    }[value]
+
+
 def _convert_to_cim_v2_date_time(value, offset):
     """Converts a cell value to a cim.v2.DateTime instance.
 
@@ -198,12 +211,14 @@ def _convert_to_cim_v2_date_time(value, offset):
     return instance
 
 
-def _convert_to_cim_2_responsibilty(role, row, col_idx=6):
+def _convert_to_cim_2_responsibilty(role, row, col_idx):
     """Returns experiment responsibility info.
 
     """
     if role is None:
         return
+
+    col_idx = _convert_col_idx(col_idx)
 
     responsibility = cim.v2.Responsibility()
     responsibility.role = _convert_to_unicode(role)
@@ -250,152 +265,172 @@ def _convert_names(names, collection):
     return [d for d in result if d]
 
 
+def _convert_col_idx(col_idx):
+    """Converts a column index to an integer.
+
+    """
+    num = 0
+    for c in col_idx:
+        if c in string.ascii_letters:
+            num = num * 26 + (ord(c.upper()) - ord('A')) + 1
+    return num
+
+
 # Maps of worksheet to cim type & columns.
 _WS_MAPS = {
     _WS_PROJECT: (cim.v2.Project, [
-            ("name", 1),
-            ("long_name", 2),
-            ("canonical_name", 3),
-            ("keywords", 4),
-            ("description", 5),
-            ("rationale", 6),
-            ("parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
-            ("citations", range(11, 15 + 1)),
-            ("sub_projects", range(19, 36 + 1)),
-            ("requires_experiments", range(37, 70 + 1)),
+            ("name", "A"),
+            ("long_name", "B"),
+            ("canonical_name", "C"),
+            ("keywords", "D"),
+            ("description", "E"),
+            ("rationale", "F"),
+            ("responsible_parties", "G", \
+                lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "H")] if i]),
+            ("citations", "K-P"),
+            ("sub_projects", "T-AK"),
+            ("requires_experiments", "AL-BU"),
         ]),
 
     _WS_EXPERIMENT: (cim.v2.NumericalExperiment, [
-            ("internal_name", 1),
-            ("long_name", 2),
-            ("name", 3),
-            ("canonical_name", 3),
-            ("alternative_names", 4, lambda v, _: [] if not v else [i.strip() for i in v.split(",")]),
-            ("keywords", 5),
-            ("description", 6),
-            ("rationale", 7),
-            ("parties", [8], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
-            ("citations", range(12, 17 + 1)),
-            ("related_experiments", range(19, 24 + 1)),
-            ("temporal_constraints", range(25, 26 + 1)),
-            ("ensembles", range(27, 30 + 1)),
-            ("multi_ensembles", range(31, 32 + 1)),
-            ("model_configurations", range(33, 37 + 1)),
-            ("forcing_constraints", range(38, 50 + 1))
+            ("internal_name", "A"),
+            ("long_name", "B"),
+            ("name", "C"),
+            ("canonical_name", "C"),
+            ("alternative_names", "D", lambda v, _: [] if not v else [i.strip() for i in v.split(",")]),
+            ("keywords", "E"),
+            ("description", "F"),
+            ("rationale", "G"),
+            ("responsible_parties", "H", \
+                lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "I")] if i]),
+            ("citations", "L-R"),
+            ("related_experiments", "T-AB"),
+            ("temporal_constraints", "AC-AD"),
+            ("ensembles", "AE-AH"),
+            ("multi_ensembles", "AI-AL"),
+            ("model_configurations", "AM-AQ"),
+            ("forcing_constraints", "AR-BI")
         ]),
 
     # TODO: additional requirements
     _WS_REQUIREMENT: (cim.v2.NumericalRequirement, [
-            ("name", 1),
-            ("long_name", 2),
-            ("canonical_name", 3),
-            ("keywords", 4),
-            ("description", 5),
-            ("rationale", 6),
-            ("parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
-            ("citations", range(11, 12 + 1)),
-            ("is_conformance_requested", 14, _convert_to_bool),
-            ("additional_requirements", range(15, 24 + 1))
+            ("name", "A"),
+            ("long_name", "B"),
+            ("canonical_name", "C"),
+            ("keywords", "D"),
+            ("description", "E"),
+            ("rationale", "F"),
+            ("responsible_parties", "G", \
+                lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "H")] if i]),
+            ("citations", "K-N"),
+            ("is_conformance_requested", "P", _convert_to_bool),
+            ("additional_requirements", "Q-Z")
         ]),
 
     _WS_FORCING_CONSTRAINT: (cim.v2.ForcingConstraint, [
-            ("name", 1),
-            ("long_name", 2),
-            ("canonical_name", 3),
-            ("keywords", 4),
-            ("description", 5),
-            ("rationale", 6),
-            ("parties", [7], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 8)),
-            ("citations", range(11, 14 + 1)),
-            ("is_conformance_requested", 16, _convert_to_bool),
-            ("forcing_type", 17)
+            ("name", "A"),
+            ("long_name", "B"),
+            ("canonical_name", "C"),
+            ("scope", "E", _convert_to_cim_v2_numerical_requirement_scope),
+            ("keywords", "F"),
+            ("description", "G"),
+            ("rationale", "H"),
+            ("responsible_parties", "I", \
+                lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "J")] if i]),
+            ("citations", "M-Q"),
+            ("is_conformance_requested", "S", _convert_to_bool),
+            ("forcing_type", "T")
         ]),
 
     _WS_TEMPORAL_CONSTRAINT: (cim.v2.TemporalConstraint, [
-            ("name", 1),
-            ("long_name", 2),
-            ("canonical_name", 3),
-            ("keywords", 4),
-            ("description", 5),
-            ("parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
-            ("citations", range(10, 10 + 1)),
-            ("is_conformance_requested", 12, _convert_to_bool),
-            ("required_duration", 13, _convert_to_cim_v2_time_period),
-            ("required_calendar", 14, _convert_to_cim_v2_calendar),
-            ("start_date", 15, lambda c, r: _convert_to_cim_v2_date_time(c, r(16))),
-            ("start_flexibility", 17, _convert_to_cim_v2_time_period)
+            ("name", "A"),
+            ("long_name", "B"),
+            ("canonical_name", "C"),
+            ("keywords", "D"),
+            ("description", "E"),
+            ("responsible_parties", "F", \
+                lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "G")] if i]),
+            ("citations", "J-J"),
+            ("is_conformance_requested", "L", _convert_to_bool),
+            ("required_duration", "M", _convert_to_cim_v2_time_period),
+            ("required_calendar", "N", _convert_to_cim_v2_calendar),
+            ("start_date", "O", lambda c, r: _convert_to_cim_v2_date_time(c, r(16))),
+            ("start_flexibility", "Q", _convert_to_cim_v2_time_period)
         ]),
 
     # TODO: ensemble-member, cols 15, 16, 17
     _WS_ENSEMBLE_REQUIREMENT: (cim.v2.EnsembleRequirement, [
-            ("name", 1),
-            ("long_name", 2),
-            ("canonical_name", 3),
-            ("keywords", 4),
-            ("description", 5),
-            ("parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
-            ("citations", range(10, 10 + 1)),
-            ("is_conformance_requested", 12, _convert_to_bool),
-            ("ensemble_type", 13),
-            ("minimum_size", 14, _convert_to_int),
+            ("name", "A"),
+            ("long_name", "B"),
+            ("canonical_name", "C"),
+            ("keywords", "D"),
+            ("description", "E"),
+            ("responsible_parties", "F", \
+                lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "G")] if i]),
+            ("citations", "J-J"),
+            ("is_conformance_requested", "L", _convert_to_bool),
+            ("ensemble_type", "M"),
+            ("minimum_size", "N", _convert_to_int),
             # TODO: map to cim type
-            ("members", range(15, 17 + 1)),
+            ("members", "O-T"),
         ]),
 
     # TODO: map to cim type
     _WS_MULTI_ENSEMBLE: (cim.v2.MultiEnsemble, [
-            ("name", 1),
-            ("long_name", 2),
-            ("canonical_name", 3),
-            ("keywords", 4),
-            ("description", 5),
-            ("parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
-            ("citations", range(10, 10 + 1)),
-            ("is_conformance_requested", 14, _convert_to_bool),
-            ("ensemble_axis", range(13, 14 + 1))
+            ("name", "A"),
+            ("long_name", "B"),
+            ("canonical_name", "C"),
+            ("keywords", "D"),
+            ("description", "E"),
+            ("responsible_parties", "F", \
+                lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "G")] if i]),
+            ("citations", "J-J"),
+            ("is_conformance_requested", "L", _convert_to_bool),
+            ("ensemble_axis", "M-N")
         ]),
 
     # TODO: map to cim type
     _WS_START_DATE_ENSEMBLE: (cim.v2.NumericalRequirement, [
-            ("name", 1),
-            ("long_name", 2),
-            ("canonical_name", 3),
-            ("keywords", 4),
-            ("description", 5),
-            ("parties", [6], lambda x, y: _convert_to_cim_2_responsibilty(x, y, 7)),
-            ("citations", range(10, 10 + 1)),
-            ("is_conformance_requested", 12, _convert_to_bool),
+            ("name", "A"),
+            ("long_name", "B"),
+            ("canonical_name", "C"),
+            ("keywords", "D"),
+            ("description", "E"),
+            ("responsible_parties", "F", \
+                lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "G")] if i]),
+            ("citations", "J-J"),
+            ("is_conformance_requested", "L", _convert_to_bool),
             # TODO: verify target attributes
-            ("regular_timeset_start_date", 13),
-            ("regular_timeset_start_length", 14),
-            ("regular_timeset_start_increment", 15),
-            ("irregular_dateset", 16),
+            ("regular_timeset_start_date", "M"),
+            ("regular_timeset_start_length", "N"),
+            ("regular_timeset_start_increment", "O"),
+            ("irregular_dateset", "P"),
         ]),
 
     _WS_CITATIONS: (cim.v2.Citation, [
-            ("doi", 1),
-            ("title", 2),
-            ("context", 3),
-            ("citation_detail", 4),
-            ("url", 5),
-            ("abstract", 6)
+            ("doi", "A"),
+            ("title", "B"),
+            ("context", "C"),
+            ("citation_detail", "D"),
+            ("url", "E"),
+            ("abstract", "F")
         ]),
 
     _WS_PARTY: (cim.v2.Party, [
-            ("name", 1),
-            ("organisation", 2, _convert_to_bool),
-            ("address", 3),
-            ("email", 4),
-            ("url", 5)
+            ("name", "A"),
+            ("organisation", "B", _convert_to_bool),
+            ("address", "C"),
+            ("email", "D"),
+            ("url", "E")
         ]),
 
     _WS_URL: (cim.v2.OnlineResource, [
-            ("name", 1),
-            ("linkage", 2),
-            ("protocol", 3),
-            ("description", 4),
+            ("name", "A"),
+            ("linkage", "B"),
+            ("protocol", "C"),
+            ("description", "D"),
         ])
-}
+    }
 
 
 class Spreadsheet(object):
@@ -481,11 +516,12 @@ class Spreadsheet(object):
             convertor = None
 
         # Convert cell value.
-        if isinstance(col_idx, int):
-            attr_value = self._get_cell_value(row, col_idx, convertor)
+        if col_idx.find("-") == -1:
+            attr_value = self._get_cell_value(row, _convert_col_idx(col_idx), convertor)
         else:
+            col_idx_from, col_idx_to = [_convert_col_idx(i) for i in col_idx.split("-")]
             attr_value = [i for i in (self._get_cell_value(row, i, convertor)
-                          for i in col_idx) if i]
+                          for i in range(col_idx_from, col_idx_to + 1)) if i]
 
         # Set aattribute value.
         setattr(doc, attr, attr_value)
@@ -657,13 +693,16 @@ class DocumentSet(object):
             reference.type = "{}:{}".format(doc.type_key, type_note)
         else:
             reference.type = doc.type_key
-        for attr in ["canonical_name", "name"]:
-            try:
-                reference.name = getattr(doc, attr)
-            except AttributeError:
-                pass
-            else:
-                break
+        if isinstance(doc, cim.v2.designing.Project):
+            reference.name = doc.name
+        else:
+            for attr in ["canonical_name", "name"]:
+                try:
+                    reference.name = getattr(doc, attr)
+                except AttributeError:
+                    pass
+                else:
+                    break
 
         return reference
 
@@ -713,11 +752,9 @@ class DocumentSet(object):
         for e in self[_WS_EXPERIMENT]:
             e.temporal_constraints = \
                 _convert_names(e.temporal_constraints, self[_WS_TEMPORAL_CONSTRAINT])
-            forcing_constraints = e.forcing_constraints
-            e.forcing_constraints = \
-                _convert_names(forcing_constraints, self[_WS_FORCING_CONSTRAINT])
-            e.forcing_constraints += \
-                _convert_names(forcing_constraints, self[_WS_REQUIREMENT])
+            e.forcing_constraints = [_convert_name(i, self[_WS_FORCING_CONSTRAINT]) or
+                                     _convert_name(i, self[_WS_REQUIREMENT])
+                                     for i in e.forcing_constraints]
             e.ensembles = \
                 _convert_names(e.ensembles, self[_WS_ENSEMBLE_REQUIREMENT])
             e.model_configurations = \
