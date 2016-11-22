@@ -88,6 +88,7 @@ declare -a CSS=('media/esdoc.css')
 declare -a IMAGES=(
     'media/images/favicon.ico'
     'media/images/logo.png'
+    'media/images/logo-1.png'
     'media/images/message.confirmation.png'
     'media/images/message.error.png'
     'media/images/message.help.png'
