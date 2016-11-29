@@ -26,7 +26,7 @@ main()
 		rm $dest/v$version/extended_schema*
 		log "pyesdoc artefacts copied to @ "$dest/v$version
 
-		declare dest=$ESDOC_DIR_CIM/v$version/extended-schema
+		declare dest=$ESDOC_DIR_CIM/v$version/schema-extended
 		cp -r $data/extended_schema* $dest
 		log "extended schema copied to @ "$dest
 

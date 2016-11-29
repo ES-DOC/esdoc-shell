@@ -148,6 +148,8 @@ declare -a ESDOC_REPOS=(
 	'esdoc-archive'
 	'esdoc-cdf2cim'
 	'esdoc-cim'
+	'esdoc-cim-v1-schema'
+	'esdoc-cim-v2-schema'
 	'esdoc-contrib'
 	'esdoc-docs'
 	'esdoc-errata-client'
@@ -160,7 +162,7 @@ declare -a ESDOC_REPOS=(
 	'esdoc-web'
 )
 
-# Set of git repos considered to be large.
+# Set of git repos considered to be relatively small.
 declare -a ESDOC_REPOS_LITE=(
 	'cmip6-specializations-atmosphere'
 	'cmip6-specializations-ocean'
@@ -168,6 +170,8 @@ declare -a ESDOC_REPOS_LITE=(
 	'esdoc-api'
 	'esdoc-cdf2cim'
 	'esdoc-cim'
+	'esdoc-cim-v1-schema'
+	'esdoc-cim-v2-schema'
 	'esdoc-contrib'
 	'esdoc-docs'
 	'esdoc-errata-client'

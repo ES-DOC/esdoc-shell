@@ -47,12 +47,12 @@ alias esdoc-deploy-update=$ESDOC_HOME/bash/deployment/update.sh
 # Meta-programming commands.
 alias esdoc-mp=$ESDOC_HOME/bash/mp/generate.sh
 alias esdoc-mp-tests=$ESDOC_HOME/bash/mp/run_tests.sh
-alias esdoc-mp-cim-v1-synch=$ESDOC_HOME/bash/mp/synch_cim_v1.sh
-alias esdoc-mp-cim-v2-synch=$ESDOC_HOME/bash/mp/synch_cim_v2.sh
-alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-synch && $ESDOC_HOME/bash/mp/generate_cim_1.sh'
-alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-synch && $ESDOC_HOME/bash/mp/generate_cim_2.sh'
-alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-synch && $ESDOC_HOME/bash/mp/validate_cim_1.sh'
-alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-synch && $ESDOC_HOME/bash/mp/validate_cim_2.sh'
+alias esdoc-mp-cim-v1-sync=$ESDOC_HOME/bash/mp/sync_cim_v1.sh
+alias esdoc-mp-cim-v2-sync=$ESDOC_HOME/bash/mp/sync_cim_v2.sh
+alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/mp/generate_cim_1.sh'
+alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/mp/generate_cim_2.sh'
+alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/mp/validate_cim_1.sh'
+alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/mp/validate_cim_2.sh'
 alias esdoc-mp-pipify=$ESDOC_HOME/bash/mp/pipify.sh
 
 # pyesdoc commands.
@@ -90,16 +90,19 @@ alias esdoc-reset-project-assets=_reset_project_assets
 
 # CMIP6 commands.
 alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/cmip6/archive_documents.sh
-alias esdoc-cmip6-generate-specializations=$ESDOC_HOME/bash/cmip6/generate_specializations.sh
+
 alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
 alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experiments_config.sh
 alias esdoc-cmip6-write-experiments-d3=$ESDOC_HOME/bash/cmip6/write_experiments_d3.sh
+
 alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/write_model_notebooks.sh
-alias esdoc-cmip6-sync-specializations=$ESDOC_HOME/bash/cmip6/sync_specializations.sh
-alias esdoc-cmip6-sync-specializations-tooling=$ESDOC_HOME/bash/cmip6/sync_specializations_tooling.sh
-alias esdoc-cmip6-sync-specializations-templates=$ESDOC_HOME/bash/cmip6/sync_specializations_templates.sh
-alias esdoc-cmip6-sync-specializations-cim-profile=$ESDOC_HOME/bash/cmip6/sync_specializations_cim_profile.sh
-alias esdoc-cmip6-validate-specializations=$ESDOC_HOME/bash/cmip6/validate_specializations.sh
+
+alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations_generate.sh
+alias esdoc-cmip6-specializations-sync=$ESDOC_HOME/bash/cmip6/specializations_sync.sh
+alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_HOME/bash/cmip6/specializations_sync_tooling.sh
+alias esdoc-cmip6-specializations-sync-templates=$ESDOC_HOME/bash/cmip6/specializations_sync_templates.sh
+alias esdoc-cmip6-specializations-sync-cim-profile=$ESDOC_HOME/bash/cmip6/specializations_sync_cim_profile.sh
+alias esdoc-cmip6-specializations-validate=$ESDOC_HOME/bash/cmip6/specializations_validate.sh
 
 _reset_cmip6()
 {
