@@ -158,8 +158,12 @@ _install_source_static()
 	# ... static files
 	cp -r $ESDOC_DIR_REPOS/esdoc-web/static/* $ESDOC_DIR_WEBAPPS/$1_$2_static
 	cp -r $ESDOC_DIR_REPOS/esdoc-web/plugin/bin/latest/* $ESDOC_DIR_WEBAPPS/$1_$2_static
+
 	mkdir -p $ESDOC_DIR_WEBAPPS/$1_$2_static/ontologies/cim/1
 	cp -r $ESDOC_DIR_REPOS/esdoc-cim/v1/xsd/*.xsd $ESDOC_DIR_WEBAPPS/$1_$2_static/ontologies/cim/1
+
+	mkdir -p $ESDOC_DIR_WEBAPPS/$1_$2_static/docs/cmip6
+	cp -r $ESDOC_DIR_REPOS/esdoc-docs/cmip6/experiments/spreadsheet/cmip6-experiments.xlsx $ESDOC_DIR_WEBAPPS/$1_$2_static/docs/cmip6/experiments
 
 	# ... viewer micro-site
 	cp -r $ESDOC_DIR_REPOS/esdoc-web/viewer/* $ESDOC_DIR_WEBAPPS/$1_$2_view
