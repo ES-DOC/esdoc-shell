@@ -734,6 +734,10 @@ class DocumentSet(object):
                     pass
                 else:
                     break
+        try:
+            reference.canonical_name = doc.canonical_name
+        except AttributeError:
+            pass
 
         return reference
 
@@ -814,6 +818,8 @@ class DocumentSet(object):
         # Set experiment governing mip.
         for e in self[_WS_EXPERIMENT]:
             e.governing_mips = _convert_names(e.governing_mips, self[_WS_PROJECT], slots=["name"])
+            if len(e.governing_mips) > 1:
+                print 666, e.name
 
         # Set experiment sub-projects.
         for e in self[_WS_EXPERIMENT]:

@@ -127,11 +127,13 @@ def _map_experiment(i):
     result = OrderedDict()
     result['canonical_name'] = i.canonical_name
     result['description'] = i.description
+    result['governing_mips'] = sorted([j.canonical_name for j in i.governing_mips])
     result['keywords'] = i.keywords
     result['long_name'] = i.long_name
     result['mip_era'] = "cmip6"
     result['rationale'] = i.rationale
-    result['related_experiments'] = sorted([j.name for j in i.related_experiments])
+    result['related_experiments'] = sorted([{'name': j.name, 'relationship': j.relationship} for j in i.related_experiments])
+    result['related_mips'] = sorted([j.canonical_name for j in i.related_mips])
     result['requirements'] = [_map_requirement(j) for j in i.requirements]
     result['uid'] = i.meta.id
     result['viewerURL'] = _VIEWER_URL.format(i.meta.id)
@@ -146,7 +148,7 @@ def _map_mip(i):
     result = OrderedDict()
     result['canonical_name'] = i.canonical_name
     result['description'] = i.description
-    result['experiments'] = sorted([j.name for j in i.requires_experiments])
+    result['experiments'] = [j.name for j in i.requires_experiments]
     result['keywords'] = i.keywords
     result['long_name'] = i.long_name
     result['label'] = i.name
