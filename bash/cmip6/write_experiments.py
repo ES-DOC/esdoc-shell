@@ -114,6 +114,16 @@ _DOC_AUTHOR_REFERENCE.version = _DOC_AUTHOR.meta.version
 _DOC_CREATE_DATE = dt.strptime("2016-07-04 13:00:00", "%Y-%m-%d %H:%M:%S")
 _DOC_UPDATE_DATE = _DOC_CREATE_DATE
 
+# Set of experimental relationships.
+_EXPERIMENTAL_RELATIONSHIP_TYPES = {
+    "is_constrained_by",
+    "is_constrainer_of",
+    "is_perturbation_from",
+    "is_control_for",
+    "is_initialized_by",
+    "is_initializer_of",
+    "is_sibling_of"
+    }
 
 
 def _convert_to_bool(value):
@@ -237,7 +247,7 @@ def _convert_to_cim_2_responsibilty(role, row, col_idx):
     return responsibility
 
 
-def _convert_name(name, collection):
+def _convert_name(name, collection, slots=["citation_detail", "canonical_name", "name"]):
     """Retrieves a document from a collection.
 
     """
@@ -256,7 +266,7 @@ def _convert_name(name, collection):
 
     name = name.lower()
     for item in collection:
-        for attr in ["citation_detail", "canonical_name", "name"]:
+        for attr in slots:
             try:
                 item_name = getattr(item, attr)
             except AttributeError:
@@ -266,11 +276,11 @@ def _convert_name(name, collection):
                     return item
 
 
-def _convert_names(names, collection):
+def _convert_names(names, collection, slots=["citation_detail", "canonical_name", "name"]):
     """Converts a set of names to a set of document.
 
     """
-    result = [_convert_name(n, collection) for n in names]
+    result = [_convert_name(n, collection, slots) for n in names]
 
     return [d for d in result if d]
 
@@ -307,19 +317,24 @@ _WS_MAPS = {
             ("long_name", "B"),
             ("name", "C"),
             ("canonical_name", "C"),
-            ("alternative_names", "D", lambda v, _: [] if not v else [i.strip() for i in v.split(",")]),
+            ("alternative_names", "D",
+                lambda v, _: [] if not v else [i.strip() for i in v.split(",")]),
             ("keywords", "E"),
+            ("governing_mips", "E-E", lambda v: v.split(",")[0]),
             ("description", "F"),
             ("rationale", "G"),
             ("responsible_parties", "H", \
                 lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "I")] if i]),
             ("citations", "L-R"),
-            ("related_experiments", "T-AB"),
+            ("is_perturbation_from", "T-T"),
+            ("is_initialized_by", "U-U"),
+            ("is_constrained_by", "V-W"),
+            ("is_sibling_of", "X-AB"),
             ("temporal_constraints", "AC-AD"),
             ("ensembles", "AE-AH"),
             ("multi_ensembles", "AI-AL"),
             ("model_configurations", "AM-AQ"),
-            ("forcing_constraints", "AR-BI")
+            ("forcing_constraints", "AR-BI"),
         ]),
 
     # TODO: additional requirements
@@ -365,7 +380,8 @@ _WS_MAPS = {
             ("is_conformance_requested", "L", _convert_to_bool),
             ("required_duration", "M", _convert_to_cim_v2_time_period),
             ("required_calendar", "N", _convert_to_cim_v2_calendar),
-            ("start_date", "O", lambda c, r: _convert_to_cim_v2_date_time(c, r(16))),
+            ("start_date", "O",
+                lambda c, r: _convert_to_cim_v2_date_time(c, r(16))),
             ("start_flexibility", "Q", _convert_to_cim_v2_time_period)
         ]),
 
@@ -523,7 +539,11 @@ class Spreadsheet(object):
         try:
             attr, col_idx, convertor = mapping
         except ValueError:
-            attr, col_idx = mapping
+            try:
+                attr, col_idx = mapping
+            except ValueError:
+                print mapping
+                raise ValueError()
             convertor = None
 
         # Convert cell value.
@@ -755,9 +775,23 @@ class DocumentSet(object):
         for p in self.responsible_parties:
             p.parties = _convert_names(p.parties, self[_WS_PARTY])
 
-        # Set experiment related experiments.
+        # Set intra-experiment relationships.
         for e in self[_WS_EXPERIMENT]:
-            e.related_experiments = _convert_names(e.related_experiments, self[_WS_EXPERIMENT])
+            for r in {"is_constrained_by", "is_perturbation_from", "is_initialized_by", "is_sibling_of"}:
+                setattr(e, r, _convert_names(getattr(e, r), self[_WS_EXPERIMENT]))
+        for e in self[_WS_EXPERIMENT]:
+            for r in {"is_constrainer_of", "is_control_for", "is_initializer_of"}:
+                setattr(e, r, [])
+        for e in self[_WS_EXPERIMENT]:
+            for r_exp in e.is_constrained_by:
+                r_exp.is_constrainer_of.append(e)
+            for r_exp in e.is_perturbation_from:
+                r_exp.is_control_for.append(e)
+            for r_exp in e.is_initialized_by:
+                r_exp.is_initializer_of.append(e)
+        for e in self[_WS_EXPERIMENT]:
+            for r in {"is_constrainer_of", "is_control_for", "is_initializer_of"}:
+                setattr(e, r, list(set(getattr(e, r))))
 
         # Set experiment requirements.
         for e in self[_WS_EXPERIMENT]:
@@ -776,6 +810,10 @@ class DocumentSet(object):
         # Set project sub-projects.
         for p in self[_WS_PROJECT]:
             pass
+
+        # Set experiment governing mip.
+        for e in self[_WS_EXPERIMENT]:
+            e.governing_mips = _convert_names(e.governing_mips, self[_WS_PROJECT], slots=["name"])
 
         # Set experiment sub-projects.
         for e in self[_WS_EXPERIMENT]:
@@ -807,19 +845,29 @@ class DocumentSet(object):
         """Sets inter document links.
 
         """
-        # Various --> Responsible Parties.
+        def set_links(doc, doc_attr):
+            """Helper function to assign a collection of links.
+
+            """
+            setattr(doc, doc_attr, [self._get_doc_link(i) for i in getattr(doc, doc_attr)])
+
+        # Responsible parties.
         for rp in self.responsible_parties:
-            rp.parties = [self._get_doc_link(d) for d in rp.parties]
+            set_links(rp, "parties")
 
-        # Various --> Citation.
+        # Citations.
         for c in self.citation_containers:
-            c.citations = [self._get_doc_link(d) for d in c.citations]
+            set_links(c, "citations")
 
-        # Experiment --> Experiment.
+        # Experiments.
         for e in self[_WS_EXPERIMENT]:
-            e.related_experiments = [self._get_doc_link(d) for d in e.related_experiments]
+            for r in _EXPERIMENTAL_RELATIONSHIP_TYPES:
+                for re in [self._get_doc_link(d) for d in getattr(e, r)]:
+                    re.relationship = r
+                    e.related_experiments.append(re)
+                delattr(e, r)
 
-        # Experiment --> Requirement.
+        # Experimental requirements.
         for e in self[_WS_EXPERIMENT]:
             e.requirements += [self._get_doc_link(d) for d in e.temporal_constraints]
             for fc in e.forcing_constraints:
@@ -833,19 +881,20 @@ class DocumentSet(object):
 
         # Requirement --> Requirement.
         for r in self[_WS_REQUIREMENT]:
-            r.additional_requirements = [self._get_doc_link(d) for d in r.additional_requirements]
+            set_links(r, "additional_requirements")
 
         # Experiment --> MIP.
         for e in self[_WS_EXPERIMENT]:
-            e.related_mips = [self._get_doc_link(d) for d in e.related_mips]
+            set_links(e, "governing_mips")
+            set_links(e, "related_mips")
 
         # Project --> Project.
         for p in self[_WS_PROJECT]:
-            p.sub_projects = [self._get_doc_link(d) for d in p.sub_projects]
+            set_links(p, "sub_projects")
 
         # Project --> Experiment.
         for p in self[_WS_PROJECT]:
-            p.requires_experiments = [self._get_doc_link(d) for d in p.requires_experiments]
+            set_links(p, "requires_experiments")
 
 
     def write(self, io_dir):
