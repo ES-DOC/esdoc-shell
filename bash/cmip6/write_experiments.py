@@ -1017,14 +1017,12 @@ def _main(args):
         Spreadsheet(args.spreadsheet_filepath, DocumentIdentifiers(args.identifiers))
             )
     docs.ignore_documents()
-
-    cv = ControlledVocabularies()
-    cv.validate(docs[_WS_PROJECT], docs[_WS_EXPERIMENT])
-    return
-
     docs.set_document_connections()
     docs.set_document_links()
     docs.write(args.io_dir)
+
+    cv = ControlledVocabularies()
+    cv.validate(docs[_WS_PROJECT], docs[_WS_EXPERIMENT])
 
 
 # Entry point.
