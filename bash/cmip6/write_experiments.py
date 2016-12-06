@@ -10,6 +10,7 @@
 
 """
 import argparse
+import json
 import os
 import string
 import uuid
@@ -124,6 +125,16 @@ _EXPERIMENTAL_RELATIONSHIP_TYPES = {
     "is_initializer_of",
     "is_sibling_of"
     }
+
+# Set "controlled vocabulary".
+_CV = {
+    _WS_EXPERIMENT: [],
+    _WS_PROJECT: []
+}
+
+fpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cv_experiment_id.json")
+with open(fpath) as fstream:
+    _CV[_WS_EXPERIMENT] = json.loads(fstream.read())['experiment_id']
 
 
 def _convert_to_bool(value):
@@ -309,7 +320,7 @@ _WS_MAPS = {
                 lambda x, y: [i for i in [_convert_to_cim_2_responsibilty(x, y, "H")] if i]),
             ("citations", "K-P"),
             ("sub_projects", "T-AK"),
-            ("requires_experiments", "AL-BU"),
+            ("required_experiments", "AL-BU"),
         ]),
 
     _WS_EXPERIMENT: (cim.v2.NumericalExperiment, [
@@ -458,6 +469,63 @@ _WS_MAPS = {
             ("description", "D"),
         ])
     }
+
+
+class ControlledVocabularies(object):
+    """Wrapper around the controlled vocabularies in use.
+
+    """
+    def __init__(self):
+        """Instance constructor.
+
+        """
+        dpath = os.path.dirname(os.path.abspath(__file__))
+        for cv_type in {"experiment", "activity"}:
+            fpath = os.path.join(dpath, "cv_{}_id.json".format(cv_type))
+            with open(fpath) as fstream:
+                setattr(self, cv_type, json.loads(fstream.read())["{}_id".format(cv_type)])
+
+
+    def validate(self, projects, experiments):
+        """Validate various CV termsets within collections.
+
+        """
+        def _validate(typeof, terms, docs):
+            """Inner function to perform the validation.
+
+            """
+            terms = [i.lower() for i in terms]
+            invalid_docs = []
+            for doc in docs:
+                if doc.name.lower() not in terms:
+                    invalid_docs.append(doc)
+
+            invalid_terms = []
+            for term in terms:
+                found = False
+                for doc in docs:
+                    if doc.name.lower() == term:
+                        found = True
+                        break
+                if not found:
+                    invalid_terms.append(term)
+
+            if invalid_docs:
+                print "------------------------------------------------------"
+                print "NON-VALIDATED {} NAMES".format(typeof.upper())
+                print "------------------------------------------------------"
+                for doc in sorted(invalid_docs, key=lambda i: i.name.lower()):
+                    print doc.name
+
+            if invalid_terms:
+                print "------------------------------------------------------"
+                print "NON-VALIDATED {} TERMS".format(typeof.upper())
+                print "------------------------------------------------------"
+                for term in sorted(invalid_terms):
+                    print term
+
+        _validate("project", self.activity, projects)
+        _validate("experiment", self.experiment.keys(), experiments)
 
 
 class Spreadsheet(object):
@@ -776,8 +844,8 @@ class DocumentSet(object):
             x.citations = _convert_names(x.citations, self[_WS_CITATIONS])
 
         # Set responsibility parties.
-        for p in self.responsible_parties:
-            p.parties = _convert_names(p.parties, self[_WS_PARTY])
+        for rp in self.responsible_parties:
+            rp.parties = _convert_names(rp.parties, self[_WS_PARTY])
 
         # Set intra-experiment relationships.
         for e in self[_WS_EXPERIMENT]:
@@ -818,13 +886,13 @@ class DocumentSet(object):
         # Set experiment governing mip.
         for e in self[_WS_EXPERIMENT]:
             e.governing_mips = _convert_names(e.governing_mips, self[_WS_PROJECT], slots=["name"])
-            if len(e.governing_mips) > 1:
-                print 666, e.name
+            for p in e.governing_mips:
+                p.governed_experiments.append(e)
 
         # Set experiment sub-projects.
         for e in self[_WS_EXPERIMENT]:
             for project in self[_WS_PROJECT]:
-                if e.canonical_name in project.requires_experiments:
+                if e.canonical_name in project.required_experiments:
                     e.meta.sub_projects.append(project.name)
                     e.related_mips.append(project)
             e.meta.sub_projects = sorted(e.meta.sub_projects)
@@ -833,6 +901,10 @@ class DocumentSet(object):
         for rq in self[_WS_REQUIREMENT]:
             rq.additional_requirements = _convert_names(rq.additional_requirements, self.numerical_requirements)
 
+        # Set multi-ensemble axis.
+        for me in self[_WS_MULTI_ENSEMBLE]:
+            me.ensemble_axis = _convert_names(me.ensemble_axis, self.numerical_requirements)
+
         # Set sub-projects.
         for p in self[_WS_PROJECT]:
             p.meta.sub_projects = sorted(p.sub_projects)
@@ -840,11 +912,17 @@ class DocumentSet(object):
 
         # Set project required experiments.
         for p in self[_WS_PROJECT]:
-            p.requires_experiments = _convert_names(p.requires_experiments, self[_WS_EXPERIMENT])
+            p.required_experiments = _convert_names(p.required_experiments, self[_WS_EXPERIMENT])
 
-        # Set multi-ensemble axis.
-        for me in self[_WS_MULTI_ENSEMBLE]:
-            me.ensemble_axis = _convert_names(me.ensemble_axis, self.numerical_requirements)
+        # Set governed experiments - order as per required experiments.
+        for p in self[_WS_PROJECT]:
+            governed_experiments = [i for i in p.required_experiments if i in p.governed_experiments]
+            governed_experiments += sorted(list(set(p.governed_experiments) - set(governed_experiments)), key=lambda i: i.name)
+            p.governed_experiments = governed_experiments
+
+        for e in self[_WS_EXPERIMENT]:
+            if e.name is None and e.canonical_name is None:
+                print "XXX", e.__dict__
 
 
     def set_document_links(self):
@@ -900,7 +978,8 @@ class DocumentSet(object):
 
         # Project --> Experiment.
         for p in self[_WS_PROJECT]:
-            set_links(p, "requires_experiments")
+            set_links(p, "required_experiments")
+            set_links(p, "governed_experiments")
 
 
     def write(self, io_dir):
@@ -938,6 +1017,11 @@ def _main(args):
         Spreadsheet(args.spreadsheet_filepath, DocumentIdentifiers(args.identifiers))
             )
     docs.ignore_documents()
+
+    cv = ControlledVocabularies()
+    cv.validate(docs[_WS_PROJECT], docs[_WS_EXPERIMENT])
+    return
+
     docs.set_document_connections()
     docs.set_document_links()
     docs.write(args.io_dir)

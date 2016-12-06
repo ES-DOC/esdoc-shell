@@ -16,8 +16,8 @@ main()
 		declare data=$ESDOC_DIR_TMP/$ontology/v$version/$ontology"_"$version.xml
 	fi
 
-	activate_venv mp
-	python "$ESDOC_DIR_MP/esdoc_mp" -s $ontology -v $version -l $language -o $ESDOC_DIR_TMP
+	activate_venv pyesdoc
+	python "$ESDOC_DIR_PYESDOC/pyesdoc/mp" -s $ontology -v $version -l $language -o $ESDOC_DIR_TMP
 
 	log_banner
 	if [ $language = "python" ]; then

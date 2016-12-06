@@ -96,24 +96,15 @@ def _map_requirement(i):
 
     result = OrderedDict()
     result['canonical_name'] = i.name
+    if i.delivery_order:
+        result['delivery_order'] = i.delivery_order
     result['description'] = i.description
     result['isConformanceRequested'] = i.is_conformance_requested
     result['keywords'] = i.keywords
     result['label'] = i.name
+    if i.scope:
+        result['scope'] = i.scope
     result['type'] = get_requirement_type()
-
-    return result
-
-
-def _map_related_experiment(i):
-    """Returns a related experiment document mapped to a dictionary.
-
-    """
-    result = OrderedDict()
-    result['canonical_name'] = i.name
-    result['mip_era'] = "cmip6"
-    result['uid'] = i.id
-    result['viewerURL'] = _VIEWER_URL.format(i.id)
 
     return result
 
@@ -148,7 +139,7 @@ def _map_mip(i):
     result = OrderedDict()
     result['canonical_name'] = i.canonical_name
     result['description'] = i.description
-    result['experiments'] = [j.name for j in i.requires_experiments]
+    result['experiments'] = [j.name for j in i.required_experiments]
     result['keywords'] = i.keywords
     result['long_name'] = i.long_name
     result['label'] = i.name

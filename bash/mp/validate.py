@@ -13,7 +13,7 @@ import argparse
 import datetime
 import os
 
-import esdoc_mp
+import pyesdoc
 
 
 
@@ -64,10 +64,10 @@ def _main(args):
 
 	"""
 	# Get schema.
-	schema = esdoc_mp.get_schema(args.ontology, args.version)
+	schema = pyesdoc.mp.get_schema(args.ontology, args.version)
 
 	# Get errors.
-	errors = esdoc_mp.validate(schema)
+	errors = pyesdoc.mp.validate(schema)
 
 	# Display report.
 	if errors:

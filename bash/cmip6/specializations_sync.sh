@@ -20,10 +20,10 @@ main()
 	do
 		# ... remove previous
 		rm $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations-cmip6/definitions/$specialization*.py
-		rm $ESDOC_DIR_REPOS/esdoc-mp/esdoc_mp/specializations-cmip6/$specialization*.py
+		rm $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/$specialization*.py
 		# ... copy current
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/$specialization*.py $ESDOC_DIR_REPOS/esdoc-cim/v2/specializations-cmip6/definitions
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/$specialization*.py $ESDOC_DIR_REPOS/esdoc-mp/esdoc_mp/specializations-cmip6
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/$specialization*.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6
 	done
 
 	# Sync generated.

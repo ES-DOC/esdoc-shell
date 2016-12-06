@@ -151,7 +151,7 @@ def _load_cache(input_dir):
 
 def _set_project_associations(associations):
     for p in _get_cached_documents("cim.2.designing.Project"):
-        for e in p.requires_experiments:
+        for e in p.required_experiments:
             associations["p:e"].append((p.meta.id, e.id))
         for c in p.citations:
             associations["p:c"].append((p.meta.id, c.id))

@@ -22,10 +22,6 @@ activate_venv()
 	elif [ $1 = "qtn" ]; then
 		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_QTN/src
 
-	elif [ $1 = "mp" ]; then
-		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_MP
-		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_MP_TESTS
-
 	elif [ $1 = "pyesdoc" ]; then
 		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYESDOC
 		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYESDOC_TESTS
@@ -108,8 +104,6 @@ declare ESDOC_DIR_API=$ESDOC_DIR_REPOS/esdoc-api
 declare ESDOC_DIR_API_TESTS=$ESDOC_DIR_REPOS/esdoc-api/tests
 declare ESDOC_DIR_ARCHIVE=$ESDOC_DIR_REPOS/esdoc-archive
 declare ESDOC_DIR_CIM=$ESDOC_DIR_REPOS/esdoc-cim
-declare ESDOC_DIR_MP=$ESDOC_DIR_REPOS/esdoc-mp
-declare ESDOC_DIR_MP_TESTS=$ESDOC_DIR_REPOS/esdoc-mp/tests
 declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
 declare ESDOC_DIR_PYESDOC_TESTS=$ESDOC_DIR_REPOS/esdoc-py-client/tests
 declare ESDOC_DIR_QTN=$ESDOC_DIR_REPOS/esdoc-questionnaire
@@ -155,7 +149,6 @@ declare -a ESDOC_REPOS=(
 	'esdoc-errata-client'
 	'esdoc-errata-fe'
 	'esdoc-errata-ws'
-	'esdoc-mp'
 	'esdoc-project'
 	'esdoc-py-client'
 	'esdoc-questionnaire'
@@ -177,7 +170,6 @@ declare -a ESDOC_REPOS_LITE=(
 	'esdoc-errata-client'
 	'esdoc-errata-fe'
 	'esdoc-errata-ws'
-	'esdoc-mp'
 	'esdoc-py-client'
 	'esdoc-web'
 )
