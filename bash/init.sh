@@ -177,7 +177,6 @@ declare -a ESDOC_REPOS_LITE=(
 # Set of virtual environments.
 declare -a ESDOC_VENVS=(
 	'api'
-	'mp'
 	'questionnaire'
 	'pyesdoc'
 )
