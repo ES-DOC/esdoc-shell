@@ -6,7 +6,8 @@ source $ESDOC_HOME/bash/init.sh
 # Main entry point.
 main()
 {
-	source $ESDOC_HOME/bash/mp/validate.sh cim 1
+	source $ESDOC_HOME/bash/pyesdoc-mp/generate.sh cim 1 python
+	source $ESDOC_HOME/bash/pyesdoc-mp/generate.sh cim 1 qxml
 }
 
 # Invoke entry point.

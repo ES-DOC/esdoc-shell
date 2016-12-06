@@ -124,7 +124,7 @@ _install_script_permissions()
 	chmod a+x $ESDOC_HOME/bash/api/*.sh
 	chmod a+x $ESDOC_HOME/bash/archive/*.sh
 	chmod a+x $ESDOC_HOME/bash/deployment/*.sh
-	chmod a+x $ESDOC_HOME/bash/mp/*.sh
+	chmod a+x $ESDOC_HOME/bash/pyesdoc-mp/*.sh
 	chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
 	chmod a+x $ESDOC_HOME/bash/stack/*.sh
 }

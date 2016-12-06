@@ -45,13 +45,13 @@ alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
 alias esdoc-deploy-update=$ESDOC_HOME/bash/deployment/update.sh
 
 # Meta-programming commands.
-alias esdoc-mp=$ESDOC_HOME/bash/mp/generate.sh
-alias esdoc-mp-cim-v1-sync=$ESDOC_HOME/bash/mp/sync_cim_v1.sh
-alias esdoc-mp-cim-v2-sync=$ESDOC_HOME/bash/mp/sync_cim_v2.sh
-alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/mp/generate_cim_1.sh'
-alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/mp/generate_cim_2.sh'
-alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/mp/validate_cim_1.sh'
-alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/mp/validate_cim_2.sh'
+alias esdoc-mp=$ESDOC_HOME/bash/pyesdoc-mp/generate.sh
+alias esdoc-mp-cim-v1-sync=$ESDOC_HOME/bash/pyesdoc-mp/sync_cim_v1.sh
+alias esdoc-mp-cim-v2-sync=$ESDOC_HOME/bash/pyesdoc-mp/sync_cim_v2.sh
+alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/pyesdoc-mp/generate_cim_1.sh'
+alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc-mp/generate_cim_2.sh'
+alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/pyesdoc-mp/validate_cim_1.sh'
+alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc-mp/validate_cim_2.sh'
 
 # pyesdoc commands.
 alias esdoc-pyesdoc-convert=$ESDOC_HOME/bash/pyesdoc/convert.sh
@@ -117,6 +117,6 @@ chmod a+x $ESDOC_HOME/bash/api/*.sh
 chmod a+x $ESDOC_HOME/bash/archive/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
-chmod a+x $ESDOC_HOME/bash/mp/*.sh
+chmod a+x $ESDOC_HOME/bash/pyesdoc-mp/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
 chmod a+x $ESDOC_HOME/bash/stack/*.sh
