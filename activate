@@ -89,6 +89,8 @@ alias esdoc-reset-project-assets=_reset_project_assets
 # CMIP6 commands.
 alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/cmip6/archive_documents.sh
 
+alias esdoc-cmip6-write-cv=$ESDOC_HOME/bash/cmip6/write_cv.sh
+
 alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
 alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experiments_config.sh
 alias esdoc-cmip6-write-experiments-d3=$ESDOC_HOME/bash/cmip6/write_experiments_d3.sh
