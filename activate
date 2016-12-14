@@ -92,21 +92,17 @@ alias esdoc-reset-project-assets=_reset_project_assets
 
 # CMIP6 commands.
 alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/cmip6/archive_documents.sh
-
-alias esdoc-cmip6-write-cv=$ESDOC_HOME/bash/cmip6/write_cv.sh
-
-alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
-alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experiments_config.sh
-alias esdoc-cmip6-write-experiments-d3=$ESDOC_HOME/bash/cmip6/write_experiments_d3.sh
-
-alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/write_model_notebooks.sh
-
+alias esdoc-cmip6-cv-init=$ESDOC_HOME/bash/cmip6/cv_init.sh
 alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations_generate.sh
 alias esdoc-cmip6-specializations-sync=$ESDOC_HOME/bash/cmip6/specializations_sync.sh
 alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_HOME/bash/cmip6/specializations_sync_tooling.sh
 alias esdoc-cmip6-specializations-sync-templates=$ESDOC_HOME/bash/cmip6/specializations_sync_templates.sh
 alias esdoc-cmip6-specializations-sync-cim-profile=$ESDOC_HOME/bash/cmip6/specializations_sync_cim_profile.sh
 alias esdoc-cmip6-specializations-validate=$ESDOC_HOME/bash/cmip6/specializations_validate.sh
+alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
+alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experiments_config.sh
+alias esdoc-cmip6-write-experiments-d3=$ESDOC_HOME/bash/cmip6/write_experiments_d3.sh
+alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/write_model_notebooks.sh
 
 _reset_cmip6()
 {

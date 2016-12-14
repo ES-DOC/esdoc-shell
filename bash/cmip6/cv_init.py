@@ -10,8 +10,11 @@
 
 """
 import argparse
+import datetime as dt
 import json
 import os
+
+import arrow
 
 import pyesdoc
 from pyesdoc import cv
@@ -48,6 +51,9 @@ _CV_SCOPE = pyesdoc.cv.create_scope(
     url=u"https://github.com/WCRP-CMIP/CMIP6_CVs"
     )
 
+# Ensure we use fixed creation date.
+_CREATE_DATE = arrow.get("2016-12-14 12:00:00.000000+0000").datetime
+
 
 def _main(args):
     """Main entry point.
@@ -83,6 +89,7 @@ def _create_collection(source, collection_type, data_factory):
         name=unicode(collection_type).replace("_", "-"),
         description=u"WCRP CMIP6 CV collection: ".format(collection_type.replace("_", "-"))
         )
+    collection.create_date = _CREATE_DATE
 
     # Create terms.
     obj = _get_input_data(source, collection_type)
@@ -90,7 +97,8 @@ def _create_collection(source, collection_type, data_factory):
         term_data = None
         if data_factory is not None:
             term_data = data_factory(obj, name)
-        pyesdoc.cv.create_term(collection=collection, name=name, data=term_data)
+        term = pyesdoc.cv.create_term(collection=collection, name=name, data=term_data)
+        term.create_date = _CREATE_DATE
 
 
 def _get_input_data(source, collection_type):
