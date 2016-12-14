@@ -10,7 +10,6 @@
 
 """
 import argparse
-import json
 import os
 import string
 import uuid
@@ -21,12 +20,13 @@ from datetime import datetime as dt
 import xlrd
 
 import pyesdoc
+import pyesdoc.cv as cv
 import pyesdoc.ontologies.cim as cim
 
 
 
 # Define command line options.
-_ARGS = argparse.ArgumentParser("Publishes CIM documents extracted from CMIP6 experiment spreadsheet.")
+_ARGS = argparse.ArgumentParser("Extracts CIM v2 documents from CMIP6 experiment spreadsheet.")
 _ARGS.add_argument(
     "--io-dir",
     help="Path to a directory into which documents will be written.",
@@ -45,7 +45,6 @@ _ARGS.add_argument(
     dest="identifiers",
     type=str
     )
-
 
 
 # Spreadsheet worksheet names.
@@ -124,16 +123,6 @@ _EXPERIMENTAL_RELATIONSHIP_TYPES = {
     "is_initializer_of",
     "is_sibling_of"
     }
-
-# Set "controlled vocabulary".
-_CV = {
-    _WS_EXPERIMENT: [],
-    _WS_PROJECT: []
-}
-
-fpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cv_experiment_id.json")
-with open(fpath) as fstream:
-    _CV[_WS_EXPERIMENT] = json.loads(fstream.read())['experiment_id']
 
 
 def _convert_to_bool(value):
@@ -470,61 +459,43 @@ _WS_MAPS = {
     }
 
 
-class ControlledVocabularies(object):
-    """Wrapper around the controlled vocabularies in use.
+def validate_vocabularies(projects, experiments):
+    """Validate various CV termsets within collections.
 
     """
-    def __init__(self):
-        """Instance constructor.
+    def _validate(typeof, terms, docs):
+        """Inner function to perform the validation.
 
         """
-        dpath = os.path.dirname(os.path.abspath(__file__))
-        for cv_type in {"experiment", "activity"}:
-            fpath = os.path.join(dpath, "cv_{}_id.json".format(cv_type))
-            with open(fpath) as fstream:
-                setattr(self, cv_type, json.loads(fstream.read())["{}_id".format(cv_type)])
+        terms = sorted([i.name for i in terms])
+        docs = sorted([i.name.lower() for i in docs])
 
+        invalid_docs = [i for i in docs if i not in terms]
+        if invalid_docs:
+            print "------------------------------------------------------"
+            print "NON-VALIDATED {} NAMES".format(typeof)
+            print "------------------------------------------------------"
+            for doc in invalid_docs:
+                print doc
 
-    def validate(self, projects, experiments):
-        """Validate various CV termsets within collections.
+        invalid_terms = [i for i in terms if i not in docs]
+        if invalid_terms:
+            print "------------------------------------------------------"
+            print "NON-VALIDATED {} TERMS".format(typeof)
+            print "------------------------------------------------------"
+            for term in invalid_terms:
+                print term
 
-        """
-        def _validate(typeof, terms, docs):
-            """Inner function to perform the validation.
-
-            """
-            terms = [i.lower() for i in terms]
-            invalid_docs = []
-            for doc in docs:
-                if doc.name.lower() not in terms:
-                    invalid_docs.append(doc)
-
-            invalid_terms = []
-            for term in terms:
-                found = False
-                for doc in docs:
-                    if doc.name.lower() == term:
-                        found = True
-                        break
-                if not found:
-                    invalid_terms.append(term)
-
-            if invalid_docs:
-                print "------------------------------------------------------"
-                print "NON-VALIDATED {} NAMES".format(typeof.upper())
-                print "------------------------------------------------------"
-                for doc in sorted(invalid_docs, key=lambda i: i.name.lower()):
-                    print doc.name
-
-            if invalid_terms:
-                print "------------------------------------------------------"
-                print "NON-VALIDATED {} TERMS".format(typeof.upper())
-                print "------------------------------------------------------"
-                for term in sorted(invalid_terms):
-                    print term
-
-        _validate("project", self.activity, projects)
-        _validate("experiment", self.experiment.keys(), experiments)
+    _validate(
+        "PROJECT",
+        cv.archive.load_collection("wcrp", "cmip6", "activity-id"),
+        projects
+        )
+    _validate(
+        "EXPERIMENTS",
+        cv.archive.load_collection("wcrp", "cmip6", "experiment-id"),
+        experiments
+        )
 
 
 class Spreadsheet(object):
@@ -1018,10 +989,9 @@ def _main(args):
     docs.ignore_documents()
     docs.set_document_connections()
     docs.set_document_links()
-    docs.write(args.io_dir)
+    # docs.write(args.io_dir)
 
-    cv = ControlledVocabularies()
-    cv.validate(docs[_WS_PROJECT], docs[_WS_EXPERIMENT])
+    validate_vocabularies(docs[_WS_PROJECT], docs[_WS_EXPERIMENT])
 
 
 # Entry point.
