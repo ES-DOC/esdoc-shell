@@ -73,6 +73,7 @@ alias esdoc-stack-update-shell=$ESDOC_HOME/bash/stack/update_shell.sh
 alias esdoc-stack-upgrade-venvs=$ESDOC_HOME/bash/stack/upgrade_venvs.sh
 
 # Composite commands.
+alias esdoc-api-daemons-reload='esdoc-api-daemons-kill && esdoc-api-daemons-init'
 alias esdoc-stack-update-source='esdoc-stack-update-shell && esdoc-stack-update-repos'
 alias esdoc-deploy-setup='esdoc-stack-install && esdoc-archive-uncompress'
 
