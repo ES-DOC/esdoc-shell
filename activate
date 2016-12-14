@@ -62,8 +62,8 @@ alias esdoc-pyesdoc-validate=$ESDOC_HOME/bash/pyesdoc/validate.sh
 alias esdoc-pyesdoc-write-demo-files=$ESDOC_HOME/bash/pyesdoc/write_demo_files.sh
 alias esdoc-pyesdoc-write-test-files=$ESDOC_HOME/bash/pyesdoc/write_test_files.sh
 
-# Operations commands.
-alias esdoc-ops-init-gh-team=$ESDOC_HOME/bash/ops/init_gh_team.sh
+# Security commands.
+alias esdoc-security-init-gh-team=$ESDOC_HOME/bash/security/init_gh_team.sh
 
 # Stack commands.
 alias esdoc-stack-install=$ESDOC_HOME/bash/stack/install.sh

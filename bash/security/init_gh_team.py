@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: http_security.py
+.. module:: init_gh_team.py
    :license: GPL/CeCIL
    :platform: Unix, Windows
-   :synopsis: Asserts user access control.
+   :synopsis: Initializes an ES-DOC-OPS GitHub user team.
 
 .. moduleauthor:: Mark A. Conway-Greenslade
 
