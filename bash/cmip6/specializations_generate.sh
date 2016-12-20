@@ -6,8 +6,26 @@ source $ESDOC_HOME/bash/init.sh
 # Main entry point.
 main()
 {
-	declare specialization=$1
-	python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate
+	if [ "$1" ]; then
+		declare specialization=$1
+		log_banner
+		log "PYESDOC : generating "$specialization" artefacts"
+		log_banner
+		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate
+	else
+		declare -a SPECIALIZATIONS=(
+			'atmosphere'
+			'ocean'
+			'seaice'
+		)
+		for specialization in "${SPECIALIZATIONS[@]}"
+		do
+			log_banner
+			log "PYESDOC : generating "$specialization" artefacts"
+			log_banner
+			python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate
+		done
+	fi
 }
 
 # Invoke entry point.
