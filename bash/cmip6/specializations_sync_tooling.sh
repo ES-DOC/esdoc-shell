@@ -33,6 +33,12 @@ main()
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/validate/* $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/validate
 	done
 
+	# Sync to pyesdoc.
+	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/factory.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/utils
+	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/loader.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/utils
+	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/model.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/utils
+	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/parser.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/utils
+
 	log "PYESDOC : syncing cmip6 specializations tooling"
 }
 
