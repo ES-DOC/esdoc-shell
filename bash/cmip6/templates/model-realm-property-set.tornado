@@ -2,7 +2,7 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "# {{ idx }} {{ ps.names(2) }}  \n",
+        "# {{ idx }}. {{ ps.names(2) }}  \n",
         "*{{ ps.description }}*"
     ]
 },

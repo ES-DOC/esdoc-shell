@@ -16,6 +16,7 @@ import os
 
 from tornado import template
 
+import pyesdoc
 from pyesdoc.model_realm_notebook import NotebookData
 
 
@@ -60,11 +61,13 @@ def _main(args):
             # ... load notebook data;
             data = _get_data(args.output_dir, cfg['mip_era'], institute, model, realm)
 
-            # ... generate notebook content;
-            content = _get_content(data)
-
-            # ... write notebook content.
-            _write(args.output_dir, institute, model, realm, content)
+            # ... write notebook content;
+            try:
+                content = _get_content(data)
+            except BaseException as err:
+                pyesdoc.log_error("{} notebook content generation failed: {}".format(realm.upper(), err))
+            else:
+                _write(args.output_dir, cfg['mip_era'], institute, model, realm, content)
 
 
 def _get_content(data):
@@ -93,9 +96,8 @@ def _get_data(output_dir, mip_era, institute, source_id, realm):
     data = NotebookData(mip_era, institute, source_id, realm)
 
     # Initialise from previously saved output.
-    fpath = os.path.join(output_dir, institute)
-    fpath = os.path.join(fpath, source_id)
-    fpath = os.path.join(fpath, "{}.json".format(realm))
+    fname = "{}--{}--{}--{}.json".format(mip_era, institute, source_id, realm)
+    fpath = os.path.join(output_dir, fname)
     if os.path.isfile(fpath):
         with open(fpath, 'r') as fstream:
             data.from_dict(json.loads(fstream.read()))
@@ -103,13 +105,12 @@ def _get_data(output_dir, mip_era, institute, source_id, realm):
     return data
 
 
-def _write(output_dir, institute, model, realm, content):
+def _write(output_dir, mip_era, institute, source_id, realm, content):
     """Writes notebook content to file system.
 
     """
-    fpath = os.path.join(output_dir, institute)
-    fpath = os.path.join(fpath, model)
-    fpath = os.path.join(fpath, "{}.ipynb".format(realm))
+    fname = "{}--{}--{}--{}.ipynb".format(mip_era, institute, source_id, realm)
+    fpath = os.path.join(output_dir, fname)
     with open(fpath, 'w') as fstream:
         fstream.write(content)
 

@@ -15,32 +15,19 @@
 		},
     "outputs": [],
     "source": [
+        "# PROPERTY INFO: \n",
+        "# Is Required: {{ p.is_required }} \n",
+        "# Type: {{ p.typeof_label }} \n",
+        "# Cardinality: {{ p.cardinality }} \n",
+        "\n",
+
         "# PROPERTY ID - DO NOT EDIT !  \n",
-        "DOC.set_id('{{ p.id }}')  \n\n",
+        "DOC.set_id('{{ p.id }}')  \n",
+        "\n",
 
         "# PROPERTY QUALITY CONTROL:  \n",
         "# 0=draft, 1=in-review, 2=reviewed  \n",
-        "DOC.set_qc_status({{ DOC.get_qc_status(p.id) }})  \n\n",
-
-        "# PROPERTY INFO: \n",
-        "#     Is Optional: {{ not p.is_mandatory }} \n",
-        "#     Type: {{ p.typeof_label }} \n",
-        {% if p.is_collection %}
-            "#     Cardinality: MANY \n",
-        {% else %}
-            "#     Cardinality: ONE \n",
-        {% end %}
-        {% if p.enum is not None %}
-            "#     Choices: \n",
-            {% for c in p.enum.choices %}
-            "#         {{ c.value }}{% if c.is_other %}: [Please specify]{% end %}  \n",
-            {% end %}
-        {% end %}
-        {% if p.typeof == 'bool' %}
-            "#     Choices: \n",
-            "#         True  \n",
-            "#         False  \n",
-        {% end %}
+        "DOC.set_qc_status({{ DOC.get_qc_status(p.id) }})  \n",
         "\n",
 
         {% if p.is_collection %}
@@ -48,8 +35,19 @@
         {% else %}
         "# PROPERTY VALUE: \n",
         {% end %}
-        {% set p_values = DOC.get_values(p) %}
         "# Set as follows: DOC.set_value(value)  \n",
+        {% if p.enum is not None %}
+            "# Choices: \n",
+            {% for c in p.enum.choices %}
+            "#      '{{ c.value }}{% if c.is_other %}: [Please specify]{% end %}'  \n",
+            {% end %}
+        {% end %}
+        {% if p.typeof == 'bool' %}
+            "# Choices: \n",
+            "#     True  \n",
+            "#     False  \n",
+        {% end %}
+        {% set p_values = DOC.get_values(p) %}
         {% if p_values %}
             {% for p_value in p_values %}
             "DOC.set_value(p_value)  \n",

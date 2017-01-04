@@ -8,6 +8,7 @@
         "**Model**: {{ DOC.source_id.upper() }}  \n",
         "**Realm**: {{ r.name_camel_case }}  \n",
         "**Realm Processes**: {% for p in r.processes %}{{ p.name_camel_case_spaced }}{% if p == r.processes[-1] %}.{% else %},{% end %} {% end %}  \n",
+        "**Properties**: {{ len(r.all_properties) }} ({{ len(r.all_required_properties) }} required, {{ len(r.all_optional_properties) }} optional)  \n",
         "\n",
         "**Notebook Help**: [Goto notebook help page](http://wordpress.es-doc.org/how-to-document-cmip6-models)  \n",
         "**Notebook Initialised**: {{ unicode(now)[0:19] }}"
@@ -24,7 +25,7 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "### {{ idx }}.1 Setup"
+        "### {{ idx }}.1 Setup - DO NOT EDIT !"
     ]
 },
 {
@@ -33,11 +34,11 @@
     "metadata": {},
     "outputs": [],
     "source": [
-        "# DO NOT EDIT !\n",
-        "from pyesdoc.model_notebook import Document\n",
+        "# DO NOT EDIT !  \n",
+        "from pyesdoc.model_realm_notebook import NotebookData  \n",
         "\n",
-        "# DO NOT EDIT !\n",
-        "DOC = Document('{{ DOC.mip_era.lower() }}', '{{ DOC.institute.lower() }}', '{{ DOC.source_id.lower() }}', '{{ r.name.lower() }}')"
+        "# DO NOT EDIT !  \n",
+        "DOC = NotebookData('{{ DOC.mip_era.lower() }}', '{{ DOC.institute.lower() }}', '{{ DOC.source_id.lower() }}', '{{ r.name.lower() }}')"
     ]
 },
 {
@@ -94,5 +95,24 @@
         {% else %}
             "# TODO"
         {% end %}
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### {{ idx }}.4 Document Property Sets  \n",
+        {% for t in r.all_sub_topics %}
+            {% if t.parent == r %}"\n",{% end %}
+            {% if t.properties %}
+                {% set idx += 1 %}
+                "[{{ t.names(2) }}](#{{ idx }}.-{{ t.names(2).replace(' ', '-') }})  \n",
+            {% end %}
+            {% for ps in [i for i in t.property_sets if i.properties] %}
+                {% set idx += 1 %}
+                "[{{ ps.names(2) }}](#{{ idx }}.-{{ ps.names(2).replace(' ', '-') }})  \n",
+            {% end %}
+        {% end %}
+    "\n"
     ]
 },

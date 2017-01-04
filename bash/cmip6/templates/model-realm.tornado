@@ -2,8 +2,9 @@
     "cells": [
 {% set idx = 1 %}
 {% include model-realm-header.tornado %}
+{% set idx = 1 %}
 {% for t in r.all_sub_topics %}
-	{% include model-realm-topic.tornado %}
+    {% include model-realm-topic.tornado %}
 {% end %}
 {% set idx += 1 %}
 {% include model-realm-footer.tornado %}
