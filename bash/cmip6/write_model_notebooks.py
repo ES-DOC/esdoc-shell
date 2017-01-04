@@ -96,8 +96,9 @@ def _get_data(output_dir, mip_era, institute, source_id, realm):
     data = NotebookData(mip_era, institute, source_id, realm)
 
     # Initialise from previously saved output.
-    fname = "{}--{}--{}--{}.json".format(mip_era, institute, source_id, realm)
-    fpath = os.path.join(output_dir, fname)
+    fname = "{}--{}--{}.json".format(institute, source_id, realm)
+    fpath = os.path.join(output_dir, "output")
+    fpath = os.path.join(fpath, fname)
     if os.path.isfile(fpath):
         with open(fpath, 'r') as fstream:
             data.from_dict(json.loads(fstream.read()))
@@ -109,8 +110,9 @@ def _write(output_dir, mip_era, institute, source_id, realm, content):
     """Writes notebook content to file system.
 
     """
-    fname = "{}--{}--{}--{}.ipynb".format(mip_era, institute, source_id, realm)
-    fpath = os.path.join(output_dir, fname)
+    fname = "{}--{}--{}.ipynb".format(institute, source_id, realm)
+    fpath = os.path.join(output_dir, "notebooks")
+    fpath = os.path.join(fpath, fname)
     with open(fpath, 'w') as fstream:
         fstream.write(content)
 
