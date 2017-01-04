@@ -2,14 +2,14 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "# {{ idx }}. Finalization"
+        "# Finalization"
     ]
 },
 {
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "### {{ idx }}.1 Review Validation Report"
+        "### Review Validation Report"
     ]
 },
 {
@@ -27,7 +27,7 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "### {{ idx }}.1 Persist to File-System"
+        "### Persist to File-System"
     ]
 },
 {

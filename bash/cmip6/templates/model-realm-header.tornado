@@ -2,7 +2,7 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "# ES-DOC {{ DOC.mip_era.upper() }} Model Realm Documentation \n",
+        "# ES-DOC {{ DOC.mip_era.upper() }} Model Realm Properties \n",
         "**MIP Era**: {{ DOC.mip_era.upper() }}  \n",
         "**Institute**: {{ DOC.institute.upper().upper() }}  \n",
         "**Model**: {{ DOC.source_id.upper() }}  \n",
@@ -18,14 +18,7 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "# {{ idx }}. Initialization"
-    ]
-},
-{
-    "cell_type": "markdown",
-    "metadata": {},
-    "source": [
-        "### {{ idx }}.1 Document Setup"
+        "### Document Setup  \n"
     ]
 },
 {
@@ -45,7 +38,7 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "### {{ idx }}.2 Document Authors  \n",
+        "### Document Authors  \n",
         "*Set document authors*"
     ]
 },
@@ -73,7 +66,7 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "### {{ idx }}.3 Document Contributors  \n",
+        "### Document Contributors  \n",
         "*Specify document contributors*  "
     ]
 },
@@ -101,16 +94,17 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "### {{ idx }}.4 Document Property Sets  \n",
+        "### Document Property Sets  \n",
+        {% set idx = 0 %}
         {% for t in r.all_sub_topics %}
             {% if t.parent == r %}"\n",{% end %}
             {% if t.properties %}
                 {% set idx += 1 %}
-                "[{{ t.names(2) }}](#{{ idx }}.-{{ t.names(2).replace(' ', '-') }})  \n",
+                "[{{ idx }}. {{ t.names(2) }}](#{{ idx }}.-{{ t.names(2).replace(' ', '-') }})  \n",
             {% end %}
             {% for ps in [i for i in t.property_sets if i.properties] %}
                 {% set idx += 1 %}
-                "[{{ ps.names(2) }}](#{{ idx }}.-{{ ps.names(2).replace(' ', '-') }})  \n",
+                "[{{ idx }}. {{ ps.names(2) }}](#{{ idx }}.-{{ ps.names(2).replace(' ', '-') }})  \n",
             {% end %}
         {% end %}
     "\n"
