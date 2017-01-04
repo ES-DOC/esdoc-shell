@@ -1,0 +1,45 @@
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "# {{ idx }}. Finalization"
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### {{ idx }}.1 Review Validation Report"
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# DO NOT EDIT !\n",
+        "# Validation errors will be listed below - FIX THEM !\n",
+        "DOC.list_errors()"
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### {{ idx }}.1 Persist to File-System"
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# DO NOT EDIT !\n",
+        "try:\n",
+        "    DOC.persist(DOC)\n",
+        "except pyesdoc.NoteBookValidationError:\n",
+        "    print('!!! VALIDATION ERRORS MUST BE FIXED !!!')"
+    ]
+}

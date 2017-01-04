@@ -34,10 +34,10 @@ main()
 	done
 
 	# Sync to pyesdoc.
-	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/factory.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/utils
-	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/loader.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/utils
-	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/model.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/utils
-	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/parser.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/utils
+	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_factory.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
+	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_loader.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
+	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_model.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
+	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_parser.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
 
 	log "PYESDOC : syncing cmip6 specializations tooling"
 }

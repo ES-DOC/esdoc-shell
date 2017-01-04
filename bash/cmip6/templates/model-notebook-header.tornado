@@ -1,0 +1,98 @@
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "# ES-DOC {{ DOC.mip_era.upper() }} Model Realm Documentation \n",
+        "**MIP Era**: {{ DOC.mip_era.upper() }}  \n",
+        "**Institute**: {{ DOC.institute.upper().upper() }}  \n",
+        "**Model**: {{ DOC.source_id.upper() }}  \n",
+        "**Realm**: {{ r.name_camel_case }}  \n",
+        "**Realm Processes**: {% for p in r.processes %}{{ p.name_camel_case_spaced }}{% if p == r.processes[-1] %}.{% else %},{% end %} {% end %}  \n",
+        "\n",
+        "**Notebook Help**: [Goto notebook help page](http://wordpress.es-doc.org/how-to-document-cmip6-models)  \n",
+        "**Notebook Initialised**: {{ unicode(now)[0:19] }}"
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "# {{ idx }}. Initialization"
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### {{ idx }}.1 Setup"
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# DO NOT EDIT !\n",
+        "from pyesdoc.model_notebook import Document\n",
+        "\n",
+        "# DO NOT EDIT !\n",
+        "DOC = Document('{{ DOC.mip_era.lower() }}', '{{ DOC.institute.lower() }}', '{{ DOC.source_id.lower() }}', '{{ r.name.lower() }}')"
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### {{ idx }}.2 Document Authors  \n",
+        "*Set document authors*"
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# Set as follows: DOC.set_author('name', 'value')  \n",
+        {% if DOC.authors %}
+            {% for author in DOC.authors %}
+                {% if author == DOC.authors[-1] %}
+                "DOC.set_author('{{ author[0] }}', '{{ author[1] }}')"
+                {% else %}
+                "DOC.set_author('{{ author[0] }}', '{{ author[1] }}') \n",
+                {% end %}
+            {% end %}
+        {% else %}
+            "# TODO"
+        {% end %}
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### {{ idx }}.3 Document Contributors  \n",
+        "*Specify document contributors*  "
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# Set as follows: DOC.set_contributor('name', 'value')  \n",
+        {% if DOC.contributors %}
+            {% for contributor in DOC.contributors %}
+                {% if contributor == DOC.contributors[-1] %}
+                "DOC.set_contributor('{{ contributor[0] }}', '{{ contributor[1] }}')"
+                {% else %}
+                "DOC.set_contributor('{{ contributor[0] }}', '{{ contributor[1] }}') \n",
+                {% end %}
+            {% end %}
+        {% else %}
+            "# TODO"
+        {% end %}
+    ]
+},

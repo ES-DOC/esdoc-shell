@@ -1,0 +1,18 @@
+{% if t.properties %}
+    {% set idx += 1 %}
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "# {{ idx }}. {{ t.names(2) }}  \n",
+            "*{{ t.description }}*"
+        ]
+    },
+    {% for p_idx, p in enumerate(t.properties) %}
+        {% include model-notebook-property.tornado %}
+    {% end %}
+{% end %}
+{% for ps in [i for i in t.property_sets if i.properties] %}
+    {% set idx += 1 %}
+    {% include model-notebook-property-set.tornado %}
+{% end %}
