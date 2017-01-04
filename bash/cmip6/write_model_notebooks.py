@@ -72,7 +72,7 @@ def _get_content(data):
 
     """
     # Load template.
-    tmpl = _TEMPLATES.load("model-notebook.tornado")
+    tmpl = _TEMPLATES.load("model-realm.tornado")
 
     # Generate content.
     content = tmpl.generate(

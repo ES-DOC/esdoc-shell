@@ -1,13 +1,12 @@
 {
     "cells": [
 {% set idx = 1 %}
-{% include model-notebook-header.tornado %}
+{% include model-realm-header.tornado %}
 {% for t in r.all_sub_topics %}
-	{% include model-notebook-topic.tornado %}
-	{% break %}
+	{% include model-realm-topic.tornado %}
 {% end %}
 {% set idx += 1 %}
-{% include model-notebook-footer.tornado %}
+{% include model-realm-footer.tornado %}
     ],
     "metadata": {
         "kernelspec": {

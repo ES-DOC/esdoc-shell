@@ -9,10 +9,10 @@
         ]
     },
     {% for p_idx, p in enumerate(t.properties) %}
-        {% include model-notebook-property.tornado %}
+        {% include model-realm-property.tornado %}
     {% end %}
 {% end %}
 {% for ps in [i for i in t.property_sets if i.properties] %}
     {% set idx += 1 %}
-    {% include model-notebook-property-set.tornado %}
+    {% include model-realm-property-set.tornado %}
 {% end %}

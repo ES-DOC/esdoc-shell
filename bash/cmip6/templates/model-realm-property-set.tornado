@@ -7,5 +7,5 @@
     ]
 },
 {% for p_idx, p in enumerate(ps.properties) %}
-    {% include model-notebook-property.tornado %}
+    {% include model-realm-property.tornado %}
 {% end %}
