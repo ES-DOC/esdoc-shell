@@ -17,7 +17,7 @@ import os
 from tornado import template
 
 import pyesdoc
-from pyesdoc.model_realm_notebook import NotebookData
+from pyesdoc.ipython.model_realm import NotebookData
 
 
 
@@ -62,12 +62,7 @@ def _main(args):
             data = _get_data(args.output_dir, cfg['mip_era'], institute, model, realm)
 
             # ... write notebook content;
-            try:
-                content = _get_content(data)
-            except BaseException as err:
-                pyesdoc.log_error("{} notebook content generation failed: {}".format(realm.upper(), err))
-            else:
-                _write(args.output_dir, cfg['mip_era'], institute, model, realm, content)
+            _write(args.output_dir, cfg['mip_era'], institute, model, realm, _get_content(data))
 
 
 def _get_content(data):
@@ -80,6 +75,7 @@ def _get_content(data):
     # Generate content.
     content = tmpl.generate(
         DOC=data,
+        escape=lambda s: s.strip().replace('"', "'"),
         now=dt.datetime.now(),
         r=data.specialization
         )
