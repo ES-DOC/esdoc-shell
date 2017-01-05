@@ -86,15 +86,6 @@ update_source()
 	rm -rf $API_HOME/app/pyesdoc
 	cp -r $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc $API_HOME/app
 
-	# Update web-apps code.
-	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_compare/*
-	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_search/*
-	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_splash/*
-	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_static/*
-	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_view/*
-	rm -rf $ESDOC_DIR_WEBAPPS/$1_$2_demo/*
-	_install_source_static $1 $2
-
 	# ... clear up temp files.
 	reset_tmp
 }
@@ -142,41 +133,10 @@ _install_source_api()
 	reset_tmp
 }
 
-# Installs static source code.
-_install_source_static()
-{
-	# ... comparator micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-web/comparator/* $ESDOC_DIR_WEBAPPS/$1_$2_compare
-	rm $ESDOC_DIR_WEBAPPS/$1_$2_compare/index-dev.html
-
-	# ... search micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-web/search/* $ESDOC_DIR_WEBAPPS/$1_$2_search
-
-	# ... splash micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-web/splash/* $ESDOC_DIR_WEBAPPS/$1_$2_splash
-
-	# ... static files
-	cp -r $ESDOC_DIR_REPOS/esdoc-web/static/* $ESDOC_DIR_WEBAPPS/$1_$2_static
-	cp -r $ESDOC_DIR_REPOS/esdoc-web/plugin/bin/latest/* $ESDOC_DIR_WEBAPPS/$1_$2_static
-
-	mkdir -p $ESDOC_DIR_WEBAPPS/$1_$2_static/ontologies/cim/1
-	cp -r $ESDOC_DIR_REPOS/esdoc-cim/v1/xsd/*.xsd $ESDOC_DIR_WEBAPPS/$1_$2_static/ontologies/cim/1
-
-	mkdir -p $ESDOC_DIR_WEBAPPS/$1_$2_static/docs/cmip6
-	cp -r $ESDOC_DIR_REPOS/esdoc-docs/cmip6/experiments/spreadsheet/cmip6-experiments.xlsx $ESDOC_DIR_WEBAPPS/$1_$2_static/docs/cmip6/experiments
-
-	# ... viewer micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-web/viewer/* $ESDOC_DIR_WEBAPPS/$1_$2_view
-
-	# ... viewer demo micro-site
-	cp -r $ESDOC_DIR_REPOS/esdoc-web/viewer-demo/* $ESDOC_DIR_WEBAPPS/$1_$2_demo
-}
-
 # Installs source code.
 install_source()
 {
 	_install_source_api $1 $2 $3 $4
-	_install_source_static $1 $2
 }
 
 # Updates cron tabe.

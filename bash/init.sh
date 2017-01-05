@@ -19,9 +19,6 @@ activate_venv()
 		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_API
 		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_API_TESTS
 
-	elif [ $1 = "qtn" ]; then
-		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_QTN/src
-
 	elif [ $1 = "pyesdoc" ]; then
 		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYESDOC
 		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYESDOC_TESTS
@@ -106,12 +103,9 @@ declare ESDOC_DIR_ARCHIVE=$ESDOC_DIR_REPOS/esdoc-archive
 declare ESDOC_DIR_CIM=$ESDOC_DIR_REPOS/esdoc-cim
 declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
 declare ESDOC_DIR_PYESDOC_TESTS=$ESDOC_DIR_REPOS/esdoc-py-client/tests
-declare ESDOC_DIR_QTN=$ESDOC_DIR_REPOS/esdoc-questionnaire
 
-declare ESDOC_DIR_WEB_COMPARATOR=$ESDOC_DIR_REPOS/esdoc-web/comparator
-declare ESDOC_DIR_WEB_PLUGIN=$ESDOC_DIR_REPOS/esdoc-web/plugin
-declare ESDOC_DIR_WEB_STATIC=$ESDOC_DIR_REPOS/esdoc-web/static
-declare ESDOC_DIR_WEB_VIEWER=$ESDOC_DIR_REPOS/esdoc-web/viewer
+declare ESDOC_DIR_WEB_COMPARATOR=$ESDOC_DIR_REPOS/esdoc-web-compare
+declare ESDOC_DIR_WEB_PLUGIN=$ESDOC_DIR_REPOS/esdoc-web-plugin
 
 # ###############################################################
 # SECTION: INITIALIZE VARS
@@ -133,7 +127,11 @@ declare -a ESDOC_OPS_DIRS=(
 
 # Set of git repos.
 declare -a ESDOC_REPOS=(
+	'cmip6-specializations-aerosols'
 	'cmip6-specializations-atmosphere'
+	'cmip6-specializations-atmospheric-chemistry'
+	'cmip6-specializations-landice'
+	'cmip6-specializations-landsurface'
 	'cmip6-specializations-ocean'
 	'cmip6-specializations-ocean-bgc'
 	'cmip6-specializations-seaice'
@@ -141,43 +139,65 @@ declare -a ESDOC_REPOS=(
 	'esdoc-api'
 	'esdoc-archive'
 	'esdoc-cdf2cim'
+	'esdoc-cdf2cim-ws'
 	'esdoc-cim'
 	'esdoc-cim-v1-schema'
 	'esdoc-cim-v2-schema'
 	'esdoc-contrib'
+	'esdoc-cv'
 	'esdoc-docs'
 	'esdoc-errata-client'
 	'esdoc-errata-fe'
 	'esdoc-errata-ws'
 	'esdoc-project'
 	'esdoc-py-client'
-	'esdoc-questionnaire'
-	'esdoc-web'
+	'esdoc-web-compare'
+	'esdoc-web-demo'
+	'esdoc-web-plugin'
+	'esdoc-web-search'
+	'esdoc-web-splash'
+	'esdoc-web-static'
+	'esdoc-web-view'
+	'esdoc-ws-url-rewriter'
 )
 
 # Set of git repos considered to be relatively small.
 declare -a ESDOC_REPOS_LITE=(
+	'cmip6-specializations-aerosols'
 	'cmip6-specializations-atmosphere'
+	'cmip6-specializations-atmospheric-chemistry'
+	'cmip6-specializations-landice'
+	'cmip6-specializations-landsurface'
 	'cmip6-specializations-ocean'
+	'cmip6-specializations-ocean-bgc'
 	'cmip6-specializations-seaice'
+	'cmip6-specializations-toplevel'
 	'esdoc-api'
 	'esdoc-cdf2cim'
+	'esdoc-cdf2cim-ws'
 	'esdoc-cim'
 	'esdoc-cim-v1-schema'
 	'esdoc-cim-v2-schema'
 	'esdoc-contrib'
+	'esdoc-cv'
 	'esdoc-docs'
 	'esdoc-errata-client'
 	'esdoc-errata-fe'
 	'esdoc-errata-ws'
 	'esdoc-py-client'
-	'esdoc-web'
+	'esdoc-web-compare'
+	'esdoc-web-demo'
+	'esdoc-web-plugin'
+	'esdoc-web-search'
+	'esdoc-web-splash'
+	'esdoc-web-static'
+	'esdoc-web-view'
+	'esdoc-ws-url-rewriter'
 )
 
 # Set of virtual environments.
 declare -a ESDOC_VENVS=(
 	'api'
-	'questionnaire'
 	'pyesdoc'
 )
 

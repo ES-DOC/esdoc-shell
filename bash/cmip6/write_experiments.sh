@@ -9,7 +9,7 @@ main()
 	log "PYESDOC : writing cmip6 experiments ..."
 
 	declare io_dir=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/experiments/cim-documents
-	declare spreadsheet=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/experiments/spreadsheet/cmip6-experiments.xlsx
+	declare spreadsheet=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/experiments/spreadsheet/experiments.xlsx
 	declare identifiers=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/experiments/spreadsheet/document-identifiers.txt
 
 	rm -rf $io_dir/*.json
