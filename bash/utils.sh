@@ -14,17 +14,11 @@ declare ESDOC_GIT_PROTOCOL=${ESDOC_GIT_PROTOCOL:='https'}
 # Activates a virtual environment.
 activate_venv()
 {
-	if [ $1 = "api" ]; then
-		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYESDOC
-		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_API
-		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_API_TESTS
-
-	elif [ $1 = "pyesdoc" ]; then
-		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYESDOC
-		export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYESDOC_TESTS
+	if [ $1 = "pyesdoc" ]; then
+		export PYTHONPATH=$PYTHONPATH:$PYESDOC_HOME
+		export PYTHONPATH=$PYTHONPATH:$PYESDOC_HOME/tests
+		source $PYESDOC_HOME/ops/venv/bin/activate
 	fi
-
-	source $ESDOC_DIR_VENV/$1/bin/activate
 }
 
 # Wraps standard echo by adding ESDOC prefix.

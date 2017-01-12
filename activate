@@ -8,56 +8,24 @@ export PS1
 # Set repo path.
 export ESDOC_CMIP6=$ESDOC_HOME/repos/esdoc-docs/cmip6
 
-# API commands.
-alias esdoc-api=$ESDOC_HOME/bash/api/run_ws.sh
-alias esdoc-api-daemons-init=$ESDOC_HOME/bash/api/daemons_init.sh
-alias esdoc-api-daemons-kill=$ESDOC_HOME/bash/api/daemons_kill.sh
-alias esdoc-api-daemons-reset-logs=$ESDOC_HOME/bash/api/daemons_reset_logs.sh
-alias esdoc-api-daemons-reload='esdoc-api-daemons-kill && esdoc-api-daemons-init'
-alias esdoc-api-daemons-status=$ESDOC_HOME/bash/api/daemons_status.sh
-alias esdoc-api-daemons-update-config=$ESDOC_HOME/bash/api/daemons_update_config.sh
-alias esdoc-api-daemons-update-config-for-debug=$ESDOC_HOME/bash/api/daemons_update_config_for_debug.sh
-alias esdoc-api-db-flush=$ESDOC_HOME/bash/api/db_flush.sh
-alias esdoc-api-db-ingest=$ESDOC_HOME/bash/api/db_ingest.sh
-alias esdoc-api-db-install=$ESDOC_HOME/bash/api/db_install.sh
-alias esdoc-api-db-reset=$ESDOC_HOME/bash/api/db_reset.sh
-alias esdoc-api-tests=$ESDOC_HOME/bash/api/run_tests.sh
-alias esdoc-api-db-uninstall=$ESDOC_HOME/bash/api/db_uninstall.sh
-alias esdoc-api-db-vacuum=$ESDOC_HOME/bash/api/db_vacuum.sh
+# Activate sub-shells.
+source $ESDOC_HOME/repos/esdoc-api/sh/activate
+source $ESDOC_HOME/repos/esdoc-archive/sh/activate
+source $ESDOC_HOME/repos/esdoc-py-client/sh/activate
+source $ESDOC_HOME/repos/esdoc-cdf2cim/sh/activate
+source $ESDOC_HOME/repos/esdoc-cdf2cim-ws/sh/activate
+source $ESDOC_HOME/repos/esdoc-errata-ws/sh/activate
+source $ESDOC_HOME/repos/esdoc-web-plugin/sh/activate
+source $ESDOC_HOME/repos/esdoc-ws-url-rewriter/sh/activate
 
-# Archive commands.
-alias esdoc-archive-compress=$ESDOC_HOME/bash/archive/compress.sh
-alias esdoc-archive-delete-document=$ESDOC_HOME/bash/archive/delete_document.sh
-alias esdoc-archive-delete-documents=$ESDOC_HOME/bash/archive/delete_documents.sh
-alias esdoc-archive-echo=$ESDOC_HOME/bash/archive/echo.sh
-alias esdoc-archive-populate=$ESDOC_HOME/bash/archive/populate.sh
-alias esdoc-archive-uncompress=$ESDOC_HOME/bash/archive/uncompress.sh
-
-# Deployment commands.
-alias esdoc-deploy-compile-js-plugin=$ESDOC_HOME/bash/deployment/compile_js_plugin.sh
-alias esdoc-deploy-list-active-shells=$ESDOC_HOME/bash/deployment/list_active_shells.sh
-alias esdoc-deploy-rollback=$ESDOC_HOME/bash/deployment/rollback.sh
-alias esdoc-deploy-rollout=$ESDOC_HOME/bash/deployment/rollout.sh
-alias esdoc-deploy-update=$ESDOC_HOME/bash/deployment/update.sh
-
-alias esdoc-deploy-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_static_assets.sh
-
-# Meta-programming commands.
-alias esdoc-mp=$ESDOC_HOME/bash/pyesdoc-mp/generate.sh
-alias esdoc-mp-cim-v1-sync=$ESDOC_HOME/bash/pyesdoc-mp/sync_cim_v1.sh
-alias esdoc-mp-cim-v2-sync=$ESDOC_HOME/bash/pyesdoc-mp/sync_cim_v2.sh
-alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/pyesdoc-mp/generate_cim_1.sh'
-alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc-mp/generate_cim_2.sh'
-alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/pyesdoc-mp/validate_cim_1.sh'
-alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc-mp/validate_cim_2.sh'
-
-# pyesdoc commands.
-alias esdoc-pyesdoc-convert=$ESDOC_HOME/bash/pyesdoc/convert.sh
-alias esdoc-pyesdoc-peek=$ESDOC_HOME/bash/pyesdoc/peek.sh
-alias esdoc-pyesdoc-pipify=$ESDOC_HOME/bash/pyesdoc/pipify.sh
-alias esdoc-pyesdoc-tests=$ESDOC_HOME/bash/pyesdoc/run_tests.sh
-alias esdoc-pyesdoc-validate=$ESDOC_HOME/bash/pyesdoc/validate.sh
-alias esdoc-pyesdoc-write-test-files=$ESDOC_HOME/bash/pyesdoc/write_test_files.sh
+# pyesdoc meta-programming commands.
+alias esdoc-mp=$ESDOC_HOME/bash/pyesdoc/mp_generate.sh
+alias esdoc-mp-cim-v1-sync=$ESDOC_HOME/bash/pyesdoc/mp_sync_cim_v1.sh
+alias esdoc-mp-cim-v2-sync=$ESDOC_HOME/bash/pyesdoc/mp_sync_cim_v2.sh
+alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/pyesdoc/mp_generate_cim_1.sh'
+alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc/mp_generate_cim_2.sh'
+alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/pyesdoc/mp_validate_cim_1.sh'
+alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc/mp_validate_cim_2.sh'
 
 # Security commands.
 alias esdoc-security-init-gh-team=$ESDOC_HOME/bash/security/init_gh_team.sh
@@ -66,26 +34,10 @@ alias esdoc-security-init-gh-team=$ESDOC_HOME/bash/security/init_gh_team.sh
 alias esdoc-stack-install=$ESDOC_HOME/bash/stack/install.sh
 alias esdoc-stack-uninstall=$ESDOC_HOME/bash/stack/uninstall.sh
 alias esdoc-stack-update=$ESDOC_HOME/bash/stack/update.sh
-alias esdoc-stack-update-config=$ESDOC_HOME/bash/stack/update_config.sh
-alias esdoc-stack-update-repos=$ESDOC_HOME/bash/stack/update_repos.sh
-alias esdoc-stack-update-repos-lite=$ESDOC_HOME/bash/stack/update_repos_lite.sh
-alias esdoc-stack-update-shell=$ESDOC_HOME/bash/stack/update_shell.sh
-alias esdoc-stack-upgrade-venvs=$ESDOC_HOME/bash/stack/upgrade_venvs.sh
+alias esdoc-stack-update-lite=$ESDOC_HOME/bash/stack/update_lite.sh
 
-# Composite commands.
-alias esdoc-api-daemons-reload='esdoc-api-daemons-kill && esdoc-api-daemons-init'
-alias esdoc-stack-update-source='esdoc-stack-update-shell && esdoc-stack-update-repos'
-alias esdoc-deploy-setup='esdoc-stack-install && esdoc-archive-uncompress'
-
-# Reset project assets composite command.
-_reset_project_assets()
-{
-	esdoc-api-db-flush $1
-	esdoc-archive-delete-documents $1
-	esdoc-archive-populate
-	esdoc-api-db-ingest
-}
-alias esdoc-reset-project-assets=_reset_project_assets
+# Deployment commands.
+alias esdoc-deployment-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_static_assets.sh
 
 # CMIP6 commands.
 alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/cmip6/archive_documents.sh
@@ -109,10 +61,8 @@ _reset_cmip6()
 alias esdoc-cmip6-reset=_reset_cmip6
 
 # Ensure target scripts are executable.
-chmod a+x $ESDOC_HOME/bash/api/*.sh
-chmod a+x $ESDOC_HOME/bash/archive/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
-chmod a+x $ESDOC_HOME/bash/pyesdoc-mp/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
+chmod a+x $ESDOC_HOME/bash/security/*.sh
 chmod a+x $ESDOC_HOME/bash/stack/*.sh

@@ -36,7 +36,7 @@ _ARGS.add_argument(
 _LINE_BREAK = '\n'
 
 # Filepath to report to be written.
-_FPATH = "{}/validate_report_{}_{}.txt"
+_FPATH = "{}/mp_validate_report_{}_{}.txt"
 
 # Report section break.
 _SECTION_BREAK = '------------------------------------------------------------------------------\n'

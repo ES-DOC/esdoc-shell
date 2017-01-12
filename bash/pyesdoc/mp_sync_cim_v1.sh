@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/init.sh
+source $ESDOC_HOME/bash/utils.sh
 
 # Main entry point.
 main()
 {
-	echo "TODO: delete a document"
+	source $ESDOC_HOME/bash/pyesdoc/mp_sync.sh 1
 }
 
 # Invoke entry point.

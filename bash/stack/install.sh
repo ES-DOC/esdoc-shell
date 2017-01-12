@@ -1,79 +1,7 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/init.sh
-
-# Installs virtual environments.
-_install_venv()
-{
-	if [ "$2" ]; then
-		log "Installing virtual environment: $1"
-	fi
-
-	# Make directory.
-	declare TARGET_VENV=$ESDOC_DIR_VENV/$1
-	rm -rf $TARGET_VENV
-    mkdir -p $TARGET_VENV
-
-    # Initialise venv.
-    export PATH=$ESDOC_DIR_PYTHON/bin:$PATH
-	export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYTHON
-    virtualenv -q $TARGET_VENV
-
-    # Build dependencies.
-    source $TARGET_VENV/bin/activate
-    pip install -q --force-reinstall --no-cache-dir --upgrade -r $ESDOC_DIR_RESOURCES/venv-requirements-$1.txt
-
-    # Cleanup.
-    deactivate
-}
-
-# Installs python virtual environments.
-_install_venvs()
-{
-	for venv in "${ESDOC_VENVS[@]}"
-	do
-		_install_venv $venv "echo"
-	done
-}
-
-# Installs a python executable primed with setuptools, pip & virtualenv.
-_install_python_executable()
-{
-	# Version of python used by stack.
-	declare PYTHON_VERSION=2.7.12
-
-	log "Installing python "$PYTHON_VERSION" (takes approx 2 minutes)"
-
-	# Download source.
-	set_working_dir $ESDOC_DIR_PYTHON
-	mkdir src
-	cd src
-	wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz --no-check-certificate
-	tar -xvf Python-$PYTHON_VERSION.tgz
-	rm Python-$PYTHON_VERSION.tgz
-
-	# Compile.
-	cd Python-$PYTHON_VERSION
-	./configure --prefix=$ESDOC_DIR_PYTHON
-	make
-	make install
-	export PATH=$ESDOC_DIR_PYTHON/bin:$PATH
-	export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYTHON
-	export PYTHONPATH=$PYTHONPATH:$ESDOC_DIR_PYTHON/lib/python2.7/site-packages
-
-	# Install setuptools.
-	cd $ESDOC_DIR_PYTHON/src
-	wget https://bootstrap.pypa.io/ez_setup.py
-	python ez_setup.py
-
-	# Install pip.
-	easy_install --prefix $ESDOC_DIR_PYTHON pip
-	pip install --upgrade pip
-
-	# Install virtualenv.
-	pip install virtualenv
-}
+source $ESDOC_HOME/bash/utils.sh
 
 # Installs a git repo.
 _install_repo()
@@ -107,26 +35,27 @@ _install_dirs()
 		mkdir -p $ops_dir
 	done
 	mkdir -p $ESDOC_DIR_REPOS
-	mkdir -p $ESDOC_DIR_PYTHON
-}
-
-# Sets up configuration.
-_install_configuration()
-{
-	cp $ESDOC_DIR_RESOURCES/template-user-api.conf $ESDOC_DIR_CONFIG/api.conf
-	cp $ESDOC_DIR_RESOURCES/template-user-pyesdoc.conf $ESDOC_DIR_CONFIG/pyesdoc.conf
-	cp $ESDOC_DIR_RESOURCES/template-user-api-supervisord.conf $ESDOC_DIR_DAEMONS/api/supervisord.conf
 }
 
 # Sets up script permissions.
 _install_script_permissions()
 {
-	chmod a+x $ESDOC_HOME/bash/api/*.sh
-	chmod a+x $ESDOC_HOME/bash/archive/*.sh
+	chmod a+x $ESDOC_HOME/bash/cmip6/*.sh
 	chmod a+x $ESDOC_HOME/bash/deployment/*.sh
-	chmod a+x $ESDOC_HOME/bash/pyesdoc-mp/*.sh
 	chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
+	chmod a+x $ESDOC_HOME/bash/security/*.sh
 	chmod a+x $ESDOC_HOME/bash/stack/*.sh
+}
+
+_activate_sub_shells()
+{
+	source $ESDOC_HOME/repos/esdoc-api/sh/activate
+	source $ESDOC_HOME/repos/esdoc-archive/sh/activate
+	source $ESDOC_HOME/repos/esdoc-py-client/sh/activate
+	source $ESDOC_HOME/repos/esdoc-cdf2cim/sh/activate
+	source $ESDOC_HOME/repos/esdoc-cdf2cim-ws/sh/activate
+	source $ESDOC_HOME/repos/esdoc-errata-ws/sh/activate
+	source $ESDOC_HOME/repos/esdoc-web-plugin/sh/activate
 }
 
 # Main entry point.
@@ -135,11 +64,9 @@ main()
 	log "INSTALLING STACK"
 
 	_install_dirs
-	_install_configuration
 	_install_script_permissions
 	_install_repos
-	_install_python_executable
-	_install_venvs
+	_activate_sub_shells
 
 	log "INSTALLED STACK"
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/init.sh
+source $ESDOC_HOME/bash/utils.sh
 
 # Main entry point.
 main()

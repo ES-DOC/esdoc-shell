@@ -1,7 +1,0 @@
-arrow
-feedparser
-lxml
-nose
-requests
-tornado
-

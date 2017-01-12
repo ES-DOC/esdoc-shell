@@ -1,14 +1,23 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/init.sh
+source $ESDOC_HOME/bash/utils.sh
+
+# Main entry point.
+_update_shell()
+{
+	log "UPDATING SHELL"
+	set_working_dir
+	git pull -q
+	remove_files "*.pyc"
+	log "UPDATED SHELL"
+}
 
 # Installs a git repo.
 _install_repo()
 {
 	log "Installing repo: $1"
 	rm -rf $ESDOC_DIR_REPOS/$1
-
 	if [ $ESDOC_GIT_PROTOCOL = "ssh" ]; then
 		git clone -q git@github.com:ES-DOC/$1.git $DIR_LOCAL_REPOS/$1
 	else
@@ -26,10 +35,10 @@ _update_repo()
 	set_working_dir
 }
 
-# Main entry point.
-main()
+# Updates git repos.
+_update_repos()
 {
-	log "UPDATING REPOS (LITE)"
+	log "UPDATING REPOS"
 	for repo in "${ESDOC_REPOS_LITE[@]}"
 	do
 		if [ -d "$ESDOC_DIR_REPOS/$repo" ]; then
@@ -38,7 +47,20 @@ main()
 			_install_repo $repo
 		fi
 	done
-	log "UPDATED REPOS (LITE)"
+	log "UPDATED REPOS"
+}
+
+# Main entry point.
+main()
+{
+	log "UPDATING STACK (LITE)"
+
+	_update_shell
+	_update_repos
+
+	source $ESDOC_HOME/bash/stack/upgrade_venvs.sh
+
+	log "UPDATED STACK (LITE)"
 }
 
 # Invoke entry point.
