@@ -26,6 +26,11 @@
         {% else %}
         "# PROPERTY VALUE: \n",
         {% end %}
+        {% if p.enum or p.typeof in {'str',} %}
+        "# Set as follows: DOC.set_value(\"value\")  \n",
+        {% else %}
+        "# Set as follows: DOC.set_value(value)  \n",
+        {% end %}
         {% if p.enum is not None %}
             "# Choices: \n",
             {% for c in p.enum.choices %}
@@ -40,18 +45,14 @@
         {% set p_values = DOC.get_values(p.id) %}
         {% if p_values %}
             {% for p_value in p_values %}
-            {% if p.enum or p.typeof in {'str',} %}
-            "DOC.set_value(\"{{p_value}}\")  \n",
-            {% else %}
-            "DOC.set_value({{p_value}})  \n",
-            {% end %}
+                {% if p.enum or p.typeof in {'str',} %}
+                    "DOC.set_value(\"{{p_value}}\")  \n",
+                {% else %}
+                    "DOC.set_value({{p_value}})  \n",
+                {% end %}
             {% end %}
         {% else %}
-            {% if p.enum or p.typeof in {'str',} %}
-            "# TODO: set as follows: DOC.set_value(\"value\")  \n",
-            {% else %}
-            "# TODO: set as follows: DOC.set_value(value)  \n",
-            {% end %}
+            "# TODO\n",
         {% end %}
         "\n",
         "# PROPERTY QUALITY CONTROL STATUS:  \n",
