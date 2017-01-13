@@ -48,7 +48,7 @@
     "metadata": {},
     "outputs": [],
     "source": [
-        "# Set as follows: DOC.set_author('name', 'value')  \n",
+        "# Set as follows: DOC.set_author(\"name\", \"email\")  \n",
         {% if DOC.authors %}
             {% for author in DOC.authors %}
                 {% if author == DOC.authors[-1] %}
@@ -76,7 +76,7 @@
     "metadata": {},
     "outputs": [],
     "source": [
-        "# Set as follows: DOC.set_contributor('name', 'value')  \n",
+        "# Set as follows: DOC.set_contributor(\"name\", \"email\")  \n",
         {% if DOC.contributors %}
             {% for contributor in DOC.contributors %}
                 {% if contributor == DOC.contributors[-1] %}
@@ -94,10 +94,9 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "### Document Property Sets  \n",
+        "### Document Table of Contents  \n",
         {% set idx = 0 %}
         {% for t in r.all_sub_topics %}
-            {% if t.parent == r %}"\n",{% end %}
             {% if t.properties %}
                 {% set idx += 1 %}
                 "[{{ idx }}. {{ t.names(2) }}](#{{ idx }}.-{{ t.names(2).replace(' ', '-') }})  \n",

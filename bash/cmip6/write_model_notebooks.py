@@ -62,7 +62,30 @@ def _main(args):
             data = _get_data(args.output_dir, cfg['mip_era'], institute, model, realm)
 
             # ... write notebook content;
-            _write(args.output_dir, cfg['mip_era'], institute, model, realm, _get_content(data))
+            _write(args.output_dir, data)
+
+
+def _get_data(output_dir, mip_era, institute, source_id, realm):
+    """Returns notebook data wrapper.
+
+    """
+    # Instantiate wrapper.
+    data = NotebookData(mip_era, institute, source_id, realm)
+
+    # Initialise state from previously saved output.
+    data.read(os.path.join(output_dir, "output"))
+
+    return data
+
+
+def _write(output_dir, data):
+    """Writes notebook content to file system.
+
+    """
+    fpath = os.path.join(output_dir, "notebooks")
+    fpath = os.path.join(fpath, data.notebook_filename)
+    with open(fpath, 'w') as fstream:
+        fstream.write(_get_content(data))
 
 
 def _get_content(data):
@@ -82,35 +105,6 @@ def _get_content(data):
 
     # Return prettified content.
     return json.dumps(json.loads(content), indent=4)
-
-
-def _get_data(output_dir, mip_era, institute, source_id, realm):
-    """Returns notebook data wrapper.
-
-    """
-    # Instantiate wrapper.
-    data = NotebookData(mip_era, institute, source_id, realm)
-
-    # Initialise from previously saved output.
-    fname = "{}--{}--{}.json".format(institute, source_id, realm)
-    fpath = os.path.join(output_dir, "output")
-    fpath = os.path.join(fpath, fname)
-    if os.path.isfile(fpath):
-        with open(fpath, 'r') as fstream:
-            data.from_dict(json.loads(fstream.read()))
-
-    return data
-
-
-def _write(output_dir, mip_era, institute, source_id, realm, content):
-    """Writes notebook content to file system.
-
-    """
-    fname = "{}--{}--{}.ipynb".format(institute, source_id, realm)
-    fpath = os.path.join(output_dir, "notebooks")
-    fpath = os.path.join(fpath, fname)
-    with open(fpath, 'w') as fstream:
-        fstream.write(content)
 
 
 # Entry point.

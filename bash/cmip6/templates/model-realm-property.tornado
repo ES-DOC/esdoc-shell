@@ -4,7 +4,9 @@
     "metadata": {},
     "source": [
         "### {{ idx }}.{{ p_idx }}. {{ p.name_camel_case_spaced }}\n",
-        " *{{ p.description }}*"
+        " *{{ p.description }}*\n",
+        "\n",
+        "**Is Required:** {{ str(p.is_required).upper() }}&nbsp;&nbsp;&nbsp;&nbsp;**Type:** {{ p.typeof_label }}&nbsp;&nbsp;&nbsp;&nbsp;**Cardinality:** {{ p.cardinality }}"
     ]
 },
 {
@@ -15,19 +17,8 @@
 		},
     "outputs": [],
     "source": [
-        "# PROPERTY INFO: \n",
-        "# Is Required: {{ p.is_required }} \n",
-        "# Type: {{ p.typeof_label }} \n",
-        "# Cardinality: {{ p.cardinality }} \n",
-        "\n",
-
         "# PROPERTY ID - DO NOT EDIT !  \n",
         "DOC.set_id('{{ p.id }}')  \n",
-        "\n",
-
-        "# PROPERTY QUALITY CONTROL:  \n",
-        "# 0=draft, 1=in-review, 2=reviewed  \n",
-        "DOC.set_qc_status({{ DOC.get_qc_status(p.id) }})  \n",
         "\n",
 
         {% if p.is_collection %}
@@ -35,11 +26,10 @@
         {% else %}
         "# PROPERTY VALUE: \n",
         {% end %}
-        "# Set as follows: DOC.set_value(value)  \n",
         {% if p.enum is not None %}
             "# Choices: \n",
             {% for c in p.enum.choices %}
-            "#      '{{ c.value }}{% if c.is_other %}: [Please specify]{% end %}'  \n",
+            "#      \"{{ c.value }}{% if c.is_other %}: [Please specify]{% end %}\"  \n",
             {% end %}
         {% end %}
         {% if p.typeof == 'bool' %}
@@ -47,13 +37,25 @@
             "#     True  \n",
             "#     False  \n",
         {% end %}
-        {% set p_values = DOC.get_values(p) %}
+        {% set p_values = DOC.get_values(p.id) %}
         {% if p_values %}
             {% for p_value in p_values %}
-            "DOC.set_value(p_value)  \n",
+            {% if p.enum or p.typeof in {'str',} %}
+            "DOC.set_value(\"{{p_value}}\")  \n",
+            {% else %}
+            "DOC.set_value({{p_value}})  \n",
+            {% end %}
             {% end %}
         {% else %}
-            "# TODO"
+            {% if p.enum or p.typeof in {'str',} %}
+            "# TODO: set as follows: DOC.set_value(\"value\")  \n",
+            {% else %}
+            "# TODO: set as follows: DOC.set_value(value)  \n",
+            {% end %}
         {% end %}
+        "\n",
+        "# PROPERTY QUALITY CONTROL STATUS:  \n",
+        "# 0=draft, 1=in-review, 2=reviewed  \n",
+        "DOC.set_qc_status({{ DOC.get_qc_status(p.id) }})"
     ]
 },
