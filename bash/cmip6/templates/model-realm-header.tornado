@@ -18,7 +18,8 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "### Document Setup  \n"
+        "### Document Setup  \n",
+        "**IMPORTANT:** *to be executed each time you run the notebook*  "
     ]
 },
 {
@@ -95,17 +96,9 @@
     "metadata": {},
     "source": [
         "### Document Table of Contents  \n",
-        {% set idx = 0 %}
-        {% for t in r.all_sub_topics %}
-            {% if t.properties %}
-                {% set idx += 1 %}
-                "[{{ idx }}. {{ t.names(2) }}](#{{ idx }}.-{{ t.names(2).replace(' ', '-') }})  \n",
-            {% end %}
-            {% for ps in [i for i in t.property_sets if i.properties] %}
-                {% set idx += 1 %}
-                "[{{ idx }}. {{ ps.names(2) }}](#{{ idx }}.-{{ ps.names(2).replace(' ', '-') }})  \n",
-            {% end %}
+        {% for pc_idx, pc in enumerate(r.all_property_containers) %}
+            "[{{ pc_idx + 1 }}. {{ pc.names(2) }}](#{{ pc_idx + 1 }}.-{{ pc.names(2).replace(' ', '-') }})  \n",
         {% end %}
-    "\n"
+        "\n"
     ]
 },

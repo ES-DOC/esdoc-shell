@@ -1,9 +1,8 @@
 {
     "cells": [
 {% include model-realm-header.tornado %}
-{% set idx = 0 %}
-{% for t in r.all_sub_topics %}
-    {% include model-realm-topic.tornado %}
+{% for pc_idx, pc in enumerate(r.all_property_containers) %}
+    {% include model-realm-property-container.tornado %}
 {% end %}
 {% include model-realm-footer.tornado %}
     ],

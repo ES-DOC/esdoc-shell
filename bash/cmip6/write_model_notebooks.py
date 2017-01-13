@@ -17,7 +17,7 @@ import os
 from tornado import template
 
 import pyesdoc
-from pyesdoc.ipython.model_realm import NotebookData
+from pyesdoc.ipython.model_realm_properties import NotebookData
 
 
 

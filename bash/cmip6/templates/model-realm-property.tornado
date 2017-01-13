@@ -1,9 +1,8 @@
-{% set p_idx += 1 %}
 {
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "### {{ idx }}.{{ p_idx }}. {{ p.name_camel_case_spaced }}\n",
+        "### {{ pc_idx + 1 }}.{{ p_idx + 1 }}. {{ p.name_camel_case_spaced }}\n",
         " *{{ p.description }}*\n",
         "\n",
         "**Is Required:** {{ str(p.is_required).upper() }}&nbsp;&nbsp;&nbsp;&nbsp;**Type:** {{ p.typeof_label }}&nbsp;&nbsp;&nbsp;&nbsp;**Cardinality:** {{ p.cardinality }}"
