@@ -981,7 +981,7 @@ def _main(args):
     if not os.path.isfile(args.spreadsheet_filepath):
         raise ValueError("Spreadsheet file does not exist")
     if not os.path.isdir(args.io_dir):
-        raise ValueError("Archive directory does not exist")
+        raise ValueError("Archive directory does not exist: {}".format(args.io_dir))
 
     docs = DocumentSet(
         Spreadsheet(args.spreadsheet_filepath, DocumentIdentifiers(args.identifiers))
