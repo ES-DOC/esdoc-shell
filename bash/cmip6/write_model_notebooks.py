@@ -17,7 +17,7 @@ import os
 from tornado import template
 
 import pyesdoc
-from pyesdoc.ipython.model_realm_properties import NotebookData
+from pyesdoc.ipython.model_realm_properties import NotebookOutput
 
 
 
@@ -58,37 +58,39 @@ def _main(args):
     # For each institute / model / realm combination, emit a notebook.
     for institute, model in [(i.split(":")[0], i.split(":")[1]) for i in cfg['models']]:
         for realm in cfg['realms']:
-            # ... load notebook data;
-            data = _get_data(args.output_dir, cfg['mip_era'], institute, model, realm)
+            # ... load output;
+            output = _get_output(args.output_dir, cfg['mip_era'], institute, model, realm)
 
-            # ... write notebook content;
-            _write(args.output_dir, data)
-
-
-def _get_data(output_dir, mip_era, institute, source_id, realm):
-    """Returns notebook data wrapper.
-
-    """
-    # Instantiate wrapper.
-    data = NotebookData(mip_era, institute, source_id, realm)
-
-    # Initialise state from previously saved output.
-    data.read(os.path.join(output_dir, "output"))
-
-    return data
+            # ... write notebook;
+            _write(output)
 
 
-def _write(output_dir, data):
-    """Writes notebook content to file system.
+def _get_output(output_dir, mip_era, institute, source_id, realm):
+    """Returns notebook output data wrapper.
 
     """
-    fpath = os.path.join(output_dir, "notebooks")
-    fpath = os.path.join(fpath, data.notebook_filename)
+    return NotebookOutput(
+        mip_era,
+        institute,
+        source_id,
+        realm,
+        os.path.join(output_dir, "output")
+        )
+
+
+def _write(output):
+    """Writes notebook to file system.
+
+    """
+    fpath = output.fpath.replace("output", "notebooks")
+    fpath = fpath.replace(".json", ".ipynb")
+    if not os.path.isdir(os.path.dirname(fpath)):
+        os.makedirs(os.path.dirname(fpath))
     with open(fpath, 'w') as fstream:
-        fstream.write(_get_content(data))
+        fstream.write(_get_notebook(output))
 
 
-def _get_content(data):
+def _get_notebook(data):
     """Returns notebook content.
 
     """

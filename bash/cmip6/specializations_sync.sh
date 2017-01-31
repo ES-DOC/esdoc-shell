@@ -37,6 +37,7 @@ _sync_definitions()
 	declare -a SPECIALIZATIONS=(
 		'atmosphere'
 		'ocean'
+		'ocean-bgc'
 		'seaice'
 	)
 

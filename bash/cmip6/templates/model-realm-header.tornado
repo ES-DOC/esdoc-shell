@@ -29,10 +29,10 @@
     "outputs": [],
     "source": [
         "# DO NOT EDIT !  \n",
-        "from pyesdoc.ipython.model_realm import NotebookData  \n",
+        "from pyesdoc.ipython.model_realm_properties import NotebookOutput  \n",
         "\n",
         "# DO NOT EDIT !  \n",
-        "DOC = NotebookData('{{ DOC.mip_era.lower() }}', '{{ DOC.institute.lower() }}', '{{ DOC.source_id.lower() }}', '{{ r.name.lower() }}')"
+        "DOC = NotebookOutput('{{ DOC.mip_era.lower() }}', '{{ DOC.institute.lower() }}', '{{ DOC.source_id.lower() }}', '{{ r.name.lower() }}')"
     ]
 },
 {

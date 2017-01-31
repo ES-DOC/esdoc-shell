@@ -31,13 +31,16 @@
         "# Set as follows: DOC.set_value(value)  \n",
         {% end %}
         {% if p.enum is not None %}
-            "# Choices: \n",
+            "# Valid Choices: \n",
             {% for c in p.enum.choices %}
-            "#      \"{{ c.value }}{% if c.is_other %}: [Please specify]{% end %}\"  \n",
+            "#      \"{{ c.value }}\"  \n",
+            {% end %}
+            {% if p.enum.is_open %}
+            "#      \"Other: [Please specify]\"  \n",
             {% end %}
         {% end %}
         {% if p.typeof == 'bool' %}
-            "# Choices: \n",
+            "# Valid Choices: \n",
             "#     True  \n",
             "#     False  \n",
         {% end %}
