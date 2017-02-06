@@ -357,5 +357,5 @@ class DocumentSet(object):
             del experiment.multi_ensembles
 
         for doc in self.documents:
-            _write(doc, pyesdoc.ENCODING_JSON)
+            _write(doc, pyesdoc.constants.ENCODING_JSON)
 

@@ -40,23 +40,23 @@ alias esdoc-stack-update-lite=$ESDOC_HOME/bash/stack/update_lite.sh
 alias esdoc-deployment-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_static_assets.sh
 
 # CMIP6 commands.
-alias esdoc-cmip6-archive-documents=$ESDOC_HOME/bash/cmip6/archive_documents.sh
-alias esdoc-cmip6-cv-init=$ESDOC_HOME/bash/cmip6/cv_init.sh
-alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations_generate.sh
-alias esdoc-cmip6-specializations-sync=$ESDOC_HOME/bash/cmip6/specializations_sync.sh
-alias esdoc-cmip6-specializations-validate=$ESDOC_HOME/bash/cmip6/specializations_validate.sh
-alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
-alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experiments_config.sh
-alias esdoc-cmip6-write-experiments-d3=$ESDOC_HOME/bash/cmip6/write_experiments_d3.sh
-alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/write_model_notebooks.sh
-alias esdoc-cmip6-write-model-from-cmip5=$ESDOC_HOME/bash/cmip6/write_model_from_cmip5.sh
+alias esdoc-cmip6-archive-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh.sh
+alias esdoc-cmip6-cv-init=$ESDOC_HOME/bash/cmip6/cv/init.sh
+alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations/generate.sh
+alias esdoc-cmip6-specializations-sync=$ESDOC_HOME/bash/cmip6/specializations/sync.sh
+alias esdoc-cmip6-specializations-validate=$ESDOC_HOME/bash/cmip6/specializations/validate.sh
+alias esdoc-cmip6-write-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/write_cim_documents.sh
+alias esdoc-cmip6-write-experiment-config=$ESDOC_HOME/bash/cmip6/experiments/write_config.sh
+alias esdoc-cmip6-write-experiment-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
+alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/models/write_notebooks.sh
+alias esdoc-cmip6-write-model-cim-documents-from-cmip5=$ESDOC_HOME/bash/cmip6/models/write_cim_documents_from_cmip5.sh
 
 _reset_cmip6()
 {
 	esdoc-archive-delete-documents cmip6-draft
 	esdoc-ws-db-flush cmip6-draft
-	esdoc-cmip6-write-experiments
-	esdoc-cmip6-archive-documents
+	esdoc-cmip6-write-experiment-cim-documents
+	esdoc-cmip6-archive-experiment-cim-documents
 	esdoc-ws-db-ingest
 }
 alias esdoc-cmip6-reset=_reset_cmip6
