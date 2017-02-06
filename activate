@@ -49,14 +49,15 @@ alias esdoc-cmip6-write-experiments=$ESDOC_HOME/bash/cmip6/write_experiments.sh
 alias esdoc-cmip6-write-experiments-config=$ESDOC_HOME/bash/cmip6/write_experiments_config.sh
 alias esdoc-cmip6-write-experiments-d3=$ESDOC_HOME/bash/cmip6/write_experiments_d3.sh
 alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/write_model_notebooks.sh
+alias esdoc-cmip6-write-model-from-cmip5=$ESDOC_HOME/bash/cmip6/write_model_from_cmip5.sh
 
 _reset_cmip6()
 {
 	esdoc-archive-delete-documents cmip6-draft
-	esdoc-api-db-flush cmip6-draft
+	esdoc-ws-db-flush cmip6-draft
 	esdoc-cmip6-write-experiments
 	esdoc-cmip6-archive-documents
-	esdoc-api-db-ingest
+	esdoc-ws-db-ingest
 }
 alias esdoc-cmip6-reset=_reset_cmip6
 

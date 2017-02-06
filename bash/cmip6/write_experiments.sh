@@ -16,7 +16,7 @@ main()
 	rm -rf $io_dir/*.xml
 
 	activate_venv pyesdoc
-	python $ESDOC_HOME/bash/cmip6/write_experiments.py --io-dir=$io_dir --spreadsheet=$spreadsheet --identifiers=$identifiers
+	python $ESDOC_HOME/bash/cmip6/write_experiments --io-dir=$io_dir --spreadsheet=$spreadsheet --identifiers=$identifiers
 
 	log "PYESDOC : cmip6 experiments written to "$io_dir
 }
