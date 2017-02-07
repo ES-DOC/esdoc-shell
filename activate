@@ -40,7 +40,7 @@ alias esdoc-stack-update-lite=$ESDOC_HOME/bash/stack/update_lite.sh
 alias esdoc-deployment-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_static_assets.sh
 
 # CMIP6 commands.
-alias esdoc-cmip6-archive-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh.sh
+alias esdoc-cmip6-archive-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh
 alias esdoc-cmip6-cv-init=$ESDOC_HOME/bash/cmip6/cv/init.sh
 alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations/generate.sh
 alias esdoc-cmip6-specializations-sync=$ESDOC_HOME/bash/cmip6/specializations/sync.sh
@@ -63,6 +63,10 @@ alias esdoc-cmip6-reset=_reset_cmip6
 
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_HOME/bash/cmip6/*.sh
+chmod a+x $ESDOC_HOME/bash/cmip6/cv/*.sh
+chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
+chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
+chmod a+x $ESDOC_HOME/bash/cmip6/simulations/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
 chmod a+x $ESDOC_HOME/bash/security/*.sh

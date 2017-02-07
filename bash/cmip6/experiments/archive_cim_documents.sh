@@ -15,7 +15,7 @@ main()
 	rm -rf $target_dir/*.json
 
 	activate_venv pyesdoc
-	python $ESDOC_HOME/bash/cmip6/archive_documents.py --source-dir=$source_dir --target-dir=$target_dir
+	python $ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.py --source-dir=$source_dir --target-dir=$target_dir
 
 	log "PYESDOC : CMIP6 : archived documents @ "$target_dir
 }

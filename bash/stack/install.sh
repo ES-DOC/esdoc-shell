@@ -41,6 +41,10 @@ _install_dirs()
 _install_script_permissions()
 {
 	chmod a+x $ESDOC_HOME/bash/cmip6/*.sh
+	chmod a+x $ESDOC_HOME/bash/cmip6/cv/*.sh
+	chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
+	chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
+	chmod a+x $ESDOC_HOME/bash/cmip6/simulations/*.sh
 	chmod a+x $ESDOC_HOME/bash/deployment/*.sh
 	chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
 	chmod a+x $ESDOC_HOME/bash/security/*.sh
