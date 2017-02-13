@@ -17,7 +17,7 @@ import os
 from tornado import template
 
 import pyesdoc
-from pyesdoc.ipython.model_realm import NotebookData
+from pyesdoc.ipython.model_realm_properties import NotebookOutput
 from pyesdoc.cv.archive import load_collection as load_cv_collection
 from pyesdoc.cv.model import Collection
 
@@ -74,7 +74,7 @@ def _get_data(output_dir, mip_era, institute, source_id, realm):
 
     """
     # Instantiate wrapper.
-    data = NotebookData(mip_era, institute, source_id, realm)
+    data = NotebookOutput(mip_era, institute, source_id, realm)
 
     # Initialise state from previously saved output.
     data.read(os.path.join(output_dir, "output"))
@@ -86,8 +86,7 @@ def _write(output_dir, data):
     """Writes notebook content to file system.
 
     """
-    fpath = os.path.join(output_dir, "notebooks")
-    fpath = os.path.join(fpath, data.notebook_filename)
+    fpath = os.path.join(output_dir, "{}--{}--{}.ipynb".format(data.institute, data.source_id, data.realm))
     with open(fpath, 'w') as fstream:
         fstream.write(_get_content(data))
 
@@ -116,7 +115,7 @@ def _get_data(output_dir, mip_era, institute, source_id, realm):
 
     """
     # Instantiate wrapper.
-    data = NotebookData(mip_era, institute, source_id, realm)
+    data = NotebookOutput(mip_era, institute, source_id, realm)
 
     # Initialise from previously saved output.
     fname = "{}--{}--{}.json".format(institute, source_id, realm)
@@ -129,15 +128,15 @@ def _get_data(output_dir, mip_era, institute, source_id, realm):
     return data
 
 
-def _write(output_dir, mip_era, institute, source_id, realm, content):
-    """Writes notebook content to file system.
-
-    """
-    fname = "{}--{}--{}.ipynb".format(institute, source_id, realm)
-    fpath = os.path.join(output_dir, "notebooks")
-    fpath = os.path.join(fpath, fname)
-    with open(fpath, 'w') as fstream:
-        fstream.write(content)
+#def _write(output_dir, mip_era, institute, source_id, realm, content):
+#    """Writes notebook content to file system.
+#
+#    """
+#    fname = "{}--{}--{}.ipynb".format(institute, source_id, realm)
+#    fpath = os.path.join(output_dir, "notebooks")
+#    fpath = os.path.join(fpath, fname)
+#    with open(fpath, 'w') as fstream:
+#        fstream.write(content)
 
 def print_attributes(obj):
     print "Type: ", type(obj)
