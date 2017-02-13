@@ -10,15 +10,16 @@ main()
 
 	declare source=$ESDOC_DIR_REPOS/cmip6-cv
 	declare dest=$ESDOC_DIR_REPOS/esdoc-cv/wcrp
+	declare dest_pyesdoc=$ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/cv/archive/wcrp
 
 	activate_venv pyesdoc
-	python $ESDOC_HOME/bash/cmip6/cv_init.py --source=$source --dest=$dest
+	python $ESDOC_HOME/bash/cmip6/cv/init.py --source=$source --dest=$dest
 
-	rm -rf $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/cv/archive/wcrp
-	cp -r $dest $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/cv/archive/wcrp
+	rm -rf $dest_pyesdoc
+	cp -r $dest $dest_pyesdoc
 
 	log "PYESDOC : WCRP cmip6 cv written to "$dest
-	log "PYESDOC : WCRP cmip6 cv written to "$ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/cv/archive/wcrp
+	log "PYESDOC : WCRP cmip6 cv written to "$dest_pyesdoc
 }
 
 # Invoke entry point.

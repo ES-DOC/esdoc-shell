@@ -16,7 +16,7 @@ _sync_cim_profile()
 		'atmospheric-chemistry'
 		'landice'
 		'landsurface'
-		'ocean-bgc'
+		'oceanbgc'
 		'seaice'
 		'toplevel'
 	)
@@ -37,6 +37,7 @@ _sync_definitions()
 	declare -a SPECIALIZATIONS=(
 		'atmosphere'
 		'ocean'
+		'oceanbgc'
 		'seaice'
 	)
 
@@ -85,7 +86,7 @@ _sync_templates()
 		'atmospheric-chemistry'
 		'landice'
 		'landsurface'
-		'ocean-bgc'
+		'oceanbgc'
 		'seaice'
 		'toplevel'
 	)
@@ -113,7 +114,7 @@ _sync_tooling()
 		'atmospheric-chemistry'
 		'landice'
 		'landsurface'
-		'ocean-bgc'
+		'oceanbgc'
 		'seaice'
 		'toplevel'
 	)

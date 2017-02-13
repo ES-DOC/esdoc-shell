@@ -16,6 +16,7 @@ main()
 		declare -a SPECIALIZATIONS=(
 			'atmosphere'
 			'ocean'
+			'oceanbgc'
 			'seaice'
 		)
 		for specialization in "${SPECIALIZATIONS[@]}"

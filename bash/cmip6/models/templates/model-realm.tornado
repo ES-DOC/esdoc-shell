@@ -1,0 +1,30 @@
+{
+    "cells": [
+{% include model-realm-header.tornado %}
+{% for pc_idx, pc in enumerate(r.all_property_containers) %}
+    {% include model-realm-property-container.tornado %}
+{% end %}
+{% include model-realm-footer.tornado %}
+    ],
+    "metadata": {
+        "kernelspec": {
+            "display_name": "Python 2",
+            "language": "python",
+            "name": "python2"
+        },
+        "language_info": {
+            "codemirror_mode": {
+                "name": "ipython",
+                "version": 2
+            },
+            "file_extension": ".py",
+            "mimetype": "text/x-python",
+            "name": "python",
+            "nbconvert_exporter": "python",
+            "pygments_lexer": "ipython2",
+            "version": "2.7.10"
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 0
+}

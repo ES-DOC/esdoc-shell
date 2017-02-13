@@ -18,8 +18,6 @@ from tornado import template
 
 import pyesdoc
 from pyesdoc.ipython.model_realm_properties import NotebookOutput
-from pyesdoc.cv.archive import load_collection as load_cv_collection
-from pyesdoc.cv.model import Collection
 
 
 
@@ -53,17 +51,15 @@ def _main(args):
     if not os.path.isfile(args.cfg_fpath):
         raise ValueError("Configration file does not exist")
 
-    # Read CMIP6 JSON/CV
-    models = _get_cv()
-
-    # should be pulled in from someplace else, not set here
-    mip_era = 'cmip6'
+    # Load configuration file.
+    with open(args.cfg_fpath, 'r') as fstream:
+        cfg = json.loads(fstream.read())
 
     # For each institute / model / realm combination, emit a notebook.
-    for institute, model, realms in [(i['institute'], i['name'], i['realms']) for i in models]:
-        for realm in realms:
+    for institute, model in [(i.split(":")[0], i.split(":")[1]) for i in cfg['models']]:
+        for realm in cfg['realms']:
             # ... load output;
-            output = _get_output(args.output_dir, mip_era, institute, model, realm)
+            output = _get_output(args.output_dir, cfg['mip_era'], institute, model, realm)
 
             # ... write notebook;
             _write(output)
@@ -112,37 +108,6 @@ def _get_notebook(data):
     # Return prettified content.
     return json.dumps(json.loads(content), indent=4)
 
-
-def _get_cv():
-    models = []
-
-    # possible realms- should be set to definitive list, not this
-    #realms = ['aerosol', 'atmosphere', 'atmospheric_chemistry', 'land_ice',
-    #          'land_surface', 'ocean', 'ocean_biogeochemistry', 'sea_ice']
-    # should work, but sea_ice / seaice
-    #realms = ['atmosphere', 'ocean', 'sea_ice']
-    realms = ['atmosphere', 'ocean']
-
-    # get the CMIP6 source_id JSON
-    cv_models = load_cv_collection('wcrp', 'cmip6', 'source-id')
-    assert isinstance(cv_models, Collection)
-
-    # for each participating model, record the name, institutes, and realms simulated
-    for cv_model in cv_models.terms:
-
-        # foreach institute that runs the model
-        for institute in cv_model.data['institution_id']:
-            model = dict()
-            model['name'] = cv_model.data['source_id'].lower()
-            model['institute'] = institute.lower()
-            model['realms'] = []
-            for realm in realms:
-                if (cv_model.data[realm] and cv_model.data[realm] != 'None'):
-                    model['realms'].append(realm)
-
-            models.append(model)
-
-    return models
 
 # Entry point.
 if __name__ == '__main__':
