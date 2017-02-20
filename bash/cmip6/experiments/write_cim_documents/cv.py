@@ -39,7 +39,7 @@ def _validate(typeof, terms, docs):
     invalid_docs = [i for i in docs if i not in terms]
     if invalid_docs:
         print "------------------------------------------------------"
-        print "NON-VALIDATED {} NAMES".format(typeof)
+        print "INVALID {} SPREADSHEET NAMES".format(typeof)
         print "------------------------------------------------------"
         for doc in invalid_docs:
             print doc
@@ -47,7 +47,7 @@ def _validate(typeof, terms, docs):
     invalid_terms = [i for i in terms if i not in docs]
     if invalid_terms:
         print "------------------------------------------------------"
-        print "NON-VALIDATED {} TERMS".format(typeof)
+        print "UNMAPPED {} WCRP TERMS".format(typeof)
         print "------------------------------------------------------"
         for term in invalid_terms:
             print term

@@ -55,8 +55,11 @@ if not os.path.isdir(_ARGS.io_dir):
 # Initialise pyesdoc.
 pyesdoc.drq.initialize()
 
+# Create document identifier mappings.
+identifiers = DocumentIdentifiers(_ARGS.identifiers)
+
 # Open spreadsheet accessor.
-xl = Spreadsheet(_ARGS.spreadsheet_filepath, DocumentIdentifiers(_ARGS.identifiers))
+xl = Spreadsheet(_ARGS.spreadsheet_filepath, identifiers)
 
 # Create document set.
 docs = DocumentSet(xl)

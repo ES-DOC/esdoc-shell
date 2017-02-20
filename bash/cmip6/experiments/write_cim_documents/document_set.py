@@ -85,7 +85,7 @@ class DocumentSet(object):
 
     @property
     def url_containers(self):
-        """Gets full set of managed objects that have citation collections.
+        """Gets full set of managed objects that have url collections.
 
         """
         return self[WS_PARTY] + self[WS_CITATIONS]
@@ -108,13 +108,6 @@ class DocumentSet(object):
         """
         return reduce(add, [i.responsible_parties for i in self.responsible_party_containers])
 
-
-    @property
-    def urls(self):
-        """Gets full set of managed url's.
-
-        """
-        return reduce(add, [i.url for i in self.url_containers])
 
 
     def _get_doc_link(self, doc, type_note=None):
@@ -188,6 +181,14 @@ class DocumentSet(object):
         # Set urls.
         for x in self.url_containers:
             x.url = convert_name(x.url, self[WS_URL])
+
+        # Set data links.
+        for x in [i for i in self[WS_FORCING_CONSTRAINT] if i.data_link]:
+            url = convert_name(x.data_link, self[WS_URL])
+            dataset = cim.v2.Dataset()
+            dataset.availability.append(url)
+            dataset.name = url.name
+            x.data_link = dataset
 
         # Set citations.
         for x in self.citation_containers:

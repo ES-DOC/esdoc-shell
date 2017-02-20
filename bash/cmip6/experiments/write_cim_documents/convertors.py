@@ -86,16 +86,6 @@ def convert_to_cim_v2_time_period(value):
     return instance
 
 
-def convert_to_cim_v2_numerical_requirement_delivery_order(value):
-    """Converts a cell value to a cim.v2.NumericalRequirementScope enum value.
-
-    """
-    return {
-        1: "pre-simulation",
-        2: "post-simulation",
-    }[value]
-
-
 def convert_to_cim_v2_numerical_requirement_scope(value):
     """Converts a cell value to a cim.v2.NumericalRequirementScope enum value.
 
@@ -122,18 +112,20 @@ def convert_to_cim_v2_date_time(value, offset):
     return instance
 
 
-def convert_to_cim_2_responsibilty(role, row, col_idx):
+def convert_to_cim_v2_responsibilty(role, row, col_idx):
     """Returns experiment responsibility info.
 
     """
     if role is None:
         return
 
-    col_idx = convert_col_idx(col_idx)
+    col_from = convert_col_idx(col_idx.split("-")[0])
+    col_to = convert_col_idx(col_idx.split("-")[1])
+    offsets = range(col_to - col_from + 1)
 
     responsibility = cim.v2.Responsibility()
     responsibility.role = convert_to_unicode(role)
-    responsibility.parties = [r for r in [row(col_idx), row(col_idx + 1), row(col_idx + 2)] if r]
+    responsibility.parties = [i for i in [row(col_from + j) for j in offsets] if i]
 
     return responsibility
 
