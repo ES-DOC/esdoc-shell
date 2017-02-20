@@ -42,7 +42,7 @@ _DOC_CACHE = {}
 _OUTPUT = {}
 
 # Viewer url.
-_VIEWER_URL = "http://view.es-doc.org?renderMethod=id&project=cmip6-draft&id={}&version=latest&client=mohc"
+_VIEWER_URL = "https://documentation.es-doc.org/cmip6/experiments/{}?client=mohc"
 
 
 def _yield_documents(input_dir, doc_type):
@@ -96,8 +96,6 @@ def _map_requirement(i):
 
     result = OrderedDict()
     result['canonical_name'] = i.name
-    if i.delivery_order:
-        result['delivery_order'] = i.delivery_order
     result['description'] = i.description
     result['isConformanceRequested'] = i.is_conformance_requested
     result['keywords'] = i.keywords
@@ -126,8 +124,9 @@ def _map_experiment(i):
     result['related_experiments'] = sorted([{'name': j.name, 'relationship': j.relationship} for j in i.related_experiments])
     result['related_mips'] = sorted([j.canonical_name for j in i.related_mips])
     result['requirements'] = [_map_requirement(j) for j in i.requirements]
+    result['tier'] = i.tier
     result['uid'] = i.meta.id
-    result['viewerURL'] = _VIEWER_URL.format(i.meta.id)
+    result['viewerURL'] = _VIEWER_URL.format(i.canonical_name)
 
     return result
 
