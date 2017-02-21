@@ -79,6 +79,7 @@ WS_MAPS = {
             ("name", "A"),
             ("long_name", "B"),
             ("canonical_name", "C"),
+            ("is_conformance_info_required", "D"),
             ("scope", "E", convert_to_cim_v2_numerical_requirement_scope),
             ("keywords", "F"),
             ("description", "G"),

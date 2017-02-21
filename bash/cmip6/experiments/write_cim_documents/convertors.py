@@ -148,7 +148,8 @@ def convert_name(
     else:
         name = str(name).split('.')[0]
     finally:
-        if len(name.strip()) == 0:
+        name = name.strip()
+        if len(name) == 0:
             return
 
     name = name.lower()
@@ -172,8 +173,12 @@ def convert_names(
 
     """
     result = [convert_name(n, collection, slots) for n in names]
+    result = [d for d in result if d]
 
-    return [d for d in result if d]
+    if len(names) != len(result):
+        print names
+
+    return result
 
 
 def convert_col_idx(col_idx):

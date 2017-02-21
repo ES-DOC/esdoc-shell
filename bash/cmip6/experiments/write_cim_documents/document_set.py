@@ -271,10 +271,6 @@ class DocumentSet(object):
             governed_experiments += sorted(list(set(p.governed_experiments) - set(governed_experiments)), key=lambda i: i.name)
             p.governed_experiments = governed_experiments
 
-        for e in self[WS_EXPERIMENT]:
-            if e.name is None and e.canonical_name is None:
-                print "XXX", e.__dict__
-
 
     def set_document_links(self):
         """Sets inter document links.
