@@ -15,66 +15,64 @@ source ./sh/activate
 # -------------------------------------------------------------------------------
 # Update front-ends
 # -------------------------------------------------------------------------------
-# ... compare
-cd $HOME/webapps/$1_fe_compare
-git pull
 
-# ... demo
-cd $HOME/webapps/$1_fe_demo
-git pull
+declare -a _ESDOC_FRONT_ENDS=(
+	'compare'
+	'demo'
+	'errata'
+	'search'
+	'splash'
+	'static'
+	'view'
+)
 
-# ... errata
-cd $HOME/webapps/$1_fe_errata
+# Simply pull latest from GH.
+for _ESDOC_FRONT_END in "${_ESDOC_FRONT_ENDS[@]}"
+do
+	cd $HOME/webapps/$1_fe_$_ESDOC_FRONT_END
+	git pull
+done
+
+# Update errata index.html.
 cp $HOME/webapps/$1_fe_errata/search.html $HOME/webapps/$1_fe_errata/index.html
-git pull
-
-# ... search
-cd $HOME/webapps/$1_fe_search
-git pull
-
-# ... splash
-cd $HOME/webapps/$1_fe_splash
-git pull
-
-# ... static
-cd $HOME/webapps/$1_fe_static
-git pull
-
-# ... view
-cd $HOME/webapps/$1_fe_view
-git pull
 
 # -------------------------------------------------------------------------------
 # Update web-services
 # -------------------------------------------------------------------------------
+declare -a _ESDOC_WEB_SERVICES=(
+	'cdf2cim'
+	'documentation'
+	'errata'
+	'url_rewriter_doc'
+	'url_rewriter_fi'
+)
+
+# Simply pull latest from GH.
+for _ESDOC_FRONT_END in "${_ESDOC_FRONT_ENDS[@]}"
+do
+	cd $HOME/webapps/$1_fe_$_ESDOC_FRONT_END
+	git pull
+done
+
+# Reload daemons.
 # ... cdf2cim
-cd $HOME/webapps/$1_ws_cdf2cim
-git pull
-source ./sh/activate
+source $HOME/webapps/$1_ws_cdf2cim/sh/activate
 cdf2cim-ws-daemon-reload
 
 # ... documentation
-cd $HOME/webapps/$1_ws_documentation
-git pull
-source ./sh/activate
+source $HOME/webapps/$1_ws_documentation/sh/activate
 esdoc-ws-daemon-reload
 
 # ... errata
-cd $HOME/webapps/$1_ws_errata
-git pull
-source ./sh/activate
+source $HOME/webapps/$1_ws_errata/sh/activate
 errata-ws-daemon-reload
 
 # ... url rewriter (doc)
-cd $HOME/webapps/$1_ws_url_rewriter_doc
-git pull
-source ./sh/activate
+source $HOME/webapps/$1_ws_url_rewriter_doc/sh/activate
 rewriter-ws-daemon-reload
 
 # ... url rewriter (further info)
-cd $HOME/webapps/$1_ws_url_rewriter_fi
-git pull
-source ./sh/activate
+source $HOME/webapps/$1_ws_url_rewriter_fi/sh/activate
 rewriter-ws-daemon-reload
 
 # -------------------------------------------------------------------------------
