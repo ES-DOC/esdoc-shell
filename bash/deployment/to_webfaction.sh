@@ -76,3 +76,8 @@ cd $HOME/webapps/$1_ws_url_rewriter_fi
 git pull
 source ./sh/activate
 rewriter-ws-daemon-reload
+
+# -------------------------------------------------------------------------------
+# Finalization
+# -------------------------------------------------------------------------------
+cd $HOME
