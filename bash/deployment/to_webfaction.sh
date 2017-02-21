@@ -13,13 +13,18 @@ _log()
 	    	echo -e "ES-DOC DEPLOYMENT > "$1
 	    fi
 	else
-	    echo -e "ES-DOC DEPLOYMENT > "
+	    echo -e ""
 	fi
 }
 
 _log_banner()
 {
 	echo "----------------------------------------------------------------"
+}
+
+_log_end()
+{
+	echo ""
 }
 
 # -------------------------------------------------------------------------------
@@ -34,6 +39,7 @@ cd $HOME/weblibs/$1/esdoc-archive
 git pull
 source ./sh/activate
 esdoc-archive-uncompress
+_log_end
 
 # ... pyesdoc
 _log_banner
@@ -43,6 +49,7 @@ _log_banner
 cd $HOME/weblibs/$1/esdoc-py-client
 git pull
 source ./sh/activate
+_log_end
 
 # -------------------------------------------------------------------------------
 # Update front-ends
@@ -67,6 +74,7 @@ do
 
 	cd $HOME/webapps/$1_fe_$_ESDOC_FRONT_END
 	git pull
+	_log_end
 done
 
 # Update errata index.html.
@@ -92,6 +100,7 @@ do
 
 	cd $HOME/webapps/$1_ws_$_ESDOC_WEB_SERVICE
 	git pull
+	_log_end
 done
 
 # Reload daemons.
@@ -102,6 +111,7 @@ _log_banner
 
 source $HOME/webapps/$1_ws_cdf2cim/sh/activate
 cdf2cim-ws-daemon-reload
+_log_end
 
 # ... documentation
 _log_banner
@@ -110,6 +120,7 @@ _log_banner
 
 source $HOME/webapps/$1_ws_documentation/sh/activate
 esdoc-ws-daemon-reload
+_log_end
 
 # ... errata
 _log_banner
@@ -118,6 +129,7 @@ _log_banner
 
 source $HOME/webapps/$1_ws_errata/sh/activate
 errata-ws-daemon-reload
+_log_end
 
 # ... url rewriter (doc)
 _log_banner
@@ -126,6 +138,7 @@ _log_banner
 
 source $HOME/webapps/$1_ws_url_rewriter_doc/sh/activate
 rewriter-ws-daemon-reload
+_log_end
 
 # ... url rewriter (further info)
 _log_banner
@@ -134,6 +147,7 @@ _log_banner
 
 source $HOME/webapps/$1_ws_url_rewriter_fi/sh/activate
 rewriter-ws-daemon-reload
+_log_end
 
 # -------------------------------------------------------------------------------
 # Finalization
@@ -143,3 +157,4 @@ cd $HOME
 _log_banner
 _log $1" deployment complete"
 _log_banner
+_log_end
