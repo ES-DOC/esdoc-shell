@@ -17,9 +17,9 @@ import os
 from tornado import template
 
 import pyesdoc
-from pyesdoc.ipython.model_realm_properties import NotebookOutput
 from pyesdoc.cv.archive import load_collection as load_cv_collection
 from pyesdoc.cv.model import Collection
+from pyesdoc.ipython.model_realm_properties import NotebookOutput
 
 
 
