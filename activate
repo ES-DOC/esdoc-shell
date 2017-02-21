@@ -62,11 +62,11 @@ _reset_cmip6()
 alias esdoc-cmip6-reset=_reset_cmip6
 
 # Ensure target scripts are executable.
-chmod a+x $ESDOC_HOME/bash/cmip6/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/cv/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/simulations/*.sh
+chmod a+x $ESDOC_HOME/bash/cmip6/specializations/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
 chmod a+x $ESDOC_HOME/bash/security/*.sh
