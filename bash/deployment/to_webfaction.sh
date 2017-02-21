@@ -1,7 +1,6 @@
 # Wraps standard echo by adding ESDOC prefix.
 _log()
 {
-	declare now=`date +%Y-%m-%dT%H:%M:%S`
 	declare tabs=''
 	if [ "$1" ]; then
 		if [ "$2" ]; then
@@ -9,12 +8,12 @@ _log()
 			do
 				declare tabs+='\t'
 			done
-	    	echo -e $now" [INFO] :: ES-DOC DEPLOYMENT > "$tabs$1
+	    	echo -e "ES-DOC DEPLOYMENT > "$tabs$1
 	    else
-	    	echo -e $now" [INFO] :: ES-DOC DEPLOYMENT > "$1
+	    	echo -e "ES-DOC DEPLOYMENT > "$1
 	    fi
 	else
-	    echo -e $now" [INFO] :: ES-DOC DEPLOYMENT > "
+	    echo -e "ES-DOC DEPLOYMENT > "
 	fi
 }
 
