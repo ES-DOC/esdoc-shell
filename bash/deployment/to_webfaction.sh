@@ -1,13 +1,35 @@
+# Wraps standard echo by adding ESDOC prefix.
+_log()
+{
+	declare now=`date +%Y-%m-%dT%H:%M:%S`
+	declare tabs=''
+	if [ "$1" ]; then
+		if [ "$2" ]; then
+			for ((i=0; i<$2; i++))
+			do
+				declare tabs+='\t'
+			done
+	    	echo -e $now" [INFO] :: ES-DOC DEPLOYMENT > "$tabs$1
+	    else
+	    	echo -e $now" [INFO] :: ES-DOC DEPLOYMENT > "$1
+	    fi
+	else
+	    echo -e $now" [INFO] :: ES-DOC DEPLOYMENT > "
+	fi
+}
+
 # -------------------------------------------------------------------------------
 # Update libs
 # -------------------------------------------------------------------------------
 # ... archive
+_log "updating document archive ..."
 cd $HOME/weblibs/$1/esdoc-archive
 git pull
 source ./sh/activate
 esdoc-archive-uncompress
 
 # ... pyesdoc
+_log "updating pyesdoc lib ..."
 cd $HOME/weblibs/$1/esdoc-py-client
 git pull
 source ./sh/activate
@@ -29,6 +51,7 @@ declare -a _ESDOC_FRONT_ENDS=(
 # Simply pull latest from GH.
 for _ESDOC_FRONT_END in "${_ESDOC_FRONT_ENDS[@]}"
 do
+	_log "updating front-end: "$1_fe_$_ESDOC_FRONT_END
 	cd $HOME/webapps/$1_fe_$_ESDOC_FRONT_END
 	git pull
 done
@@ -48,30 +71,36 @@ declare -a _ESDOC_WEB_SERVICES=(
 )
 
 # Simply pull latest from GH.
-for _ESDOC_FRONT_END in "${_ESDOC_FRONT_ENDS[@]}"
+for _ESDOC_WEB_SERVICE in "${_ESDOC_WEB_SERVICES[@]}"
 do
-	cd $HOME/webapps/$1_fe_$_ESDOC_FRONT_END
+	_log "updating web-service: "$1_ws_$_ESDOC_WEB_SERVICE
+	cd $HOME/webapps/$1_ws_$_ESDOC_WEB_SERVICE
 	git pull
 done
 
 # Reload daemons.
 # ... cdf2cim
+_log "reloading web-service: "$1_ws_cdf2cim
 source $HOME/webapps/$1_ws_cdf2cim/sh/activate
 cdf2cim-ws-daemon-reload
 
 # ... documentation
+_log "reloading web-service: "$1_ws_documentation
 source $HOME/webapps/$1_ws_documentation/sh/activate
 esdoc-ws-daemon-reload
 
 # ... errata
+_log "reloading web-service: "$1_ws_errata
 source $HOME/webapps/$1_ws_errata/sh/activate
 errata-ws-daemon-reload
 
 # ... url rewriter (doc)
+_log "reloading web-service: "$1_ws_url_rewriter_doc
 source $HOME/webapps/$1_ws_url_rewriter_doc/sh/activate
 rewriter-ws-daemon-reload
 
 # ... url rewriter (further info)
+_log "reloading web-service: "$1_ws_url_rewriter_fi
 source $HOME/webapps/$1_ws_url_rewriter_fi/sh/activate
 rewriter-ws-daemon-reload
 
