@@ -15,6 +15,7 @@ import os
 import pyesdoc
 
 from cv import validate_vocabularies
+from convertors import UNCONVERTED_NAMES
 from document_identifiers import DocumentIdentifiers
 from document_set import DocumentSet
 from xl import Spreadsheet
@@ -70,9 +71,17 @@ docs.ignore_documents()
 # Set intra-document mesh.
 docs.set_document_connections()
 
+# Emit set of unconverted names.
+for collection_type, names in UNCONVERTED_NAMES.items():
+    print "------------------------------------------------------"
+    print "INVALID CELL REFERENCES: {} ".format(collection_type)
+    print sorted(list(names))
+    print "------------------------------------------------------"
+
 # Create intra-document links.
 docs.set_document_links()
 
+# Write documents to file system.
 docs.write(_ARGS.io_dir)
 
 # Write vocab validation report.

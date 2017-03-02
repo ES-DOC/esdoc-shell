@@ -35,6 +35,7 @@ _sync_definitions()
 
 	# Set of specializations.
 	declare -a SPECIALIZATIONS=(
+		'toplevel'
 		'atmosphere'
 		'ocean'
 		'oceanbgc'
@@ -44,33 +45,34 @@ _sync_definitions()
 	# Update pyesdoc.
 	for specialization in "${SPECIALIZATIONS[@]}"
 	do
-		rm $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/$specialization*.py
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/$specialization*.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6
-	done
+		if [ $specialization = "toplevel" ]; then
+			declare file_prefix="model"
+		else
+			declare file_prefix=$specialization
+		fi
 
-	# Update generated artefacts.
-	for specialization in "${SPECIALIZATIONS[@]}"
-	do
+		# ... Update pyesdoc.
+		rm $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/$file_prefix*.py
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/$file_prefix*.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6
+
+		# ... update generated artefacts.
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=mm
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=json
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=ids-level-1
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=ids-level-2
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate --type=ids-level-3
-	done
 
-	# Updated esdoc-docs.
-	for specialization in "${SPECIALIZATIONS[@]}"
-	do
-		# ... remove previously generated
-		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/config/$specialization.json
-		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$specialization*.csv
-		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/mindmaps/$specialization.mm
-		# ... copy generated
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization.mm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/mindmaps/$specialization.mm
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization.json $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/config/$specialization.json
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization-ids-level-1.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$specialization-ids-level-1.csv
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization-ids-level-2.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$specialization-ids-level-2.csv
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$specialization-ids-level-3.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$specialization-ids-level-3.csv
+		# ... remove previously generated docs
+		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/config/$file_prefix.json
+		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$file_prefix*.csv
+		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/mindmaps/$file_prefix.mm
+		# ... copy generated docs
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$file_prefix.mm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/mindmaps/$file_prefix.mm
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$file_prefix.json $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/config/$file_prefix.json
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$file_prefix-ids-level-1.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$file_prefix-ids-level-1.csv
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$file_prefix-ids-level-2.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$file_prefix-ids-level-2.csv
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$file_prefix-ids-level-3.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$file_prefix-ids-level-3.csv
+
 	done
 }
 
@@ -102,50 +104,13 @@ _sync_templates()
 	done
 }
 
-# Sync tooling.
-_sync_tooling()
-{
-	log "PYESDOC : syncing cmip6 specialization tooling ..."
-
-	# Set of specializations.
-	declare -a SPECIALIZATIONS=(
-		'aerosols'
-		'atmosphere'
-		'atmospheric-chemistry'
-		'landice'
-		'landsurface'
-		'oceanbgc'
-		'seaice'
-		'toplevel'
-	)
-
-	# Sync definitions.
-	for specialization in "${SPECIALIZATIONS[@]}"
-	do
-		# ... remove previous
-		rm -rf $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate
-		mkdir $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate
-		rm -rf $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/validate
-		mkdir $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/validate
-		# ... copy current
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/* $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/validate/* $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/validate
-	done
-
-	# Sync to pyesdoc.
-	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_factory.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
-	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_loader.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
-	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_model.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
-	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_parser.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
-}
-
 # Main entry point.
 main()
 {
+	source $ESDOC_HOME/bash/cmip6/specializations/sync_tooling.sh
+	_sync_templates
 	_sync_cim_profile
 	_sync_definitions
-	_sync_templates
-	_sync_tooling
 }
 
 # Invoke entry point.

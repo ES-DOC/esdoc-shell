@@ -9,11 +9,17 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
+import collections
 import string
 
 import pyesdoc.ontologies.cim as cim
 
 from constants import *
+
+
+
+# Names that could not be converted to documents ... i.e. cell reference issues.
+UNCONVERTED_NAMES = collections.defaultdict(set)
 
 
 
@@ -165,6 +171,7 @@ def convert_name(
 
 
 def convert_names(
+    collection_type,
     names,
     collection,
     slots=["citation_detail", "canonical_name", "name"]
@@ -172,11 +179,13 @@ def convert_names(
     """Converts a set of names.
 
     """
-    result = [convert_name(n, collection, slots) for n in names]
-    result = [d for d in result if d]
-
-    if len(names) != len(result):
-        print names
+    result = []
+    for name in names:
+        doc = convert_name(name, collection, slots)
+        if doc is None:
+            UNCONVERTED_NAMES[collection_type].add(name)
+        else:
+            result.append(doc)
 
     return result
 

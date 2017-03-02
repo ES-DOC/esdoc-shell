@@ -11,6 +11,7 @@ main()
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/validate
 	else
 		declare -a SPECIALIZATIONS=(
+			'toplevel'
 			'atmosphere'
 			'ocean'
 			'oceanbgc'

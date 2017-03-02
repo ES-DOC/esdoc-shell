@@ -192,16 +192,16 @@ class DocumentSet(object):
 
         # Set citations.
         for x in self.citation_containers:
-            x.citations = convert_names(x.citations, self[WS_CITATIONS])
+            x.citations = convert_names("citations", x.citations, self[WS_CITATIONS])
 
         # Set responsibility parties.
         for rp in self.responsible_parties:
-            rp.parties = convert_names(rp.parties, self[WS_PARTY])
+            rp.parties = convert_names(WS_PARTY, rp.parties, self[WS_PARTY])
 
         # Set intra-experiment relationships.
         for e in self[WS_EXPERIMENT]:
             for r in {"is_constrained_by", "is_perturbation_from", "is_initialized_by", "is_sibling_of"}:
-                setattr(e, r, convert_names(getattr(e, r), self[WS_EXPERIMENT]))
+                setattr(e, r, convert_names("exp-to-exp", getattr(e, r), self[WS_EXPERIMENT]))
         for e in self[WS_EXPERIMENT]:
             for r in {"is_constrainer_of", "is_control_for", "is_initializer_of"}:
                 setattr(e, r, [])
@@ -219,16 +219,16 @@ class DocumentSet(object):
         # Set experiment requirements.
         for e in self[WS_EXPERIMENT]:
             e.temporal_constraints = \
-                convert_names(e.temporal_constraints, self[WS_TEMPORAL_CONSTRAINT])
+                convert_names(WS_TEMPORAL_CONSTRAINT, e.temporal_constraints, self[WS_TEMPORAL_CONSTRAINT])
             e.forcing_constraints = [convert_name(i, self[WS_FORCING_CONSTRAINT]) or
                                      convert_name(i, self[WS_REQUIREMENT])
                                      for i in e.forcing_constraints]
             e.ensembles = \
-                convert_names(e.ensembles, self[WS_ENSEMBLE_REQUIREMENT])
+                convert_names(WS_ENSEMBLE_REQUIREMENT, e.ensembles, self[WS_ENSEMBLE_REQUIREMENT])
             e.model_configurations = \
-                convert_names(e.model_configurations, self[WS_REQUIREMENT])
+                convert_names(WS_REQUIREMENT, e.model_configurations, self[WS_REQUIREMENT])
             e.multi_ensembles = \
-                convert_names(e.multi_ensembles, self[WS_MULTI_ENSEMBLE])
+                convert_names(WS_MULTI_ENSEMBLE, e.multi_ensembles, self[WS_MULTI_ENSEMBLE])
 
         # Set project sub-projects.
         for p in self[WS_PROJECT]:
@@ -236,7 +236,7 @@ class DocumentSet(object):
 
         # Set experiment governing mip.
         for e in self[WS_EXPERIMENT]:
-            e.governing_mips = convert_names(e.governing_mips, self[WS_PROJECT], slots=["name"])
+            e.governing_mips = convert_names("exp-to-project", e.governing_mips, self[WS_PROJECT], slots=["name"])
             for p in e.governing_mips:
                 p.governed_experiments.append(e)
 
@@ -250,20 +250,21 @@ class DocumentSet(object):
 
         # Set additional experimental requirements.
         for rq in self[WS_REQUIREMENT]:
-            rq.additional_requirements = convert_names(rq.additional_requirements, self.numerical_requirements)
+            rq.additional_requirements = \
+                convert_names("additional requirements", rq.additional_requirements, self.numerical_requirements)
 
         # Set multi-ensemble axis.
         for me in self[WS_MULTI_ENSEMBLE]:
-            me.ensemble_axis = convert_names(me.ensemble_axis, self.numerical_requirements)
+            me.ensemble_axis = convert_names("multi-ensemble", me.ensemble_axis, self.numerical_requirements)
 
         # Set sub-projects.
         for p in self[WS_PROJECT]:
             p.meta.sub_projects = sorted(p.sub_projects)
-            p.sub_projects = convert_names(p.sub_projects, self[WS_PROJECT])
+            p.sub_projects = convert_names("sub-projects", p.sub_projects, self[WS_PROJECT])
 
         # Set project required experiments.
         for p in self[WS_PROJECT]:
-            p.required_experiments = convert_names(p.required_experiments, self[WS_EXPERIMENT])
+            p.required_experiments = convert_names("prj-to-exp", p.required_experiments, self[WS_EXPERIMENT])
 
         # Set governed experiments - order as per required experiments.
         for p in self[WS_PROJECT]:

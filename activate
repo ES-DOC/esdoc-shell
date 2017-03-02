@@ -44,6 +44,7 @@ alias esdoc-cmip6-archive-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experi
 alias esdoc-cmip6-cv-init=$ESDOC_HOME/bash/cmip6/cv/init.sh
 alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations/generate.sh
 alias esdoc-cmip6-specializations-sync=$ESDOC_HOME/bash/cmip6/specializations/sync.sh
+alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_HOME/bash/cmip6/specializations/sync_tooling.sh
 alias esdoc-cmip6-specializations-validate=$ESDOC_HOME/bash/cmip6/specializations/validate.sh
 alias esdoc-cmip6-write-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/write_cim_documents.sh
 alias esdoc-cmip6-write-experiment-config=$ESDOC_HOME/bash/cmip6/experiments/write_config.sh
