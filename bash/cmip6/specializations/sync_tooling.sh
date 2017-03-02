@@ -36,6 +36,7 @@ main()
 	done
 
 	# Sync to pyesdoc.
+	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_constants.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
 	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_factory.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
 	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_loader.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
 	cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/generate/utils_model.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
