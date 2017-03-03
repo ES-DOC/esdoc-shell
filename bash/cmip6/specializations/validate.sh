@@ -3,6 +3,15 @@
 # Import utils.
 source $ESDOC_HOME/bash/utils.sh
 
+# Array of active specifications.
+declare -a _ACTIVE_SPECIALIZATIONS=(
+	'toplevel'
+	'atmosphere'
+	'ocean'
+	'ocean-bgc'
+	'seaice'
+)
+
 # Main entry point.
 main()
 {
@@ -10,16 +19,8 @@ main()
 		declare specialization=$1
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/validate
 	else
-		declare -a SPECIALIZATIONS=(
-			'toplevel'
-			'atmosphere'
-			'ocean'
-			'oceanbgc'
-			'seaice'
-		)
-		for specialization in "${SPECIALIZATIONS[@]}"
+		for specialization in "${_ACTIVE_SPECIALIZATIONS[@]}"
 		do
-			log "PYESDOC : validating "$specialization" artefacts ..."
 			python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/validate
 		done
 	fi

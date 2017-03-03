@@ -3,6 +3,15 @@
 # Import utils.
 source $ESDOC_HOME/bash/utils.sh
 
+# Array of active specifications.
+declare -a _ACTIVE_SPECIALIZATIONS=(
+	'toplevel'
+	'atmosphere'
+	'ocean'
+	'ocean-bgc'
+	'seaice'
+)
+
 # Main entry point.
 main()
 {
@@ -13,13 +22,7 @@ main()
 		log_banner
 		python $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate
 	else
-		declare -a SPECIALIZATIONS=(
-			'atmosphere'
-			'ocean'
-			'oceanbgc'
-			'seaice'
-		)
-		for specialization in "${SPECIALIZATIONS[@]}"
+		for specialization in "${_ACTIVE_SPECIALIZATIONS[@]}"
 		do
 			log_banner
 			log "PYESDOC : generating "$specialization" artefacts"
