@@ -3,26 +3,33 @@
 # Import utils.
 source $ESDOC_HOME/bash/utils.sh
 
+# Array of realm specifications.
+declare -a _REALM_SPECIALIZATIONS=(
+	'aerosols'
+	'atmosphere'
+	'atmospheric-chemistry'
+	'landice'
+	'landsurface'
+	'ocean'
+	'ocean-bgc'
+	'seaice'
+)
+
+# Array of active (i.e. valid) specifications.
+declare -a _ACTIVE_SPECIALIZATIONS=(
+	'toplevel'
+	'atmosphere'
+	'ocean'
+	'ocean-bgc'
+	'seaice'
+)
 
 # Sync CIM profile.
 _sync_cim_profile()
 {
 	log "PYESDOC : syncing cmip6 specialization CIM profile ..."
 
-	# Set of specializations.
-	declare -a SPECIALIZATIONS=(
-		'aerosols'
-		'atmosphere'
-		'atmospheric-chemistry'
-		'landice'
-		'landsurface'
-		'oceanbgc'
-		'seaice'
-		'toplevel'
-	)
-
-	# Sync definitions.
-	for specialization in "${SPECIALIZATIONS[@]}"
+	for specialization in "${_REALM_SPECIALIZATIONS[@]}"
 	do
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-toplevel/cim_profile.py $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate/cim_profile.py
 	done
@@ -33,20 +40,13 @@ _sync_definitions()
 {
 	log "PYESDOC : syncing cmip6 specialization definitions ..."
 
-	# Set of specializations.
-	declare -a SPECIALIZATIONS=(
-		'toplevel'
-		'atmosphere'
-		'ocean'
-		'oceanbgc'
-		'seaice'
-	)
-
-	# Update pyesdoc.
-	for specialization in "${SPECIALIZATIONS[@]}"
+	for specialization in "${_ACTIVE_SPECIALIZATIONS[@]}"
 	do
+		# ... switch output file names.
 		if [ $specialization = "toplevel" ]; then
 			declare file_prefix="model"
+		elif [ $specialization = "ocean-bgc" ]; then
+			declare file_prefix="oceanbgc"
 		else
 			declare file_prefix=$specialization
 		fi
@@ -81,26 +81,13 @@ _sync_templates()
 {
 	log "PYESDOC : syncing cmip6 specialization templates ..."
 
-	# Set of specializations.
-	declare -a SPECIALIZATIONS=(
-		'aerosols'
-		'atmosphere'
-		'atmospheric-chemistry'
-		'landice'
-		'landsurface'
-		'oceanbgc'
-		'seaice'
-		'toplevel'
-	)
-
-	# Sync definitions.
-	for specialization in "${SPECIALIZATIONS[@]}"
+	for specialization in "${_REALM_SPECIALIZATIONS[@]}"
 	do
 		# ... remove previous
 		rm -rf $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/templates
 		mkdir $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/templates
 		# ... copy current
-		cp $ESDOC_DIR_REPOS/cmip6-specializations-ocean/templates/* $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/templates
+		cp $ESDOC_DIR_REPOS/cmip6-specializations-toplevel/templates/* $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/templates
 	done
 }
 
