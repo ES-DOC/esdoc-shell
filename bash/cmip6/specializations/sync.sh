@@ -5,11 +5,11 @@ source $ESDOC_HOME/bash/utils.sh
 
 # Array of realm specifications.
 declare -a _REALM_SPECIALIZATIONS=(
-	'aerosols'
+	'aerosol'
 	'atmos'
-	'atmospheric-chemistry'
+	'atmoschem'
+	'land'
 	'landice'
-	'landsurface'
 	'ocean'
 	'ocnbgchem'
 	'seaice'

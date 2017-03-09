@@ -121,11 +121,11 @@ declare -a ESDOC_OPS_DIRS=(
 
 # Set of git repos.
 declare -a ESDOC_REPOS=(
-	'cmip6-specializations-aerosols'
+	'cmip6-specializations-aerosol'
 	'cmip6-specializations-atmos'
-	'cmip6-specializations-atmospheric-chemistry'
+	'cmip6-specializations-atmoschem'
+	'cmip6-specializations-land'
 	'cmip6-specializations-landice'
-	'cmip6-specializations-landsurface'
 	'cmip6-specializations-ocean'
 	'cmip6-specializations-ocnbgchem'
 	'cmip6-specializations-seaice'
@@ -157,11 +157,11 @@ declare -a ESDOC_REPOS=(
 
 # Set of git repos considered to be relatively small.
 declare -a ESDOC_REPOS_LITE=(
-	'cmip6-specializations-aerosols'
+	'cmip6-specializations-aerosol'
 	'cmip6-specializations-atmos'
-	'cmip6-specializations-atmospheric-chemistry'
+	'cmip6-specializations-atmoschem'
+	'cmip6-specializations-land'
 	'cmip6-specializations-landice'
-	'cmip6-specializations-landsurface'
 	'cmip6-specializations-ocean'
 	'cmip6-specializations-ocnbgchem'
 	'cmip6-specializations-seaice'
