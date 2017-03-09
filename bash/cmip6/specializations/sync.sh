@@ -6,21 +6,21 @@ source $ESDOC_HOME/bash/utils.sh
 # Array of realm specifications.
 declare -a _REALM_SPECIALIZATIONS=(
 	'aerosols'
-	'atmosphere'
+	'atmos'
 	'atmospheric-chemistry'
 	'landice'
 	'landsurface'
 	'ocean'
-	'ocean-bgc'
+	'ocnbgchem'
 	'seaice'
 )
 
 # Array of active (i.e. valid) specifications.
 declare -a _ACTIVE_SPECIALIZATIONS=(
 	'toplevel'
-	'atmosphere'
+	'atmos'
 	'ocean'
-	'ocean-bgc'
+	'ocnbgchem'
 	'seaice'
 )
 
@@ -33,6 +33,8 @@ _sync_cim_profile()
 	do
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-toplevel/cim_profile.py $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/generate/cim_profile.py
 	done
+
+	log "PYESDOC : ... synced"
 }
 
 # Sync python definitions.
@@ -43,13 +45,7 @@ _sync_definitions()
 	for specialization in "${_ACTIVE_SPECIALIZATIONS[@]}"
 	do
 		# ... switch output file names.
-		if [ $specialization = "toplevel" ]; then
-			declare file_prefix="model"
-		elif [ $specialization = "ocean-bgc" ]; then
-			declare file_prefix="oceanbgc"
-		else
-			declare file_prefix=$specialization
-		fi
+		declare file_prefix=$specialization
 
 		# ... Update pyesdoc.
 		rm $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/$file_prefix*.py
@@ -74,6 +70,8 @@ _sync_definitions()
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/_$file_prefix-ids-level-3.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$file_prefix-ids-level-3.csv
 
 	done
+
+	log "PYESDOC : ... synced"
 }
 
 # Sync templates.
@@ -89,6 +87,8 @@ _sync_templates()
 		# ... copy current
 		cp $ESDOC_DIR_REPOS/cmip6-specializations-toplevel/templates/* $ESDOC_DIR_REPOS/cmip6-specializations-$specialization/templates
 	done
+
+	log "PYESDOC : ... synced"
 }
 
 # Main entry point.

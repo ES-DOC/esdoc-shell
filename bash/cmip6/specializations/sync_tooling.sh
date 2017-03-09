@@ -11,12 +11,12 @@ main()
 	# Set of specializations.
 	declare -a SPECIALIZATIONS=(
 		'aerosols'
-		'atmosphere'
+		'atmos'
 		'atmospheric-chemistry'
 		'landice'
 		'landsurface'
 		'ocean'
-		'ocean-bgc'
+		'ocnbgchem'
 		'seaice'
 	)
 

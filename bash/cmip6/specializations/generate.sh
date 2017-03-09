@@ -6,9 +6,9 @@ source $ESDOC_HOME/bash/utils.sh
 # Array of active specifications.
 declare -a _ACTIVE_SPECIALIZATIONS=(
 	'toplevel'
-	'atmosphere'
+	'atmos'
 	'ocean'
-	'ocean-bgc'
+	'ocnbgchem'
 	'seaice'
 )
 
