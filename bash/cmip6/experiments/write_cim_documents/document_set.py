@@ -156,6 +156,8 @@ class DocumentSet(object):
 
         """
         def _do(p, mip):
+            if p.name.lower() == 'cmip':
+                return
             if not mip:
                 return
             if mip.url != 'None':
