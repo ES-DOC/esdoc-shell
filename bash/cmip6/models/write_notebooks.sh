@@ -8,11 +8,11 @@ main()
 {
 	log "PYESDOC : writing cmip6 model notebooks ..."
 
-	declare output_dir=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/ipython
 	activate_venv pyesdoc
-	python $ESDOC_HOME/bash/cmip6/models/write_notebooks.py --output=$output_dir
+	export ESDOC_CMIP6_NOTEBOOK_HOME=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/ipython
+	python $ESDOC_HOME/bash/cmip6/models/write_notebooks.py
 
-	log "PYESDOC : cmip6 model notebooks written to "$output_dir/notebooks
+	log "PYESDOC : cmip6 model notebooks written to "$ESDOC_CMIP6_NOTEBOOK_HOME
 }
 
 # Invoke entry point.

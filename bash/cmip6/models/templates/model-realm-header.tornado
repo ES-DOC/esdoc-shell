@@ -2,13 +2,15 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "# ES-DOC {{ DOC.mip_era.upper() }} Model Realm Properties \n",
+        "# ES-DOC {{ DOC.mip_era.upper() }} Model Properties ({{ t.name_camel_case }}) \n",
         "**MIP Era**: {{ DOC.mip_era.upper() }}  \n",
         "**Institute**: {{ DOC.institute.upper().upper() }}  \n",
         "**Source ID**: {{ DOC.source_id.upper() }}  \n",
-        "**Realm**: {{ r.name_camel_case }}  \n",
-        "**Realm Processes**: {% for p in r.processes %}{{ p.name_camel_case_spaced }}{% if p == r.processes[-1] %}.{% else %},{% end %} {% end %}  \n",
-        "**Properties**: {{ len(r.all_properties) }} ({{ len(r.all_required_properties) }} required, {{ len(r.all_optional_properties) }} optional)  \n",
+        {% if t.name != "toplevel" %}
+        "**Realm**: {{ t.name_camel_case }}  \n",
+        {% end %}
+        "**Processes**: {% for p in t['process'] %}{{ p.name_camel_case_spaced }}{% if p == t['process'][-1] %}.{% else %},{% end %} {% end %}  \n",
+        "**Properties**: {{ len(t.all_properties) }} ({{ len(t.all_required_properties) }} required, {{ len(t.all_optional_properties) }} optional)  \n",
         "\n",
         "**Notebook Help**: [Goto notebook help page](http://wordpress.es-doc.org/how-to-document-cmip6-models)  \n",
         "**Notebook Initialised**: {{ unicode(now)[0:19] }}"
@@ -32,7 +34,7 @@
         "from pyesdoc.ipython.model_realm_properties import NotebookOutput  \n",
         "\n",
         "# DO NOT EDIT !  \n",
-        "DOC = NotebookOutput('{{ DOC.mip_era.lower() }}', '{{ DOC.institute.lower() }}', '{{ DOC.source_id.lower() }}', '{{ r.name.lower() }}')"
+        "DOC = NotebookOutput('{{ DOC.mip_era.lower() }}', '{{ DOC.institute.lower() }}', '{{ DOC.source_id.lower() }}', '{{ t.name.lower() }}')"
     ]
 },
 {
@@ -96,7 +98,7 @@
     "metadata": {},
     "source": [
         "### Document Table of Contents  \n",
-        {% for pc_idx, pc in enumerate(r.all_property_containers) %}
+        {% for pc_idx, pc in enumerate(t.all_property_containers) %}
             "[{{ pc_idx + 1 }}. {{ pc.names(2) }}](#{{ pc_idx + 1 }}.-{{ pc.names(2).replace(' ', '-') }})  \n",
         {% end %}
         "\n"

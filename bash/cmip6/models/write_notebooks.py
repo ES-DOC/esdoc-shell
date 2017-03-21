@@ -16,124 +16,189 @@ import os
 
 from tornado import template
 
-import pyesdoc
 from pyesdoc.cv.archive import load_collection as load_cv_collection
-from pyesdoc.cv.model import Collection
 from pyesdoc.ipython.model_realm_properties import NotebookOutput
 
 
 
 # Command line options.
 _ARGS = argparse.ArgumentParser("Writes CMIP6 IPython model notebooks to file system.")
-_ARGS.add_argument(
-    "--output",
-    help="Path to a directory into which notebooks will be written.",
-    dest="output_dir",
-    type=str
-    )
 
 # Template cache.
 _TEMPLATES = template.Loader(os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates"))
+
+# MIP era.
+_MIP_ERA = "cmip6"
+
+# Map of realm names to specialization repo & source id attribute.
+_REALMS = {
+    'aerosol': {
+        'is_active': False,
+        'source_id_attr': 'aerosol',
+    },
+    'atmos': {
+        'is_active': True,
+        'source_id_attr': 'atmosphere',
+    },
+    'atmoschem': {
+        'is_active': False,
+        'source_id_attr': 'atmospheric_chemistry',
+    },
+    'land': {
+        'is_active': False,
+        'source_id_attr': 'land_surface',
+    },
+    'landice': {
+        'is_active': False,
+        'source_id_attr': 'land_ice',
+    },
+    'ocean': {
+        'is_active': True,
+        'source_id_attr': 'ocean',
+    },
+    'ocnbgchem': {
+        'is_active': True,
+        'source_id_attr': 'ocean_biogeochemistry',
+    },
+    'seaice': {
+        'is_active': True,
+        'source_id_attr': 'sea_ice',
+    }
+}
+
+# Test institute / source id.
+_TEST_INSTITUTE = "test-institute"
+_TEST_SOURCE_ID = "test-model"
 
 
 def _main(args):
     """Main entry point.
 
     """
-    # Validate inputs.
-    if not os.path.isdir(args.output_dir):
-        raise ValueError("Output directory does not exist")
-
-    # Read CMIP6 JSON/CV
-    models = _get_cv()
-
-    # should be pulled in from someplace else, not set here
-    mip_era = 'cmip6'
-
-    # For each institute / model / realm combination, emit a notebook.
-    for institute, model, realms in [(i['institute'], i['name'], i['realms']) for i in models]:
-        for realm in realms:
-            # ... load output;
-            output = _get_output(args.output_dir, mip_era, institute, model, realm)
-
-            # ... write notebook;
-            _write(output)
+    ctx = _ProcessingContextInfo()
+    for idx, info in enumerate(sorted(_get_config())):
+        ctx.set_info(info)
+        print "writing notebook {} :: {}/{}/{}/{}".format(idx + 1, _MIP_ERA, ctx.institution_id, ctx.source_id, ctx.specialization_id)
+        ctx.set_output()
+        ctx.set_notebook()
+        ctx.write()
 
 
-def _get_output(output_dir, mip_era, institute, source_id, realm):
-    """Returns notebook output data wrapper.
+class _ProcessingContextInfo(object):
+    def __init__(self):
+        self.institution_id = None
+        self.output = None
+        self.source_id = None
+        self.specialization_id = None
+
+
+    def set_info(self, info):
+        self.institution_id, self.source_id, self.specialization_id = info
+        self.output = self.notebook = None
+
+
+    def set_output(self):
+        self.output = NotebookOutput(
+            _MIP_ERA,
+            self.institution_id,
+            self.source_id,
+            self.specialization_id
+            )
+
+
+    def set_notebook(self):
+        # Load template.
+        tmpl = _TEMPLATES.load("model-realm.tornado")
+
+        # Generate content.
+        content = tmpl.generate(
+            DOC=self.output,
+            escape=lambda s: s.strip().replace('"', "'"),
+            now=dt.datetime.now(),
+            t=self.output.specialization
+            )
+
+        # Set notebook.
+        try:
+            as_dict = json.loads(content)
+        except ValueError as err:
+            print "ERROR: ", self.institution_id, self.source_id, self.specialization_id, err
+            self.notebook = content
+        else:
+            self.notebook = json.dumps(as_dict, indent=4)
+
+
+    def write(self):
+        dpath = os.path.dirname(self.output.fpath)
+        if not os.path.isdir(dpath):
+            os.makedirs(dpath)
+        fpath = os.path.join(dpath, "{}.ipynb".format(self.output.specialization.name))
+        print self.output.fpath, fpath
+        with open(fpath, 'w') as fstream:
+            fstream.write(self.notebook)
+
+
+    def get_notebook(self):
+        # Load template.
+        tmpl = _TEMPLATES.load("model-realm.tornado")
+
+        # Generate content.
+        content = tmpl.generate(
+            DOC=self.output,
+            escape=lambda s: s.strip().replace('"', "'"),
+            now=dt.datetime.now(),
+            r=self.output.specialization
+            )
+
+        try:
+            as_dict = json.loads(content)
+        except ValueError as err:
+            print "ERROR: ", self.institution_id, self.source_id, self.specialization_id, err
+            # Return raw content.
+            return content
+        else:
+            # Return prettified content.
+            return json.dumps(as_dict, indent=4)
+
+
+def _get_config():
+    """Returns set of notebooks to be generated.
 
     """
-    return NotebookOutput(
-        mip_era,
-        institute,
-        source_id,
-        realm,
-        os.path.join(output_dir, "output")
-        )
+    result = set()
 
+    # Load CMIP6 vocabularies.
+    cv_institution_id, cv_source_id, cv_realm = \
+        load_cv_collection('wcrp', 'cmip6', 'institution-id'), \
+        load_cv_collection('wcrp', 'cmip6', 'source-id'), \
+        load_cv_collection('wcrp', 'cmip6', 'realm')
 
-def _write(output):
-    """Writes notebook to file system.
+    # Add test related notebook info.
+    result.add((_TEST_INSTITUTE, _TEST_SOURCE_ID, "toplevel"))
+    for realm in cv_realm:
+        if _REALMS[realm.name]['is_active']:
+            result.add((_TEST_INSTITUTE, _TEST_SOURCE_ID, realm.name))
 
-    """
-    fpath = output.fpath.replace("output", "notebooks")
-    fpath = fpath.replace(".json", ".ipynb")
-    if not os.path.isdir(os.path.dirname(fpath)):
-        os.makedirs(os.path.dirname(fpath))
-    with open(fpath, 'w') as fstream:
-        fstream.write(_get_notebook(output))
+    # For each source_id, institution_id combination:
+    for institution_id in cv_institution_id:
+        for source_id in cv_source_id:
+            # ... exclude unsupported insitutes;
+            if institution_id.label not in source_id.data['institution_id']:
+                continue
+            # ... emit top-level;
+            result.add((institution_id.name, source_id.name, 'toplevel'))
+            # ... emit realms;
+            for realm in cv_realm:
+                # ... exclude inactive realm specialisations;
+                if _REALMS[realm.name]['is_active'] == False:
+                    continue
+                # ... exclude unconfigured realms;
+                if source_id.data[_REALMS[realm.name]['source_id_attr']] in (None, 'None'):
+                    continue
+                result.add((institution_id.name, source_id.name, realm.name))
 
+    return result
 
-def _get_notebook(data):
-    """Returns notebook content.
-
-    """
-    # Load template.
-    tmpl = _TEMPLATES.load("model-realm.tornado")
-
-    # Generate content.
-    content = tmpl.generate(
-        DOC=data,
-        escape=lambda s: s.strip().replace('"', "'"),
-        now=dt.datetime.now(),
-        r=data.specialization
-        )
-
-    # Return prettified content.
-    return json.dumps(json.loads(content), indent=4)
-
-
-def _get_cv():
-    models = []
-
-    # possible realms- should be set to definitive list, not this
-    #realms = ['aerosol', 'atmosphere', 'atmospheric_chemistry', 'land_ice',
-    #          'land_surface', 'ocean', 'ocean_biogeochemistry', 'sea_ice']
-    # should work, but sea_ice / seaice
-    #realms = ['atmosphere', 'ocean', 'sea_ice']
-    realms = ['atmosphere', 'ocean']
-
-    # get the CMIP6 source_id JSON
-    cv_models = load_cv_collection('wcrp', 'cmip6', 'source-id')
-    assert isinstance(cv_models, Collection)
-
-    # for each participating model, record the name, institutes, and realms simulated
-    for cv_model in cv_models.terms:
-
-        # foreach institute that runs the model
-        for institute in cv_model.data['institution_id']:
-            model = dict()
-            model['name'] = cv_model.data['source_id'].lower()
-            model['institute'] = institute.lower()
-            model['realms'] = []
-            for realm in realms:
-                if (cv_model.data[realm] and cv_model.data[realm] != 'None'):
-                    model['realms'].append(realm)
-
-            models.append(model)
-
-    return models
 
 # Entry point.
 if __name__ == '__main__':

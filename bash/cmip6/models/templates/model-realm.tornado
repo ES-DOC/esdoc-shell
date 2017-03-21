@@ -1,7 +1,7 @@
 {
     "cells": [
 {% include model-realm-header.tornado %}
-{% for pc_idx, pc in enumerate(r.all_property_containers) %}
+{% for pc_idx, pc in enumerate(t.all_property_containers) %}
     {% include model-realm-property-container.tornado %}
 {% end %}
 {% include model-realm-footer.tornado %}
