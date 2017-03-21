@@ -58,7 +58,6 @@ _log_end
 declare -a _ESDOC_FRONT_ENDS=(
 	'compare'
 	'demo'
-	'errata'
 	'search'
 	'splash'
 	'static'
@@ -78,7 +77,7 @@ do
 done
 
 # Update errata index.html.
-cp $HOME/webapps/$1_fe_errata/search.html $HOME/webapps/$1_fe_errata/index.html
+# cp $HOME/webapps/$1_fe_errata/search.html $HOME/webapps/$1_fe_errata/index.html
 
 # -------------------------------------------------------------------------------
 # Update web-services
@@ -86,7 +85,6 @@ cp $HOME/webapps/$1_fe_errata/search.html $HOME/webapps/$1_fe_errata/index.html
 declare -a _ESDOC_WEB_SERVICES=(
 	'cdf2cim'
 	'documentation'
-	'errata'
 	'url_rewriter_doc'
 	'url_rewriter_fi'
 )
@@ -123,13 +121,13 @@ esdoc-ws-daemon-reload
 _log_end
 
 # ... errata
-_log_banner
-_log "reloading web-service: "$1_ws_errata
-_log_banner
+# _log_banner
+# _log "reloading web-service: "$1_ws_errata
+# _log_banner
 
-source $HOME/webapps/$1_ws_errata/sh/activate
-errata-ws-daemon-reload
-_log_end
+# source $HOME/webapps/$1_ws_errata/sh/activate
+# errata-ws-daemon-reload
+# _log_end
 
 # ... url rewriter (doc)
 _log_banner
