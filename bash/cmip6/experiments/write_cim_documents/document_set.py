@@ -156,11 +156,9 @@ class DocumentSet(object):
 
         """
         def _do(p, mip):
-            if p.name.lower() == 'cmip':
+            if not mip or p.name.lower() == 'cmip':
                 return
-            if not mip:
-                return
-            if mip.url != 'None':
+            if mip.url not in (None, 'None'):
                 p.homepage = mip.url
             p.objectives = ["{}: {}".format(o.label, o.description) for o in mip.objectives]
             p.objectives = sorted(p.objectives)
