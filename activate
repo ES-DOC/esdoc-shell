@@ -57,6 +57,8 @@ _reset_cmip6()
 	esdoc-archive-delete-documents cmip6-draft
 	esdoc-ws-db-flush cmip6-draft
 	esdoc-cmip6-write-experiment-cim-documents
+	esdoc-cmip6-write-experiment-config
+	esdoc-cmip6-write-experiment-d3
 	esdoc-cmip6-archive-experiment-cim-documents
 	esdoc-ws-db-ingest
 }
