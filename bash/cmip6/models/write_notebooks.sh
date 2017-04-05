@@ -8,7 +8,7 @@ main()
 {
 	log "PYESDOC : writing cmip6 model notebooks ..."
 
-	activate_venv pyesdoc
+	activate_venv
 	export ESDOC_CMIP6_NOTEBOOK_HOME=$ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/ipython
 	python $ESDOC_HOME/bash/cmip6/models/write_notebooks.py
 

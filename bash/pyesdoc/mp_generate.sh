@@ -10,7 +10,7 @@ main()
 	declare version=$2
 	declare language=$3
 
-	activate_venv pyesdoc
+	activate_venv
 	python "$ESDOC_DIR_PYESDOC/pyesdoc/mp" -s $ontology -v $version -l $language -o $ESDOC_DIR_TMP
 
 	log_banner

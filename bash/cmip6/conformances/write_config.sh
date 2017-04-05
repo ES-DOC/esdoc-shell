@@ -13,10 +13,10 @@ main()
 
 	rm -rf $output_dir/*.json
 
-	activate_venv pyesdoc
+	activate_venv
 	python $ESDOC_HOME/bash/cmip6/conformances/write_config.py --input=$input_dir --output=$output_dir
 
-	log "PYESDOC : cmip6 conformance config written to "
+	log "PYESDOC : cmip6 conformance config written to "$output_dir
 }
 
 # Invoke entry point.

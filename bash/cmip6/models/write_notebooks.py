@@ -16,7 +16,7 @@ import os
 
 from tornado import template
 
-from pyesdoc.cv.archive import load_collection as load_cv_collection
+import pyessv
 from pyesdoc.ipython.model_realm_properties import NotebookOutput
 
 
@@ -78,14 +78,16 @@ def _main(args):
     ctx = _ProcessingContextInfo()
     for idx, info in enumerate(sorted(_get_config())):
         ctx.set_info(info)
-        print "writing notebook {} :: {}/{}/{}/{}".format(idx + 1, _MIP_ERA, ctx.institution_id, ctx.source_id, ctx.specialization_id)
+        # print "writing notebook {} :: {}/{}/{}/{}".format(idx + 1, _MIP_ERA, ctx.institution_id, ctx.source_id, ctx.specialization_id)
         ctx.set_output()
         ctx.set_notebook()
         ctx.write()
 
-
 class _ProcessingContextInfo(object):
     def __init__(self):
+        """Instance initializer.
+
+        """
         self.institution_id = None
         self.output = None
         self.source_id = None
@@ -93,11 +95,17 @@ class _ProcessingContextInfo(object):
 
 
     def set_info(self, info):
+        """Set information related to notebook about to be emitted.
+
+        """
         self.institution_id, self.source_id, self.specialization_id = info
         self.output = self.notebook = None
 
 
     def set_output(self):
+        """Set notebook output.
+
+        """
         self.output = NotebookOutput(
             _MIP_ERA,
             self.institution_id,
@@ -107,6 +115,9 @@ class _ProcessingContextInfo(object):
 
 
     def set_notebook(self):
+        """Set notebook.
+
+        """
         # Load template.
         tmpl = _TEMPLATES.load("model-realm.tornado")
 
@@ -129,16 +140,21 @@ class _ProcessingContextInfo(object):
 
 
     def write(self):
+        """Write output to file system.
+
+        """
         dpath = os.path.dirname(self.output.fpath)
         if not os.path.isdir(dpath):
             os.makedirs(dpath)
         fpath = os.path.join(dpath, "{}.ipynb".format(self.output.specialization.name))
-        print self.output.fpath, fpath
         with open(fpath, 'w') as fstream:
             fstream.write(self.notebook)
 
 
     def get_notebook(self):
+        """Load notebook JSON content.
+
+        """
         # Load template.
         tmpl = _TEMPLATES.load("model-realm.tornado")
 
@@ -169,15 +185,18 @@ def _get_config():
 
     # Load CMIP6 vocabularies.
     cv_institution_id, cv_source_id, cv_realm = \
-        load_cv_collection('wcrp', 'cmip6', 'institution-id'), \
-        load_cv_collection('wcrp', 'cmip6', 'source-id'), \
-        load_cv_collection('wcrp', 'cmip6', 'realm')
+        pyessv.load('wcrp', 'cmip6', 'institution-id'), \
+        pyessv.load('wcrp', 'cmip6', 'source-id'), \
+        pyessv.load('wcrp', 'cmip6', 'realm')
+    cv_realm = [i for i in cv_realm if _REALMS[i.name]['is_active']]
 
     # Add test related notebook info.
-    result.add((_TEST_INSTITUTE, _TEST_SOURCE_ID, "toplevel"))
-    for realm in cv_realm:
-        if _REALMS[realm.name]['is_active']:
-            result.add((_TEST_INSTITUTE, _TEST_SOURCE_ID, realm.name))
+    for i in range(3):
+        institute_id = '{}-{}'.format(_TEST_INSTITUTE, i + 1)
+        source_id = '{}-{}'.format(_TEST_SOURCE_ID, i + 1)
+        result.add((institute_id, source_id, "toplevel"))
+        for realm in cv_realm:
+            result.add((institute_id, source_id, realm.name))
 
     # For each source_id, institution_id combination:
     for institution_id in cv_institution_id:
@@ -185,16 +204,9 @@ def _get_config():
             # ... exclude unsupported insitutes;
             if institution_id.label not in source_id.data['institution_id']:
                 continue
-            # ... emit top-level;
+            # ... emit top-level + realms;
             result.add((institution_id.name, source_id.name, 'toplevel'))
-            # ... emit realms;
             for realm in cv_realm:
-                # ... exclude inactive realm specialisations;
-                if _REALMS[realm.name]['is_active'] == False:
-                    continue
-                # ... exclude unconfigured realms;
-                if source_id.data[_REALMS[realm.name]['source_id_attr']] in (None, 'None'):
-                    continue
                 result.add((institution_id.name, source_id.name, realm.name))
 
     return result

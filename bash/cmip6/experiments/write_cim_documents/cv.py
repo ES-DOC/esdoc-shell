@@ -9,7 +9,7 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-import pyesdoc.cv as cv
+import pyessv
 
 
 
@@ -19,12 +19,12 @@ def validate_vocabularies(projects, experiments):
     """
     _validate(
         "PROJECT",
-        cv.archive.load_collection("wcrp", "cmip6", "activity-id"),
+        pyessv.load("wcrp", "cmip6", "activity-id"),
         projects
         )
     _validate(
         "EXPERIMENTS",
-        cv.archive.load_collection("wcrp", "cmip6", "experiment-id"),
+        pyessv.load("wcrp", "cmip6", "experiment-id"),
         experiments
         )
 

@@ -16,7 +16,7 @@ import json
 import os
 
 import pyesdoc
-import pyesdoc.ontologies.cim as cim
+import pyesdoc.ontologies.cim.v2 as cim
 
 
 
@@ -44,9 +44,13 @@ _DOC_CACHE_2 = collections.defaultdict(dict)
 # Viewer url.
 _VIEWER_URL = "https://documentation.es-doc.org/cmip6/{}/{}?client=esdoc"
 
-# Some CIM v2 types of interest.
-_EXPERIMENT = cim.v2.NumericalExperiment
-_MIP = cim.v2.Project
+# Maps of requirement type to type keys.
+_REQUIREMENT_TYPE_KEYS = {
+    cim.ForcingConstraint: "forcing-constraint",
+    cim.TemporalConstraint: "temporal-constraint",
+    cim.EnsembleRequirement: "ensemble",
+    cim.MultiEnsemble: "multi-ensemble"
+}
 
 
 def _get_requirement(r_ref):
@@ -69,7 +73,7 @@ def _map_requirements(i):
     """
     result = dict()
     for j in i.required_experiments:
-        j = _DOC_CACHE_2[_EXPERIMENT][j.canonical_name]
+        j = _DOC_CACHE_2[cim.NumericalExperiment][j.canonical_name]
         for k in j.requirements:
             result[k.canonical_name] = _map_requirement(k)
 
@@ -84,20 +88,12 @@ def _map_requirement(i):
         """Returns a shortened requirement type description.
 
         """
-        if len(i.meta.type.split(":")) == 2:
-            return i.meta.type.split(":")[1].replace("_", "-")
-        elif isinstance(i, cim.v2.ForcingConstraint):
-            return "forcing-constraint"
-        elif isinstance(i, cim.v2.TemporalConstraint):
-            return "temporal-constraint"
-        elif isinstance(i, cim.v2.EnsembleRequirement):
-            return "ensemble"
-        elif isinstance(i, cim.v2.EnsembleRequirement):
-            return "ensemble"
-        elif isinstance(i, cim.v2.MultiEnsemble):
-            return "multi-ensemble"
-
-        return "unknown"
+        try:
+            return _REQUIREMENT_TYPE_KEYS[type(i)]
+        except KeyError:
+            if len(i.meta.type.split(":")) == 2:
+                return i.meta.type.split(":")[1].replace("_", "-")
+            return "unknown"
 
     # Set associated data-link.
     data_link = None
@@ -117,8 +113,8 @@ def _map_requirement(i):
     result['isConformanceRequested'] = i.is_conformance_requested
     result['keywords'] = i.keywords
     result['label'] = i.name
-    if i.scope:
-        result['scope'] = i.scope
+    # if i.scope:
+    result['scope'] = i.scope
     result['type'] = get_requirement_type()
     result['uid'] = i.meta.id
 
@@ -137,7 +133,7 @@ def _map_experiment(canonical_name):
     """Returns an experiment document mapped to a dictionary.
 
     """
-    i = _DOC_CACHE_2[_EXPERIMENT][canonical_name]
+    i = _DOC_CACHE_2[cim.NumericalExperiment][canonical_name]
 
     i.requirements = [_get_requirement(j) for j in i.requirements]
 
@@ -162,7 +158,7 @@ def _map_experiment(canonical_name):
 def _map_data_links(i):
     result = dict()
     for j in i.required_experiments:
-        j = _DOC_CACHE_2[_EXPERIMENT][j.canonical_name]
+        j = _DOC_CACHE_2[cim.NumericalExperiment][j.canonical_name]
         for k in j.requirements:
             try:
                 k.data_link
@@ -229,13 +225,13 @@ def _load_cache(input_dir):
 
     """
     for doc_type in {
-        cim.v2.EnsembleRequirement,
-        cim.v2.ForcingConstraint,
-        cim.v2.MultiEnsemble,
-        cim.v2.NumericalExperiment,
-        cim.v2.NumericalRequirement,
-        cim.v2.Project,
-        cim.v2.TemporalConstraint
+        cim.EnsembleRequirement,
+        cim.ForcingConstraint,
+        cim.MultiEnsemble,
+        cim.NumericalExperiment,
+        cim.NumericalRequirement,
+        cim.Project,
+        cim.TemporalConstraint
     }:
         for doc in _yield_documents(input_dir, doc_type.type_key):
             _DOC_CACHE_1[doc.meta.id] = doc
@@ -255,7 +251,7 @@ def _main(args):
     _load_cache(args.input_dir)
 
     # Step 2: map mip & write to file system.
-    for _, i in _DOC_CACHE_2[_MIP].iteritems():
+    for i in _DOC_CACHE_2[cim.Project].values():
         fpath = "{}/{}.json".format(args.output_dir, i.canonical_name.lower())
         with open(fpath, 'w') as fstream:
             fstream.write(json.dumps(_get_output(i), indent=4))

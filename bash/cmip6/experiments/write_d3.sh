@@ -13,7 +13,7 @@ main()
 
 	rm -rf $output_dir/*.*
 
-	activate_venv pyesdoc
+	activate_venv
 	python $ESDOC_HOME/bash/cmip6/experiments/write_d3.py --input=$input_dir --output=$output_dir
 
 	log "PYESDOC : cmip6 experiments d3 config written to "$output_dir

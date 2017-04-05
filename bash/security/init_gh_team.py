@@ -16,7 +16,7 @@ import json
 import requests
 
 import pyesdoc
-from pyesdoc.cv.archive import load_collection as load_cv_collection
+import pyessv
 
 
 
@@ -50,7 +50,7 @@ def _main(args):
 
 	"""
 	# Get list of WCRP sanctioned institute codes.
-	institutes = load_cv_collection('wcrp', 'cmip6', 'institution-id')
+	institutes = pyessv.load('wcrp', 'cmip6', 'institution-id')
 
 	# Set teams to be created.
 	teams = {"{}-{}".format(args.gh_team, i.name) for i in institutes}

@@ -41,7 +41,6 @@ alias esdoc-deployment-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_stati
 
 # CMIP6 commands.
 alias esdoc-cmip6-archive-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh
-alias esdoc-cmip6-cv-init=$ESDOC_HOME/bash/cmip6/cv/init.sh
 alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations/generate.sh
 alias esdoc-cmip6-specializations-sync=$ESDOC_HOME/bash/cmip6/specializations/sync.sh
 alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_HOME/bash/cmip6/specializations/sync_tooling.sh
@@ -51,6 +50,9 @@ alias esdoc-cmip6-write-experiment-config=$ESDOC_HOME/bash/cmip6/experiments/wri
 alias esdoc-cmip6-write-experiment-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
 alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/models/write_notebooks.sh
 alias esdoc-cmip6-write-model-cim-documents-from-cmip5=$ESDOC_HOME/bash/cmip6/models/write_cim_documents_from_cmip5.sh
+
+alias esdoc-cmip6-write-conformances-config=$ESDOC_HOME/bash/cmip6/conformances/write_config.sh
+alias esdoc-cmip6-write-conformances-spreadsheets=$ESDOC_HOME/bash/cmip6/conformances/write_spreadsheets.sh
 
 _reset_cmip6()
 {
@@ -65,7 +67,7 @@ _reset_cmip6()
 alias esdoc-cmip6-reset=_reset_cmip6
 
 # Ensure target scripts are executable.
-chmod a+x $ESDOC_HOME/bash/cmip6/cv/*.sh
+chmod a+x $ESDOC_HOME/bash/cmip6/conformances/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/simulations/*.sh

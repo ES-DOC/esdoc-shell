@@ -53,11 +53,11 @@
     "source": [
         "# Set as follows: DOC.set_author(\"name\", \"email\")  \n",
         {% if DOC.authors %}
-            {% for author in DOC.authors %}
-                {% if author == DOC.authors[-1] %}
-                "DOC.set_author('{{ author[0] }}', '{{ author[1] }}')"
+            {% for idx, author in enumerate(DOC.authors) %}
+                {% if idx < len(DOC.authors) - 1 %}
+                "DOC.set_author('{{ author[0] }}', '{{ author[1] }}')  \n",
                 {% else %}
-                "DOC.set_author('{{ author[0] }}', '{{ author[1] }}') \n",
+                "DOC.set_author('{{ author[0] }}', '{{ author[1] }}')"
                 {% end %}
             {% end %}
         {% else %}

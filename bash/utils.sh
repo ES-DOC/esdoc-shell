@@ -14,11 +14,8 @@ declare ESDOC_GIT_PROTOCOL=${ESDOC_GIT_PROTOCOL:='https'}
 # Activates a virtual environment.
 activate_venv()
 {
-	if [ $1 = "pyesdoc" ]; then
-		export PYTHONPATH=$PYTHONPATH:$PYESDOC_HOME
-		export PYTHONPATH=$PYTHONPATH:$PYESDOC_HOME/tests
-		source $PYESDOC_HOME/ops/venv/bin/activate
-	fi
+	export PYTHONPATH=$PYTHONPATH:$PYESDOC_HOME
+	source $PYESDOC_HOME/ops/venv/bin/activate
 }
 
 # Wraps standard echo by adding ESDOC prefix.
@@ -153,6 +150,9 @@ declare -a ESDOC_REPOS=(
 	'esdoc-web-static'
 	'esdoc-web-view'
 	'esdoc-ws-url-rewriter'
+	'pyessv'
+	'pyessv-archive'
+	'pyessv-writer'
 )
 
 # Set of git repos considered to be relatively small.
@@ -187,6 +187,9 @@ declare -a ESDOC_REPOS_LITE=(
 	'esdoc-web-static'
 	'esdoc-web-view'
 	'esdoc-ws-url-rewriter'
+	'pyessv'
+	'pyessv-archive'
+	'pyessv-writer'
 )
 
 # Set of virtual environments.
