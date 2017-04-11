@@ -40,7 +40,6 @@ _install_dirs()
 # Sets up script permissions.
 _install_script_permissions()
 {
-	chmod a+x $ESDOC_HOME/bash/cmip6/cv/*.sh
 	chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
 	chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
 	chmod a+x $ESDOC_HOME/bash/cmip6/simulations/*.sh

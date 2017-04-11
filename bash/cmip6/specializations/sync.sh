@@ -19,6 +19,7 @@ declare -a _REALM_SPECIALIZATIONS=(
 declare -a _ACTIVE_SPECIALIZATIONS=(
 	'toplevel'
 	'atmos'
+	'land'
 	'ocean'
 	'ocnbgchem'
 	'seaice'

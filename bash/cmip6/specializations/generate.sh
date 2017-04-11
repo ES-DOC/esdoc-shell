@@ -7,6 +7,7 @@ source $ESDOC_HOME/bash/utils.sh
 declare -a _ACTIVE_SPECIALIZATIONS=(
 	'toplevel'
 	'atmos'
+	'land'
 	'ocean'
 	'ocnbgchem'
 	'seaice'
