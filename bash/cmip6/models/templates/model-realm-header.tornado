@@ -10,7 +10,7 @@
         "**Realm**: {{ t.name_camel_case }}  \n",
         {% end %}
         "**Processes**: {% for p in t['process'] %}{{ p.name_camel_case_spaced }}{% if p == t['process'][-1] %}.{% else %},{% end %} {% end %}  \n",
-        "**Properties**: {{ len(t.all_properties) }} ({{ len(t.all_required_properties) }} required, {{ len(t.all_optional_properties) }} optional)  \n",
+        "**Properties**: {{ len(t.all_properties) }} ({{ len(t.all_required_properties) }} required)  \n",
         "\n",
         "**Notebook Help**: [Goto notebook help page](http://wordpress.es-doc.org/how-to-document-cmip6-models)  \n",
         "**Notebook Initialised**: {{ unicode(now)[0:19] }}"
