@@ -24,7 +24,7 @@ import pyessv
 _ARGS = argparse.ArgumentParser("Initializes GitHub teams for user access control.")
 _ARGS.add_argument(
     "--gh-user",
-    help="An ES-DOC officer GitHub user account",
+    help="An ES-DOC administrator GitHub user account",
     dest="gh_user",
     type=str
     )

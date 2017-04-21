@@ -1,0 +1,1 @@
+https://gist.github.com/andriisoldatenko/6d155ec6ca4fc9532bfc#file-install_python-sh

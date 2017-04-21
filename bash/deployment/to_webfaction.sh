@@ -59,7 +59,6 @@ declare -a _ESDOC_FRONT_ENDS=(
 	'compare'
 	'demo'
 	'search'
-	'splash'
 	'static'
 	'view'
 )

@@ -29,6 +29,7 @@ alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc
 
 # Security commands.
 alias esdoc-security-init-gh-team=$ESDOC_HOME/bash/security/init_gh_team.sh
+alias esdoc-security-init-gh-repos=$ESDOC_HOME/bash/security/init_gh_repos.sh
 
 # Stack commands.
 alias esdoc-stack-install=$ESDOC_HOME/bash/stack/install.sh
@@ -69,8 +70,8 @@ alias esdoc-cmip6-reset=_reset_cmip6
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_HOME/bash/cmip6/conformances/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
+chmod a+x $ESDOC_HOME/bash/cmip6/misc/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
-chmod a+x $ESDOC_HOME/bash/cmip6/simulations/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/specializations/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh

@@ -42,7 +42,6 @@ _install_script_permissions()
 {
 	chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
 	chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
-	chmod a+x $ESDOC_HOME/bash/cmip6/simulations/*.sh
 	chmod a+x $ESDOC_HOME/bash/cmip6/specializations/*.sh
 	chmod a+x $ESDOC_HOME/bash/deployment/*.sh
 	chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
