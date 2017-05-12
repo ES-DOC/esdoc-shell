@@ -27,9 +27,9 @@ WS_MAPS = {
             ("rationale", "F"),
             ("responsible_parties", "G", \
                 lambda x, y: [i for i in [convert_to_cim_v2_responsibilty(x, y, "H-L")] if i]),
-            ("citations", "M-R"),
-            ("sub_projects", "V-AM"),
-            ("required_experiments", "AN-BY"),
+            ("citations", "M-T"),
+            ("sub_projects", "X-AO"),
+            ("required_experiments", "AP-CA"),
         ]),
 
     WS_EXPERIMENT: (cim.v2.NumericalExperiment, [
@@ -70,7 +70,8 @@ WS_MAPS = {
                 lambda x, y: [i for i in [convert_to_cim_v2_responsibilty(x, y, "H-J")] if i]),
             ("citations", "K-N"),
             ("is_conformance_requested", "P", convert_to_bool),
-            ("additional_requirements", "Q-Z")
+            ("is_semantically_reasoned", "Q", convert_to_bool),
+            ("additional_requirements", "R-AA")
         ]),
 
     # TODO: data link @ col R
