@@ -8,6 +8,7 @@ declare -a _ACTIVE_SPECIALIZATIONS=(
 	'toplevel'
 	'atmos'
 	'land'
+	'landice'
 	'ocean'
 	'ocnbgchem'
 	'seaice'
