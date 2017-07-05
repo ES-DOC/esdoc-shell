@@ -45,11 +45,11 @@ _REALMS = {
         'source_id_attr': 'atmospheric_chemistry',
     },
     'land': {
-        'is_active': False,
+        'is_active': True,
         'source_id_attr': 'land_surface',
     },
     'landice': {
-        'is_active': False,
+        'is_active': True,
         'source_id_attr': 'land_ice',
     },
     'ocean': {
@@ -82,6 +82,7 @@ def _main(args):
         ctx.set_output()
         ctx.set_notebook()
         ctx.write()
+
 
 class _ProcessingContextInfo(object):
     def __init__(self):
@@ -185,10 +186,10 @@ def _get_config():
 
     # Load CMIP6 vocabularies.
     cv_institution_id, cv_source_id, cv_realm = \
-        pyessv.load('wcrp', 'cmip6', 'institution-id'), \
-        pyessv.load('wcrp', 'cmip6', 'source-id'), \
-        pyessv.load('wcrp', 'cmip6', 'realm')
-    cv_realm = [i for i in cv_realm if _REALMS[i.name]['is_active']]
+        pyessv.load('wcrp:cmip6:institution-id'), \
+        pyessv.load('wcrp:cmip6:source-id'), \
+        pyessv.load('wcrp:cmip6:realm')
+    cv_realm = [i for i in cv_realm if _REALMS[i.canonical_name]['is_active']]
 
     # Add test related notebook info.
     for i in range(3):
@@ -196,7 +197,7 @@ def _get_config():
         source_id = '{}-{}'.format(_TEST_SOURCE_ID, i + 1)
         result.add((institute_id, source_id, "toplevel"))
         for realm in cv_realm:
-            result.add((institute_id, source_id, realm.name))
+            result.add((institute_id, source_id, realm.canonical_name))
 
     # For each source_id, institution_id combination:
     for institution_id in cv_institution_id:
@@ -205,9 +206,9 @@ def _get_config():
             if institution_id.label not in source_id.data['institution_id']:
                 continue
             # ... emit top-level + realms;
-            result.add((institution_id.name, source_id.name, 'toplevel'))
+            result.add((institution_id.canonical_name, source_id.canonical_name, 'toplevel'))
             for realm in cv_realm:
-                result.add((institution_id.name, source_id.name, realm.name))
+                result.add((institution_id.canonical_name, source_id.canonical_name, realm.canonical_name))
 
     return result
 

@@ -18,15 +18,16 @@ def validate_vocabularies(projects, experiments):
 
     """
     _validate(
-        "PROJECT",
-        pyessv.load("wcrp", "cmip6", "activity-id"),
+        'PROJECT',
+        pyessv.load('wcrp:cmip6:activity-id'),
         projects
         )
     _validate(
         "EXPERIMENTS",
-        pyessv.load("wcrp", "cmip6", "experiment-id"),
+        pyessv.load('wcrp:cmip6:experiment-id'),
         experiments
         )
+    print "------------------------------------------------------"
 
 
 def _validate(typeof, terms, docs):

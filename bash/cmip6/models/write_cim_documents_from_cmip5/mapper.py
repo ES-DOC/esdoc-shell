@@ -16,64 +16,76 @@ _ROLE_CODES = {
     "centre": "custodian"
 }
 
-_mappings = collections.OrderedDict()
+# Mappings loaded from csv files.
+_MAPPINGS = collections.OrderedDict()
 
 
 def map_model(m):
-    """Maps a cim.v1.Model.
+    """Returns a cim.v2.Model instance mapped from a cim.v1.ModelComponent instance.
+
+    :param cim.v1.ModelComponent m: Model instance in previous CIM format.
+
+    :returns: A Model document.
+    :rtype: cim.v2.Model
 
     """
-    doc = _create_doc(cim.v2.Model, m)
-
-    doc.citations = [map_citation(m, i) for i in m.citations]
+    doc = _create_doc(cim.v2.Model, m.meta.institute)
+    doc.citations = [_map_citation(m, i) for i in m.citations]
     doc.description = m.description
     doc.long_name = m.long_name
     doc.name = m.short_name
     doc.release_date = m.release_date
-    doc.responsible_parties = [map_responsibility(m, i) for i in m.responsible_parties]
+    doc.responsible_parties = [_map_responsibility(m, i) for i in m.responsible_parties]
 
+    # Build collection of values to be emitted.
+    values = []
     for c in m.ext.component_tree:
-        pyesdoc.extend(c)
-        print c.type
-        for p in c.properties:
-            pyesdoc.extend(p)
-            print p.ext
-            print p.short_name
-        # print c.type, c.type in _mappings
+        for p in c.ext.scientific_property_tree:
+            for v in p.values:
+                cmip5_id = p.ext.full_display_name.lower()
+                cmip5_id = "cmip5{}".format(cmip5_id)
+                cmip5_id = cmip5_id.replace(" > ", ".")
+                cmip5_id = cmip5_id.replace(" >> ", ".")
+                cmip5_id = cmip5_id.replace(" ", "_")
+                cmip5_id = cmip5_id.replace("scientific_properties.", "")
+                values.append((cmip5_id, c, p, v))
+
+    for cmip5_id, c, p, v in values:
+        print cmip5_id, " :: ", v, cmip5_id in _MAPPINGS
 
     return doc
 
 
-def map_citation(m, c):
-    """Maps a cim.v2.Citation.
+def _map_citation(m, c):
+    """Returns a cim.v2.Citation instance.
 
     """
-    doc = _create_doc(cim.v2.Citation, m)
+    doc = _create_doc(cim.v2.Citation, m.meta.institute)
     doc.collective_title = c.collective_title
     doc.title = c.title
     doc.type = c.type
     if c.location:
-        doc.url = map_online_resource(c.location, c.title)
+        doc.url = _map_online_resource(c.location, c.title)
 
     return doc
 
 
-def map_responsibility(m, rp):
-    """Maps a cim.v2.Responsibility.
+def _map_responsibility(m, rp):
+    """Returns a cim.v2.Responsibility instance.
 
     """
-    doc = _create_doc(cim.v2.Responsibility, m)
+    doc = _create_doc(cim.v2.Responsibility, m.meta.institute)
     doc.role = _ROLE_CODES[rp.role.lower()]
-    doc.party = map_party(m, rp)
+    doc.party = _map_party(m, rp)
 
     return doc
 
 
-def map_party(m, rp):
-    """Maps a cim.v2.Party.
+def _map_party(m, rp):
+    """Returns a cim.v2.Party instance.
 
     """
-    doc = _create_doc(cim.v2.Party, m)
+    doc = _create_doc(cim.v2.Party, m.meta.institute)
     doc.address = rp.address
     doc.email = rp.email
     if rp.individual_name is not None:
@@ -82,13 +94,13 @@ def map_party(m, rp):
         doc.name = rp.organisation_name
         doc.is_organisation = True
     if rp.url:
-        doc.url = map_online_resource(rp.url, doc.name)
+        doc.url = _map_online_resource(rp.url, doc.name)
 
     return doc
 
 
-def map_online_resource(url, name):
-    """Maps a cim.v2.OnlineResource.
+def _map_online_resource(url, name):
+    """Returns a cim.v2.OnlineResource instance.
 
     """
     if not url.startswith("http"):
@@ -100,18 +112,16 @@ def map_online_resource(url, name):
     return i
 
 
-def _create_doc(typeof, m):
+def _create_doc(typeof, institute):
     """Returns a document or document fragment.
 
     """
-    return pyesdoc.create(typeof, project="cmip6", institute=m.meta.institute, source="script")
-
-
-def get_realm_mappings(realm):
-    for k in _mappings:
-        if k.startswith(realm):
-            print k
-    print 666, realm
+    return pyesdoc.create(
+        typeof,
+        project="cmip5",
+        institute=institute,
+        source="script"
+        )
 
 
 def init():
@@ -120,15 +130,10 @@ def init():
     """
     dpath = os.path.dirname(__file__)
     dpath = os.path.join(dpath, "mappings")
-
-    mappings = dict()
     for fpath in glob.glob(os.path.join(dpath, "*.csv")):
+        realm = fpath.split("/")[-1].split(".")[0]
         typeof = fpath.split("/")[-1].split(".")[1]
         data = [i for i in csv.reader(open(fpath, 'r'))][1:]
         for row in data:
             if typeof == "component-tree":
-                mappings[row[1]] = row[2]
-
-    for k in sorted(mappings.keys()):
-        _mappings[k] = mappings[k]
-
+                _MAPPINGS[row[1]] = row[2]

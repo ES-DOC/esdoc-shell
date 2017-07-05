@@ -19,6 +19,7 @@ from tornado import template
 
 import pyesdoc
 from pyesdoc.ontologies import cim
+from pyesdoc.archive import yield_latest_documents
 
 import mapper
 
@@ -28,7 +29,7 @@ import mapper
 _ARGS = argparse.ArgumentParser("Writes CMIP5 model documents in CIM v2 format.")
 _ARGS.add_argument(
     "--output",
-    help="Path to a directory into which notebooks will be written.",
+    help="Path to a directory into which CIM v2 documents will be written.",
     dest="output_dir",
     type=str
     )
@@ -54,7 +55,10 @@ if not os.path.isdir(_ARGS.output_dir):
 pyesdoc.archive.init()
 mapper.init()
 
-for i in pyesdoc.archive.yield_latest_documents("cmip5", "metafor-q", "cim-1-software-modelcomponent"):
-    with open(_FPATH, "w") as fstream:
-        fstream.write(pyesdoc.encode(mapper.map_model(i)))
+
+
+for i in yield_latest_documents("cmip5", "metafor-q", "cim-1-software-modelcomponent"):
+    mapper.map_model(i)
+#     # with open(_FPATH, "w") as fstream:
+#     #     fstream.write(pyesdoc.encode(mapper.map_model(i)))
     break

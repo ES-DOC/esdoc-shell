@@ -60,7 +60,7 @@ WS_SHEETS = [
 ]
 
 # Default document project code.
-DOC_PROJECT = 'CMIP6-DRAFT'
+DOC_PROJECT = 'CMIP6'
 
 # Default document source.
 DOC_SOURCE = 'spreadsheet'

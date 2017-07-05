@@ -29,7 +29,7 @@ WS_MAPS = {
                 lambda x, y: [i for i in [convert_to_cim_v2_responsibilty(x, y, "H-L")] if i]),
             ("citations", "M-T"),
             ("sub_projects", "X-AO"),
-            ("required_experiments", "AP-CA"),
+            ("required_experiments", "AP-CD"),
         ]),
 
     WS_EXPERIMENT: (cim.v2.NumericalExperiment, [

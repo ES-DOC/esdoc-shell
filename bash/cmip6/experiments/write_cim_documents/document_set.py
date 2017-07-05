@@ -185,10 +185,13 @@ class DocumentSet(object):
         # Set data links.
         for x in [i for i in self[WS_FORCING_CONSTRAINT] if i.data_link]:
             url = convert_name(x.data_link, self[WS_URL])
-            dataset = cim.v2.Dataset()
-            dataset.availability.append(url)
-            dataset.name = url.name
-            x.data_link = dataset
+            if url is None:
+                print 'INVALID FORCING CONSTRAINT DATA LINK:', x.data_link
+            else:
+                dataset = cim.v2.Dataset()
+                dataset.availability.append(url)
+                dataset.name = url.name
+                x.data_link = dataset
 
         # Set citations.
         for x in self.citation_containers:

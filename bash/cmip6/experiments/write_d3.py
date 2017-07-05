@@ -42,7 +42,7 @@ _CIM_CACHE = {}
 _OUTPUT = {}
 
 # Viewer url.
-_VIEWER_URL = "http://view.es-doc.org?renderMethod=id&project=cmip6-draft&id={}&version=latest&client=esdoc"
+_VIEWER_URL = "http://view.es-doc.org?renderMethod=id&project=cmip6&id={}&version=latest&client=esdoc"
 
 # Map of document types to node types.
 _NODE_TYPES = {

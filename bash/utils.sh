@@ -29,12 +29,12 @@ log()
 			do
 				declare tabs+='\t'
 			done
-	    	echo -e $now" [INFO] :: ES-DOC SH > "$tabs$1
+	    	echo -e $now" [INFO] :: ESDOC-SH > "$tabs$1
 	    else
-	    	echo -e $now" [INFO] :: ES-DOC SH > "$1
+	    	echo -e $now" [INFO] :: ESDOC-SH > "$1
 	    fi
 	else
-	    echo -e $now" [INFO] :: ES-DOC SH > "
+	    echo -e $now" [INFO] :: ESDOC-SH > "
 	fi
 }
 
@@ -98,6 +98,9 @@ declare ESDOC_DIR_PYESDOC_TESTS=$ESDOC_DIR_REPOS/esdoc-py-client/tests
 declare ESDOC_DIR_WEB_COMPARATOR=$ESDOC_DIR_REPOS/esdoc-web-compare
 declare ESDOC_DIR_WEB_PLUGIN=$ESDOC_DIR_REPOS/esdoc-web-plugin
 
+# Project specific.
+declare ESDOC_DIR_CMIP6=$ESDOC_DIR_REPOS/cmip6
+
 # ###############################################################
 # SECTION: INITIALIZE VARS
 # ###############################################################
@@ -118,15 +121,6 @@ declare -a ESDOC_OPS_DIRS=(
 
 # Set of git repos.
 declare -a ESDOC_REPOS=(
-	'cmip6-specializations-aerosol'
-	'cmip6-specializations-atmos'
-	'cmip6-specializations-atmoschem'
-	'cmip6-specializations-land'
-	'cmip6-specializations-landice'
-	'cmip6-specializations-ocean'
-	'cmip6-specializations-ocnbgchem'
-	'cmip6-specializations-seaice'
-	'cmip6-specializations-toplevel'
 	'esdoc-api'
 	'esdoc-archive'
 	'esdoc-cdf2cim'
@@ -147,6 +141,7 @@ declare -a ESDOC_REPOS=(
 	'esdoc-web-search'
 	'esdoc-web-static'
 	'esdoc-web-view'
+	'esdoc-web-wordpress'
 	'esdoc-ws-url-rewriter'
 	'pyessv'
 	'pyessv-archive'
@@ -155,15 +150,6 @@ declare -a ESDOC_REPOS=(
 
 # Set of git repos considered to be relatively small.
 declare -a ESDOC_REPOS_LITE=(
-	'cmip6-specializations-aerosol'
-	'cmip6-specializations-atmos'
-	'cmip6-specializations-atmoschem'
-	'cmip6-specializations-land'
-	'cmip6-specializations-landice'
-	'cmip6-specializations-ocean'
-	'cmip6-specializations-ocnbgchem'
-	'cmip6-specializations-seaice'
-	'cmip6-specializations-toplevel'
 	'esdoc-api'
 	'esdoc-cdf2cim'
 	'esdoc-cdf2cim-ws'
@@ -182,6 +168,7 @@ declare -a ESDOC_REPOS_LITE=(
 	'esdoc-web-search'
 	'esdoc-web-static'
 	'esdoc-web-view'
+	'esdoc-web-wordpress'
 	'esdoc-ws-url-rewriter'
 	'pyessv'
 	'pyessv-archive'
@@ -193,6 +180,9 @@ declare -a ESDOC_VENVS=(
 	'api'
 	'pyesdoc'
 )
+
+# Vocabs.
+source $ESDOC_HOME/bash/utils_vocabs.sh
 
 # ###############################################################
 # SECTION: Initialise file system

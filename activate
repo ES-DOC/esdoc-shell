@@ -16,7 +16,6 @@ source $ESDOC_HOME/repos/esdoc-cdf2cim/sh/activate
 source $ESDOC_HOME/repos/esdoc-cdf2cim-ws/sh/activate
 source $ESDOC_HOME/repos/esdoc-errata-ws/sh/activate
 source $ESDOC_HOME/repos/esdoc-web-plugin/sh/activate
-source $ESDOC_HOME/repos/esdoc-ws-url-rewriter/sh/activate
 
 # pyesdoc meta-programming commands.
 alias esdoc-mp=$ESDOC_HOME/bash/pyesdoc/mp_generate.sh
@@ -28,8 +27,10 @@ alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/pyesdoc
 alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc/mp_validate_cim_2.sh'
 
 # Security commands.
-alias esdoc-security-init-gh-team=$ESDOC_HOME/bash/security/init_gh_team.sh
-alias esdoc-security-init-gh-repos=$ESDOC_HOME/bash/security/init_gh_repos.sh
+alias esdoc-gh-clone-repos=$ESDOC_HOME/bash/gh/clone_repos.sh
+alias esdoc-gh-init-teams=$ESDOC_HOME/bash/gh/init_teams.sh
+alias esdoc-gh-init-repos=$ESDOC_HOME/bash/gh/init_repos.sh
+alias esdoc-gh-push-changes=$ESDOC_HOME/bash/gh/push_changes.sh
 
 # Stack commands.
 alias esdoc-stack-install=$ESDOC_HOME/bash/stack/install.sh
@@ -42,6 +43,8 @@ alias esdoc-deployment-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_stati
 
 # CMIP6 commands.
 alias esdoc-cmip6-archive-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh
+alias esdoc-cmip6-specializations-clone=$ESDOC_HOME/bash/cmip6/specializations/clone.sh
+alias esdoc-cmip6-specializations-pull=$ESDOC_HOME/bash/cmip6/specializations/pull.sh
 alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations/generate.sh
 alias esdoc-cmip6-specializations-sync=$ESDOC_HOME/bash/cmip6/specializations/sync.sh
 alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_HOME/bash/cmip6/specializations/sync_tooling.sh
@@ -49,16 +52,19 @@ alias esdoc-cmip6-specializations-validate=$ESDOC_HOME/bash/cmip6/specialization
 alias esdoc-cmip6-write-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/write_cim_documents.sh
 alias esdoc-cmip6-write-experiment-config=$ESDOC_HOME/bash/cmip6/experiments/write_config.sh
 alias esdoc-cmip6-write-experiment-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
+alias esdoc-cmip6-write-model-default-spreadsheets=$ESDOC_HOME/bash/cmip6/models/write_default_spreadsheets.sh
 alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/models/write_notebooks.sh
 alias esdoc-cmip6-write-model-cim-documents-from-cmip5=$ESDOC_HOME/bash/cmip6/models/write_cim_documents_from_cmip5.sh
 
 alias esdoc-cmip6-write-conformances-config=$ESDOC_HOME/bash/cmip6/conformances/write_config.sh
 alias esdoc-cmip6-write-conformances-spreadsheets=$ESDOC_HOME/bash/cmip6/conformances/write_spreadsheets.sh
 
+alias esdoc-cmip6-write-rda-notebooks=$ESDOC_HOME/bash/cmip6/models/write_rda_notebooks.sh
+
 _reset_cmip6()
 {
-	esdoc-archive-delete-documents cmip6-draft
-	esdoc-ws-db-flush cmip6-draft
+	esdoc-archive-delete-documents cmip6
+	esdoc-ws-db-flush cmip6
 	esdoc-cmip6-write-experiment-cim-documents
 	esdoc-cmip6-write-experiment-config
 	esdoc-cmip6-write-experiment-d3
@@ -70,10 +76,10 @@ alias esdoc-cmip6-reset=_reset_cmip6
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_HOME/bash/cmip6/conformances/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
-chmod a+x $ESDOC_HOME/bash/cmip6/misc/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/specializations/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
+chmod a+x $ESDOC_HOME/bash/gh/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
 chmod a+x $ESDOC_HOME/bash/security/*.sh
 chmod a+x $ESDOC_HOME/bash/stack/*.sh

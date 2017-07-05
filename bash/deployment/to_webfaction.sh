@@ -8,9 +8,9 @@ _log()
 			do
 				declare tabs+='\t'
 			done
-	    	echo -e "ES-DOC DEPLOYMENT > "$tabs$1
+	    	echo -e "ESDOC DEPLOYMENT > "$tabs$1
 	    else
-	    	echo -e "ES-DOC DEPLOYMENT > "$1
+	    	echo -e "ESDOC DEPLOYMENT > "$1
 	    fi
 	else
 	    echo -e ""
