@@ -8,9 +8,9 @@ _log()
 			do
 				declare tabs+='\t'
 			done
-	    	echo -e "ESDOC DEPLOYMENT > "$tabs$1
+	    	echo -e "ESDOC-DEPLOYMENT > "$tabs$1
 	    else
-	    	echo -e "ESDOC DEPLOYMENT > "$1
+	    	echo -e "ESDOC-DEPLOYMENT > "$1
 	    fi
 	else
 	    echo -e ""
@@ -34,7 +34,6 @@ _log_end()
 _log_banner
 _log "updating document archive ..."
 _log_banner
-
 cd $HOME/weblibs/$1/esdoc-archive
 git pull
 source ./sh/activate
@@ -45,10 +44,17 @@ _log_end
 _log_banner
 _log "updating pyesdoc lib ..."
 _log_banner
-
 cd $HOME/weblibs/$1/esdoc-py-client
 git pull
 source ./sh/activate
+_log_end
+
+# ... docs
+_log_banner
+_log "updating docs ..."
+_log_banner
+cd $HOME/weblibs/$1/esdoc-docs
+git pull
 _log_end
 
 # -------------------------------------------------------------------------------
@@ -69,14 +75,10 @@ do
 	_log_banner
 	_log "updating front-end: "$1_fe_$_ESDOC_FRONT_END
 	_log_banner
-
 	cd $HOME/webapps/$1_fe_$_ESDOC_FRONT_END
 	git pull
 	_log_end
 done
-
-# Update errata index.html.
-# cp $HOME/webapps/$1_fe_errata/search.html $HOME/webapps/$1_fe_errata/index.html
 
 # -------------------------------------------------------------------------------
 # Update web-services
@@ -94,54 +96,39 @@ do
 	_log_banner
 	_log "updating web-service: "$1_ws_$_ESDOC_WEB_SERVICE
 	_log_banner
-
 	cd $HOME/webapps/$1_ws_$_ESDOC_WEB_SERVICE
 	git pull
 	_log_end
 done
 
-# Reload daemons.
-# ... cdf2cim
+# Reload cdf2cim daemon
 _log_banner
 _log "reloading web-service: "$1_ws_cdf2cim
 _log_banner
-
 source $HOME/webapps/$1_ws_cdf2cim/sh/activate
 cdf2cim-ws-daemon-reload
 _log_end
 
-# ... documentation
+# Reload documentation daemon
 _log_banner
 _log "reloading web-service: "$1_ws_documentation
 _log_banner
-
 source $HOME/webapps/$1_ws_documentation/sh/activate
 esdoc-ws-daemon-reload
 _log_end
 
-# ... errata
-# _log_banner
-# _log "reloading web-service: "$1_ws_errata
-# _log_banner
-
-# source $HOME/webapps/$1_ws_errata/sh/activate
-# errata-ws-daemon-reload
-# _log_end
-
-# ... url rewriter (doc)
+# Reload url rewriter (doc) daemon
 _log_banner
 _log "reloading web-service: "$1_ws_url_rewriter_doc
 _log_banner
-
 source $HOME/webapps/$1_ws_url_rewriter_doc/sh/activate
 rewriter-ws-daemon-reload
 _log_end
 
-# ... url rewriter (further info)
+# Reload url rewriter (further info) daemon
 _log_banner
 _log "reloading web-service: "$1_ws_url_rewriter_fi
 _log_banner
-
 source $HOME/webapps/$1_ws_url_rewriter_fi/sh/activate
 rewriter-ws-daemon-reload
 _log_end
