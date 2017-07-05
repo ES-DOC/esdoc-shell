@@ -7,7 +7,7 @@ source $ESDOC_HOME/bash/utils.sh
 main()
 {
 	source $ESDOC_HOME/bash/pyesdoc/mp_generate.sh cim 2 python
-	source $ESDOC_HOME/bash/pyesdoc/mp_generate.sh cim 2 qxml
+	source $ESDOC_HOME/bash/pyesdoc/mp_generate.sh cim 2 qconfig
 }
 
 # Invoke entry point.

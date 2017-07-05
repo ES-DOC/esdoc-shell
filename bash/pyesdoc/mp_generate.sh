@@ -29,6 +29,11 @@ main()
 		declare dest=$ESDOC_DIR_CIM/v$version/questionnaire/$ontology-v$version-q-config.xml
 		cp -r $data $dest
 		log "qxml artefacts copied to @ "$dest
+	elif [ $language = "qconfig" ]; then
+        declare data=$ESDOC_DIR_TMP/$ontology/v$version/"$ontology"_"$version".json
+		declare dest=$ESDOC_DIR_CIM/v$version/questionnaire/"$ontology"_"$version"_qconfig.json
+		cp -r $data $dest
+		log "qconfig artefacts copied to @ "$dest
 	fi
 	log_banner
 
