@@ -28,9 +28,8 @@ _log_end()
 }
 
 # -------------------------------------------------------------------------------
-# Update libs
+# Update archive
 # -------------------------------------------------------------------------------
-# ... archive
 _log_banner
 _log "updating document archive ..."
 _log_banner
@@ -40,7 +39,11 @@ source ./sh/activate
 esdoc-archive-uncompress
 _log_end
 
-# ... pyesdoc
+# -------------------------------------------------------------------------------
+# Update libs
+# -------------------------------------------------------------------------------
+
+# pyesdoc
 _log_banner
 _log "updating pyesdoc lib ..."
 _log_banner
@@ -49,7 +52,7 @@ git pull
 source ./sh/activate
 _log_end
 
-# ... docs
+# docs
 _log_banner
 _log "updating docs ..."
 _log_banner

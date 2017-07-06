@@ -39,6 +39,18 @@ _sync_cim_profile()
 	log "CMIP6-SPECS : ... synced"
 }
 
+# Sync html.
+_sync_html()
+{
+	log "CMIP6-SPECS : syncing HTML ..."
+
+	for specialization in "${_ACTIVE_SPECIALIZATIONS[@]}"
+	do
+		cp $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/_$specialization.html /Users/macg/dev/esdoc/repos/esdoc-web-view-specialization/cmip6_$specialization.html
+	done
+
+	log "CMIP6-SPECS : ... synced"
+}
 # Sync python definitions.
 _sync_definitions()
 {
@@ -100,6 +112,7 @@ main()
 	_sync_templates
 	_sync_cim_profile
 	_sync_definitions
+	_sync_html
 }
 
 # Invoke entry point.

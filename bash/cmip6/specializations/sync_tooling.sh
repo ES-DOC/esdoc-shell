@@ -28,10 +28,13 @@ main()
 		mkdir $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/generate
 		rm -rf $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/validate
 		mkdir $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/validate
+		rm -rf $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/media
+		mkdir $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/media
 
 		# ... copy current
-		cp $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/generate/* $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/generate
-		cp $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/validate/* $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/validate
+		cp -r $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/generate/* $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/generate
+		cp -r $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/validate/* $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/validate
+		cp -r $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/media/* $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/media
 		log "CMIP6-SPECS : ... synced: "$specialization
 	done
 
