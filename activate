@@ -41,6 +41,9 @@ alias esdoc-stack-update-lite=$ESDOC_HOME/bash/stack/update_lite.sh
 # Deployment commands.
 alias esdoc-deployment-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_static_assets.sh
 
+# CMIP5 commands.
+alias esdoc-cmip5-archive-cim-documents=$ESDOC_HOME/bash/cmip5/archive_cim_documents.sh
+
 # CMIP6 commands.
 alias esdoc-cmip6-archive-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh
 alias esdoc-cmip6-specializations-clone=$ESDOC_HOME/bash/cmip6/specializations/clone.sh

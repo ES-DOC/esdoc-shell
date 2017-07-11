@@ -146,7 +146,6 @@ declare -a ESDOC_REPOS=(
 	'esdoc-ws-url-rewriter'
 	'pyessv'
 	'pyessv-archive'
-	'pyessv-writer'
 )
 
 # Set of git repos considered to be relatively small.
@@ -174,7 +173,6 @@ declare -a ESDOC_REPOS_LITE=(
 	'esdoc-ws-url-rewriter'
 	'pyessv'
 	'pyessv-archive'
-	'pyessv-writer'
 )
 
 # Set of virtual environments.
