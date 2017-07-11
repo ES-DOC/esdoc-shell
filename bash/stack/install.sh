@@ -13,7 +13,7 @@ _install_repos()
 	for repo in "${ESDOC_REPOS[@]}"
 	do
 		log "Installing core repo: $repo"
-		rm -rf ./$repo
+		rm -rf $ESDOC_DIR_REPOS/$repo
 		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS/$repo
 	done
 
