@@ -36,7 +36,6 @@ alias esdoc-gh-push-changes=$ESDOC_HOME/bash/gh/push_changes.sh
 alias esdoc-stack-install=$ESDOC_HOME/bash/stack/install.sh
 alias esdoc-stack-uninstall=$ESDOC_HOME/bash/stack/uninstall.sh
 alias esdoc-stack-update=$ESDOC_HOME/bash/stack/update.sh
-alias esdoc-stack-update-lite=$ESDOC_HOME/bash/stack/update_lite.sh
 
 # Deployment commands.
 alias esdoc-deployment-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_static_assets.sh

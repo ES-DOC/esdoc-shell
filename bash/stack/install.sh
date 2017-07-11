@@ -3,26 +3,23 @@
 # Import utils.
 source $ESDOC_HOME/bash/utils.sh
 
-# Installs a git repo.
-_install_repo()
-{
-	log "Installing repo: $1"
-	rm -rf $ESDOC_DIR_REPOS/$1
-
-	if [ $ESDOC_GIT_PROTOCOL = "ssh" ]; then
-		git clone -q git@github.com:ES-DOC/$1.git $DIR_LOCAL_REPOS/$1
-	else
-		git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/$1
-	fi
-}
-
 # Installs git repos.
 _install_repos()
 {
 	log "Installing repos"
+
 	for repo in "${ESDOC_REPOS[@]}"
 	do
-		_install_repo $repo
+		log "Installing repo: $1"
+		rm -rf $ESDOC_DIR_REPOS/$1
+		git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/$1
+	done
+
+	for repo in "${ESDOC_REPOS_CMIP6[@]}"
+	do
+		log "Installing repo: $1"
+		rm -rf $ESDOC_DIR_REPOS/cmip6/$1
+		git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/cmip6/$1
 	done
 }
 
@@ -35,6 +32,9 @@ _install_dirs()
 		mkdir -p $ops_dir
 	done
 	mkdir -p $ESDOC_DIR_REPOS
+	mkdir -p $ESDOC_DIR_REPOS/cmip6
+	mkdir -p $ESDOC_DIR_REPOS/core
+	mkdir -p $ESDOC_DIR_REPOS/institutional
 }
 
 # Sets up script permissions.

@@ -1,13 +1,6 @@
 #!/bin/bash
 
 # ###############################################################
-# SECTION: HELPER VARS
-# ###############################################################
-
-# Set git-hub protocol.
-declare ESDOC_GIT_PROTOCOL=${ESDOC_GIT_PROTOCOL:='https'}
-
-# ###############################################################
 # SECTION: HELPER FUNCTIONS
 # ###############################################################
 
@@ -119,8 +112,9 @@ declare -a ESDOC_OPS_DIRS=(
 	$ESDOC_DIR_PYTHON
 )
 
-# Set of git repos.
+# Set of core git repos.
 declare -a ESDOC_REPOS=(
+	# core
 	'esdoc-api'
 	'esdoc-archive'
 	'esdoc-cdf2cim'
@@ -148,31 +142,17 @@ declare -a ESDOC_REPOS=(
 	'pyessv-archive'
 )
 
-# Set of git repos considered to be relatively small.
-declare -a ESDOC_REPOS_LITE=(
-	'esdoc-api'
-	'esdoc-cdf2cim'
-	'esdoc-cdf2cim-ws'
-	'esdoc-cim'
-	'esdoc-cim-v1-schema'
-	'esdoc-cim-v2-schema'
-	'esdoc-contrib'
-	'esdoc-docs'
-	'esdoc-errata-client'
-	'esdoc-errata-fe'
-	'esdoc-errata-ws'
-	'esdoc-py-client'
-	'esdoc-web-compare'
-	'esdoc-web-demo'
-	'esdoc-web-plugin'
-	'esdoc-web-search'
-	'esdoc-web-static'
-	'esdoc-web-view'
-	'esdoc-web-view-specialization'
-	'esdoc-web-wordpress'
-	'esdoc-ws-url-rewriter'
-	'pyessv'
-	'pyessv-archive'
+# Set of cmip6 git repos.
+declare -a ESDOC_REPOS_CMIP6=(
+	'cmip6-specializations-toplevel'
+	'cmip6-specializations-seaice'
+	'cmip6-specializations-ocnbgchem'
+	'cmip6-specializations-ocean'
+	'cmip6-specializations-landice'
+	'cmip6-specializations-land'
+	'cmip6-specializations-atmoschem'
+	'cmip6-specializations-atmos'
+	'cmip6-specializations-aerosol'
 )
 
 # Set of virtual environments.
