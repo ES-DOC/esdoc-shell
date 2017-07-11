@@ -19,17 +19,18 @@ _update_repo()
 	declare $repo=$1
 	declare $dir_repo=$2/$repo
 	declare $gh_repo=$3/$repo.git
-	if [ -d "$dir_repo" ]; then
-		log "Updating core repo: $repo"
-		set_working_dir $dir_repo
-		git pull -q
-		remove_files "*.pyc"
-		set_working_dir
-	else
-		log "Installing core repo: $repo"
-		rm -rf $dir_repo
-		git clone -q $gh_repo $dir_repo
-	fi
+	echo $repo $dir_repo $gh_repo
+	# if [ -d "$dir_repo" ]; then
+	# 	log "Updating core repo: $repo"
+	# 	set_working_dir $dir_repo
+	# 	git pull -q
+	# 	remove_files "*.pyc"
+	# 	set_working_dir
+	# else
+	# 	log "Installing core repo: $repo"
+	# 	rm -rf $dir_repo
+	# 	git clone -q $gh_repo $dir_repo
+	# fi
 }
 
 # Updates git repos.
