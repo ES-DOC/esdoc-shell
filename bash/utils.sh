@@ -114,7 +114,6 @@ declare -a ESDOC_OPS_DIRS=(
 
 # Set of core git repos.
 declare -a ESDOC_REPOS=(
-	# core
 	'esdoc-api'
 	'esdoc-archive'
 	'esdoc-cdf2cim'
