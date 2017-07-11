@@ -8,19 +8,25 @@ _install_repos()
 {
 	log "Installing repos"
 
+	mkdir -p $ESDOC_DIR_REPOS
+	mkdir -p $ESDOC_DIR_REPOS/cmip6
+	mkdir -p $ESDOC_DIR_REPOS/core
+	mkdir -p $ESDOC_DIR_REPOS/institutional
+
+	cd $ESDOC_DIR_REPOS
 	for repo in "${ESDOC_REPOS[@]}"
 	do
 		log "Installing repo: $1"
-		rm -rf $ESDOC_DIR_REPOS/$1
-		git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/$1
+		rm -rf ./$1
+		git clone -q https://github.com/ES-DOC/$1.git
 	done
 
-	for repo in "${ESDOC_REPOS_CMIP6[@]}"
-	do
-		log "Installing repo: $1"
-		rm -rf $ESDOC_DIR_REPOS/cmip6/$1
-		git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/cmip6/$1
-	done
+	# for repo in "${ESDOC_REPOS_CMIP6[@]}"
+	# do
+	# 	log "Installing repo: $1"
+	# 	rm -rf $ESDOC_DIR_REPOS/cmip6/$1
+	# 	git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/cmip6/$1
+	# done
 }
 
 # Sets up directories.
@@ -67,8 +73,8 @@ main()
 
 	_install_dirs
 	_install_script_permissions
-	_install_repos
-	_activate_sub_shells
+	# _install_repos
+	# _activate_sub_shells
 
 	log "INSTALLED STACK"
 }
