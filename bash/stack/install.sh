@@ -9,24 +9,23 @@ _install_repos()
 	log "Installing repos"
 
 	mkdir -p $ESDOC_DIR_REPOS
-	mkdir -p $ESDOC_DIR_REPOS/cmip6
 	mkdir -p $ESDOC_DIR_REPOS/core
-	mkdir -p $ESDOC_DIR_REPOS/institutional
-
-	cd $ESDOC_DIR_REPOS
 	for repo in "${ESDOC_REPOS[@]}"
 	do
-		log "Installing repo: $1"
-		rm -rf ./$1
-		git clone -q https://github.com/ES-DOC/$1.git
+		log "Installing repo: $repo"
+		rm -rf ./$repo
+		git clone -q https://github.com/ES-DOC/$repo.git
 	done
 
-	# for repo in "${ESDOC_REPOS_CMIP6[@]}"
-	# do
-	# 	log "Installing repo: $1"
-	# 	rm -rf $ESDOC_DIR_REPOS/cmip6/$1
-	# 	git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/cmip6/$1
-	# done
+	mkdir -p $ESDOC_DIR_REPOS/cmip6
+	for repo in "${ESDOC_REPOS_CMIP6[@]}"
+	do
+		log "Installing repo: $repo"
+		rm -rf $ESDOC_DIR_REPOS/cmip6/$repo
+		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS/cmip6/$repo
+	done
+
+	mkdir -p $ESDOC_DIR_REPOS/institutional
 }
 
 # Sets up directories.
