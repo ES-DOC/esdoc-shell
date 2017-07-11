@@ -67,8 +67,6 @@ main()
 	_update_shell
 	_update_repos
 
-	source $ESDOC_HOME/bash/stack/upgrade_venvs.sh
-
 	log "UPDATED STACK"
 }
 
