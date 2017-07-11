@@ -13,36 +13,49 @@ _update_shell()
 	log "UPDATED SHELL"
 }
 
-# Installs a git repo.
-_install_repo()
-{
-	log "Installing repo: $1"
-	rm -rf $ESDOC_DIR_REPOS/$1
-	git clone -q https://github.com/ES-DOC/$1.git $ESDOC_DIR_REPOS/$1
-}
-
 # Updates a git repo.
 _update_repo()
 {
-	log "Updating repo: $1"
-	set_working_dir $ESDOC_DIR_REPOS/$1
-	git pull -q
-	remove_files "*.pyc"
-	set_working_dir
+	$repo = $1
+	$dir_repo = $2/$repo
+	$gh_repo = $3/$repo.git
+	if [ -d "$dir_repo" ]; then
+		log "Updating core repo: $repo"
+		set_working_dir $dir_repo
+		git pull -q
+		remove_files "*.pyc"
+		set_working_dir
+	else
+		log "Installing core repo: $repo"
+		rm -rf $dir_repo
+		git clone -q $gh_repo $dir_repo
+	fi
 }
 
 # Updates git repos.
 _update_repos()
 {
 	log "UPDATING REPOS"
+
+	mkdir -p $ESDOC_DIR_REPOS
+	mkdir -p $ESDOC_DIR_REPOS_CORE
 	for repo in "${ESDOC_REPOS[@]}"
 	do
-		if [ -d "$ESDOC_DIR_REPOS/$repo" ]; then
-			_update_repo $repo
-		else
-			_install_repo $repo
-		fi
+		_update_repo $repo $ESDOC_DIR_REPOS https://github.com/ES-DOC
 	done
+
+	mkdir -p $ESDOC_DIR_REPOS_CMIP6
+	for repo in "${ESDOC_REPOS_CMIP6[@]}"
+	do
+		_update_repo $repo $ESDOC_DIR_REPOS_CMIP6 https://github.com/ES-DOC
+	done
+
+	mkdir -p $ESDOC_DIR_REPOS/institutional
+	for institution in "${INSTITUTION_ID[@]}"
+	do
+		_update_repo $institution $ESDOC_DIR_REPOS_INSTITUTIONAL https://github.com/ES-DOC-INSTITUTIONAL
+	done
+
 	log "UPDATED REPOS"
 }
 
