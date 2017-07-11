@@ -16,9 +16,9 @@ _update_shell()
 # Updates a git repo.
 _update_repo()
 {
-	$repo = $1
-	$dir_repo = $2/$repo
-	$gh_repo = $3/$repo.git
+	declare $repo=$1
+	declare $dir_repo=$2/$repo
+	declare $gh_repo=$3/$repo.git
 	if [ -d "$dir_repo" ]; then
 		log "Updating core repo: $repo"
 		set_working_dir $dir_repo
