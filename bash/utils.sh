@@ -69,6 +69,9 @@ declare ESDOC_DIR_BASH=$ESDOC_HOME/bash
 declare ESDOC_DIR_DOCS=$ESDOC_HOME/docs
 declare ESDOC_DIR_OPS=$ESDOC_HOME/ops
 declare ESDOC_DIR_REPOS=$ESDOC_HOME/repos
+declare ESDOC_DIR_REPOS_CORE=$ESDOC_DIR_REPOS/core
+declare ESDOC_DIR_REPOS_CMIP6=$ESDOC_DIR_REPOS/cmip6
+declare ESDOC_DIR_REPOS_INSTITUTIONAL=$ESDOC_DIR_REPOS/institutional
 declare ESDOC_DIR_RESOURCES=$ESDOC_HOME/resources
 
 # Define ops sub-directories.

@@ -9,37 +9,38 @@ _install_repos()
 	log "Installing repos"
 
 	mkdir -p $ESDOC_DIR_REPOS
-	mkdir -p $ESDOC_DIR_REPOS/core
+	mkdir -p $ESDOC_DIR_REPOS_CORE
 	for repo in "${ESDOC_REPOS[@]}"
 	do
-		log "Installing repo: $repo"
+		log "Installing core repo: $repo"
 		rm -rf ./$repo
-		git clone -q https://github.com/ES-DOC/$repo.git
+		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS/$repo
 	done
 
-	mkdir -p $ESDOC_DIR_REPOS/cmip6
+	mkdir -p $ESDOC_DIR_REPOS_CMIP6
 	for repo in "${ESDOC_REPOS_CMIP6[@]}"
 	do
-		log "Installing repo: $repo"
-		rm -rf $ESDOC_DIR_REPOS/cmip6/$repo
-		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS/cmip6/$repo
+		log "Installing cmip6 repo: $repo"
+		rm -rf $ESDOC_DIR_REPOS_CMIP6/$repo
+		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS_CMIP6/$repo
 	done
 
 	mkdir -p $ESDOC_DIR_REPOS/institutional
+	for institution in "${INSTITUTION_ID[@]}"
+	do
+		log "Installing institutional repo: $institution"
+		rm -rf $ESDOC_DIR_REPOS_INSTITUTIONAL/$institution
+		git clone -q https://github.com/ES-DOC/$institution.git $ESDOC_DIR_REPOS_INSTITUTIONAL/$institution
+	done
 }
 
-# Sets up directories.
-_install_dirs()
+# Sets up operational directories.
+_install_ops_dirs()
 {
-	# new
 	for ops_dir in "${ESDOC_OPS_DIRS[@]}"
 	do
 		mkdir -p $ops_dir
 	done
-	mkdir -p $ESDOC_DIR_REPOS
-	mkdir -p $ESDOC_DIR_REPOS/cmip6
-	mkdir -p $ESDOC_DIR_REPOS/core
-	mkdir -p $ESDOC_DIR_REPOS/institutional
 }
 
 # Sets up script permissions.
@@ -70,7 +71,7 @@ main()
 {
 	log "INSTALLING STACK"
 
-	_install_dirs
+	_install_ops_dirs
 	_install_script_permissions
 	_install_repos
 	# _activate_sub_shells
