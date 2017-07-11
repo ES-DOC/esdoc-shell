@@ -73,7 +73,7 @@ main()
 
 	_install_dirs
 	_install_script_permissions
-	# _install_repos
+	_install_repos
 	# _activate_sub_shells
 
 	log "INSTALLED STACK"
