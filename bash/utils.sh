@@ -60,6 +60,17 @@ remove_files()
 	find . -name $1 -exec rm -rf {} \;
 }
 
+activate_sub_shells()
+{
+	source $ESDOC_HOME/repos/esdoc-api/sh/activate
+	source $ESDOC_HOME/repos/esdoc-archive/sh/activate
+	source $ESDOC_HOME/repos/esdoc-py-client/sh/activate
+	source $ESDOC_HOME/repos/esdoc-cdf2cim/sh/activate
+	source $ESDOC_HOME/repos/esdoc-cdf2cim-ws/sh/activate
+	source $ESDOC_HOME/repos/esdoc-errata-ws/sh/activate
+	source $ESDOC_HOME/repos/esdoc-web-plugin/sh/activate
+}
+
 # ###############################################################
 # SECTION: INITIALIZE PATHS
 # ###############################################################

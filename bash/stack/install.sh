@@ -55,17 +55,6 @@ _install_script_permissions()
 	chmod a+x $ESDOC_HOME/bash/stack/*.sh
 }
 
-_activate_sub_shells()
-{
-	source $ESDOC_HOME/repos/esdoc-api/sh/activate
-	source $ESDOC_HOME/repos/esdoc-archive/sh/activate
-	source $ESDOC_HOME/repos/esdoc-py-client/sh/activate
-	source $ESDOC_HOME/repos/esdoc-cdf2cim/sh/activate
-	source $ESDOC_HOME/repos/esdoc-cdf2cim-ws/sh/activate
-	source $ESDOC_HOME/repos/esdoc-errata-ws/sh/activate
-	source $ESDOC_HOME/repos/esdoc-web-plugin/sh/activate
-}
-
 # Main entry point.
 main()
 {
@@ -74,7 +63,7 @@ main()
 	_install_ops_dirs
 	_install_script_permissions
 	_install_repos
-	# _activate_sub_shells
+	activate_sub_shells
 
 	log "INSTALLED STACK"
 }
