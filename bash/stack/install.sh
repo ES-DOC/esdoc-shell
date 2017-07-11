@@ -30,7 +30,7 @@ _install_repos()
 	do
 		log "Installing institutional repo: $institution"
 		rm -rf $ESDOC_DIR_REPOS_INSTITUTIONAL/$institution
-		git clone -q https://github.com/ES-DOC/$institution.git $ESDOC_DIR_REPOS_INSTITUTIONAL/$institution
+		git clone -q https://github.com/ES-DOC-INSTITUTIONAL/$institution.git $ESDOC_DIR_REPOS_INSTITUTIONAL/$institution
 	done
 }
 
