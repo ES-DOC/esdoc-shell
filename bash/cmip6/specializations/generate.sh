@@ -3,16 +3,8 @@
 # Import utils.
 source $ESDOC_HOME/bash/utils.sh
 
-# Array of active specifications.
-declare -a _ACTIVE_SPECIALIZATIONS=(
-	'atmos'
-	'land'
-	'landice'
-	'ocean'
-	'ocnbgchem'
-	'seaice'
-	'toplevel'
-)
+# Import vocab.
+source $ESDOC_HOME/bash/cmip6/specializations/vocab.sh
 
 # Main entry point.
 main()
@@ -24,7 +16,7 @@ main()
 		log_banner
 		python $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/generate
 	else
-		for specialization in "${_ACTIVE_SPECIALIZATIONS[@]}"
+		for specialization in "${CMIP6_SPECIALIZATIONS[@]}"
 		do
 			log_banner
 			log "CMIP6-SPECS : generating "$specialization
