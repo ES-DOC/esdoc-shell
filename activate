@@ -61,6 +61,7 @@ alias esdoc-cmip5-archive-cim-documents=$ESDOC_HOME/bash/cmip5/archive_cim_docum
 alias esdoc-cmip6-archive-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh
 alias esdoc-cmip6-specializations-clone=$ESDOC_HOME/bash/cmip6/specializations/clone.sh
 alias esdoc-cmip6-specializations-pull=$ESDOC_HOME/bash/cmip6/specializations/pull.sh
+alias esdoc-cmip6-specializations-push=$ESDOC_HOME/bash/cmip6/specializations/push.sh
 alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations/generate.sh
 
 alias esdoc-cmip6-specializations-sync-cim-profile=$ESDOC_HOME/bash/cmip6/specializations/sync_cim_profile.sh
