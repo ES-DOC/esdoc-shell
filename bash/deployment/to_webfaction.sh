@@ -68,6 +68,7 @@ declare -a _ESDOC_FRONT_ENDS=(
 	'compare'
 	'demo'
 	'search'
+	'specializations'
 	'static'
 	'view'
 )
@@ -91,6 +92,7 @@ declare -a _ESDOC_WEB_SERVICES=(
 	'documentation'
 	'url_rewriter_doc'
 	'url_rewriter_fi'
+	'url_rewriter_specs'
 )
 
 # Simply pull latest from GH.
@@ -133,6 +135,14 @@ _log_banner
 _log "reloading web-service: "$1_ws_url_rewriter_fi
 _log_banner
 source $HOME/webapps/$1_ws_url_rewriter_fi/sh/activate
+rewriter-ws-daemon-reload
+_log_end
+
+# Reload url rewriter (specs) daemon
+_log_banner
+_log "reloading web-service: "$1_ws_url_rewriter_specs
+_log_banner
+source $HOME/webapps/$1_ws_url_rewriter_specs/sh/activate
 rewriter-ws-daemon-reload
 _log_end
 
