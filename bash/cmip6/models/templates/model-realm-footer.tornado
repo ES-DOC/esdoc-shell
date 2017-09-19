@@ -2,23 +2,6 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "# Finalization"
-    ]
-},
-{
-    "cell_type": "markdown",
-    "metadata": {},
-    "source": [
-        "### Document Persistence"
-    ]
-},
-{
-    "cell_type": "code",
-    "execution_count": null,
-    "metadata": {},
-    "outputs": [],
-    "source": [
-        "# DO NOT EDIT !\n",
-        "DOC.write()"
+        "### ©2017 [ES-DOC](https://es-doc.org)  \n"
     ]
 }

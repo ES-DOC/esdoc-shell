@@ -20,16 +20,13 @@
         "DOC.set_id('{{ p.id }}')  \n",
         "\n",
 
-        {% if p.is_collection %}
-        "# PROPERTY VALUE(S): \n",
-        {% else %}
-        "# PROPERTY VALUE: \n",
-        {% end %}
-        {% if p.enum or p.typeof in {'str',} %}
-        "# Set as follows: DOC.set_value(\"value\")  \n",
-        {% else %}
-        "# Set as follows: DOC.set_value(value)  \n",
-        {% end %}
+        "# PROPERTY QUALITY CONTROL STATUS:  \n",
+        "# 0=draft, 1=in-review, 2=reviewed  \n",
+        "DOC.set_qc_status({{ DOC.get_qc_status(p.id) }}) \n",
+        "\n",
+
+        "# PROPERTY VALUE{% if p.is_collection %}(S){% end %}: \n",
+        "# Set as follows: DOC.set_value({% if p.enum or p.typeof in {'str',} %}\"value\"{% else %}value{% end %})  \n",
         {% if p.enum is not None %}
             "# Valid Choices: \n",
             {% for c in p.enum.choices %}
@@ -44,21 +41,15 @@
             "#     True  \n",
             "#     False  \n",
         {% end %}
+
         {% set p_values = DOC.get_values(p.id) %}
         {% if p_values %}
             {% for p_value in p_values %}
-                {% if p.enum or p.typeof in {'str',} %}
-                    "DOC.set_value(\"{{p_value}}\")  \n",
-                {% else %}
-                    "DOC.set_value({{p_value}})  \n",
-                {% end %}
+                "DOC.set_value({% if p.enum or p.typeof in {'str',} %}\"{{p_value}}\"{% else %}{{p_value}}{% end %}) {% if p_value != p_values[-1] %} \n{% end %}",
             {% end %}
         {% else %}
-            "# TODO\n",
+            "# TODO !!!",
         {% end %}
-        "\n",
-        "# PROPERTY QUALITY CONTROL STATUS:  \n",
-        "# 0=draft, 1=in-review, 2=reviewed  \n",
-        "DOC.set_qc_status({{ DOC.get_qc_status(p.id) }})"
+        "\n"
     ]
 },

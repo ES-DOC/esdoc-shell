@@ -17,7 +17,7 @@ import os
 from tornado import template
 
 import pyessv
-from pyesdoc.ipython.model_realm_properties import NotebookOutput
+from pyesdoc.ipython.model_topic import NotebookOutput
 
 
 
@@ -30,40 +30,16 @@ _TEMPLATES = template.Loader(os.path.join(os.path.dirname(os.path.abspath(__file
 # MIP era.
 _MIP_ERA = "cmip6"
 
-# Map of realm names to specialization repo & source id attribute.
+# Map of active realms.
 _REALMS = {
-    'aerosol': {
-        'is_active': False,
-        'source_id_attr': 'aerosol',
-    },
-    'atmos': {
-        'is_active': True,
-        'source_id_attr': 'atmosphere',
-    },
-    'atmoschem': {
-        'is_active': False,
-        'source_id_attr': 'atmospheric_chemistry',
-    },
-    'land': {
-        'is_active': True,
-        'source_id_attr': 'land_surface',
-    },
-    'landice': {
-        'is_active': True,
-        'source_id_attr': 'land_ice',
-    },
-    'ocean': {
-        'is_active': True,
-        'source_id_attr': 'ocean',
-    },
-    'ocnbgchem': {
-        'is_active': True,
-        'source_id_attr': 'ocean_biogeochemistry',
-    },
-    'seaice': {
-        'is_active': True,
-        'source_id_attr': 'sea_ice',
-    }
+    'aerosol': False,
+    'atmos': True,
+    'atmoschem': False,
+    'land': True,
+    'landice': True,
+    'ocean': True,
+    'ocnbgchem': True,
+    'seaice': True
 }
 
 # Test institute / source id.
@@ -76,7 +52,9 @@ def _main(args):
 
     """
     ctx = _ProcessingContextInfo()
-    for idx, info in enumerate(sorted(_get_config())):
+    cfg = sorted(_get_config())
+
+    for idx, info in enumerate(cfg):
         ctx.set_info(info)
         # print "writing notebook {} :: {}/{}/{}/{}".format(idx + 1, _MIP_ERA, ctx.institution_id, ctx.source_id, ctx.specialization_id)
         ctx.set_output()
@@ -185,30 +163,27 @@ def _get_config():
     result = set()
 
     # Load CMIP6 vocabularies.
-    cv_institution_id, cv_source_id, cv_realm = \
+    institutes, sources, realms = \
         pyessv.load('wcrp:cmip6:institution-id'), \
         pyessv.load('wcrp:cmip6:source-id'), \
         pyessv.load('wcrp:cmip6:realm')
-    cv_realm = [i for i in cv_realm if _REALMS[i.canonical_name]['is_active']]
+    realms = [i for i in realms if _REALMS[i.canonical_name]]
 
-    # Add test related notebook info.
+    # Add test institute notebooks.
     for i in range(3):
         institute_id = '{}-{}'.format(_TEST_INSTITUTE, i + 1)
         source_id = '{}-{}'.format(_TEST_SOURCE_ID, i + 1)
         result.add((institute_id, source_id, "toplevel"))
-        for realm in cv_realm:
+        for realm in realms:
             result.add((institute_id, source_id, realm.canonical_name))
 
-    # For each source_id, institution_id combination:
-    for institution_id in cv_institution_id:
-        for source_id in cv_source_id:
-            # ... exclude unsupported insitutes;
-            if institution_id.label not in source_id.data['institution_id']:
-                continue
-            # ... emit top-level + realms;
-            result.add((institution_id.canonical_name, source_id.canonical_name, 'toplevel'))
-            for realm in cv_realm:
-                result.add((institution_id.canonical_name, source_id.canonical_name, realm.canonical_name))
+    # Add source_id, institution_id combinations:
+    for institute in institutes:
+        for source in sources:
+            if institute.label in source.data['institution_id']:
+                result.add((institute.canonical_name, source.canonical_name, 'toplevel'))
+                for realm in [i for i in realms if i.raw_name in source.raw_data['modelComponent']]:
+                    result.add((institute.canonical_name, source.canonical_name, realm.canonical_name))
 
     return result
 

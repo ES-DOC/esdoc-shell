@@ -2,17 +2,18 @@
     "cell_type": "markdown",
     "metadata": {},
     "source": [
-        "# ES-DOC {{ DOC.mip_era.upper() }} Model Properties ({{ t.name_camel_case }}) \n",
+        "# ES-DOC {{ DOC.mip_era.upper() }} Model Properties - {{ t.name_camel_case }} \n",
         "**MIP Era**: {{ DOC.mip_era.upper() }}  \n",
         "**Institute**: {{ DOC.institute.upper().upper() }}  \n",
         "**Source ID**: {{ DOC.source_id.upper() }}  \n",
         {% if t.name != "toplevel" %}
-        "**Realm**: {{ t.name_camel_case }}  \n",
+        "**Topic**: {{ t.name_camel_case }}  \n",
         {% end %}
-        "**Processes**: {% for p in t['process'] %}{{ p.name_camel_case_spaced }}{% if p == t['process'][-1] %}.{% else %},{% end %} {% end %}  \n",
+        "**Sub-Topics**: {% for p in t['process'] %}{{ p.name_camel_case_spaced }}{% if p == t['process'][-1] %}.{% else %},{% end %} {% end %}  \n",
         "**Properties**: {{ len(t.all_properties) }} ({{ len(t.all_required_properties) }} required)  \n",
+        "**Specializations**: [View specializations](https://specializations.es-doc.org/{{ DOC.mip_era.lower() }}/{{ t.name }}?client=jupyter-notebook)  \n",
         "\n",
-        "**Notebook Help**: [Goto notebook help page](http://wordpress.es-doc.org/how-to-document-cmip6-models)  \n",
+        "**Notebook Help**: [Goto notebook help page](https://es-doc.org/how-to-document-cmip6-models-with-ipython)  \n",
         "**Notebook Initialised**: {{ unicode(now)[0:19] }}"
     ]
 },
@@ -21,7 +22,7 @@
     "metadata": {},
     "source": [
         "### Document Setup  \n",
-        "**IMPORTANT:** *to be executed each time you run the notebook*  "
+        "**IMPORTANT: to be executed each time you run the notebook**  "
     ]
 },
 {
@@ -31,7 +32,7 @@
     "outputs": [],
     "source": [
         "# DO NOT EDIT !  \n",
-        "from pyesdoc.ipython.model_realm_properties import NotebookOutput  \n",
+        "from pyesdoc.ipython.model_topic import NotebookOutput  \n",
         "\n",
         "# DO NOT EDIT !  \n",
         "DOC = NotebookOutput('{{ DOC.mip_era.lower() }}', '{{ DOC.institute.lower() }}', '{{ DOC.source_id.lower() }}', '{{ t.name.lower() }}')"
@@ -91,6 +92,25 @@
         {% else %}
             "# TODO"
         {% end %}
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### Document Publication  \n",
+        "*Specify document publication status*  "
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# Set publication status:  \n",
+        "# 0=do not publish, 1=publish.   \n",
+        "DOC.set_publication_status({{ DOC.publication_status }})"
     ]
 },
 {
