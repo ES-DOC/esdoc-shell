@@ -16,19 +16,19 @@ _ROLE_CODES = {
     "centre": "custodian"
 }
 
-# Mappings loaded from csv files.
-_MAPPINGS = collections.OrderedDict()
 
 
-def map_model(m):
-    """Returns a cim.v2.Model instance mapped from a cim.v1.ModelComponent instance.
+def map(m):
+    """Maps a CMIP5 model component to a CIM v2 document.
 
-    :param cim.v1.ModelComponent m: Model instance in previous CIM format.
+    :param cim.v1.Model m: CMIP5 CIM v1 model document.
 
-    :returns: A Model document.
-    :rtype: cim.v2.Model
+    :returns: CMIP6 IPython notebook output.
+    :rtype: dict
 
     """
+    return
+
     doc = _create_doc(cim.v2.Model, m.meta.institute)
     doc.citations = [_map_citation(m, i) for i in m.citations]
     doc.description = m.description
@@ -123,17 +123,3 @@ def _create_doc(typeof, institute):
         source="script"
         )
 
-
-def init():
-    """Initialises set of mappers.
-
-    """
-    dpath = os.path.dirname(__file__)
-    dpath = os.path.join(dpath, "mappings")
-    for fpath in glob.glob(os.path.join(dpath, "*.csv")):
-        realm = fpath.split("/")[-1].split(".")[0]
-        typeof = fpath.split("/")[-1].split(".")[1]
-        data = [i for i in csv.reader(open(fpath, 'r'))][1:]
-        for row in data:
-            if typeof == "component-tree":
-                _MAPPINGS[row[1]] = row[2]

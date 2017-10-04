@@ -17,6 +17,7 @@ main()
 		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/csv/$specialization*.csv
 		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/config/$specialization.json
 		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/mindmaps/$specialization.mm
+		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/cmip5-mappings/$specialization.csv
 	done
 
 	for specialization in "${CMIP6_SPECIALIZATIONS[@]}"
@@ -31,6 +32,9 @@ main()
 
 		# log "CMIP6-SPECS : syncing json files ..."
 		cp $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/_$specialization.json $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/config/$specialization.json
+
+		# log "CMIP6-SPECS : syncing mapping files ..."
+		cp $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/mappings/$specialization-cmip5-to-cmip6-mappings.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/cmip5-mappings/$specialization.csv
 
 		# log "CMIP6-SPECS : syncing mindmap files ..."
 		cp $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/_$specialization.mm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/mindmaps/$specialization.mm

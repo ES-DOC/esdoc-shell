@@ -13,6 +13,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import shutil
 
 from tornado import template
 
@@ -47,7 +48,7 @@ _TEST_INSTITUTE = "test-institute"
 _TEST_SOURCE_ID = "test-model"
 
 
-def _main(args):
+def _main():
     """Main entry point.
 
     """
@@ -56,7 +57,6 @@ def _main(args):
 
     for idx, info in enumerate(cfg):
         ctx.set_info(info)
-        # print "writing notebook {} :: {}/{}/{}/{}".format(idx + 1, _MIP_ERA, ctx.institution_id, ctx.source_id, ctx.specialization_id)
         ctx.set_output()
         ctx.set_notebook()
         ctx.write()
@@ -179,15 +179,23 @@ def _get_config():
 
     # Add source_id, institution_id combinations:
     for institute in institutes:
+        # Add a notebook per source_id / topic combination.
         for source in sources:
             if institute.label in source.data['institution_id']:
                 result.add((institute.canonical_name, source.canonical_name, 'toplevel'))
                 for realm in [i for i in realms if i.raw_name in source.raw_data['modelComponent']]:
                     result.add((institute.canonical_name, source.canonical_name, realm.canonical_name))
 
+        # Add sandbox notebooks.
+        for i in range(2):
+            source_id = "sandbox-{}".format(i + 1)
+            result.add((institute.canonical_name, source_id, 'toplevel'))
+            for realm in realms:
+                result.add((institute.canonical_name, source_id, realm.canonical_name))
+
+
     return result
 
 
 # Entry point.
-if __name__ == '__main__':
-    _main(_ARGS.parse_args())
+_main()

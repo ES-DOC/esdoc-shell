@@ -16,7 +16,6 @@ import os
 
 import requests
 
-import pyesdoc
 import pyessv
 
 
@@ -45,6 +44,7 @@ def _main(args):
 	# Set repos to be created.
 	for i in institutes:
 		repo = i.canonical_name
+
 		payload = {
 			'auto_init': True,
 			'name': repo,
@@ -66,15 +66,15 @@ def _main(args):
 
 		# If created then log.
 		if r.status_code == 201:
-			pyesdoc.log("GH-repo created: {}".format(repo))
+			pyessv.log("GH-repo created: {}".format(repo))
 
 		# If already exists then skip.
 		elif r.status_code == 422:
-			pyesdoc.log("GH-repo already exists: {}".format(repo))
+			pyessv.log("GH-repo already exists: {}".format(repo))
 
 		# Otherwise log error.
 		else:
-			pyesdoc.log_error("GH-repo creation failure: {} :: {}".format(repo, r['errors'][0]['message']))
+			pyessv.log_error("GH-repo creation failure: {} :: {}".format(repo, r['errors'][0]['message']))
 
 
 # Main entry point.
