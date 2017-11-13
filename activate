@@ -45,6 +45,7 @@ alias esdoc-gh-clone-repos=$ESDOC_HOME/bash/gh/clone_repos.sh
 alias esdoc-gh-init-teams=$ESDOC_HOME/bash/gh/init_teams.sh
 alias esdoc-gh-init-repos=$ESDOC_HOME/bash/gh/init_repos.sh
 alias esdoc-gh-push-changes=$ESDOC_HOME/bash/gh/push_changes.sh
+alias esdoc-gh-test-team-membership=$ESDOC_HOME/bash/gh/test_team_membership.sh
 
 # Stack commands.
 alias esdoc-stack-install=$ESDOC_HOME/bash/stack/install.sh
@@ -74,9 +75,11 @@ alias esdoc-cmip6-specializations-validate=$ESDOC_HOME/bash/cmip6/specialization
 alias esdoc-cmip6-write-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/write_cim_documents.sh
 alias esdoc-cmip6-write-experiment-config=$ESDOC_HOME/bash/cmip6/experiments/write_config.sh
 alias esdoc-cmip6-write-experiment-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
-alias esdoc-cmip6-write-model-default-spreadsheets=$ESDOC_HOME/bash/cmip6/models/write_default_spreadsheets.sh
 alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/models/write_notebooks.sh
 alias esdoc-cmip6-write-model-seeding-config=$ESDOC_HOME/bash/cmip6/models/write_seeding_config.sh
+
+alias esdoc-cmip6-push-model-seeding-config=$ESDOC_HOME/bash/cmip6/models/push_seeding_config.sh
+
 
 alias esdoc-cmip6-write-model-from-cmip5=$ESDOC_HOME/bash/cmip6/models/write_from_cmip5.sh
 

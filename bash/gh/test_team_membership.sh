@@ -6,13 +6,13 @@ source $ESDOC_HOME/bash/utils.sh
 # Main entry point.
 main()
 {
-	log "GITHUB : initializing institutional teams ..."
+	log "GITHUB : testing team membership ..."
 
 	activate_venv
-	python $ESDOC_HOME/bash/gh/init_teams.py
+	python $ESDOC_HOME/bash/gh/test_team_membership.py --team=$1 --user=$2
 
 	log "GITHUB : institutional teams initialized"
 }
 
 # Invoke entry point.
-main $1
+main $1 $2

@@ -12,7 +12,7 @@
         "**Sub-Topics**: {% for p in t['process'] %}{{ p.name_camel_case_spaced }}{% if p == t['process'][-1] %}.{% else %},{% end %} {% end %}  \n",
         "**Properties**: {{ len(t.all_properties) }} ({{ len(t.all_required_properties) }} required)  \n",
         "**Model descriptions**: [Model description details](https://specializations.es-doc.org/{{ DOC.mip_era.lower() }}/{{ t.name }}?client=jupyter-notebook)  \n",
-        "**Seeded From**: {{ (DOC.seeding_source or '--').upper() }}  \n",
+        "**Initialized From**: {{ (DOC.seeding_source or '--').upper() }}  \n",
         "\n",
         "**Notebook Help**: [Goto notebook help page](https://es-doc.org/how-to-document-models-with-ipython)  \n",
         "**Notebook Initialised**: {{ unicode(now)[0:19] }}"
@@ -63,7 +63,7 @@
                 {% end %}
             {% end %}
         {% else %}
-            "# TODO"
+            "# TODO - please enter value(s)"
         {% end %}
     ]
 },
@@ -91,7 +91,7 @@
                 {% end %}
             {% end %}
         {% else %}
-            "# TODO"
+            "# TODO - please enter value(s)"
         {% end %}
     ]
 },

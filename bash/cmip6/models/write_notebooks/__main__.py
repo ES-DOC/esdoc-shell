@@ -31,16 +31,10 @@ _TEMPLATES = template.Loader(os.path.join(os.path.dirname(os.path.abspath(__file
 # MIP era.
 _MIP_ERA = "cmip6"
 
-# Map of active realms.
-_REALMS = {
-    'aerosol': False,
-    'atmos': True,
-    'atmoschem': False,
-    'land': True,
-    'landice': True,
-    'ocean': True,
-    'ocnbgchem': True,
-    'seaice': True
+# Set of inactive realms.
+_INACTIVE_REALMS = {
+    'aerosol',
+    'atmoschem'
 }
 
 # Test institute / source id.
@@ -53,9 +47,7 @@ def _main():
 
     """
     ctx = _ProcessingContextInfo()
-    cfg = sorted(_get_config())
-
-    for idx, info in enumerate(cfg):
+    for idx, info in enumerate(sorted(_get_config())):
         ctx.set_info(info)
         ctx.set_output()
         ctx.set_notebook()
@@ -63,6 +55,9 @@ def _main():
 
 
 class _ProcessingContextInfo(object):
+    """Encpasulates information used during processing.
+
+    """
     def __init__(self):
         """Instance initializer.
 
@@ -167,9 +162,9 @@ def _get_config():
         pyessv.load('wcrp:cmip6:institution-id'), \
         pyessv.load('wcrp:cmip6:source-id'), \
         pyessv.load('wcrp:cmip6:realm')
-    realms = [i for i in realms if _REALMS[i.canonical_name]]
+    realms = [i for i in realms if i.canonical_name not in _INACTIVE_REALMS]
 
-    # Add test institute notebooks.
+    # 1 notebook per test institute / topic combination.
     for i in range(3):
         institute_id = '{}-{}'.format(_TEST_INSTITUTE, i + 1)
         source_id = '{}-{}'.format(_TEST_SOURCE_ID, i + 1)
@@ -177,22 +172,24 @@ def _get_config():
         for realm in realms:
             result.add((institute_id, source_id, realm.canonical_name))
 
-    # Add source_id, institution_id combinations:
+    # 1 notebook per institution_id / source_id / toplevel combination:
     for institute in institutes:
-        # Add a notebook per source_id / topic combination.
-        for source in sources:
-            if institute.label in source.data['institution_id']:
-                result.add((institute.canonical_name, source.canonical_name, 'toplevel'))
-                for realm in [i for i in realms if i.raw_name in source.raw_data['modelComponent']]:
-                    result.add((institute.canonical_name, source.canonical_name, realm.canonical_name))
+        for source in [i for i in sources if institute.label in i.data['institution_id']]:
+            result.add((institute.canonical_name, source.canonical_name, 'toplevel'))
 
-        # Add sandbox notebooks.
+    # 1 notebook per institution_id / source_id / topic combination:
+    for institute in institutes:
+        for source in [i for i in sources if institute.label in i.data['institution_id']]:
+            for realm in [i for i in realms if i.raw_name in source.data['model_component']]:
+                result.add((institute.canonical_name, source.canonical_name, realm.canonical_name))
+
+    # 1 notebook per institution_id / sandbox / topic combination:
+    for institute in institutes:
         for i in range(2):
             source_id = "sandbox-{}".format(i + 1)
             result.add((institute.canonical_name, source_id, 'toplevel'))
             for realm in realms:
                 result.add((institute.canonical_name, source_id, realm.canonical_name))
-
 
     return result
 

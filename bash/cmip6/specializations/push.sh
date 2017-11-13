@@ -11,6 +11,7 @@ main()
 {
 	declare comment=$1
 
+	# Push specializations.
 	cd $ESDOC_HOME/repos
 	for specialization in "${CMIP6_SPECIALIZATIONS[@]}"
 	do
@@ -20,6 +21,12 @@ main()
 		git commit -m $comment
 		git push -v origin master:master
 	done
+
+	# Push viewer.
+	cd $ESDOC_HOME/repos/esdoc-web-view-specialization
+	git add .
+	git commit -m $comment
+	git push -v origin master:master
 }
 
 # Invoke entry point.

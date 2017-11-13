@@ -29,8 +29,11 @@ _GH_USER_NAME = 'esdoc-system-user'
 # GitHub - access token.
 _GH_ACCESS_TOKEN = os.getenv('ESDOC_GITHUB_ACCESS_TOKEN')
 
-# GitHub API - create repo.
-_GH_API_REPO_CREATE = "https://api.github.com/orgs/ES-DOC-INSTITUTIONAL/repos"
+# GitHub API - credentials.
+_GH_API_CREDENTIALS = (_GH_USER_NAME, _GH_ACCESS_TOKEN)
+
+# GitHub API - repos.
+_GH_API_REPOS = "https://api.github.com/orgs/ES-DOC-INSTITUTIONAL/repos"
 
 
 
@@ -56,12 +59,12 @@ def _main(args):
 			'has_projects': True,
 			'has_wiki': True
 		}
-		r = requests.post(_GH_API_REPO_CREATE,
+		r = requests.post(_GH_API_REPOS,
 			data=json.dumps(payload),
 			headers={
 				'Accept': "application/vnd.github.korra-preview+json"
 			},
-			auth=(_GH_USER_NAME, _GH_ACCESS_TOKEN)
+			auth=_GH_API_CREDENTIALS
 			)
 
 		# If created then log.

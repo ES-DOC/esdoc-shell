@@ -32,46 +32,65 @@ def _main(args):
     """Main entry point.
 
     """
-    _log('Initialising CMIP6 model descriptions seeding config files:')
-    for institution_id, obj in _get_data().items():
+    pyessv.log('Initialising CMIP6 model descriptions seeding config files:', app='CMIP6')
+
+    data = _map_institutes()
+    for institution_id, obj in data.items():
         fname = '{}.json'.format(institution_id)
         fpath = os.path.join(args.output_dir, fname)
         with open(fpath, 'w') as fstream:
             fstream.write(json.dumps(obj, indent=4))
-        _log('... {} : initialised'.format(institution_id))
+        pyessv.log('... {} : initialised'.format(institution_id), app='CMIP6')
 
 
-def _log(msg):
-    """Log helper.
-
-    """
-    pyessv.log(msg, app='CMIP6')
-
-
-def _get_data():
-    """Gets data to be written to file system.
+def _map_institutes():
+    """Maps institutes collection to a dictionary.
 
     """
-    return collections.OrderedDict([(i, j) for i, j in _get_institutes().items() if j])
+    obj = collections.OrderedDict()
+    for institute in pyessv.load('wcrp:cmip6:institution-id'):
+        obj[institute.canonical_name] = _map_institute(institute)
+
+    return collections.OrderedDict([(i, j) for i, j in obj.items() if j])
 
 
-def _get_institutes():
-    """Get map of institute to source identifier.
-
-    """
-    return collections.OrderedDict((i.canonical_name, _get_sources(i)) \
-           for i in pyessv.load('wcrp:cmip6:institution-id'))
-
-
-def _get_sources(institute):
-    """Get map of source identifier to realm.
+def _map_institute(institute):
+    """Maps an institute to a dictionary.
 
     """
     def _is_related(source):
         return institute.canonical_name in [i.lower() for i in source.data['institution_id']]
 
-    return collections.OrderedDict([(i.canonical_name, _get_realms()) \
-           for i in pyessv.load('wcrp:cmip6:source-id') if _is_related(i)])
+    obj = collections.OrderedDict()
+    for source_id in pyessv.load('wcrp:cmip6:source-id'):
+        if not _is_related(source_id):
+            continue
+        obj[source_id.canonical_name] = _map_source_id(source_id)
+
+    return obj
+
+
+def _map_source_id(source_id):
+    """Maps a source identifier to a dictionary.
+
+    """
+    obj = collections.OrderedDict()
+    for realm in pyessv.load('wcrp:cmip6:realm'):
+        if source_id.raw_data['modelComponent'][realm.raw_name]['description'] != 'none':
+            obj[realm.canonical_name] = _map_realm(source_id, realm)
+
+    return obj
+
+
+def _map_realm(source_id, realm):
+    """Maps a realm to a dictionary.
+
+    """
+    obj = collections.OrderedDict()
+    obj['initializedFrom'] = ''
+    obj['name'] = ''
+
+    return obj
 
 
 def _get_realms():

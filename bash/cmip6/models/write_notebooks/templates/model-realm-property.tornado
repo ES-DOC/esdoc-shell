@@ -47,7 +47,7 @@
                 "DOC.set_value({% if p.enum or p.typeof in {'str',} %}\"{{p_value}}\"{% else %}{{p_value}}{% end %}) {% if p_value != p_values[-1] %} \n{% end %}",
             {% end %}
         {% else %}
-            "# TODO !!!",
+            "# TODO - please enter value(s)",
         {% end %}
         "\n"
     ]
