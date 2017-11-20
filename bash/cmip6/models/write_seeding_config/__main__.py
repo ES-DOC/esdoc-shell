@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: generate_config.py
+.. module:: write_seeding_config.__main__.py
    :license: GPL/CeCIL
    :platform: Unix, Windows
-   :synopsis: Generates CMIP5 CIM (v1) model documents to CMIP6 CIM (v2) mapping config file.
+   :synopsis: Initializes CMIP6 seeding configuration files.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-import argparse
 import collections
 import json
 import os
@@ -18,71 +17,73 @@ import pyessv
 
 
 
-# Define command line options.
-_ARGS = argparse.ArgumentParser("Writes CMIP6 model seeding config files.")
-_ARGS.add_argument(
-    "--output",
-    help="Path to directory into which seeding config files will be written.",
-    dest="output_dir",
-    type=str
-    )
+# Output directory.
+_OUTPUT_DIR = os.getenv('ESDOC_HOME')
+_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'repos')
+_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'esdoc-docs')
+_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'cmip6')
+_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'models')
+_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'seeding')
 
 
-def _main(args):
+def _main():
     """Main entry point.
 
     """
-    pyessv.log('Initialising CMIP6 model descriptions seeding config files:', app='CMIP6')
-
-    data = _map_institutes()
-    for institution_id, obj in data.items():
+    _log('Initialising CMIP6 model descriptions seeding config files:')
+    for institution_id, obj in _get_data().items():
         fname = '{}.json'.format(institution_id)
-        fpath = os.path.join(args.output_dir, fname)
+        fpath = os.path.join(_OUTPUT_DIR, fname)
         with open(fpath, 'w') as fstream:
             fstream.write(json.dumps(obj, indent=4))
-        pyessv.log('... {} : initialised'.format(institution_id), app='CMIP6')
+        _log('... {} : initialised'.format(institution_id))
 
 
-def _map_institutes():
-    """Maps institutes collection to a dictionary.
+def _log(msg):
+    """Log helper.
 
     """
-    obj = collections.OrderedDict()
-    for institute in pyessv.load('wcrp:cmip6:institution-id'):
-        obj[institute.canonical_name] = _map_institute(institute)
-
-    return collections.OrderedDict([(i, j) for i, j in obj.items() if j])
+    pyessv.log(msg, app='CMIP6')
 
 
-def _map_institute(institute):
-    """Maps an institute to a dictionary.
+def _get_data():
+    """Gets data to be written to file system.
+
+    """
+    return collections.OrderedDict([(i, j) for i, j in _get_institutes().items() if j])
+
+
+def _get_institutes():
+    """Get map of institute to source identifier.
+
+    """
+    return collections.OrderedDict((i.canonical_name, _get_sources(i)) \
+           for i in pyessv.load('wcrp:cmip6:institution-id'))
+
+
+def _get_sources(institute):
+    """Get map of source identifier to realm.
 
     """
     def _is_related(source):
         return institute.canonical_name in [i.lower() for i in source.data['institution_id']]
 
-    obj = collections.OrderedDict()
-    for source_id in pyessv.load('wcrp:cmip6:source-id'):
-        if not _is_related(source_id):
-            continue
-        obj[source_id.canonical_name] = _map_source_id(source_id)
-
-    return obj
+    return collections.OrderedDict([(i.canonical_name, _get_realms(i)) \
+           for i in pyessv.load('wcrp:cmip6:source-id') if _is_related(i)])
 
 
-def _map_source_id(source_id):
-    """Maps a source identifier to a dictionary.
+def _get_realms(source_id):
+    """Get map of realm to empty mapping.
 
     """
-    obj = collections.OrderedDict()
-    for realm in pyessv.load('wcrp:cmip6:realm'):
-        if source_id.raw_data['modelComponent'][realm.raw_name]['description'] != 'none':
-            obj[realm.canonical_name] = _map_realm(source_id, realm)
+    def _is_realized(realm):
+        return source_id.data['model_component'][realm.raw_name]['description'] != 'none'
 
-    return obj
+    return collections.OrderedDict((i.canonical_name, _get_realm(source_id, i)) \
+           for i in pyessv.load('wcrp:cmip6:realm') if _is_realized(i))
 
 
-def _map_realm(source_id, realm):
+def _get_realm(source_id, realm):
     """Maps a realm to a dictionary.
 
     """
@@ -93,13 +94,5 @@ def _map_realm(source_id, realm):
     return obj
 
 
-def _get_realms():
-    """Get map of realm to empty mapping.
-
-    """
-    return collections.OrderedDict((i.canonical_name, '') \
-           for i in pyessv.load('wcrp:cmip6:realm'))
-
-
 # Entry point.
-_main(_ARGS.parse_args())
+_main()

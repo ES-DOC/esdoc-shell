@@ -76,17 +76,17 @@ alias esdoc-cmip6-write-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experime
 alias esdoc-cmip6-write-experiment-config=$ESDOC_HOME/bash/cmip6/experiments/write_config.sh
 alias esdoc-cmip6-write-experiment-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
 alias esdoc-cmip6-write-model-notebooks=$ESDOC_HOME/bash/cmip6/models/write_notebooks.sh
+
 alias esdoc-cmip6-write-model-seeding-config=$ESDOC_HOME/bash/cmip6/models/write_seeding_config.sh
-
 alias esdoc-cmip6-push-model-seeding-config=$ESDOC_HOME/bash/cmip6/models/push_seeding_config.sh
-
 
 alias esdoc-cmip6-write-model-from-cmip5=$ESDOC_HOME/bash/cmip6/models/write_from_cmip5.sh
 
 alias esdoc-cmip6-write-conformances-config=$ESDOC_HOME/bash/cmip6/conformances/write_config.sh
 alias esdoc-cmip6-write-conformances-spreadsheets=$ESDOC_HOME/bash/cmip6/conformances/write_spreadsheets.sh
 
-alias esdoc-cmip6-write-rda-notebooks=$ESDOC_HOME/bash/cmip6/models/write_rda_notebooks.sh
+alias esdoc-cmip6-write-bash-vars=$ESDOC_HOME/bash/cmip6/other/write_bash_vars.sh
+
 
 _reset_cmip6()
 {
@@ -107,6 +107,7 @@ chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/specializations/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
 chmod a+x $ESDOC_HOME/bash/gh/*.sh
+chmod a+x $ESDOC_HOME/bash/other/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
 chmod a+x $ESDOC_HOME/bash/security/*.sh
 chmod a+x $ESDOC_HOME/bash/stack/*.sh

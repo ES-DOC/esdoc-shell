@@ -47,7 +47,6 @@ def _main(args):
 	# Set repos to be created.
 	for i in institutes:
 		repo = i.canonical_name
-
 		payload = {
 			'auto_init': True,
 			'name': repo,
