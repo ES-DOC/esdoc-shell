@@ -31,7 +31,12 @@ _GH_API_CREDENTIALS = (_GH_USER_NAME, _GH_ACCESS_TOKEN)
 # GitHub API - teams.
 _GH_API_TEAMS = "https://api.github.com/orgs/ES-DOC-INSTITUTIONAL/teams"
 
-
+# Project configuration.
+_CONFIG = {
+	('cmip5', 'wcrp:cmip5:institute'),
+	('cmip6', 'wcrp:cmip6:institution-id'),
+	('cordex', 'wcrp:cordex:institute')
+}
 
 
 
@@ -39,55 +44,36 @@ def _main():
 	"""Main entry point.
 
 	"""
-	# Set existing teams.
-	teams = _get_teams()
-
-	# Set institutes without a team.
-	institutes = [i for i in pyessv.load('wcrp:cmip6:institution-id')
-				  if _get_team_name(i) not in teams]
-
-	# Create.
-	for i in institutes:
-		_create_team(i)
+	existing_teams = _get_teams()
+	for project, collection_id in _CONFIG:
+		institutes = pyessv.load(collection_id)
+		for institute in institutes:
+			team = '{}-{}'.format(project, institute.canonical_name)
+			if team not in existing_teams:
+				_create_team1(project, institute.canonical_name, team)
 
 
 def _get_teams():
 	"""Returns set of existing GH teams.
 
 	"""
-	url = '{}?per_page=100'.format(_GH_API_TEAMS)
+	url = '{}?per_page=500'.format(_GH_API_TEAMS)
 	r = requests.get(url, auth=_GH_API_CREDENTIALS)
 
-	return {i['name']: i for i in json.loads(r.text)}
+	return [i['name'] for i in json.loads(r.text)]
 
 
-def _get_team_name(institution):
-	"""Returns GitHub team name for an institute.
-
-	"""
-	return 'staff-{}'.format(institution.canonical_name)
-
-
-def _get_repo_name(institution):
-	"""Returns GitHub repo name for an institute.
-
-	"""
-	return institution.canonical_name
-
-
-def _create_team(institution):
+def _create_team1(project, institute, team):
 	"""Creates an institutional GitHub team.
 
 	"""
 	# Post to GitHub API.
-	team = _get_team_name(institution)
 	payload = {
 		'auto_init': True,
-		'description': '{} staff members'.format(institution.canonical_name.upper()),
+		'description': '{} project {} team'.format(project.upper(), institute.upper()),
 		'maintainers': [_GH_USER_NAME],
 		'name': team,
-		'privacy': 'secret',
-		'repo_names': ['ES-DOC-INSTITUTIONAL/{}'.format(_get_repo_name(institution))]
+		'privacy': 'secret'
 	}
 	r = requests.post(_GH_API_TEAMS,
 		data=json.dumps(payload),

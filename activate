@@ -42,8 +42,10 @@ alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc
 
 # Security commands.
 alias esdoc-gh-clone-repos=$ESDOC_HOME/bash/gh/clone_repos.sh
+alias esdoc-gh-delete-teams=$ESDOC_HOME/bash/gh/delete_teams.sh
 alias esdoc-gh-init-teams=$ESDOC_HOME/bash/gh/init_teams.sh
 alias esdoc-gh-init-repos=$ESDOC_HOME/bash/gh/init_repos.sh
+alias esdoc-gh-list-teams=$ESDOC_HOME/bash/gh/list_teams.sh
 alias esdoc-gh-push-changes=$ESDOC_HOME/bash/gh/push_changes.sh
 alias esdoc-gh-test-team-membership=$ESDOC_HOME/bash/gh/test_team_membership.sh
 
@@ -104,10 +106,10 @@ alias esdoc-cmip6-reset=_reset_cmip6
 chmod a+x $ESDOC_HOME/bash/cmip6/conformances/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
+chmod a+x $ESDOC_HOME/bash/cmip6/other/*.sh
 chmod a+x $ESDOC_HOME/bash/cmip6/specializations/*.sh
 chmod a+x $ESDOC_HOME/bash/deployment/*.sh
 chmod a+x $ESDOC_HOME/bash/gh/*.sh
-chmod a+x $ESDOC_HOME/bash/other/*.sh
 chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
 chmod a+x $ESDOC_HOME/bash/security/*.sh
 chmod a+x $ESDOC_HOME/bash/stack/*.sh
