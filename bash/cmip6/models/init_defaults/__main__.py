@@ -17,26 +17,31 @@ import pyessv
 
 
 
-# Output directory.
-_OUTPUT_DIR = os.getenv('ESDOC_HOME')
-_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'repos')
-_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'esdoc-docs')
-_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'cmip6')
-_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'models')
-_OUTPUT_DIR = os.path.join(_OUTPUT_DIR, 'seeding')
-
-
 def _main():
     """Main entry point.
 
     """
     _log('Initialising CMIP6 model descriptions seeding config files:')
     for institution_id, obj in _get_data().items():
-        fname = '{}.json'.format(institution_id)
-        fpath = os.path.join(_OUTPUT_DIR, fname)
+        fpath = _get_fpath(institution_id)
         with open(fpath, 'w') as fstream:
             fstream.write(json.dumps(obj, indent=4))
         _log('... {} : initialised'.format(institution_id))
+
+
+def _get_fpath(institution_id):
+    """Returns path to an institutes model-default.json.
+
+    """
+    fpath = os.getenv('ESDOC_HOME')
+    fpath = os.path.join(fpath, 'repos')
+    fpath = os.path.join(fpath, 'institutional')
+    fpath = os.path.join(fpath, institution_id)
+    fpath = os.path.join(fpath, 'cmip6')
+    fpath = os.path.join(fpath, 'models')
+    fpath = os.path.join(fpath, 'model-defaults.json')
+
+    return fpath
 
 
 def _log(msg):
@@ -50,7 +55,7 @@ def _get_data():
     """Gets data to be written to file system.
 
     """
-    return collections.OrderedDict([(i, j) for i, j in _get_institutes().items() if j])
+    return collections.OrderedDict([(i, j) for i, j in _get_institutes().items()])
 
 
 def _get_institutes():

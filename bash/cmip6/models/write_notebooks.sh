@@ -6,13 +6,13 @@ source $ESDOC_HOME/bash/utils.sh
 # Main entry point.
 main()
 {
-	log "PYESDOC : writing cmip6 model notebooks ..."
+	log "CMIP6 model notebooks writing begins ..."
 
 	activate_venv
-	export ESDOC_CMIP6_NOTEBOOK_HOME=$ESDOC_DIR_REPOS/esdoc-jupyterhub/notebooks
+	rm -r $ESDOC_DIR_REPOS/esdoc-jupyterhub/notebooks
 	python $ESDOC_HOME/bash/cmip6/models/write_notebooks
 
-	log "PYESDOC : cmip6 model notebooks written to "$ESDOC_CMIP6_NOTEBOOK_HOME
+	log "CMIP6 model notebooks written ..."
 }
 
 # Invoke entry point.

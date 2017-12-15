@@ -9,8 +9,6 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-import pyesdoc
-
 import mappings
 
 
@@ -23,6 +21,7 @@ def convert_property_values(values, spec):
     vals = []
     for val in values:
         vals += _convert_property_value(spec, val)
+    vals = [i for i in vals if i is not None]
     values = sorted(vals)
     # values = sorted([_convert_property_value(spec, i) for i in values])
 

@@ -14,7 +14,7 @@
         "**Model descriptions**: [Model description details](https://specializations.es-doc.org/{{ DOC.mip_era.lower() }}/{{ t.name }}?client=jupyter-notebook)  \n",
         "**Initialized From**: {{ (DOC.seeding_source or '--').upper() }}  \n",
         "\n",
-        "**Notebook Help**: [Goto notebook help page](https://es-doc.org/how-to-document-models-with-ipython)  \n",
+        "**Notebook Help**: [Goto notebook help page](https://es-doc.org/cmip6-models-documenting-with-ipython)  \n",
         "**Notebook Initialised**: {{ unicode(now)[0:19] }}"
     ]
 },

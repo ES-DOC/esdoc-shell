@@ -9,7 +9,6 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-import argparse
 import datetime as dt
 import json
 import os
@@ -22,20 +21,11 @@ from pyesdoc.ipython.model_topic import NotebookOutput
 
 
 
-# Command line options.
-_ARGS = argparse.ArgumentParser("Writes CMIP6 IPython model notebooks to file system.")
-
 # Template cache.
 _TEMPLATES = template.Loader(os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates"))
 
 # MIP era.
 _MIP_ERA = "cmip6"
-
-# Set of inactive realms.
-_INACTIVE_REALMS = {
-    'aerosol',
-    'atmoschem'
-}
 
 # Test institute / source id.
 _TEST_INSTITUTE = "test-institute"
@@ -47,7 +37,7 @@ def _main():
 
     """
     ctx = _ProcessingContextInfo()
-    for idx, info in enumerate(sorted(_get_config())):
+    for info in sorted(_get_config()):
         ctx.set_info(info)
         ctx.set_output()
         ctx.set_notebook()
@@ -64,6 +54,7 @@ class _ProcessingContextInfo(object):
         """
         self.institution_id = None
         self.output = None
+        self.output_dir = os.path.join(os.getenv('ESDOC_HOME'), 'repos/esdoc-jupyterhub')
         self.source_id = None
         self.specialization_id = None
 
@@ -84,7 +75,8 @@ class _ProcessingContextInfo(object):
             _MIP_ERA,
             self.institution_id,
             self.source_id,
-            self.specialization_id
+            self.specialization_id,
+            self.output_dir
             )
 
 
@@ -162,7 +154,7 @@ def _get_config():
         pyessv.load('wcrp:cmip6:institution-id'), \
         pyessv.load('wcrp:cmip6:source-id'), \
         pyessv.load('wcrp:cmip6:realm')
-    realms = [i for i in realms if i.canonical_name not in _INACTIVE_REALMS]
+    # realms = [i for i in realms if i.canonical_name not in _INACTIVE_REALMS]
 
     # 1 notebook per test institute / topic combination.
     for i in range(3):

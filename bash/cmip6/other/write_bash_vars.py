@@ -50,7 +50,7 @@ def _main():
 
     # Create CMIP6 collections.
     for scope in _VOCABS:
-        for collection in [pyessv.load('wcrp', scope, i) for i in _VOCABS[scope]]:
+        for collection in [pyessv.load('wcrp:{}:{}'.format(scope, i)) for i in _VOCABS[scope]]:
             data = ''
             for term in collection:
                 data += '\t\'{}\'\n'.format(term.canonical_name)

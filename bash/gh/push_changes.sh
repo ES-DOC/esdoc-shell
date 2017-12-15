@@ -12,7 +12,7 @@ main()
 	do
 		cd $ESDOC_HOME/repos/institutional/$institution_id
 		git add *
-		git commit -m "Model default spreadsheets"
+		git commit -m $1
 		git push origin master
 	done
 
@@ -20,4 +20,4 @@ main()
 }
 
 # Invoke entry point.
-main
+main $1

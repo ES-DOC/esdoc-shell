@@ -19,11 +19,6 @@
         "DOC.set_id('{{ p.id }}')  \n",
         "\n",
 
-        "# PROPERTY QUALITY CONTROL STATUS:  \n",
-        "# 0=draft, 1=in-review, 2=reviewed  \n",
-        "DOC.set_qc_status({{ DOC.get_qc_status(p.id) }}) \n",
-        "\n",
-
         "# PROPERTY VALUE{% if p.is_collection %}(S){% end %}: \n",
         "# Set as follows: DOC.set_value({% if p.enum or p.typeof in {'str',} %}\"value\"{% else %}value{% end %})  \n",
         {% if p.enum is not None %}
