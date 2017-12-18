@@ -9,6 +9,7 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
+import argparse
 import datetime as dt
 import json
 import os
@@ -20,6 +21,19 @@ import pyessv
 from pyesdoc.ipython.model_topic import NotebookOutput
 
 
+
+# Define command line options.
+_ARGS = argparse.ArgumentParser("Writes CMIP6 IPython notebooks.")
+_ARGS.add_argument(
+    "--institute",
+    help="CMIP6 institute identier (* for all).",
+    dest="institute",
+    type=str
+    )
+_ARGS = _ARGS.parse_args()
+
+# All institute filter.
+_ALL_INSTITUTES = 'all'
 
 # Template cache.
 _TEMPLATES = template.Loader(os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates"))
@@ -37,7 +51,7 @@ def _main():
 
     """
     ctx = _ProcessingContextInfo()
-    for info in sorted(_get_config()):
+    for info in sorted(_get_config(_ARGS.institute)):
         ctx.set_info(info)
         ctx.set_output()
         ctx.set_notebook()
@@ -143,7 +157,7 @@ class _ProcessingContextInfo(object):
             return json.dumps(as_dict, indent=4)
 
 
-def _get_config():
+def _get_config(institute_filter):
     """Returns set of notebooks to be generated.
 
     """
@@ -154,15 +168,17 @@ def _get_config():
         pyessv.load('wcrp:cmip6:institution-id'), \
         pyessv.load('wcrp:cmip6:source-id'), \
         pyessv.load('wcrp:cmip6:realm')
-    # realms = [i for i in realms if i.canonical_name not in _INACTIVE_REALMS]
+    if institute_filter != _ALL_INSTITUTES:
+        institutes = [i for i in institutes if i.canonical_name == institute_filter]
 
     # 1 notebook per test institute / topic combination.
-    for i in range(3):
-        institute_id = '{}-{}'.format(_TEST_INSTITUTE, i + 1)
-        source_id = '{}-{}'.format(_TEST_SOURCE_ID, i + 1)
-        result.add((institute_id, source_id, "toplevel"))
-        for realm in realms:
-            result.add((institute_id, source_id, realm.canonical_name))
+    if institute_filter in {_ALL_INSTITUTES, 'test'}:
+        for i in range(3):
+            institute_id = '{}-{}'.format(_TEST_INSTITUTE, i + 1)
+            source_id = '{}-{}'.format(_TEST_SOURCE_ID, i + 1)
+            result.add((institute_id, source_id, "toplevel"))
+            for realm in realms:
+                result.add((institute_id, source_id, realm.canonical_name))
 
     # 1 notebook per institution_id / source_id / toplevel combination:
     for institute in institutes:
