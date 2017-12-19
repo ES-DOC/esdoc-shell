@@ -31,15 +31,14 @@ def map(data):
     """
     # Unpack.
     m, c = data
+    institution_id = mappings.get_institute(m)
+    source_id = defaults.get_source_id(m, c)
+    realm = mappings.get_realm(c)
+    output_dir = os.path.join(os.getenv('ESDOC_HOME'), 'repos/esdoc-jupyterhub-archive/data')
+    output_dir = os.path.join(output_dir, institution_id)
 
     # Set notebook output.
-    doc = NotebookOutput(
-        'cmip6',
-        mappings.get_institute(m),
-        defaults.get_source_id(m, c),
-        mappings.get_realm(c),
-        output_dir=os.path.join(os.getenv('ESDOC_HOME'), 'repos/esdoc-jupyterhub'),
-        auto_save=False)
+    doc = NotebookOutput('cmip6', institution_id, source_id, realm, output_dir=output_dir, auto_save=False)
     doc.seeding_source = doc.seeding_source or 'cmip5:{}'.format(m.short_name.lower())
 
     # Set notebook content.

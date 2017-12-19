@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# Import utils.
+source $JH_ARCHIVE_HOME/sh/utils.sh
+
+# Main entry point.
+main()
+{
+    log "initializing notebook archive ..."
+
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 awi awi-cm-1-0-hr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 awi awi-cm-1-0-lr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 awi awi-cm-1-0-mr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 bcc bcc-csm2-hr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 bcc bcc-csm2-mr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 bcc bcc-esm1
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 bnu bnu-esm-1-1
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cams cams-csm1-0
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cas fgoals-f3-h
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cas fgoals-f3-l
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cas fgoals-g3
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cccma canesm5
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cccr-iitm iitm-esm
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cmcc cmcc-cm2-hr4
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cmcc cmcc-cm2-hr5
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cmcc cmcc-cm2-sr5
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cmcc cmcc-cm2-vhr4
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cmcc cmcc-esm2-hr5
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cmcc cmcc-esm2-sr5
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cnrm-cerfacs cnrm-cm6-1
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cnrm-cerfacs cnrm-cm6-1-hr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cnrm-cerfacs cnrm-esm2-1
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 cnrm-cerfacs cnrm-esm2-1-hr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 csir-csiro vresm-1-0
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 csiro-bom access-1-0
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ec-earth-consortium ec-earth3
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ec-earth-consortium ec-earth3-aerchem
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ec-earth-consortium ec-earth3-cc
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ec-earth-consortium ec-earth3-gris
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ec-earth-consortium ec-earth3-hr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ec-earth-consortium ec-earth3-lr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ec-earth-consortium ec-earth3-veg
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ec-earth-consortium ec-earth3-veg-lr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 hammoz-consortium mpiesm-1-2-ham
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 inm inm-cm4-8
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 inm inm-cm5-0
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 inm inm-cm5-h
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 inpe besm-2-7
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ipsl ipsl-cm6a-lr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 messy-consortium emac-2-53-aerchem
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 messy-consortium emac-2-53-vol
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 miroc miroc-es2h
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 miroc miroc-es2l
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 miroc miroc6
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 miroc nicam16-7s
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 miroc nicam16-8s
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 miroc nicam16-9d-l78
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 miroc nicam16-9s
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mohc hadgem3-gc31-hh
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mohc hadgem3-gc31-hm
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mohc hadgem3-gc31-ll
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mohc hadgem3-gc31-lm
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mohc hadgem3-gc31-mh
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mohc hadgem3-gc31-mm
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mohc ukesm1-0-ll
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mohc ukesm1-0-mmh
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mpi-m icon-esm-lr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mpi-m mpi-esm-1-2-hr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mpi-m mpi-esm-1-2-lr
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mri mri-agcm3-2
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 mri mri-esm2-0
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 nasa-giss giss-e2-1g
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 nasa-giss giss-e2-1h
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ncc noresm2-hh
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ncc noresm2-lm
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ncc noresm2-lme
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ncc noresm2-lmec
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ncc noresm2-mh
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 ncc noresm2-mm
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 nerc ukesm1-0-ll
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 nerc ukesm1-0-mmh
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 niwa ukesm1-0-ll
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 noaa-gfdl gfdl-am4
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 noaa-gfdl gfdl-cm4
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 noaa-gfdl gfdl-esm2m
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 noaa-gfdl gfdl-esm4
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 pcmdi pcmdi-test-1-0
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 snu sam0-unicon
+	source $JH_ARCHIVE_HOME/sh/init_.sh cmip6 thu ciesm
+
+    log "notebook archive initialized ..."
+}
+
+# Invoke entry point.
+main

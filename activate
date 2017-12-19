@@ -86,8 +86,12 @@ alias esdoc-cmip6-write-experiment-config=$ESDOC_HOME/bash/cmip6/experiments/wri
 alias esdoc-cmip6-write-experiment-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
 
 # ... cmip6 models
+alias esdoc-cmip6-jhub-init-archive=$ESDOC_HOME/bash/cmip6/jhub/init_archive.sh
+alias esdoc-cmip6-jhub-init-output=$ESDOC_HOME/bash/cmip6/jhub/init_output.sh
+alias esdoc-cmip6-jhub-write-sync=$ESDOC_HOME/bash/cmip6/jhub/write_sync.sh
+
+
 alias esdoc-cmip6-init-model-defaults=$ESDOC_HOME/bash/cmip6/models/init_defaults.sh
-alias esdoc-cmip6-init-model-output=$ESDOC_HOME/bash/cmip6/models/init_output.sh
 alias esdoc-cmip6-write-model-ipynb=$ESDOC_HOME/bash/cmip6/models/write_ipynb.sh
 
 _reset_cmip6()
