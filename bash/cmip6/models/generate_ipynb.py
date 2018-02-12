@@ -31,9 +31,6 @@ _ARGS.add_argument(
     type=str
     )
 
-# All institute filter.
-_ALL_INSTITUTES = 'all'
-
 # MIP era.
 _MIP_ERA = "cmip6"
 
