@@ -1,0 +1,127 @@
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "# ES-DOC {{ DOC.mip_era.upper() }} Model Properties - {{ t.name_camel_case }} \n",
+        "**MIP Era**: {{ DOC.mip_era.upper() }}  \n",
+        "**Institute**: {{ DOC.institute.upper().upper() }}  \n",
+        "**Source ID**: {{ DOC.source_id.upper() }}  \n",
+        {% if t.name != "toplevel" %}
+        "**Topic**: {{ t.name_camel_case }}  \n",
+        {% end %}
+        "**Sub-Topics**: {% for p in t['process'] %}{{ p.name_camel_case_spaced }}{% if p == t['process'][-1] %}.{% else %},{% end %} {% end %}  \n",
+        "**Properties**: {{ len(t.all_properties) }} ({{ len(t.all_required_properties) }} required)  \n",
+        "**Model descriptions**: [Model description details](https://specializations.es-doc.org/{{ DOC.mip_era.lower() }}/{{ t.name }}?client=jupyter-notebook)  \n",
+        "**Initialized From**: {{ (DOC.seeding_source or '--').upper() }}  \n",
+        "\n",
+        "**Notebook Help**: [Goto notebook help page](https://es-doc.org/cmip6-models-documenting-with-ipython)  \n",
+        "**Notebook Initialised**: {{ unicode(now)[0:19] }}"
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### Document Setup  \n",
+        "**IMPORTANT: to be executed each time you run the notebook**  "
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# DO NOT EDIT !  \n",
+        "from pyesdoc.ipython.model_topic import NotebookOutput  \n",
+        "\n",
+        "# DO NOT EDIT !  \n",
+        "DOC = NotebookOutput('{{ DOC.mip_era.lower() }}', '{{ DOC.institute.lower() }}', '{{ DOC.source_id.lower() }}', '{{ t.name.lower() }}')"
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### Document Authors  \n",
+        "*Set document authors*"
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# Set as follows: DOC.set_author(\"name\", \"email\")  \n",
+        {% if DOC.authors %}
+            {% for idx, author in enumerate(DOC.authors) %}
+                {% if idx < len(DOC.authors) - 1 %}
+                "DOC.set_author('{{ author[0] }}', '{{ author[1] }}')  \n",
+                {% else %}
+                "DOC.set_author('{{ author[0] }}', '{{ author[1] }}')"
+                {% end %}
+            {% end %}
+        {% else %}
+            "# TODO - please enter value(s)"
+        {% end %}
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### Document Contributors  \n",
+        "*Specify document contributors*  "
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# Set as follows: DOC.set_contributor(\"name\", \"email\")  \n",
+        {% if DOC.contributors %}
+            {% for contributor in DOC.contributors %}
+                {% if contributor == DOC.contributors[-1] %}
+                "DOC.set_contributor('{{ contributor[0] }}', '{{ contributor[1] }}')"
+                {% else %}
+                "DOC.set_contributor('{{ contributor[0] }}', '{{ contributor[1] }}') \n",
+                {% end %}
+            {% end %}
+        {% else %}
+            "# TODO - please enter value(s)"
+        {% end %}
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### Document Publication  \n",
+        "*Specify document publication status*  "
+    ]
+},
+{
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "# Set publication status:  \n",
+        "# 0=do not publish, 1=publish.   \n",
+        "DOC.set_publication_status({{ DOC.publication_status }})"
+    ]
+},
+{
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "### Document Table of Contents  \n",
+        {% for pc_idx, pc in enumerate(t.all_property_containers) %}
+            "[{{ pc_idx + 1 }}. {{ pc.names(2) }}](#{{ pc_idx + 1 }}.-{{ pc.names(2).replace(' ', '-') }})  \n",
+        {% end %}
+        "\n"
+    ]
+},

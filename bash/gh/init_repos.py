@@ -41,11 +41,8 @@ def _main(args):
 	"""Main entry point.
 
 	"""
-	# Get list of WCRP sanctioned institute codes.
-	institutes = pyessv.load('wcrp:cmip6:institution-id')
-
 	# Set repos to be created.
-	for i in institutes:
+	for i in pyessv.WCRP.cmip6.institution_id:
 		repo = i.canonical_name
 		payload = {
 			'auto_init': True,

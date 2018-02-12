@@ -69,6 +69,7 @@ declare -a INSTITUTION_ID=(
 	'cnrm-cerfacs'
 	'csir-csiro'
 	'csiro-bom'
+	'dwd'
 	'ec-earth-consortium'
 	'fio-ronm'
 	'hammoz-consortium'
@@ -91,6 +92,7 @@ declare -a INSTITUTION_ID=(
 	'pcmdi'
 	'snu'
 	'thu'
+	'uhh'
 )
 
 # Institution ID - raw name
@@ -106,6 +108,7 @@ declare -a INSTITUTION_ID_RAW=(
 	'CNRM-CERFACS'
 	'CSIR-CSIRO'
 	'CSIRO-BOM'
+	'DWD'
 	'EC-Earth-Consortium'
 	'FIO-RONM'
 	'HAMMOZ-Consortium'
@@ -128,6 +131,7 @@ declare -a INSTITUTION_ID_RAW=(
 	'PCMDI'
 	'SNU'
 	'THU'
+	'UHH'
 )
 
 # MIP-era ID - canonical name

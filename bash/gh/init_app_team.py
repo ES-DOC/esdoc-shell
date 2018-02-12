@@ -49,11 +49,8 @@ def _main(args):
 	"""Main entry point.
 
 	"""
-	# Get list of WCRP sanctioned institute codes.
-	institutes = pyessv.load('wcrp:cmip6:institution-id')
-
 	# Set teams to be created.
-	teams = {"{}-{}".format(args.gh_team, i.canonical_name) for i in institutes}
+	teams = {"{}-{}".format(args.gh_team, i.canonical_name) for i in pyessv.WCRP.cmip6.institution_id}
 	teams.add(args.gh_team)
 
 	# POST each new team to GH API

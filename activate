@@ -86,7 +86,10 @@ alias esdoc-cmip6-write-experiment-config=$ESDOC_HOME/bash/cmip6/experiments/wri
 alias esdoc-cmip6-write-experiment-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
 
 # ... cmip6 models
-alias esdoc-cmip6-init-model-defaults=$ESDOC_HOME/bash/cmip6/models/init_defaults.sh
+alias esdoc-cmip6-models-init-defaults=$ESDOC_HOME/bash/cmip6/models/init_defaults.sh
+alias esdoc-cmip6-models-generate-ipynb=$ESDOC_HOME/bash/cmip6/models/generate_ipynb.sh
+alias esdoc-cmip6-models-generate-pdf=$ESDOC_HOME/bash/cmip6/models/generate_pdf.sh
+alias esdoc-cmip6-models-generate-xls=$ESDOC_HOME/bash/cmip6/models/generate_xls.sh
 
 _reset_cmip6()
 {

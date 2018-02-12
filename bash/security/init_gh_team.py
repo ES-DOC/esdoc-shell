@@ -50,7 +50,7 @@ def _main(args):
 
 	"""
 	# Get list of WCRP sanctioned institute codes.
-	institutes = pyessv.load('wcrp:cmip6:institution-id')
+	institutes = pyessv.WCRP.cmip6.institution_id
 
 	# Set teams to be created.
 	teams = {"{}-{}".format(args.gh_team, i.canonical_name) for i in institutes}

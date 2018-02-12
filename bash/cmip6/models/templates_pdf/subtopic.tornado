@@ -1,0 +1,12 @@
+\newpage
+
+\section{{{ (st.names(2)).replace('-->', '--') }}}
+\large{\textit{{{st.description}}}}
+
+{% for ps_idx, ps in enumerate(st.all_property_containers) %}
+	\subsection{{{ps.name_camel_case_spaced}}}
+	\normalsize{\textit{{{ps.description}}}}
+	{% for p_idx, p in enumerate(ps.properties) %}
+	{% include property.tornado %}
+	{% end %}
+{% end %}

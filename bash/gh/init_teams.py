@@ -50,7 +50,7 @@ def _main():
 		for institute in institutes:
 			team = '{}-{}'.format(project, institute.canonical_name)
 			if team not in existing_teams:
-				_create_team1(project, institute.canonical_name, team)
+				_create_team(project, institute.canonical_name, team)
 
 
 def _get_teams():
@@ -63,7 +63,7 @@ def _get_teams():
 	return [i['name'] for i in json.loads(r.text)]
 
 
-def _create_team1(project, institute, team):
+def _create_team(project, institute, team):
 	"""Creates an institutional GitHub team.
 
 	"""

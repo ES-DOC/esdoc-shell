@@ -1,0 +1,13 @@
+\textbf{Select value{% if p.is_collection %}(s){% end %}:} \\
+
+{% for c in p.enum.choices %}
+	{% if c.value in p_values %}
+		\LARGE{\XBox} \hspace{0.1cm} \footnotesize{{{_str(c.value)}}{% if c.description %} - {{_str(c.description)}}{% end %}} \\
+	{% else %}
+		\LARGE{\Square} \hspace{0.1cm} \footnotesize{{{_str(c.value)}}{% if c.description %} - {{_str(c.description)}}{% end %}} \\
+	{% end %}
+{% end %}
+
+{% if p.enum.is_open %}
+\LARGE{\Square} \hspace{0.1cm} \footnotesize{Other - please specify:} \\
+{% end %}

@@ -1,0 +1,25 @@
+{% set p_values = DOC.get_values(p.id) %}
+
+\subsubsection{{{p.name_camel_case_spaced}}}
+
+\footnotesize{
+
+	\textit{{{_str(p.description)}}} \\
+
+	\textbf{Spec. ID:} {{str(p.id).lower()}} \\
+
+	\textbf{Is Required ?} {{str(p.is_required).upper()}} \\
+
+	{% if p.typeof == 'bool' %}
+		{% include property_bool.tornado %}
+	{% elif p.typeof == 'int' %}
+		{% include property_int.tornado %}
+	{% elif p.typeof == 'float' %}
+		{% include property_float.tornado %}
+	{% elif p.typeof == 'str' %}
+		{% include property_str.tornado %}
+	{% elif p.enum %}
+		{% include property_enum.tornado %}
+	{% end %}
+
+}
