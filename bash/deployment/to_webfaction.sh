@@ -52,6 +52,24 @@ git pull
 source ./sh/activate
 _log_end
 
+# pyessv
+_log_banner
+_log "updating pyessv lib ..."
+_log_banner
+cd $HOME/weblibs/$1/pyessv
+git pull
+source ./sh/activate
+_log_end
+
+# pyessv-archive
+_log_banner
+_log "updating pyessv-archive ..."
+_log_banner
+cd $HOME/weblibs/$1/pyessv-archive
+git pull
+source ./sh/activate
+_log_end
+
 # docs
 _log_banner
 _log "updating docs ..."
