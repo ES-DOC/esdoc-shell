@@ -101,7 +101,7 @@ def convert_to_cim_v2_numerical_requirement_scope(value):
         2: "mip-group",
         3: "mip",
         4: "experiment",
-    }[value]
+    }[abs(value)]
 
 
 def convert_to_cim_v2_date_time(value, offset):

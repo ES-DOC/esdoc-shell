@@ -149,7 +149,7 @@ WS_MAPS = {
                 lambda x, y: [i for i in [convert_to_cim_v2_responsibilty(x, y, "G-I")] if i]),
             ("citations", "J-J"),
             ("is_conformance_requested", "L", convert_to_bool),
-            # TODO: verify target attributes
+            # TODO: verify target attributes    
             ("regular_timeset_start_date", "M"),
             ("regular_timeset_start_length", "N"),
             ("regular_timeset_start_increment", "O"),

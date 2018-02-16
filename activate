@@ -80,10 +80,10 @@ alias esdoc-cmip6-specializations-sync-viewer=$ESDOC_HOME/bash/cmip6/specializat
 alias esdoc-cmip6-specializations-validate=$ESDOC_HOME/bash/cmip6/specializations/validate.sh
 
 # ... cmip6 experiments
-alias esdoc-cmip6-archive-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh
-alias esdoc-cmip6-write-experiment-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/write_cim_documents.sh
-alias esdoc-cmip6-write-experiment-config=$ESDOC_HOME/bash/cmip6/experiments/write_config.sh
-alias esdoc-cmip6-write-experiment-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
+alias esdoc-cmip6-experiments-archive-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh
+alias esdoc-cmip6-experiments-write-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/write_cim_documents.sh
+alias esdoc-cmip6-experiments-write-config=$ESDOC_HOME/bash/cmip6/experiments/write_config.sh
+alias esdoc-cmip6-experiments-write-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
 
 # ... cmip6 models
 alias esdoc-cmip6-models-init-defaults=$ESDOC_HOME/bash/cmip6/models/init_defaults.sh
@@ -96,10 +96,10 @@ _reset_cmip6()
 {
 	esdoc-archive-delete-documents cmip6
 	esdoc-ws-db-flush cmip6
-	esdoc-cmip6-write-experiment-cim-documents
-	esdoc-cmip6-write-experiment-config
-	esdoc-cmip6-write-experiment-d3
-	esdoc-cmip6-archive-experiment-cim-documents
+	esdoc-cmip6-experiments-write-cim-documents
+	esdoc-cmip6-experiments-write-config
+	esdoc-cmip6-experiments-write-d3
+	esdoc-cmip6-experiments-archive-cim-documents
 	esdoc-ws-db-ingest
 }
 alias esdoc-cmip6-reset=_reset_cmip6
