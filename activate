@@ -64,8 +64,8 @@ alias esdoc-deployment-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_stati
 alias esdoc-cmip6-write-bash-vars=$ESDOC_HOME/bash/cmip6/other/write_bash_vars.sh
 
 # ... cmip6 conformances
-alias esdoc-cmip6-write-conformances-config=$ESDOC_HOME/bash/cmip6/conformances/write_config.sh
-alias esdoc-cmip6-write-conformances-spreadsheets=$ESDOC_HOME/bash/cmip6/conformances/write_spreadsheets.sh
+alias esdoc-cmip6-conformances-write-config=$ESDOC_HOME/bash/cmip6/conformances/write_config.sh
+alias esdoc-cmip6-conformances-write-spreadsheets=$ESDOC_HOME/bash/cmip6/conformances/write_spreadsheets.sh
 
 # ... cmip6 specializations
 alias esdoc-cmip6-specializations-clone=$ESDOC_HOME/bash/cmip6/specializations/clone.sh
