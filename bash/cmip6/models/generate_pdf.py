@@ -93,7 +93,7 @@ def write_pdf(institution_id, source_id, topic_id, pdf):
         os.makedirs(path)
     path = os.path.join(path, fname)
 
-    pyessv.log('generating --> {}'.format(fname), app='SH')
+    pyessv.log('generated --> {}'.format(fname), app='SH')
     with open(path, 'w') as fstream:
         fstream.write(str(pdf))
 
@@ -110,6 +110,7 @@ def _str(val):
             val = val.replace('?', '\?')
             val = val.replace('\\', 'xxx')
             val = val.replace('"', '')
+            val = val.replace('^', '')
 
             return val
 

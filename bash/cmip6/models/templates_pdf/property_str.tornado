@@ -1,1 +1,1 @@
-\textbf{Enter TEXT value{% if p.is_collection %}(s){% end %}:} {% if p_values %}{{ ' \\ '.join(p_values) }}{% end %}
+\textbf{Enter TEXT value{% if p.is_collection %}(s){% end %}:} {% if p_values %}{{ ' \\ '.join([_str(i) for i in p_values]) }}{% end %}
