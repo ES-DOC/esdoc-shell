@@ -26,8 +26,8 @@
 
 \textbf{Specialization Version}:\tab{{{topic.change_history[-1][0]}}} \\
 
-\textbf{Further Info}:\tab{https://es-doc.org/{{DOC.mip_era.lower()}}}
+\textbf{Further Info}:\tab{https://es-doc.org/{{DOC.mip_era.lower()}}} \\
 
-\tab{https://specializations.es-doc.org/{{DOC.mip_era.lower()}}}
+\textbf{Note}:\tab{* indicates a required property}
 
 }

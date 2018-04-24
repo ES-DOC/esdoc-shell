@@ -1,4 +1,3 @@
 {% if not p_values %}
 	\textbf{Enter TEXT:}
 {% end %}
-

@@ -34,44 +34,47 @@ def _main(args):
     """Main entry point.
 
     """
-    # Initialise sub-modules.
-    pyessv.log('Initializing sub-modules ...', app='JHUB')
-    pyesdoc.archive.init()
-    mappings.init()
-    defaults.init(args.institution_id)
+    pyessv.log('initialising {} ...'.format(args.institution_id), app='SH')
 
-    # Process mapped documents.
-    pyessv.log('Processing archived CMIP5 model documentation ...', app='JHUB')
-    for nb_output in _yield_notebook_outputs(args.institution_id):
+    _init(args.institution_id)
+
+    pyessv.log('Processing archived CMIP5 model documentation:')
+    for cmip5_model_id, cmip5_component, cmip6_institution_id, cmip6_source_id, cmip6_topic in _yield_targets():
+        nb_output = mapper.map(cmip5_model_id, cmip5_component, cmip6_institution_id, cmip6_source_id, cmip6_topic)
         nb_output.save()
-        pyessv.log(nb_output.fpath, app='JHUB')
+        pyessv.log('... {};'.format(nb_output.fpath))
 
 
-def _yield_notebook_outputs(institution_id):
-    """Yields CMIP6 notebook outputs.
+def _init(institution_id):
+    """Initialises sub-modules.
 
     """
-    for docs in _yield_model_components(institution_id):
-        yield mapper.map(docs)
+    pyesdoc.archive.init()
+    mappings.init()
+    defaults.init(institution_id)
 
 
-def _yield_model_components(institution_id):
-    """Yields mappable CMIP5 model components.
-
-        """
-    for m in _yield_model(institution_id):
-        for c in m.sub_components:
-            if defaults.get_source_id(m, c):
-                yield (m, c)
-
-
-def _yield_model(institution_id):
-    """Yields mappable CMIP5 model documents.
+def _yield_targets():
+    """Yields targets to be processed.
 
     """
     for m in pyesdoc.archive.yield_latest_documents("cmip5", "metafor-q", "cim-1-software-modelcomponent"):
-        if mappings.get_institute(m) == institution_id:
-            yield m
+        for cmip5_institute, cmip5_model_id, cmip6_institution_id, cmip6_source_id, cmip6_topic in sorted(defaults.DEFAULTS):
+            # Escape if institute \ model mismatch.
+            if mappings.get_cmip5_institute_id(m) != cmip5_institute or \
+               mappings.get_cmip5_model_id(m) != cmip5_model_id:
+               continue
+
+            # Emit toplevel.
+            if cmip6_topic == 'toplevel':
+                yield((cmip5_model_id, m, cmip6_institution_id, cmip6_source_id, cmip6_topic))
+
+            # Emit realms.
+            else:
+                for c in m.sub_components:
+                    cmip5_component = mappings.get_cmip5_component_id(c)
+                    if cmip5_component in mappings.REALM_MAPPINGS and mappings.REALM_MAPPINGS[cmip5_component] == cmip6_topic:
+                        yield((cmip5_model_id, c, cmip6_institution_id, cmip6_source_id, cmip6_topic))
 
 
 _main(_ARGS.parse_args())

@@ -1,1 +1,5 @@
-\textbf{Enter FLOAT value{% if p.is_collection %}(s){% end %}:} {% if p_values %}{{ ','.join([_str(i) for i in p_values]) }}{% end %}
+{% if not p_values %}
+	\textbf{Enter FLOAT value{% if p.is_collection %}(s){% end %}:} \\
+{% end %}
+
+\textbf{{{ ','.join([_str(i) for i in p_values]) }}}

@@ -1,7 +1,13 @@
-\textbf{Select value{% if p.is_collection %}(s){% end %}:} \\
+{% if not p_values %}
+	{% if p.is_collection %}
+		\textbf{Select MULTIPLE options:} \\
+	{% else %}
+		\textbf{Select SINGLE option:} \\
+	{% end %}
+{% end %}
 
 {% for c in p.enum.choices %}
-	{% if c.value in p_values %}
+	{% if p_values and c.value in p_values %}
 		\LARGE{\XBox} \hspace{0.1cm} \footnotesize{{{_str(c.value)}}{% if c.description %} - {{_str(c.description)}}{% end %}} \\
 	{% else %}
 		\LARGE{\Square} \hspace{0.1cm} \footnotesize{{{_str(c.value)}}{% if c.description %} - {{_str(c.description)}}{% end %}} \\

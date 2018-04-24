@@ -19,11 +19,11 @@ import mappings
 
 
 
-# Nested map of institutes to source identifiers to realms.
-_DEFAULTS = collections.defaultdict(dict)
+# 5 member tuple: (cmip5-insititute, cmip5-model, cmip6-insititute, cmip6-source-id, cmip6-realm-id).
+DEFAULTS = list()
 
-# Name of file contiaing model defaults.
-_FILENAME = 'model-defaults.json'
+# Model initialisation configuration filename.
+_FILENAME = 'model-initialization.json'
 
 
 def init(institution_id):
@@ -32,20 +32,20 @@ def init(institution_id):
     :param str institution_id: ID of institution being processed.
 
     """
-    # Open model-defaults.json.
+    # Open config file.
     fpath = _get_filepath(institution_id)
     try:
         with open(fpath, 'r') as fstream:
             obj = json.loads(fstream.read())
     except IOError:
-        raise ValueError('Institute model defaults not found: {}'.format(institution_id))
+        raise ValueError('Institute model defaults not found: {}: {}'.format(institution_id, fpath))
 
     # Set defaults.
-    _set_defaults(obj)
+    _set_defaults(institution_id, obj)
 
 
 def _get_filepath(institution_id):
-    """Returns path to an institite's model-defaults.json file.
+    """Returns path to an institite's model initialisation configuration file.
 
     """
     fpath = os.getenv('ESDOC_HOME')
@@ -59,17 +59,33 @@ def _get_filepath(institution_id):
     return fpath
 
 
-def _set_defaults(obj):
+def _set_defaults(institution_id, obj):
     """Caches model defaults.
 
     """
     for source_id in obj:
-        for realm in obj[source_id]:
-            initializedFrom = obj[source_id][realm]['initializedFrom']
-            if initializedFrom and initializedFrom.split(':')[0] == 'cmip5':
+        for realm_id in obj[source_id]:
+            initializedFrom = obj[source_id][realm_id]['initializedFrom']
+            if not initializedFrom or initializedFrom.split(':')[0] != 'cmip5':
+                break
+            if len(initializedFrom.split(':')) == 3:
+                cmip5_institute = initializedFrom.split(':')[-2]
                 cmip5_model = initializedFrom.split(':')[-1]
-                cmip5_component = mappings.COMPONENT_MAPPINGS.get(realm, realm)
-                _DEFAULTS[cmip5_model][cmip5_component] = source_id
+            else:
+                try:
+                    cmip5_institute = mappings.INSTITUTE_MAPPINGS_REVERSED[institution_id]
+                except KeyError:
+                    cmip5_institute = institution_id
+                cmip5_model = initializedFrom.split(':')[-1]
+
+            DEFAULTS.append((cmip5_institute, cmip5_model, institution_id, source_id, realm_id))
+
+
+def get_cmip5_institute_id():
+    """Returns a CMIP5 institute identifier.
+
+    """
+    return _DEFAULTS.keys()[0]
 
 
 def get_source_id(m, c):
@@ -82,9 +98,10 @@ def get_source_id(m, c):
     :rtype: str | None
 
     """
+    cmip5_institute = mappings.get_institute(m)
     cmip5_model = m.short_name.lower()
     cmip5_component = c.short_name.lower()
     try:
-        return _DEFAULTS[cmip5_model][cmip5_component]
+        return _DEFAULTS[cmip5_institute][cmip5_model][cmip5_component]
     except KeyError:
         pass

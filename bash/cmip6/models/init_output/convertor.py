@@ -21,9 +21,7 @@ def convert_property_values(values, spec):
     vals = []
     for val in values:
         vals += _convert_property_value(spec, val)
-    vals = [i for i in vals if i is not None]
-    values = sorted(vals)
-    # values = sorted([_convert_property_value(spec, i) for i in values])
+    values = sorted([i for i in vals if i is not None])
 
     # Collapse values.
     if spec.is_collection == False and len(values) > 1:
