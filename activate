@@ -46,6 +46,7 @@ alias esdoc-gh-delete-teams=$ESDOC_HOME/bash/gh/delete_teams.sh
 alias esdoc-gh-init-teams=$ESDOC_HOME/bash/gh/init_teams.sh
 alias esdoc-gh-init-repos=$ESDOC_HOME/bash/gh/init_repos.sh
 alias esdoc-gh-list-teams=$ESDOC_HOME/bash/gh/list_teams.sh
+alias esdoc-gh-pull-changes=$ESDOC_HOME/bash/gh/pull_changes.sh
 alias esdoc-gh-push-changes=$ESDOC_HOME/bash/gh/push_changes.sh
 alias esdoc-gh-test-team-membership=$ESDOC_HOME/bash/gh/test_team_membership.sh
 
@@ -74,6 +75,7 @@ alias esdoc-cmip6-specializations-push=$ESDOC_HOME/bash/cmip6/specializations/pu
 alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations/generate.sh
 alias esdoc-cmip6-specializations-sync-cim-profile=$ESDOC_HOME/bash/cmip6/specializations/sync_cim_profile.sh
 alias esdoc-cmip6-specializations-sync-definitions=$ESDOC_HOME/bash/cmip6/specializations/sync_definitions.sh
+alias esdoc-cmip6-specializations-sync-mappings=$ESDOC_HOME/bash/cmip6/specializations/sync_mappings.sh
 alias esdoc-cmip6-specializations-sync-templates=$ESDOC_HOME/bash/cmip6/specializations/sync_templates.sh
 alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_HOME/bash/cmip6/specializations/sync_tooling.sh
 alias esdoc-cmip6-specializations-sync-viewer=$ESDOC_HOME/bash/cmip6/specializations/sync_viewer.sh
@@ -88,7 +90,6 @@ alias esdoc-cmip6-experiments-write-d3=$ESDOC_HOME/bash/cmip6/experiments/write_
 # ... cmip6 models
 alias esdoc-cmip6-models-init-defaults=$ESDOC_HOME/bash/cmip6/models/init_defaults.sh
 alias esdoc-cmip6-models-init-output=$ESDOC_HOME/bash/cmip6/models/init_output.sh
-alias esdoc-cmip6-models-generate-ipynb=$ESDOC_HOME/bash/cmip6/models/generate_ipynb.sh
 alias esdoc-cmip6-models-generate-pdf=$ESDOC_HOME/bash/cmip6/models/generate_pdf.sh
 alias esdoc-cmip6-models-generate-xls=$ESDOC_HOME/bash/cmip6/models/generate_xls.sh
 

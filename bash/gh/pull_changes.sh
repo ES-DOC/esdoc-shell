@@ -6,32 +6,28 @@ source $ESDOC_HOME/bash/utils.sh
 # Main entry point.
 main()
 {
-	log "GITHUB : pushing institutional GitHub repo changes ..."
+	log "GITHUB : pulling institutional GitHub repo updates ..."
 
 	for institution_id in "${INSTITUTION_ID[@]}"
 	do
+		log "GITHUB : pulling  "$institution_id
 		cd $ESDOC_HOME/repos/institutional/$institution_id
-		git add *
-		git commit -m $1
-		git push origin master
+		git pull
 	done
 
+	log "GITHUB : pulling test-institute-1"
 	cd $ESDOC_HOME/repos/institutional/test-institute-1
-	git add *
-	git commit -m $1
-	git push origin master
+	git pull
 
+	log "GITHUB : pulling test-institute-2"
 	cd $ESDOC_HOME/repos/institutional/test-institute-2
-	git add *
-	git commit -m $1
-	git push origin master
+	git pull
 
+	log "GITHUB : pulling test-institute-3"
 	cd $ESDOC_HOME/repos/institutional/test-institute-3
-	git add *
-	git commit -m $1
-	git push origin master
+	git pull
 
-	log "GITHUB : institutional GitHub repo changes pushed..."
+	log "GITHUB : institutional GitHub repo updates pulled"
 }
 
 # Invoke entry point.
