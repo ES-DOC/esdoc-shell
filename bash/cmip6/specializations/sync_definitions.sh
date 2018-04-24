@@ -12,9 +12,9 @@ main()
 	log "CMIP6-SPECS : syncing definitions ..."
 
 	log "CMIP6-SPECS : syncing py files ..."
+	rm $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/*.py
 	for specialization in "${CMIP6_SPECIALIZATIONS[@]}"
 	do
-		rm $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6/$specialization*.py
 		cp $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/$specialization*.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations/cmip6
 	done
 
@@ -46,9 +46,13 @@ main()
 	log "CMIP6-SPECS : syncing cmip5 mapping files ..."
 	for specialization in "${CMIP6_SPECIALIZATIONS[@]}"
 	do
-		rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/cmip5-mappings/$specialization-cmip5-to-cmip6-mappings.csv
-		cp $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/mappings/$specialization-cmip5-to-cmip6-mappings.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/cmip5-mappings/$specialization-cmip5-to-cmip6-mappings.csv
+		if [ $specialization != "toplevel" ]; then
+			rm $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/cmip5-mappings/$specialization-*.csv
+			cp $ESDOC_DIR_CMIP6/cmip6-specializations-$specialization/mappings/*.csv $ESDOC_DIR_REPOS/esdoc-docs/cmip6/models/cmip5-mappings
+		fi
 	done
+
+	log "CMIP6-SPECS : synced definitions"
 }
 
 # Invoke entry point.

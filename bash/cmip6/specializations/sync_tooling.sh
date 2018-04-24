@@ -28,11 +28,16 @@ main()
 	done
 
 	# Sync to pyesdoc.
+	cp $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/generate/utils.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
+	cp $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/generate/utils_cache.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
 	cp $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/generate/utils_constants.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
 	cp $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/generate/utils_factory.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
 	cp $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/generate/utils_loader.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
 	cp $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/generate/utils_model.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
 	cp $ESDOC_DIR_CMIP6/cmip6-specializations-toplevel/generate/utils_parser.py $ESDOC_DIR_REPOS/esdoc-py-client/pyesdoc/mp/specializations
+	log "CMIP6-SPECS : ... synced: pyesdoc"
+
+	log "CMIP6-SPECS : synced tooling"
 }
 
 # Invoke entry point.
