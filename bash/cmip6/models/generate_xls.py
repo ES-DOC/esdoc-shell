@@ -19,6 +19,10 @@ import pyesdoc
 import pyessv
 from pyesdoc.ipython.model_topic import NotebookOutput
 
+# Changes
+# 1. Hide speciality ID col.
+# 2. citations & resp.party references
+
 
 
 # Define command line argument parser.
@@ -33,6 +37,10 @@ _ARGS.add_argument(
 # MIP era.
 _MIP_ERA = "cmip6"
 
+# Set of test instiutes.
+_TEST_INSTITUTES = {'test-institute-1', 'test-institute-2', 'test-institute-3'}
+
+
 
 def _main(args):
     """Main entry point.
@@ -40,24 +48,56 @@ def _main(args):
     """
     pyessv.log('XLS file generation starts ... ', app='SH')
 
-    for source_id, topic_id, topic_label, doc in _yield_config(args.institution_id):
-        wb = Workbook(args.institution_id, source_id, topic_id, topic_label, doc)
+    yielder = _yield_test_workbooks if args.institution_id in _TEST_INSTITUTES else _yield_institutional_workbooks
+    for wb in yielder(args.institution_id):
         wb.write()
 
     pyessv.log('XLS file generation complete ... ', app='SH')
 
 
-def _yield_config(institution_id):
-    """Returns set of notebooks to be generated.
+def _yield_test_workbooks(institution_id):
+    """Returns set of spreadsheets to be generated.
+
+    """
+    for i in range(3):
+        source_id = 'sandbox-{}'.format(i + 1)
+        for j in pyessv.ESDOC.cmip6.get_model_topics():
+            topic_id = j.canonical_name
+            topic_label = j.label
+            output = _get_output_wrapper(institution_id, source_id, topic_id)
+            yield Workbook(institution_id, source_id, topic_id, topic_label, output)
+
+
+def _yield_institutional_workbooks(institution_id):
+    """Returns set of spreadsheets to be generated.
 
     """
     for i in pyessv.WCRP.cmip6.institution_id:
         if i.canonical_name != institution_id:
             continue
         for j in pyessv.WCRP.cmip6.get_institute_sources(i):
+            source_id = j.canonical_name
             for k in pyessv.ESDOC.cmip6.get_model_topics(j):
-                output = NotebookOutput.create(_MIP_ERA, i.canonical_name, j.canonical_name, k.canonical_name)
-                yield j.canonical_name, k.canonical_name, k.label, output
+                topic_id = k.canonical_name
+                topic_label = k.label
+                output = _get_output_wrapper(institution_id, source_id, topic_id)
+                yield Workbook(institution_id, source_id, topic_id, topic_label, output)
+
+
+def _get_output_wrapper(institution_id, source_id, topic_id):
+    """Returns a model documentation output wrapper.
+
+    """
+    # Set path to output file.
+    fpath = os.getenv('ESDOC_HOME')
+    fpath = os.path.join(fpath, 'repos/institutional')
+    fpath = os.path.join(fpath, institution_id)
+    fpath = os.path.join(fpath, 'cmip6/models')
+    fpath = os.path.join(fpath, source_id)
+    fpath = os.path.join(fpath, 'json')
+    fpath = os.path.join(fpath, 'cmip6_{}_{}_{}.json'.format(institution_id, source_id, topic_id))
+
+    return NotebookOutput(_MIP_ERA, institution_id, source_id, topic_id, path=fpath)
 
 
 class Workbook(object):
@@ -166,30 +206,19 @@ class Workbook(object):
         ws = self.wb.add_worksheet('Frontis')
 
         # Set columns.
-        f0 = self.create_format(None)
+        f0 = self.create_format()
         f0.set_bg_color('#337ab7')
         f0.set_font_color('#FFFFFF')
-
-        f1 = self.create_format(None)
-        f1.set_bg_color('white')
-        f1.set_font_color('#FFFFFF')
-
         ws.set_column('A:A', 35, f0)
-        ws.set_column('B:B', 55, f0)
-        ws.set_column('C:E', None, f0)
-        ws.set_column('F:ZZ', None, f1)
-        for i in range(100):
-            ws.set_row(i + 12 + len(self.t.sub_topics), None, f1)
+        ws.set_column('B:B', 180, f0)
+        ws.set_column('C:XFD', None, f0)
 
-        # Write header.
+        # Set formats.
         f0 = self.create_format(26)
         f0.set_bold()
         f0.set_bg_color('#337ab7')
         f0.set_font_color('#FFFFFF')
-        f0.set_underline()
-        ws.write(0, 0, 'ES-DOC CMIP6 Model Documentation', f0)
 
-        # Write summary.
         f1 = self.create_format(18)
         f1.set_bold()
         f1.set_bg_color('#337ab7')
@@ -199,170 +228,242 @@ class Workbook(object):
         f2.set_bg_color('#337ab7')
         f2.set_font_color('#FFFFFF')
 
-        ws.write(2, 0, 'Institute', f1)
-        ws.write(2, 1, self.doc.institute.upper(), f2)
-        ws.write(3, 0, 'Model', f1)
-        ws.write(3, 1, self.doc.source_id.upper(), f2)
-        ws.write(4, 0, 'Topic', f1)
-        ws.write(4, 1, self.topic_label, f2)
+        f3 = self.create_format(11)
+        f3.set_bg_color('#337ab7')
+        f3.set_font_color('#FFFFFF')
+        f3.set_italic()
 
-        ws.write(6, 0, 'Sub-Topics', f1)
+        f4 = self.create_format(14)
+        f4.set_align('left')
+        f4.set_bg_color('#CCCCCC')
+        f4.set_font_color('#000000')
+
+        ws_row = 0
+        ws.write(ws_row, 0, 'ES-DOC CMIP6 Model Documentation', f0)
+
+        ws_row += 2
+        ws.write(ws_row, 0, 'MIP Era', f1)
+        ws.write(ws_row, 1, 'CMIP6', f2)
+
+        ws_row += 1
+        ws.write(ws_row, 0, 'Institute', f1)
+        ws.write(ws_row, 1, self.doc.institute.upper(), f2)
+
+        ws_row += 1
+        ws.write(ws_row, 0, 'Model', f1)
+        ws.write(ws_row, 1, self.doc.source_id.upper(), f2)
+
+        ws_row += 1
+        ws.write(ws_row, 0, 'Topic', f1)
+        ws.write(ws_row, 1, self.topic_label, f2)
+
+        ws_row += 2
+        ws.write(ws_row, 0, 'Sub-Topics', f1)
         for idx, st in enumerate(self.t.sub_topics):
-            ws.write(6 + idx, 1, '{}. {}'.format(idx + 1, st.names(2)), f2)
+            ws.write(ws_row + idx, 1, '{}. {}'.format(idx + 1, st.names(2)), f2)
+        ws_row += len(self.t.sub_topics)
 
-        ws.write(7 + len(self.t.sub_topics), 0, 'Specialization Version', f1)
-        ws.write(7 + len(self.t.sub_topics), 1, self.t.change_history[-1][0], f2)
-        ws.write(9 + len(self.t.sub_topics), 0, 'Further Info', f1)
-        ws.write(9 + len(self.t.sub_topics), 1, 'https://es-doc.org/{}'.format(self.doc.mip_era.lower()), f2)
-        ws.write(10 + len(self.t.sub_topics), 1, 'https://specializations.es-doc.org/{}'.format(self.doc.mip_era.lower()), f2)
+        ws_row += 2
+        ws.write(ws_row, 0, 'Further Info', f1)
+        ws.write(ws_row, 1, 'https://es-doc.org/{}'.format(self.doc.mip_era.lower()), f2)
+
+        ws_row += 1
+        ws.write(ws_row, 0, 'Specialization Version', f1)
+        ws.write(ws_row, 1, self.t.change_history[-1][0], f2)
 
 
     def write_subtopic(self):
         """Write sub-topic worksheet.
 
         """
+        # Set formats.
+        f0 = self.create_format()
+        f0.set_bg_color('#FFFFFF')
+
+        f1 = self.create_format(24)
+        f1.set_bg_color('#003366')
+        f1.set_bold()
+        f1.set_font_color('#FFFFFF')
+
         # Write worksheet.
         ws_title = '{}. {}'.format(self.st_idx, self.st.names(2))[0:31]
         self.ws = self.wb.add_worksheet(ws_title)
-
-        # Set columns.
-        self.ws.set_column(0, 0, 5.5)
-        self.ws.set_column(1, 1, 120)
-        self.ws.set_column(2, 4, 18)
-        self.ws.set_column(5, 5, 85)
-
-        # Write header.
-        f0 = self.create_format(24)
-        f0.set_bg_color('#337ab7')
-        f0.set_bold()
-        f0.set_font_color('#FFFFFF')
-
         self.ws_row = 0
-        self.ws.set_row(self.ws_row, 36)
-        self.ws.write(self.ws_row, 0, self.st_id, f0)
-        self.ws.write(self.ws_row, 1, self.st.description, f0)
-        self.ws.write(self.ws_row, 2, '', f0)
-        self.ws.write(self.ws_row, 3, '', f0)
-        self.ws.write(self.ws_row, 4, '', f0)
-        self.ws.write(self.ws_row, 5, '', f0)
+
+        # Write columns.
+        self.ws.set_column(0, 0, 13)
+        self.ws.set_column(1, 1, 200)
+        self.ws.set_column('C:C', None, None, {
+            'hidden': 1,
+            })
+        self.ws.set_column('D:XFD', None, f0)
 
 
     def write_propertyset(self):
         """Write property set worksheet rows.
 
         """
-        # Write header.
+        # Set formats.
         f0 = self.create_format(18)
-        f0.set_bg_color('#337ab7')
+        f0.set_bg_color('#003366')
         f0.set_bold()
         f0.set_font_color('#FFFFFF')
 
-        self.ws_row += (2 if self.ps == self.st.all_property_containers[0] else 3)
+        f1 = self.create_format(14)
+        f1.set_bold()
+        f1.set_italic()
+
+        # Write header.
+        if self.ps_idx == 1:
+            self.ws_row += 0
+        else:
+            self.ws_row += 3
+        # print 111, self.ps_idx, self.ps_id
+        # self.ws_row += (2 if self.ps == self.st.all_property_containers[0] else 3)
         self.ws.set_row(self.ws_row, 24)
         self.ws.write(self.ws_row, 0, self.ps_id, f0)
         self.ws.write(self.ws_row, 1, _get_property_set_label(self.ps), f0)
-        self.ws.write(self.ws_row, 2, '', f0)
-        self.ws.write(self.ws_row, 3, '', f0)
-        self.ws.write(self.ws_row, 4, '', f0)
-        self.ws.write(self.ws_row, 5, '', f0)
 
         # Write description.
-        f0 = self.create_format(14)
-        f0.set_bold()
-        f0.set_italic()
-
         self.ws_row += 1
         self.ws.set_row(self.ws_row, 24)
-        self.ws.write(self.ws_row, 1, self.ps.description, f0)
+        self.ws.write(self.ws_row, 1, self.ps.description, f1)
 
 
     def write_property(self):
         """Write property worksheet rows.
 
         """
-        # Write header.
+        # Set formats.
         f0 = self.create_format(14)
         f0.set_bg_color('#337ab7')
         f0.set_bold()
         f0.set_font_color('#FFFFFF')
 
-        f1 = self.create_format(14)
-        f1.set_align('center')
-        f1.set_bg_color('#337ab7')
-        f1.set_bold()
-        f1.set_font_color('#FFFFFF')
+        f1 = self.create_format(11)
 
+        f2 = self.create_format()
+        f2.set_bold()
+
+        f3 = self.create_format(10)
+        f3.set_align('left')
+        f3.set_italic()
+
+        # Write header.
         self.ws_row += 2
         self.ws.set_row(self.ws_row, 24)
-        self.ws.write(self.ws_row, 1, '{} - {}'.format(self.p_id, self.p.name_camel_case_spaced), f0)
-        self.ws.write(self.ws_row, 2, 'Is Required ?', f1)
-        self.ws.write(self.ws_row, 3, 'Cardinality', f1)
-        self.ws.write(self.ws_row, 4, 'Type', f1)
-        self.ws.write(self.ws_row, 5, 'Specialization ID', f0)
+        self.ws.write(self.ws_row, 0, '{} {}'.format(self.p_id, '*' if self.p.is_required else ''), f0)
+        self.ws.write(self.ws_row, 1, self.p.name_camel_case_spaced, f0)
 
         # Write details.
-        f0 = self.create_format(12)
-        f0.set_bold()
-
-        f1 = self.create_format(12)
-        f1.set_align('center')
-        f1.set_bold()
-
-        f2 = self.create_format(12)
-        f2.set_bold()
-        f2.set_italic()
-
         self.ws_row += 1
         self.ws.set_row(self.ws_row, 24)
+        self.ws.write(self.ws_row, 0, self.p.typeof_label, f1)
         self.ws.write(self.ws_row, 1, self.p.description, f2)
-        self.ws.write(self.ws_row, 2, self.p.is_required, f1)
-        self.ws.write(self.ws_row, 3, self.p.cardinality, f1)
-        self.ws.write(self.ws_row, 4, self.p.typeof_label, f1)
-        self.ws.write(self.ws_row, 5, self.p.id, f0)
+        self.ws.write(self.ws_row, 2, self.p.id, f2)
+
+        # Write note: comma separated strings.
+        if self.p.typeof == 'cs-str':
+            self.ws_row += 1
+            self.ws.set_row(self.ws_row, 24)
+            self.ws.write(self.ws_row, 1, 'NOTE: Please enter a comma seperated list', f3)
+
+        # Write note: long strings.
+        if self.p.typeof == 'l-str':
+            self.ws_row += 1
+            self.ws.set_row(self.ws_row, 24)
+            self.ws.write(self.ws_row, 1, 'NOTE: Double click to expand if text is too long for cell', f3)
+
+        # Write note: X.N cardinality.
+        if self.p.is_collection:
+            self.ws_row += 1
+            self.ws.set_row(self.ws_row, 24)
+            self.ws.write(self.ws_row, 1, 'NOTE: Multiple entries are allowed, please insert a new row per entry.', f3)
 
 
     def write_property_value(self):
-        """Write property worksheet rows.
+        """Writes a worksheet row per property value.
 
         """
         if self.p.typeof == 'bool':
-            self.write_property_values({
+            self.write_property_value_bool()
+
+        elif self.p.typeof == 'float':
+            self.write_property_value_float()
+
+        elif self.p.typeof == 'int':
+            self.write_property_value_int()
+
+        elif self.p.typeof in {'str', 'cs-str', 'l-str'}:
+            self.write_property_value_str()
+
+        elif self.p.enum:
+            self.write_property_value_enum()
+
+
+    def write_property_value_bool(self):
+        """Writes a property boolean value.
+
+        """
+        for val in self.p_values or ['']:
+            self.write_property_values(val, {
                 'validate': 'list',
                 'source': ['TRUE', 'FALSE']
                 })
 
-        elif self.p.typeof == 'float':
-            self.write_property_values({
+
+    def write_property_value_enum(self):
+        """Writes a property enum value.
+
+        """
+        choices = [c.value for c in self.p.enum.choices]
+        if self.p.enum.is_open:
+            choices.append('Other: document to the right')
+        choices = [_str(i[0:255]) for i in choices]
+
+        self.p_values = [_str(i) for i in self.p_values]
+        for val in self.p_values or ['']:
+            self.write_property_values(val, {
+                'validate': 'list'
+                }, choices=choices)
+
+
+    def write_property_value_float(self):
+        """Writes a property float value.
+
+        """
+        for val in self.p_values or ['']:
+            self.write_property_values(val, {
                 'validate': 'decimal',
                 'criteria': 'between',
                 'maximum': 1000000.0,
                 'minimum': -1000000.0
                 })
 
-        elif self.p.typeof == 'int':
-            self.write_property_values({
+
+    def write_property_value_int(self):
+        """Writes a property int value.
+
+        """
+        for val in self.p_values or ['']:
+            self.write_property_values(val, {
                 'validate': 'integer',
                 'criteria': '>=',
                 'value': 0
                 })
 
-        elif self.p.typeof == 'str':
-            self.write_property_values({
+
+    def write_property_value_str(self):
+        """Writes a property str value.
+
+        """
+        for val in self.p_values or ['']:
+            self.write_property_values(val, {
                 'validate': 'any',
                 })
 
-        elif self.p.enum:
-            options = [c.value for c in self.p.enum.choices]
-            if self.p.enum.is_open:
-                options.append('Other: document in the cell to the right')
-            self.p_values = [_str(i) for i in self.p_values]
-            self.write_property_values({
-                'validate': 'list',
-                'source': [_str(i[0:250]) for i in options]
-                })
 
-
-    def write_property_values(self, validation_opts):
+    def write_property_values(self, val, validation_opts, choices=[]):
         """Writes property values to active worksheet.
 
         """
@@ -370,23 +471,29 @@ class Workbook(object):
         f0.set_align('left')
         f0.set_bg_color('#CCCCCC')
         f0.set_font_color('#000000')
+        f0.set_text_wrap()
+        f0.set_align('top')
 
-        for val in self.p_values or ['']:
-            self.ws_row += 1
-            self.ws.set_row(self.ws_row, 24)
-            self.ws.write(self.ws_row, 1, val, f0)
-            self.ws.data_validation(self.ws_row, 1, self.ws_row, 1, validation_opts)
+        self.ws_row += 1
+        self.ws.set_row(self.ws_row, 178 if self.p.typeof == 'l-str' else 24)
+        self.ws.write(self.ws_row, 1, val, f0)
+
+        if choices:
+            for idx, choice in enumerate(choices):
+                self.ws.write(self.ws_row, idx + 26, choice)
+            validation_opts['source'] = 'AA{0}:A{1}{0}'.format(self.ws_row + 1, chr(64 + len(choices)))
+
+        self.ws.data_validation(self.ws_row, 1, self.ws_row, 1, validation_opts)
 
 
-    def create_format(self, font_size):
+    def create_format(self, font_size=12):
         """Returns a cell formatter.
 
         """
         f = self.wb.add_format()
         f.set_align('vcenter')
         f.set_font_name('Helvetica Neue')
-        if font_size is not None:
-            f.set_font_size(font_size)
+        f.set_font_size(font_size)
 
         return f
 
@@ -397,7 +504,7 @@ def _get_property_set_label(ps):
     """
     names = ps.names().split(' --> ')
     if len(names) == 3:
-        return '{} --> Top Level Details'.format(names[-1])
+        return names[-1]
     elif len(names) == 4:
         return ps.names(2)
     else:
@@ -421,3 +528,6 @@ def _str(val):
 # Main entry point.
 if __name__ == '__main__':
     _main(_ARGS.parse_args())
+
+
+# Constant value, Turbulent closure - TKE, Turbulent closure - KPP, Turbulent closure - Mellor-Yamada, Turbulent closure - Bulk Mixed Layer, Richardson number dependent - PP, Richardson number dependent - KT, Imbeded as isopycnic vertical coordinate, Other: document to the right

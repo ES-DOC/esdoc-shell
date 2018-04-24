@@ -14,6 +14,9 @@ main()
 		do
 			python $ESDOC_HOME/bash/cmip6/models/init_defaults.py --institution-id=$institution_id
 		done
+		python $ESDOC_HOME/bash/cmip6/models/init_defaults.py --institution-id=test-institute-1
+		python $ESDOC_HOME/bash/cmip6/models/init_defaults.py --institution-id=test-institute-2
+		python $ESDOC_HOME/bash/cmip6/models/init_defaults.py --institution-id=test-institute-3
 	else
 		python $ESDOC_HOME/bash/cmip6/models/init_defaults.py --institution-id=$1
 	fi

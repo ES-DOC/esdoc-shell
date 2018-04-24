@@ -35,46 +35,81 @@ _ARGS.add_argument(
 _TEMPLATES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates_pdf")
 _TEMPLATES = template.Loader(_TEMPLATES_PATH)
 
+# Set of test instiutes.
+_TEST_INSTITUTES = {'test-institute-1', 'test-institute-2', 'test-institute-3'}
+
 # MIP era.
 _MIP_ERA = "cmip6"
 
 
-def _main(args):
+def _main(institution_id):
     """Main entry point.
 
     """
-    for source_id, topic_id, topic_label, doc in _yield_config(args.institution_id):
+    # Load template into memory.
+    latex_template = _TEMPLATES.load("main.tornado")
+
+    for source_id, topic_id, topic_label in _yield_config(institution_id):
+        # if topic_id != 'ocean':
+        #     continue
+
+        pyessv.log('generating PDF --> {} : {} : {} : {}'.format(_MIP_ERA, institution_id, source_id, topic_id), app='SH')
+
+        # Set documentation output wrapper.
+        output = _get_output_wrapper(institution_id, source_id, topic_id)
+
         # Generate latex.
-        as_latex = _TEMPLATES.load("main.tornado").generate(
-            topic=doc.specialization,
+        as_latex = latex_template.generate(
+            topic=output.specialization,
             topic_label=topic_label,
-            DOC=doc,
-            escape=lambda s: s.strip().replace('"', "'"),
+            DOC=output,
             now=dt.datetime.now(),
             _str=_str
             )
+
+        # Ensure that PDf generation will process unicode characters.
+        as_latex = as_latex.replace('&amp;', 'and')
+        as_latex = as_latex.replace('&quot;', '"')
 
         # Generate pdf.
         as_pdf = latex.build_pdf(as_latex)
 
         # Write pdf.
-        write_pdf(args.institution_id, source_id, topic_id, as_pdf)
+        write_pdf(institution_id, source_id, topic_id, as_pdf)
+
+        # break
 
     pyessv.log('PDF file generation complete ... ', app='SH')
 
 
 def _yield_config(institution_id):
-    """Returns set of notebooks to be generated.
+    """Returns job configuration information.
 
     """
-    pyessv.log('loading config ... ', app='SH')
-    for i in pyessv.WCRP.cmip6.institution_id:
-        if i.canonical_name != institution_id:
-            continue
-        for j in pyessv.WCRP.cmip6.get_institute_sources(i):
+    if institution_id in _TEST_INSTITUTES:
+        for i in range(3):
+            for j in pyessv.ESDOC.cmip6.get_model_topics():
+                yield 'sandbox-{}'.format(i + 1), j.canonical_name, j.label
+    else:
+        for j in pyessv.WCRP.cmip6.get_institute_sources(institution_id):
             for k in pyessv.ESDOC.cmip6.get_model_topics(j):
-                output = NotebookOutput.create(_MIP_ERA, i.canonical_name, j.canonical_name, k.canonical_name)
-                yield j.canonical_name, k.canonical_name, k.label, output
+                yield j.canonical_name, k.canonical_name, k.label
+
+
+def _get_output_wrapper(institution_id, source_id, topic_id):
+    """Returns a model documentation output wrapper.
+
+    """
+    # Set path to output file.
+    fpath = os.getenv('ESDOC_HOME')
+    fpath = os.path.join(fpath, 'repos/institutional')
+    fpath = os.path.join(fpath, institution_id)
+    fpath = os.path.join(fpath, 'cmip6/models')
+    fpath = os.path.join(fpath, source_id)
+    fpath = os.path.join(fpath, 'json')
+    fpath = os.path.join(fpath, 'cmip6_{}_{}_{}.json'.format(institution_id, source_id, topic_id))
+
+    return NotebookOutput(_MIP_ERA, institution_id, source_id, topic_id, path=fpath)
 
 
 def write_pdf(institution_id, source_id, topic_id, pdf):
@@ -89,11 +124,11 @@ def write_pdf(institution_id, source_id, topic_id, pdf):
     path = os.path.join(path, _MIP_ERA)
     path = os.path.join(path, 'models')
     path = os.path.join(path, source_id)
+    path = os.path.join(path, 'pdf')
     if not os.path.isdir(path):
         os.makedirs(path)
     path = os.path.join(path, fname)
 
-    pyessv.log('generated --> {}'.format(fname), app='SH')
     with open(path, 'w') as fstream:
         fstream.write(str(pdf))
 
@@ -102,21 +137,25 @@ def _str(val):
     """Formats a string value.
 
     """
-    if val is not None:
-        val = str(val).strip()
-        if len(val):
-            val = '{}{}'.format(val[0].upper(), val[1:])
-            val = val.replace('&', 'and')
-            val = val.replace('?', '\?')
-            val = val.replace('\\', 'xxx')
-            val = val.replace('"', '')
-            val = val.replace('^', '')
+    if val is None:
+        return ''
+    elif not isinstance(val, (str, unicode)):
+        return str(val)
+    else:
+        val = val.encode('utf').strip()
+        if len(val) == 0:
+            return ''
 
-            return val
+        val = '{}{}'.format(val[0].upper(), val[1:])
 
-    return ''
+        # Ensures latex can emit.
+        val = unicode(val, "utf-8", errors="ignore")
+        val = val.encode('ascii', 'ignore')
+
+    return val
 
 
 # Main entry point.
 if __name__ == '__main__':
-    _main(_ARGS.parse_args())
+    _args = _ARGS.parse_args()
+    _main(_args.institution_id)

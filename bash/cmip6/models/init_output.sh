@@ -12,9 +12,11 @@ main()
 	if [ $1 = "all" ]; then
 		for institution_id in "${INSTITUTION_ID[@]}"
 		do
-			log "... initializing "$institution_id
 			python $ESDOC_HOME/bash/cmip6/models/init_output --institution-id=$institution_id
 		done
+		python $ESDOC_HOME/bash/cmip6/models/init_output --institution-id=test-institute-1
+		python $ESDOC_HOME/bash/cmip6/models/init_output --institution-id=test-institute-2
+		python $ESDOC_HOME/bash/cmip6/models/init_output --institution-id=test-institute-3
 	else
 		python $ESDOC_HOME/bash/cmip6/models/init_output --institution-id=$1
 	fi
