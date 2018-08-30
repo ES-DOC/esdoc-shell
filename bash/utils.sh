@@ -127,9 +127,8 @@ declare -a ESDOC_OPS_DIRS=(
 )
 
 # Set of core git repos.
-declare -a ESDOC_REPOS=(
+declare -a ESDOC_REPOS_CORE=(
 	'esdoc-api'
-	'esdoc-archive'
 	'esdoc-cdf2cim'
 	'esdoc-cdf2cim-archive'
 	'esdoc-cdf2cim-ws'
@@ -141,8 +140,6 @@ declare -a ESDOC_REPOS=(
 	'esdoc-errata-client'
 	'esdoc-errata-fe'
 	'esdoc-errata-ws'
-	'esdoc-jupyterhub'
-	'esdoc-jupyterhub-archive'
 	'esdoc-project'
 	'esdoc-py-client'
 	'esdoc-web-compare'
