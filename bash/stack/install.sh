@@ -8,16 +8,17 @@ _install_repos()
 {
 	log "Installing repos"
 
-	mkdir -p $ESDOC_DIR_REPOS
 	mkdir -p $ESDOC_DIR_REPOS_CORE
-	for repo in "${ESDOC_REPOS[@]}"
+	mkdir -p $ESDOC_DIR_REPOS_CMIP6
+	mkdir -p $ESDOC_DIR_REPOS_INSTITUTIONAL
+
+	for repo in "${ESDOC_REPOS_CORE[@]}"
 	do
 		log "Installing core repo: $repo"
-		rm -rf $ESDOC_DIR_REPOS/$repo
-		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS/$repo
+		rm -rf $ESDOC_DIR_REPOS_CORE/$repo
+		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS_CORE/$repo
 	done
 
-	mkdir -p $ESDOC_DIR_REPOS_CMIP6
 	for repo in "${ESDOC_REPOS_CMIP6[@]}"
 	do
 		log "Installing cmip6 repo: $repo"
@@ -25,7 +26,6 @@ _install_repos()
 		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS_CMIP6/$repo
 	done
 
-	mkdir -p $ESDOC_DIR_REPOS/institutional
 	for institution in "${INSTITUTION_ID[@]}"
 	do
 		log "Installing institutional repo: $institution"
@@ -34,34 +34,11 @@ _install_repos()
 	done
 }
 
-# Sets up operational directories.
-_install_ops_dirs()
-{
-	for ops_dir in "${ESDOC_OPS_DIRS[@]}"
-	do
-		mkdir -p $ops_dir
-	done
-}
-
-# Sets up script permissions.
-_install_script_permissions()
-{
-	chmod a+x $ESDOC_HOME/bash/cmip6/experiments/*.sh
-	chmod a+x $ESDOC_HOME/bash/cmip6/models/*.sh
-	chmod a+x $ESDOC_HOME/bash/cmip6/specializations/*.sh
-	chmod a+x $ESDOC_HOME/bash/deployment/*.sh
-	chmod a+x $ESDOC_HOME/bash/pyesdoc/*.sh
-	chmod a+x $ESDOC_HOME/bash/security/*.sh
-	chmod a+x $ESDOC_HOME/bash/stack/*.sh
-}
-
 # Main entry point.
 main()
 {
 	log "INSTALLING STACK"
 
-	_install_ops_dirs
-	_install_script_permissions
 	_install_repos
 	activate_sub_shells
 

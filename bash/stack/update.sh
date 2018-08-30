@@ -40,18 +40,19 @@ _update_repos()
 
 	mkdir -p $ESDOC_DIR_REPOS
 	mkdir -p $ESDOC_DIR_REPOS_CORE
-	for repo in "${ESDOC_REPOS[@]}"
+	mkdir -p $ESDOC_DIR_REPOS_CMIP6
+	mkdir -p $ESDOC_DIR_REPOS/institutional
+
+	for repo in "${ESDOC_REPOS_CORE[@]}"
 	do
 		_update_repo $repo $ESDOC_DIR_REPOS "https://github.com/ES-DOC" "core"
 	done
 
-	mkdir -p $ESDOC_DIR_REPOS_CMIP6
 	for repo in "${ESDOC_REPOS_CMIP6[@]}"
 	do
 		_update_repo $repo $ESDOC_DIR_REPOS_CMIP6 "https://github.com/ES-DOC" "cmip6"
 	done
 
-	mkdir -p $ESDOC_DIR_REPOS/institutional
 	for institution in "${INSTITUTION_ID[@]}"
 	do
 		_update_repo $institution $ESDOC_DIR_REPOS_INSTITUTIONAL "https://github.com/ES-DOC-INSTITUTIONAL" "institutional"

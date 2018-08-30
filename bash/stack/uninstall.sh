@@ -10,21 +10,11 @@ _uninstall_shell()
 	rm -rf $ESDOC_HOME
 }
 
-# Uninstalls git repo.
-_uninstall_repo()
-{
-	log "Uninstalling repo: $1"
-	rm -rf $ESDOC_DIR_REPOS/$1
-}
-
 # Uninstalls git repos.
 _uninstall_repos()
 {
 	log "Uninstalling repos"
-	for repo in "${ESDOC_REPOS[@]}"
-	do
-		_uninstall_repo $repo
-	done
+	rm -rf $ESDOC_DIR_REPOS
 }
 
 # Uninstalls python.
