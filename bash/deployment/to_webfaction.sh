@@ -33,7 +33,7 @@ _log_end()
 _log_banner
 _log "updating document archive ..."
 _log_banner
-cd $HOME/weblibs/$1/esdoc-archive
+cd $HOME/weblibs/esdoc-archive
 git pull
 source ./sh/activate
 esdoc-archive-uncompress
@@ -47,7 +47,7 @@ _log_end
 _log_banner
 _log "updating pyesdoc lib ..."
 _log_banner
-cd $HOME/weblibs/$1/esdoc-py-client
+cd $HOME/weblibs/esdoc-py-client
 git pull
 source ./sh/activate
 _log_end
@@ -56,7 +56,7 @@ _log_end
 _log_banner
 _log "updating pyessv lib ..."
 _log_banner
-cd $HOME/weblibs/$1/pyessv
+cd $HOME/weblibs/pyessv
 git pull
 source ./sh/activate
 _log_end
@@ -65,7 +65,7 @@ _log_end
 _log_banner
 _log "updating pyessv-archive ..."
 _log_banner
-cd $HOME/weblibs/$1/pyessv-archive
+cd $HOME/weblibs/pyessv-archive
 git pull
 source ./sh/activate
 _log_end
@@ -74,7 +74,7 @@ _log_end
 _log_banner
 _log "updating docs ..."
 _log_banner
-cd $HOME/weblibs/$1/esdoc-docs
+cd $HOME/weblibs/esdoc-docs
 git pull
 _log_end
 
