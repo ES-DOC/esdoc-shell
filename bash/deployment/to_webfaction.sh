@@ -67,7 +67,6 @@ _log "updating pyessv-archive ..."
 _log_banner
 cd $HOME/weblibs/pyessv-archive
 git pull
-source ./sh/activate
 _log_end
 
 # docs
