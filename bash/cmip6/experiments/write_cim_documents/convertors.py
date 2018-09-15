@@ -174,7 +174,8 @@ def convert_names(
     collection_type,
     names,
     collection,
-    slots=["citation_detail", "canonical_name", "name"]
+    slots=["citation_detail", "canonical_name", "name"],
+    collection_name=None
     ):
     """Converts a set of names.
 
@@ -183,7 +184,7 @@ def convert_names(
     for name in names:
         doc = convert_name(name, collection, slots)
         if doc is None:
-            UNCONVERTED_NAMES[collection_type].add(name)
+            UNCONVERTED_NAMES[collection_type].add('{}:{}'.format(collection_name, name))
         else:
             result.append(doc)
 

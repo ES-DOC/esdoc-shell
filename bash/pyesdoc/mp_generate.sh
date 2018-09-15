@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/utils.sh
+source $ESDOC_DIR_BASH/utils.sh
 
 # Main entry point.
 main()
@@ -23,18 +23,8 @@ main()
 		declare dest=$ESDOC_DIR_CIM/v$version/schema-extended
 		cp -r $data/extended_schema* $dest
 		log "extended schema copied to @ "$dest
-
-	elif [ $language = "qxml" ]; then
-		declare data=$ESDOC_DIR_TMP/$ontology/v$version/$ontology"_"$version.xml
-		declare dest=$ESDOC_DIR_CIM/v$version/questionnaire/$ontology-v$version-q-config.xml
-		cp -r $data $dest
-		log "qxml artefacts copied to @ "$dest
-	elif [ $language = "qconfig" ]; then
-        declare data=$ESDOC_DIR_TMP/$ontology/v$version/"$ontology"_"$version".json
-		declare dest=$ESDOC_DIR_CIM/v$version/questionnaire/"$ontology"_"$version"_qconfig.json
-		cp -r $data $dest
-		log "qconfig artefacts copied to @ "$dest
 	fi
+
 	log_banner
 
 	find $ESDOC_DIR_PYESDOC -type f -name "*.pyc" -exec rm -f {} \;

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/utils.sh
+source $ESDOC_DIR_BASH/utils.sh
 
 # Main entry point.
 main()
@@ -9,7 +9,7 @@ main()
 	log "GITHUB : listing institutional teams ..."
 
 	activate_venv
-	python $ESDOC_HOME/bash/gh/list_teams.py
+	python $ESDOC_DIR_BASH/gh/list_teams.py
 
 	log "GITHUB : institutional teams listed"
 }

@@ -28,8 +28,8 @@ WS_MAPS = {
             ("responsible_parties", "G", \
                 lambda x, y: [i for i in [convert_to_cim_v2_responsibilty(x, y, "H-L")] if i]),
             ("citations", "M-T"),
-            ("sub_projects", "X-AO"),
-            ("required_experiments", "AP-CD"),
+            ("sub_projects", "X-AQ"),
+            ("required_experiments", "AR-CD"),
         ]),
 
     WS_EXPERIMENT: (cim.v2.NumericalExperiment, [
@@ -38,7 +38,7 @@ WS_MAPS = {
             ("name", "C"),
             ("canonical_name", "C"),
             ("alternative_names", "D",
-                lambda v, _: [] if not v else [i.strip() for i in v.split(",")]),
+                lambda v, _: [] if not v else [i.strip() for i in str(v).split(",")]),
             ("keywords", "E"),
             ("governing_mips", "E-E", lambda v: v.split(",")[0]),
             ("tier", "E", lambda v: int(v.split(",")[1][-1])),
@@ -149,7 +149,7 @@ WS_MAPS = {
                 lambda x, y: [i for i in [convert_to_cim_v2_responsibilty(x, y, "G-I")] if i]),
             ("citations", "J-J"),
             ("is_conformance_requested", "L", convert_to_bool),
-            # TODO: verify target attributes    
+            # TODO: verify target attributes
             ("regular_timeset_start_date", "M"),
             ("regular_timeset_start_length", "N"),
             ("regular_timeset_start_increment", "O"),

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/utils.sh
+source $ESDOC_DIR_BASH/utils.sh
 
 # Uninstalls shell.
 _uninstall_shell()

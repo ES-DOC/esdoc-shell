@@ -109,7 +109,6 @@ class DocumentSet(object):
         return reduce(add, [i.responsible_parties for i in self.responsible_party_containers])
 
 
-
     def _get_doc_link(self, doc, type_note=None):
         """Returns a document link.
 
@@ -184,6 +183,9 @@ class DocumentSet(object):
 
         # Set data links.
         for x in [i for i in self[WS_FORCING_CONSTRAINT] if i.data_link]:
+            if x.data_link == 'TBD':
+                x.data_link = None
+                continue
             url = convert_name(x.data_link, self[WS_URL])
             if url is None:
                 print 'INVALID FORCING CONSTRAINT DATA LINK:', x.data_link
@@ -239,7 +241,7 @@ class DocumentSet(object):
 
         # Set experiment governing mip.
         for e in self[WS_EXPERIMENT]:
-            e.governing_mips = convert_names("exp-to-project", e.governing_mips, self[WS_PROJECT], slots=["name"])
+            e.governing_mips = convert_names("exp-to-project", e.governing_mips, self[WS_PROJECT], slots=["name"], collection_name=e.name)
             for p in e.governing_mips:
                 p.governed_experiments.append(e)
 
@@ -267,7 +269,7 @@ class DocumentSet(object):
 
         # Set project required experiments.
         for p in self[WS_PROJECT]:
-            p.required_experiments = convert_names("prj-to-exp", p.required_experiments, self[WS_EXPERIMENT])
+            p.required_experiments = convert_names("prj-to-exp", p.required_experiments, self[WS_EXPERIMENT], collection_name=p.name)
 
         # Set governed experiments - order as per required experiments.
         for p in self[WS_PROJECT]:
@@ -359,4 +361,3 @@ class DocumentSet(object):
 
         for doc in self.documents:
             _write(doc, pyesdoc.constants.ENCODING_JSON)
-

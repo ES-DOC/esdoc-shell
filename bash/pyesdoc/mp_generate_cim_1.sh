@@ -1,13 +1,12 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/utils.sh
+source $ESDOC_DIR_BASH/utils.sh
 
 # Main entry point.
 main()
 {
-	source $ESDOC_HOME/bash/pyesdoc/mp_generate.sh cim 1 python
-	source $ESDOC_HOME/bash/pyesdoc/mp_generate.sh cim 1 qxml
+	source $ESDOC_DIR_BASH/pyesdoc/mp_generate.sh cim 1 python
 }
 
 # Invoke entry point.

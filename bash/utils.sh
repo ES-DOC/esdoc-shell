@@ -14,7 +14,7 @@ activate_venv()
 # Wraps standard echo by adding ESDOC prefix.
 log()
 {
-	declare now=`date +%Y-%m-%dT%H:%M:%S`
+	declare now=`date +%Y-%m-%dT%H:%M:%S:000000`
 	declare tabs=''
 	if [ "$1" ]; then
 		if [ "$2" ]; then
@@ -22,12 +22,12 @@ log()
 			do
 				declare tabs+='\t'
 			done
-	    	echo -e $now" [INFO] :: ESDOC-SH > "$tabs$1
+	    	echo -e $now" [INFO] :: ESDOC-SH :: "$tabs$1
 	    else
-	    	echo -e $now" [INFO] :: ESDOC-SH > "$1
+	    	echo -e $now" [INFO] :: ESDOC-SH :: "$1
 	    fi
 	else
-	    echo -e $now" [INFO] :: ESDOC-SH > "
+	    echo -e $now" [INFO] :: ESDOC-SH :: "
 	fi
 }
 
@@ -83,6 +83,7 @@ declare ESDOC_DIR_REPOS=$ESDOC_HOME/repos
 declare ESDOC_DIR_REPOS_CORE=$ESDOC_DIR_REPOS/core
 declare ESDOC_DIR_REPOS_CMIP6=$ESDOC_DIR_REPOS/cmip6
 declare ESDOC_DIR_REPOS_INSTITUTIONAL=$ESDOC_DIR_REPOS/institutional
+declare ESDOC_DIR_REPOS_MISC=$ESDOC_DIR_REPOS/misc
 declare ESDOC_DIR_RESOURCES=$ESDOC_HOME/resources
 
 # Define ops sub-directories.
@@ -95,18 +96,17 @@ declare ESDOC_DIR_TMP=$ESDOC_DIR_OPS/tmp
 declare ESDOC_DIR_VENV=$ESDOC_DIR_OPS/venv
 
 # Define repo directories.
-declare ESDOC_DIR_API=$ESDOC_DIR_REPOS/esdoc-api
-declare ESDOC_DIR_API_TESTS=$ESDOC_DIR_REPOS/esdoc-api/tests
-declare ESDOC_DIR_ARCHIVE=$ESDOC_DIR_REPOS/esdoc-archive
-declare ESDOC_DIR_CIM=$ESDOC_DIR_REPOS/esdoc-cim
-declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS/esdoc-py-client
-declare ESDOC_DIR_PYESDOC_TESTS=$ESDOC_DIR_REPOS/esdoc-py-client/tests
-
-declare ESDOC_DIR_WEB_COMPARATOR=$ESDOC_DIR_REPOS/esdoc-web-compare
-declare ESDOC_DIR_WEB_PLUGIN=$ESDOC_DIR_REPOS/esdoc-web-plugin
+declare ESDOC_DIR_API=$ESDOC_DIR_REPOS_CORE/esdoc-api
+declare ESDOC_DIR_API_TESTS=$ESDOC_DIR_REPOS_CORE/esdoc-api/tests
+declare ESDOC_DIR_ARCHIVE=$ESDOC_DIR_REPOS_CORE/esdoc-archive
+declare ESDOC_DIR_CIM=$ESDOC_DIR_REPOS_CORE/esdoc-cim
+declare ESDOC_DIR_PYESDOC=$ESDOC_DIR_REPOS_CORE/esdoc-py-client
+declare ESDOC_DIR_PYESDOC_TESTS=$ESDOC_DIR_REPOS_CORE/esdoc-py-client/tests
+declare ESDOC_DIR_WEB_COMPARATOR=$ESDOC_DIR_REPOS_CORE/esdoc-web-compare
+declare ESDOC_DIR_WEB_PLUGIN=$ESDOC_DIR_REPOS_CORE/esdoc-web-plugin
 
 # Project specific.
-declare ESDOC_DIR_CMIP6=$ESDOC_DIR_REPOS/cmip6
+declare ESDOC_DIR_CMIP6=$ESDOC_DIR_REPOS_CMIP6
 
 # ###############################################################
 # SECTION: INITIALIZE VARS
@@ -135,12 +135,10 @@ declare -a ESDOC_REPOS_CORE=(
 	'esdoc-cim'
 	'esdoc-cim-v1-schema'
 	'esdoc-cim-v2-schema'
-	'esdoc-contrib'
 	'esdoc-docs'
 	'esdoc-errata-client'
 	'esdoc-errata-fe'
 	'esdoc-errata-ws'
-	'esdoc-project'
 	'esdoc-py-client'
 	'esdoc-web-compare'
 	'esdoc-web-demo'
@@ -148,11 +146,12 @@ declare -a ESDOC_REPOS_CORE=(
 	'esdoc-web-search'
 	'esdoc-web-static'
 	'esdoc-web-view'
+	'esdoc-web-view-furtherinfo'
 	'esdoc-web-view-specialization'
-	'esdoc-web-wordpress'
 	'esdoc-ws-url-rewriter'
 	'pyessv'
 	'pyessv-archive'
+	'pyessv-js'
 )
 
 # Set of cmip6 git repos.
@@ -168,6 +167,12 @@ declare -a ESDOC_REPOS_CMIP6=(
 	'cmip6-specializations-aerosol'
 )
 
+# Set of cmip6 git repos.
+declare -a ESDOC_REPOS_MISC=(
+	'https://github.com/ESGF/esgf-config.git'
+	'https://github.com/ESGF/esgf-prepare.git'
+)
+
 # Set of virtual environments.
 declare -a ESDOC_VENVS=(
 	'api'
@@ -175,7 +180,7 @@ declare -a ESDOC_VENVS=(
 )
 
 # Vocabs.
-source $ESDOC_HOME/bash/utils_vocabs.sh
+source $ESDOC_DIR_BASH/utils_vocabs.sh
 
 # ###############################################################
 # SECTION: Initialise file system

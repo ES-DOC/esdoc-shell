@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/utils.sh
+source $ESDOC_DIR_BASH/utils.sh
 
 # Main entry point.
 main()
@@ -12,13 +12,13 @@ main()
 	if [ $1 = "all" ]; then
 		for institution_id in "${INSTITUTION_ID[@]}"
 		do
-			python $ESDOC_HOME/bash/cmip6/models/generate_xls.py --institution-id=$institution_id
+			python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=$institution_id
 		done
-		python $ESDOC_HOME/bash/cmip6/models/generate_xls.py --institution-id=test-institute-1
-		python $ESDOC_HOME/bash/cmip6/models/generate_xls.py --institution-id=test-institute-2
-		python $ESDOC_HOME/bash/cmip6/models/generate_xls.py --institution-id=test-institute-3
+		python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=test-institute-1
+		python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=test-institute-2
+		python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=test-institute-3
 	else
-		python $ESDOC_HOME/bash/cmip6/models/generate_xls.py --institution-id=$1
+		python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=$1
 	fi
 
 	log "CMIP6 model XLS files generated ..."

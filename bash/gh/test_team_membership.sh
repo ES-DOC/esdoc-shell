@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/utils.sh
+source $ESDOC_DIR_BASH/utils.sh
 
 # Main entry point.
 main()
@@ -9,7 +9,7 @@ main()
 	log "GITHUB : testing team membership ..."
 
 	activate_venv
-	python $ESDOC_HOME/bash/gh/test_team_membership.py --team=$1 --user=$2
+	python $ESDOC_DIR_BASH/gh/test_team_membership.py --team=$1 --user=$2
 
 	log "GITHUB : institutional teams initialized"
 }

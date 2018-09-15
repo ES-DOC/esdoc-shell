@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/utils.sh
+source $ESDOC_DIR_BASH/utils.sh
 
 # Installs git repos.
 _install_repos()
 {
-	log "Installing repos"
+	log "Installing repos:"
 
 	mkdir -p $ESDOC_DIR_REPOS_CORE
 	mkdir -p $ESDOC_DIR_REPOS_CMIP6
@@ -24,13 +24,6 @@ _install_repos()
 		log "Installing cmip6 repo: $repo"
 		rm -rf $ESDOC_DIR_REPOS_CMIP6/$repo
 		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS_CMIP6/$repo
-	done
-
-	for institution in "${INSTITUTION_ID[@]}"
-	do
-		log "Installing institutional repo: $institution"
-		rm -rf $ESDOC_DIR_REPOS_INSTITUTIONAL/$institution
-		git clone -q https://github.com/ES-DOC-INSTITUTIONAL/$institution.git $ESDOC_DIR_REPOS_INSTITUTIONAL/$institution
 	done
 }
 

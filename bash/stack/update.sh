@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import utils.
-source $ESDOC_HOME/bash/utils.sh
+source $ESDOC_DIR_BASH/utils.sh
 
 # Main entry point.
 _update_shell()
@@ -41,7 +41,6 @@ _update_repos()
 	mkdir -p $ESDOC_DIR_REPOS
 	mkdir -p $ESDOC_DIR_REPOS_CORE
 	mkdir -p $ESDOC_DIR_REPOS_CMIP6
-	mkdir -p $ESDOC_DIR_REPOS/institutional
 
 	for repo in "${ESDOC_REPOS_CORE[@]}"
 	do
@@ -51,11 +50,6 @@ _update_repos()
 	for repo in "${ESDOC_REPOS_CMIP6[@]}"
 	do
 		_update_repo $repo $ESDOC_DIR_REPOS_CMIP6 "https://github.com/ES-DOC" "cmip6"
-	done
-
-	for institution in "${INSTITUTION_ID[@]}"
-	do
-		_update_repo $institution $ESDOC_DIR_REPOS_INSTITUTIONAL "https://github.com/ES-DOC-INSTITUTIONAL" "institutional"
 	done
 
 	log "UPDATED REPOS"
