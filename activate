@@ -66,12 +66,14 @@ alias esdoc-cmip6-models-generate-xls=$ESDOC_DIR_BASH/cmip6/models/generate_xls.
 
 _reset_cmip6()
 {
-	esdoc-archive-delete-documents cmip6
-	esdoc-ws-db-flush cmip6
 	esdoc-cmip6-experiments-write-cim-documents
 	esdoc-cmip6-experiments-write-config
 	esdoc-cmip6-experiments-write-d3
+
+	esdoc-archive-delete-documents cmip6
 	esdoc-cmip6-experiments-archive-cim-documents
+
+	esdoc-ws-db-flush cmip6
 	esdoc-ws-db-ingest
 }
 alias esdoc-cmip6-reset=_reset_cmip6

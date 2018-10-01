@@ -92,16 +92,17 @@ def convert_to_cim_v2_time_period(value):
     return instance
 
 
-def convert_to_cim_v2_numerical_requirement_scope(value):
+def convert_to_cim_v2_numerical_requirement_scope(value, other):
     """Converts a cell value to a cim.v2.NumericalRequirementScope enum value.
 
     """
-    return {
-        1: "mip-era",
-        2: "mip-group",
-        3: "mip",
-        4: "experiment",
-    }[abs(value)]
+    if value is not None:
+        return {
+            1: "mip-era",
+            2: "mip-group",
+            3: "mip",
+            4: "experiment",
+        }[abs(value)]
 
 
 def convert_to_cim_v2_date_time(value, offset):
