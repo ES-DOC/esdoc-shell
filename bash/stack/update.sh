@@ -3,56 +3,20 @@
 # Import utils.
 source $ESDOC_DIR_BASH/utils.sh
 
-# Main entry point.
-_update_shell()
-{
-	log "UPDATING SHELL"
-	set_working_dir
-	git pull -q
-	remove_files "*.pyc"
-	log "UPDATED SHELL"
-}
-
-# Updates a git repo.
 _update_repo()
 {
-	declare target=$1
-	declare dir_repo=$2"/$1"
-	declare gh_repo=$3"/$1.git"
-	declare repo_type=$4
-	if [ -d "$dir_repo" ]; then
-		log "Updating $repo_type repo: $target"
-		set_working_dir $dir_repo
-		git pull -q
-		remove_files "*.pyc"
-		set_working_dir
-	else
-		log "Installing $repo_type repo: $target"
-		rm -rf $dir_repo
-		git clone -q $gh_repo $dir_repo
-	fi
+	echo "UPDATING: "$1
+	cd $1
+	git pull
 }
 
 # Updates git repos.
 _update_repos()
 {
-	log "UPDATING REPOS"
-
-	mkdir -p $ESDOC_DIR_REPOS
-	mkdir -p $ESDOC_DIR_REPOS_CORE
-	mkdir -p $ESDOC_DIR_REPOS_CMIP6
-
-	for repo in "${ESDOC_REPOS_CORE[@]}"
+	for repo in $(find $1 -maxdepth 1 -mindepth 1 -type d)
 	do
-		_update_repo $repo $ESDOC_DIR_REPOS "https://github.com/ES-DOC" "core"
+		_update_repo $repo
 	done
-
-	for repo in "${ESDOC_REPOS_CMIP6[@]}"
-	do
-		_update_repo $repo $ESDOC_DIR_REPOS_CMIP6 "https://github.com/ES-DOC" "cmip6"
-	done
-
-	log "UPDATED REPOS"
 }
 
 # Main entry point.
@@ -60,8 +24,10 @@ main()
 {
 	log "UPDATING STACK"
 
-	_update_shell
-	_update_repos
+	_update_repo $ESDOC_HOME
+	_update_repos $ESDOC_DIR_REPOS_CORE
+	_update_repos $ESDOC_DIR_REPOS_CMIP6
+	_update_repos $ESDOC_DIR_REPOS_EXT
 
 	log "UPDATED STACK"
 }

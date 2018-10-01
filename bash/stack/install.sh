@@ -4,27 +4,12 @@
 source $ESDOC_DIR_BASH/utils.sh
 
 # Installs git repos.
-_install_repos()
+_install_repo()
 {
-	log "Installing repos:"
-
-	mkdir -p $ESDOC_DIR_REPOS_CORE
-	mkdir -p $ESDOC_DIR_REPOS_CMIP6
-	mkdir -p $ESDOC_DIR_REPOS_INSTITUTIONAL
-
-	for repo in "${ESDOC_REPOS_CORE[@]}"
-	do
-		log "Installing core repo: $repo"
-		rm -rf $ESDOC_DIR_REPOS_CORE/$repo
-		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS_CORE/$repo
-	done
-
-	for repo in "${ESDOC_REPOS_CMIP6[@]}"
-	do
-		log "Installing cmip6 repo: $repo"
-		rm -rf $ESDOC_DIR_REPOS_CMIP6/$repo
-		git clone -q https://github.com/ES-DOC/$repo.git $ESDOC_DIR_REPOS_CMIP6/$repo
-	done
+	mkdir -p $1
+	cd $1
+	log "... "$2" -> "$1
+	git clone -q $2
 }
 
 # Main entry point.
@@ -32,7 +17,21 @@ main()
 {
 	log "INSTALLING STACK"
 
-	_install_repos
+	for repo in "${ESDOC_REPOS_CORE[@]}"
+	do
+		_install_repo $ESDOC_DIR_REPOS_CORE $repo
+	done
+
+	for repo in "${ESDOC_REPOS_CMIP6[@]}"
+	do
+		_install_repo $ESDOC_DIR_REPOS_CMIP6 $repo
+	done
+
+	for repo in "${ESDOC_REPOS_EXT[@]}"
+	do
+		_install_repo $ESDOC_DIR_REPOS_EXT $repo
+	done
+
 	activate_sub_shells
 
 	log "INSTALLED STACK"

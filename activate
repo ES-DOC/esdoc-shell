@@ -1,83 +1,66 @@
 # Set paths
 export ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export ESDOC_DIR_BASH=$ESDOC_HOME/bash
-export ESDOC_DIR_REPOS_CORE=$ESDOC_HOME/repos/core
-
-# Update prommpt.
-export PS1="$"
-
-# Set repo path.
-export ESDOC_CMIP6=$ESDOC_HOME/repos/esdoc-docs/cmip6
-
-# Activate sub-shells.
-source $ESDOC_DIR_REPOS_CORE/esdoc-api/sh/activate
-source $ESDOC_DIR_REPOS_CORE/esdoc-archive/sh/activate
-source $ESDOC_DIR_REPOS_CORE/esdoc-py-client/sh/activate
-source $ESDOC_DIR_REPOS_CORE/esdoc-cdf2cim/sh/activate
-source $ESDOC_DIR_REPOS_CORE/esdoc-cdf2cim-ws/sh/activate
-source $ESDOC_DIR_REPOS_CORE/esdoc-errata-ws/sh/activate
-source $ESDOC_DIR_REPOS_CORE/esdoc-web-plugin/sh/activate
 
 # pyesdoc meta-programming commands.
-alias esdoc-mp-cim-v1-sync=$ESDOC_DIR_BASH/pyesdoc/mp_sync_cim_v1.sh
-alias esdoc-mp-cim-v2-sync=$ESDOC_DIR_BASH/pyesdoc/mp_sync_cim_v2.sh
-alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-sync && $ESDOC_DIR_BASH/pyesdoc/mp_generate_cim_1.sh'
-alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-sync && $ESDOC_DIR_BASH/pyesdoc/mp_generate_cim_2.sh'
-alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_DIR_BASH/pyesdoc/mp_validate_cim_1.sh'
-alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_DIR_BASH/pyesdoc/mp_validate_cim_2.sh'
+alias esdoc-mp-cim-v1-sync=$ESDOC_HOME/bash/pyesdoc/mp_sync_cim_v1.sh
+alias esdoc-mp-cim-v2-sync=$ESDOC_HOME/bash/pyesdoc/mp_sync_cim_v2.sh
+alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/pyesdoc/mp_generate_cim_1.sh'
+alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc/mp_generate_cim_2.sh'
+alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_HOME/bash/pyesdoc/mp_validate_cim_1.sh'
+alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_HOME/bash/pyesdoc/mp_validate_cim_2.sh'
 
 # Security commands.
-alias esdoc-gh-clone-repos=$ESDOC_DIR_BASH/gh/clone_repos.sh
-alias esdoc-gh-delete-teams=$ESDOC_DIR_BASH/gh/delete_teams.sh
-alias esdoc-gh-init-teams=$ESDOC_DIR_BASH/gh/init_teams.sh
-alias esdoc-gh-init-repos=$ESDOC_DIR_BASH/gh/init_repos.sh
-alias esdoc-gh-list-teams=$ESDOC_DIR_BASH/gh/list_teams.sh
-alias esdoc-gh-pull-changes=$ESDOC_DIR_BASH/gh/pull_changes.sh
-alias esdoc-gh-push-changes=$ESDOC_DIR_BASH/gh/push_changes.sh
-alias esdoc-gh-test-team-membership=$ESDOC_DIR_BASH/gh/test_team_membership.sh
+alias esdoc-gh-clone-repos=$ESDOC_HOME/bash/gh/clone_repos.sh
+alias esdoc-gh-delete-teams=$ESDOC_HOME/bash/gh/delete_teams.sh
+alias esdoc-gh-init-teams=$ESDOC_HOME/bash/gh/init_teams.sh
+alias esdoc-gh-init-repos=$ESDOC_HOME/bash/gh/init_repos.sh
+alias esdoc-gh-list-teams=$ESDOC_HOME/bash/gh/list_teams.sh
+alias esdoc-gh-pull-changes=$ESDOC_HOME/bash/gh/pull_changes.sh
+alias esdoc-gh-push-changes=$ESDOC_HOME/bash/gh/push_changes.sh
+alias esdoc-gh-test-team-membership=$ESDOC_HOME/bash/gh/test_team_membership.sh
 
 # Stack commands.
-alias esdoc-stack-install=$ESDOC_DIR_BASH/stack/install.sh
-alias esdoc-stack-uninstall=$ESDOC_DIR_BASH/stack/uninstall.sh
-alias esdoc-stack-update=$ESDOC_DIR_BASH/stack/update.sh
+alias esdoc-stack-install=$ESDOC_HOME/bash/stack/install.sh
+alias esdoc-stack-uninstall=$ESDOC_HOME/bash/stack/uninstall.sh
+alias esdoc-stack-update=$ESDOC_HOME/bash/stack/update.sh
 
 # Deployment commands.
-alias esdoc-deployment-sync-static-assets=$ESDOC_DIR_BASH/deployment/sync_static_assets.sh
+alias esdoc-deployment-sync-static-assets=$ESDOC_HOME/bash/deployment/sync_static_assets.sh
 
 # CMIP5 commands.
-# alias esdoc-cmip5-archive-cim-documents=$ESDOC_DIR_BASH/cmip5/archive_cim_documents.sh
+# alias esdoc-cmip5-archive-cim-documents=$ESDOC_HOME/bash/cmip5/archive_cim_documents.sh
 
 # CMIP6 commands.
-alias esdoc-cmip6-write-bash-vars=$ESDOC_DIR_BASH/cmip6/other/write_bash_vars.sh
+alias esdoc-cmip6-write-bash-vars=$ESDOC_HOME/bash/cmip6/other/write_bash_vars.sh
 
 # ... cmip6 conformances
-alias esdoc-cmip6-conformances-write-config=$ESDOC_DIR_BASH/cmip6/conformances/write_config.sh
-alias esdoc-cmip6-conformances-write-spreadsheets=$ESDOC_DIR_BASH/cmip6/conformances/write_spreadsheets.sh
+alias esdoc-cmip6-conformances-write-config=$ESDOC_HOME/bash/cmip6/conformances/write_config.sh
+alias esdoc-cmip6-conformances-write-spreadsheets=$ESDOC_HOME/bash/cmip6/conformances/write_spreadsheets.sh
 
 # ... cmip6 specializations
-alias esdoc-cmip6-specializations-clone=$ESDOC_DIR_BASH/cmip6/specializations/clone.sh
-alias esdoc-cmip6-specializations-pull=$ESDOC_DIR_BASH/cmip6/specializations/pull.sh
-alias esdoc-cmip6-specializations-push=$ESDOC_DIR_BASH/cmip6/specializations/push.sh
-alias esdoc-cmip6-specializations-generate=$ESDOC_DIR_BASH/cmip6/specializations/generate.sh
-alias esdoc-cmip6-specializations-sync-cim-profile=$ESDOC_DIR_BASH/cmip6/specializations/sync_cim_profile.sh
-alias esdoc-cmip6-specializations-sync-definitions=$ESDOC_DIR_BASH/cmip6/specializations/sync_definitions.sh
-alias esdoc-cmip6-specializations-sync-mappings=$ESDOC_DIR_BASH/cmip6/specializations/sync_mappings.sh
-alias esdoc-cmip6-specializations-sync-templates=$ESDOC_DIR_BASH/cmip6/specializations/sync_templates.sh
-alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_DIR_BASH/cmip6/specializations/sync_tooling.sh
-alias esdoc-cmip6-specializations-sync-viewer=$ESDOC_DIR_BASH/cmip6/specializations/sync_viewer.sh
-alias esdoc-cmip6-specializations-validate=$ESDOC_DIR_BASH/cmip6/specializations/validate.sh
+alias esdoc-cmip6-specializations-clone=$ESDOC_HOME/bash/cmip6/specializations/clone.sh
+alias esdoc-cmip6-specializations-pull=$ESDOC_HOME/bash/cmip6/specializations/pull.sh
+alias esdoc-cmip6-specializations-push=$ESDOC_HOME/bash/cmip6/specializations/push.sh
+alias esdoc-cmip6-specializations-generate=$ESDOC_HOME/bash/cmip6/specializations/generate.sh
+alias esdoc-cmip6-specializations-sync-cim-profile=$ESDOC_HOME/bash/cmip6/specializations/sync_cim_profile.sh
+alias esdoc-cmip6-specializations-sync-definitions=$ESDOC_HOME/bash/cmip6/specializations/sync_definitions.sh
+alias esdoc-cmip6-specializations-sync-mappings=$ESDOC_HOME/bash/cmip6/specializations/sync_mappings.sh
+alias esdoc-cmip6-specializations-sync-templates=$ESDOC_HOME/bash/cmip6/specializations/sync_templates.sh
+alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_HOME/bash/cmip6/specializations/sync_tooling.sh
+alias esdoc-cmip6-specializations-sync-viewer=$ESDOC_HOME/bash/cmip6/specializations/sync_viewer.sh
+alias esdoc-cmip6-specializations-validate=$ESDOC_HOME/bash/cmip6/specializations/validate.sh
 
 # ... cmip6 experiments
-alias esdoc-cmip6-experiments-archive-cim-documents=$ESDOC_DIR_BASH/cmip6/experiments/archive_cim_documents.sh
-alias esdoc-cmip6-experiments-write-cim-documents=$ESDOC_DIR_BASH/cmip6/experiments/write_cim_documents.sh
-alias esdoc-cmip6-experiments-write-config=$ESDOC_DIR_BASH/cmip6/experiments/write_config.sh
-alias esdoc-cmip6-experiments-write-d3=$ESDOC_DIR_BASH/cmip6/experiments/write_d3.sh
+alias esdoc-cmip6-experiments-archive-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/archive_cim_documents.sh
+alias esdoc-cmip6-experiments-write-cim-documents=$ESDOC_HOME/bash/cmip6/experiments/write_cim_documents.sh
+alias esdoc-cmip6-experiments-write-config=$ESDOC_HOME/bash/cmip6/experiments/write_config.sh
+alias esdoc-cmip6-experiments-write-d3=$ESDOC_HOME/bash/cmip6/experiments/write_d3.sh
 
 # ... cmip6 models
-alias esdoc-cmip6-models-init-defaults=$ESDOC_DIR_BASH/cmip6/models/init_defaults.sh
-alias esdoc-cmip6-models-init-output=$ESDOC_DIR_BASH/cmip6/models/init_output.sh
-alias esdoc-cmip6-models-generate-pdf=$ESDOC_DIR_BASH/cmip6/models/generate_pdf.sh
-alias esdoc-cmip6-models-generate-xls=$ESDOC_DIR_BASH/cmip6/models/generate_xls.sh
+alias esdoc-cmip6-models-init-defaults=$ESDOC_HOME/bash/cmip6/models/init_defaults.sh
+alias esdoc-cmip6-models-init-output=$ESDOC_HOME/bash/cmip6/models/init_output.sh
+alias esdoc-cmip6-models-generate-pdf=$ESDOC_HOME/bash/cmip6/models/generate_pdf.sh
+alias esdoc-cmip6-models-generate-xls=$ESDOC_HOME/bash/cmip6/models/generate_xls.sh
 
 _reset_cmip6()
 {
@@ -92,6 +75,6 @@ _reset_cmip6()
 alias esdoc-cmip6-reset=_reset_cmip6
 
 # Ensure target scripts are executable.
-chmod a+x $ESDOC_DIR_BASH/*.sh
-chmod a+x $ESDOC_DIR_BASH/*/*.sh
-chmod a+x $ESDOC_DIR_BASH/*/*/*.sh
+chmod a+x $ESDOC_HOME/bash/*.sh
+chmod a+x $ESDOC_HOME/bash/*/*.sh
+chmod a+x $ESDOC_HOME/bash/*/*/*.sh

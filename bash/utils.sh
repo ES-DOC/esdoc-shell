@@ -62,13 +62,13 @@ remove_files()
 
 activate_sub_shells()
 {
-	source $ESDOC_HOME/repos/esdoc-api/sh/activate
-	source $ESDOC_HOME/repos/esdoc-archive/sh/activate
-	source $ESDOC_HOME/repos/esdoc-py-client/sh/activate
-	source $ESDOC_HOME/repos/esdoc-cdf2cim/sh/activate
-	source $ESDOC_HOME/repos/esdoc-cdf2cim-ws/sh/activate
-	source $ESDOC_HOME/repos/esdoc-errata-ws/sh/activate
-	source $ESDOC_HOME/repos/esdoc-web-plugin/sh/activate
+	source $ESDOC_HOME/repos/core/esdoc-api/sh/activate
+	source $ESDOC_HOME/repos/core/esdoc-archive/sh/activate
+	source $ESDOC_HOME/repos/core/esdoc-py-client/sh/activate
+	source $ESDOC_HOME/repos/core/esdoc-cdf2cim/sh/activate
+	source $ESDOC_HOME/repos/core/esdoc-cdf2cim-ws/sh/activate
+	source $ESDOC_HOME/repos/core/esdoc-errata-ws/sh/activate
+	source $ESDOC_HOME/repos/core/esdoc-web-plugin/sh/activate
 }
 
 # ###############################################################
@@ -83,7 +83,7 @@ declare ESDOC_DIR_REPOS=$ESDOC_HOME/repos
 declare ESDOC_DIR_REPOS_CORE=$ESDOC_DIR_REPOS/core
 declare ESDOC_DIR_REPOS_CMIP6=$ESDOC_DIR_REPOS/cmip6
 declare ESDOC_DIR_REPOS_INSTITUTIONAL=$ESDOC_DIR_REPOS/institutional
-declare ESDOC_DIR_REPOS_MISC=$ESDOC_DIR_REPOS/misc
+declare ESDOC_DIR_REPOS_EXT=$ESDOC_DIR_REPOS/ext
 declare ESDOC_DIR_RESOURCES=$ESDOC_HOME/resources
 
 # Define ops sub-directories.
@@ -128,55 +128,50 @@ declare -a ESDOC_OPS_DIRS=(
 
 # Set of core git repos.
 declare -a ESDOC_REPOS_CORE=(
-	'esdoc-api'
-	'esdoc-cdf2cim'
-	'esdoc-cdf2cim-archive'
-	'esdoc-cdf2cim-ws'
-	'esdoc-cim'
-	'esdoc-cim-v1-schema'
-	'esdoc-cim-v2-schema'
-	'esdoc-docs'
-	'esdoc-errata-client'
-	'esdoc-errata-fe'
-	'esdoc-errata-ws'
-	'esdoc-py-client'
-	'esdoc-web-compare'
-	'esdoc-web-demo'
-	'esdoc-web-plugin'
-	'esdoc-web-search'
-	'esdoc-web-static'
-	'esdoc-web-view'
-	'esdoc-web-view-furtherinfo'
-	'esdoc-web-view-specialization'
-	'esdoc-ws-url-rewriter'
-	'pyessv'
-	'pyessv-archive'
-	'pyessv-js'
+	'https://github.com/ES-DOC/esdoc-api.git'
+	'https://github.com/ES-DOC/esdoc-cdf2cim.git'
+	'https://github.com/ES-DOC/esdoc-cdf2cim-archive.git'
+	'https://github.com/ES-DOC/esdoc-cdf2cim-ws.git'
+	'https://github.com/ES-DOC/esdoc-cim.git'
+	'https://github.com/ES-DOC/esdoc-cim-v1-schema.git'
+	'https://github.com/ES-DOC/esdoc-cim-v2-schema.git'
+	'https://github.com/ES-DOC/esdoc-docs.git'
+	'https://github.com/ES-DOC/esdoc-errata-client.git'
+	'https://github.com/ES-DOC/esdoc-errata-fe.git'
+	'https://github.com/ES-DOC/esdoc-errata-ws.git'
+	'https://github.com/ES-DOC/esdoc-py-client.git'
+	'https://github.com/ES-DOC/esdoc-web-compare.git'
+	'https://github.com/ES-DOC/esdoc-web-demo.git'
+	'https://github.com/ES-DOC/esdoc-web-plugin.git'
+	'https://github.com/ES-DOC/esdoc-web-search.git'
+	'https://github.com/ES-DOC/esdoc-web-static.git'
+	'https://github.com/ES-DOC/esdoc-web-view.git'
+	'https://github.com/ES-DOC/esdoc-web-view-furtherinfo.git'
+	'https://github.com/ES-DOC/esdoc-web-view-specialization.git'
+	'https://github.com/ES-DOC/esdoc-ws-url-rewriter.git'
+	'https://github.com/ES-DOC/pyessv.git'
+	'https://github.com/ES-DOC/pyessv-archive.git'
+	'https://github.com/ES-DOC/pyessv-js.git'
 )
 
 # Set of cmip6 git repos.
 declare -a ESDOC_REPOS_CMIP6=(
-	'cmip6-specializations-toplevel'
-	'cmip6-specializations-seaice'
-	'cmip6-specializations-ocnbgchem'
-	'cmip6-specializations-ocean'
-	'cmip6-specializations-landice'
-	'cmip6-specializations-land'
-	'cmip6-specializations-atmoschem'
-	'cmip6-specializations-atmos'
-	'cmip6-specializations-aerosol'
+	'https://github.com/ES-DOC/cmip6-specializations-toplevel.git'
+	'https://github.com/ES-DOC/cmip6-specializations-seaice.git'
+	'https://github.com/ES-DOC/cmip6-specializations-ocnbgchem.git'
+	'https://github.com/ES-DOC/cmip6-specializations-ocean.git'
+	'https://github.com/ES-DOC/cmip6-specializations-landice.git'
+	'https://github.com/ES-DOC/cmip6-specializations-land.git'
+	'https://github.com/ES-DOC/cmip6-specializations-atmoschem.git'
+	'https://github.com/ES-DOC/cmip6-specializations-atmos.git'
+	'https://github.com/ES-DOC/cmip6-specializations-aerosol.git'
 )
 
-# Set of cmip6 git repos.
-declare -a ESDOC_REPOS_MISC=(
+# Set of external git repos.
+declare -a ESDOC_REPOS_EXT=(
 	'https://github.com/ESGF/esgf-config.git'
 	'https://github.com/ESGF/esgf-prepare.git'
-)
-
-# Set of virtual environments.
-declare -a ESDOC_VENVS=(
-	'api'
-	'pyesdoc'
+	'https://github.com/WCRP-CMIP/CMIP6_CVs.git'
 )
 
 # Vocabs.
