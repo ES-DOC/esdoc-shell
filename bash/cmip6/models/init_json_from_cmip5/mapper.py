@@ -22,6 +22,9 @@ class MappingInfo(object):
 
     """
     def __init__(self, cmip5_model_id, cmip5_component, cmip6_institution_id, cmip6_source_id, cmip6_topic):
+        """Ctor.
+
+        """
         self.cmip5_model_id = cmip5_model_id
         self.cmip5_component = cmip5_component
         self.cmip6_institution_id = cmip6_institution_id
