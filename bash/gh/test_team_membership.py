@@ -38,10 +38,13 @@ def _main(args):
     """
     team_id = args.team.strip().lower()
     user_id = args.user.strip()
-    if not pyesdoc.security.is_team_member(team_id, user_id):
-        raise ValueError('{} is not a member of {}'.format(args.user, args.team))
 
-    pyesdoc.log('team membership confirmed')
+    try:
+        pyesdoc.authorize_user(team_id, user_id)
+    except pyesdoc.AuthorizationError:
+        raise ValueError('{} is not a member of {}'.format(args.user, args.team))
+    else:
+        pyesdoc.log('team membership confirmed')
 
 
 # Main entry point.

@@ -20,10 +20,10 @@ import mappings
 
 
 # 5 member tuple: (cmip5-insititute, cmip5-model, cmip6-insititute, cmip6-source-id, cmip6-realm-id).
-DEFAULTS = list()
+DEFAULTS = None
 
-# Model initialisation configuration filename.
-_FILENAME = 'model-initialization.json'
+# Model initialisation from CMIP5 settings filename.
+_SETTINGS_FNAME = 'initialization_from_CMIP5.json'
 
 
 def init(institution_id):
@@ -32,40 +32,45 @@ def init(institution_id):
     :param str institution_id: ID of institution being processed.
 
     """
-    # Open config file.
-    fpath = _get_filepath(institution_id)
-    try:
-        with open(fpath, 'r') as fstream:
-            obj = json.loads(fstream.read())
-    except IOError:
-        raise ValueError('Institute model defaults not found: {}: {}'.format(institution_id, fpath))
+    # Open settings.
+    settings = _get_settings(institution_id)
 
     # Set defaults.
-    _set_defaults(institution_id, obj)
+    _set_defaults(institution_id, settings)
 
 
-def _get_filepath(institution_id):
-    """Returns path to an institite's model initialisation configuration file.
+def _get_settings(institution_id):
+    """Returns initialization from CMIP5 settings.
 
     """
+    # Set path.
     fpath = os.getenv('ESDOC_HOME')
     fpath = os.path.join(fpath, 'repos')
     fpath = os.path.join(fpath, 'institutional')
     fpath = os.path.join(fpath, institution_id)
     fpath = os.path.join(fpath, 'cmip6')
     fpath = os.path.join(fpath, 'models')
-    fpath = os.path.join(fpath, _FILENAME)
+    fpath = os.path.join(fpath, _SETTINGS_FNAME)
 
-    return fpath
+    # Read JSON.
+    try:
+        with open(fpath, 'r') as fstream:
+            return json.loads(fstream.read())
+    except IOError:
+        raise ValueError('Institute initialization from CMIP5 settings not found: {}: {}'.format(institution_id, fpath))
 
 
-def _set_defaults(institution_id, obj):
+def _set_defaults(institution_id, settings):
     """Caches model defaults.
 
     """
-    for source_id in obj:
-        for realm_id in obj[source_id]:
-            initializedFrom = obj[source_id][realm_id]['initializedFrom']
+    # Reset.
+    global DEFAULTS
+    DEFAULTS = list()
+
+    for source_id in settings:
+        for realm_id in settings[source_id]:
+            initializedFrom = settings[source_id][realm_id]['initializedFrom']
             if not initializedFrom or initializedFrom.split(':')[0] != 'cmip5':
                 break
             if len(initializedFrom.split(':')) == 3:

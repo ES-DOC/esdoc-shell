@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: mapper_ipython.py
+.. module:: mapper.py
    :license: GPL/CeCIL
    :platform: Unix, Windows
    :synopsis: Maps CMIP5 CIM (v1) model documents to lightweight IPython format.
@@ -11,29 +11,40 @@
 """
 import os
 
-from pyesdoc.ipython.model_topic import NotebookOutput
-
 import convertor
 import defaults
 import mappings
-
-from sh.utils import get_archive_output_fpath
-
+from _utils import NotebookOutput
 
 
-def map(cmip5_model_id, cmip5_component, cmip6_institution_id, cmip6_source_id, cmip6_topic):
-    """Maps a CMIP5 model component to a CMIP6 Ipython notebook output.
+class MappingInfo(object):
+    """Encapsulates information to be mapped.
 
-    :param str cmip5_model_id: CMIP5 model identifier.
-    :param cim.v1.ModelComponent cmip5_component: CMIP5 model component.
-    :param str cmip6_institution_id: CMIP6 institution identifier.
-    :param str cmip6_source_id: CMIP6 source identifier.
-    :param str cmip6_topic: CMIP6 model documentation topic.
+    """
+    def __init__(self, cmip5_model_id, cmip5_component, cmip6_institution_id, cmip6_source_id, cmip6_topic):
+        self.cmip5_model_id = cmip5_model_id
+        self.cmip5_component = cmip5_component
+        self.cmip6_institution_id = cmip6_institution_id
+        self.cmip6_source_id = cmip6_source_id
+        self.cmip6_topic = cmip6_topic
 
-    :returns: CMIP6 IPython notebook output.
+
+def map(mapping_info):
+    """Maps a CMIP5 model component to a CMIP6 simplified output.
+
+    :param MappingInfo mapping_info: Information to be mapped.
+
+    :returns: CMIP6 simplified model document output.
     :rtype: dict
 
     """
+    # Deconstruct mapping information.
+    cmip5_model_id = mapping_info.cmip5_model_id
+    cmip5_component = mapping_info.cmip5_component
+    cmip6_institution_id = mapping_info.cmip6_institution_id
+    cmip6_source_id = mapping_info.cmip6_source_id
+    cmip6_topic = mapping_info.cmip6_topic
+
     # Set output document to be seeded.
     doc = _get_document(cmip6_institution_id, cmip6_source_id, cmip6_topic)
 
@@ -64,13 +75,11 @@ def _get_document(institution_id, source_id, topic_id):
     fpath = os.path.join(fpath, 'cmip6/models')
     fpath = os.path.join(fpath, source_id)
     fpath = os.path.join(fpath, 'json')
+    if not os.path.isdir(fpath):
+        os.makedirs(fpath)
     fpath = os.path.join(fpath, 'cmip6_{}_{}_{}.json'.format(institution_id, source_id, topic_id))
 
-    # Ensure directory exists.
-    if not os.path.isdir(os.path.dirname(fpath)):
-        os.makedirs(os.path.dirname(fpath))
-
-    # Remove previous.
+    # Remove previous ?.
     if os.path.exists(fpath):
         os.remove(fpath)
 

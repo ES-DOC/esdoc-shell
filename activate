@@ -11,14 +11,15 @@ alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_DIR_BASH/pyesdoc/
 alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_DIR_BASH/pyesdoc/mp_validate_cim_2.sh'
 
 # Security commands.
-alias esdoc-gh-clone-repos=$ESDOC_DIR_BASH/gh/clone_repos.sh
 alias esdoc-gh-delete-teams=$ESDOC_DIR_BASH/gh/delete_teams.sh
 alias esdoc-gh-init-teams=$ESDOC_DIR_BASH/gh/init_teams.sh
 alias esdoc-gh-init-repos=$ESDOC_DIR_BASH/gh/init_repos.sh
 alias esdoc-gh-list-teams=$ESDOC_DIR_BASH/gh/list_teams.sh
+alias esdoc-gh-test-team-membership=$ESDOC_DIR_BASH/gh/test_team_membership.sh
+
+alias esdoc-gh-abort-changes=$ESDOC_DIR_BASH/gh/abort_changes.sh
 alias esdoc-gh-pull-changes=$ESDOC_DIR_BASH/gh/pull_changes.sh
 alias esdoc-gh-push-changes=$ESDOC_DIR_BASH/gh/push_changes.sh
-alias esdoc-gh-test-team-membership=$ESDOC_DIR_BASH/gh/test_team_membership.sh
 
 # Stack commands.
 alias esdoc-stack-diff=$ESDOC_DIR_BASH/stack/diff.sh
@@ -35,11 +36,14 @@ alias esdoc-deployment-sync-static-assets=$ESDOC_DIR_BASH/deployment/sync_static
 # CMIP6 commands.
 alias esdoc-cmip6-write-bash-vars=$ESDOC_DIR_BASH/cmip6/other/write_bash_vars.sh
 
-# ... cmip6 conformances
+alias esdoc-cmip6-sync-gh-repos='$ESDOC_DIR_BASH/gh/sync_repos.sh cmip6'
+alias esdoc-cmip6-sync-gh-teams='$ESDOC_DIR_BASH/gh/sync_teams.sh cmip6'
+alias esdoc-cmip6-clone-gh-repos='$ESDOC_DIR_BASH/gh/clone_repos.sh cmip6'
+
+# ... conformances
 alias esdoc-cmip6-conformances-write-config=$ESDOC_DIR_BASH/cmip6/conformances/write_config.sh
 alias esdoc-cmip6-conformances-write-spreadsheets=$ESDOC_DIR_BASH/cmip6/conformances/write_spreadsheets.sh
-
-# ... cmip6 specializations
+# ... specializations
 alias esdoc-cmip6-specializations-clone=$ESDOC_DIR_BASH/cmip6/specializations/clone.sh
 alias esdoc-cmip6-specializations-pull=$ESDOC_DIR_BASH/cmip6/specializations/pull.sh
 alias esdoc-cmip6-specializations-push=$ESDOC_DIR_BASH/cmip6/specializations/push.sh
@@ -51,18 +55,17 @@ alias esdoc-cmip6-specializations-sync-templates=$ESDOC_DIR_BASH/cmip6/specializ
 alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_DIR_BASH/cmip6/specializations/sync_tooling.sh
 alias esdoc-cmip6-specializations-sync-viewer=$ESDOC_DIR_BASH/cmip6/specializations/sync_viewer.sh
 alias esdoc-cmip6-specializations-validate=$ESDOC_DIR_BASH/cmip6/specializations/validate.sh
-
-# ... cmip6 experiments
+# ... experiments
 alias esdoc-cmip6-experiments-archive-cim-documents=$ESDOC_DIR_BASH/cmip6/experiments/archive_cim_documents.sh
 alias esdoc-cmip6-experiments-write-cim-documents=$ESDOC_DIR_BASH/cmip6/experiments/write_cim_documents.sh
 alias esdoc-cmip6-experiments-write-config=$ESDOC_DIR_BASH/cmip6/experiments/write_config.sh
 alias esdoc-cmip6-experiments-write-d3=$ESDOC_DIR_BASH/cmip6/experiments/write_d3.sh
-
-# ... cmip6 models
-alias esdoc-cmip6-models-init-defaults=$ESDOC_DIR_BASH/cmip6/models/init_defaults.sh
-alias esdoc-cmip6-models-init-output=$ESDOC_DIR_BASH/cmip6/models/init_output.sh
+# ... models
 alias esdoc-cmip6-models-generate-pdf=$ESDOC_DIR_BASH/cmip6/models/generate_pdf.sh
 alias esdoc-cmip6-models-generate-xls=$ESDOC_DIR_BASH/cmip6/models/generate_xls.sh
+alias esdoc-cmip6-models-init-cmip5-docs=$ESDOC_DIR_BASH/cmip6/models/init_cmip5_docs.sh
+alias esdoc-cmip6-models-init-json-from-cmip5=$ESDOC_DIR_BASH/cmip6/models/init_json_from_cmip5.sh
+alias esdoc-cmip6-models-init-settings=$ESDOC_DIR_BASH/cmip6/models/init_settings.sh
 
 _reset_cmip6()
 {

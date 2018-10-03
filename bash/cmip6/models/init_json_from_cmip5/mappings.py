@@ -20,6 +20,9 @@ import pyesdoc
 
 # Map of CMIP5 institutes to CMIP6 institutes.
 _INSTITUTE_MAPPINGS = {
+    'csiro-bom': 'csiro-arccss-bom',
+    'csiro-qccce': 'csiro',
+    'ec-earth': 'ec-earth-consortium',
     'lasg-cess': 'thu'
     }
 INSTITUTE_MAPPINGS_REVERSED = {v:k for k, v in _INSTITUTE_MAPPINGS.items()}

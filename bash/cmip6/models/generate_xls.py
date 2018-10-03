@@ -17,7 +17,7 @@ import xlsxwriter
 
 import pyesdoc
 import pyessv
-from pyesdoc.ipython.model_topic import NotebookOutput
+from _utils import NotebookOutput
 
 # Changes
 # 1. Hide speciality ID col.

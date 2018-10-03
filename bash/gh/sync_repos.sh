@@ -6,14 +6,14 @@ source $ESDOC_DIR_BASH/utils.sh
 # Main entry point.
 main()
 {
-	log "GITHUB : cloning "$1" GitHub repos ..."
+	log "GITHUB : synching "$1" GitHub repos ..."
 
 	activate_venv
 	if [ $1 = "cmip6" ]; then
-		source $ESDOC_DIR_BASH/gh/clone_repos_cmip6.sh
+		python $ESDOC_DIR_BASH/gh/sync_repos_cmip6.py
 	fi
 
-	log "GITHUB : cloned "$1" GitHub repos"
+	log "GITHUB : synched "$1" GitHub repos"
 }
 
 # Invoke entry point.
