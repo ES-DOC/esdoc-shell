@@ -58,6 +58,7 @@ def _validate_property_value(spec, val):
     try:
         spec.validate_value(val)
     except ValueError as err:
+        return
         print 'Invalid CMIP5 Property Value:'
         print '\tSpec. Info:\t', spec.typeof, spec.cardinality
         print '\tSpec. ID:\t', spec.id

@@ -36,9 +36,6 @@ _ARGS.add_argument(
 _TEMPLATES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates_pdf")
 _TEMPLATES = template.Loader(_TEMPLATES_PATH)
 
-# Set of test instiutes.
-_TEST_INSTITUTES = {'test-institute-1', 'test-institute-2', 'test-institute-3'}
-
 # MIP era.
 _MIP_ERA = "cmip6"
 
@@ -87,14 +84,9 @@ def _yield_config(institution_id):
     """Returns job configuration information.
 
     """
-    if institution_id in _TEST_INSTITUTES:
-        for i in range(3):
-            for j in pyessv.ESDOC.cmip6.get_model_topics():
-                yield 'sandbox-{}'.format(i + 1), j.canonical_name, j.label
-    else:
-        for j in pyessv.WCRP.cmip6.get_institute_sources(institution_id):
-            for k in pyessv.ESDOC.cmip6.get_model_topics(j):
-                yield j.canonical_name, k.canonical_name, k.label
+    for j in pyessv.WCRP.cmip6.get_institute_sources(institution_id):
+        for k in pyessv.ESDOC.cmip6.get_model_topics(j):
+            yield j.canonical_name, k.canonical_name, k.label
 
 
 def _get_output_wrapper(institution_id, source_id, topic_id):

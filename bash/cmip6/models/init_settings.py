@@ -67,6 +67,14 @@ class ModelSettings(object):
         self._write()
 
 
+    def _get_topics(self, source):
+        """Returns set of topics to be processed.
+
+        """
+        return [pyessv.ESDOC.cmip6.model_topic.toplevel] + \
+                pyessv.WCRP.cmip6.get_source_realms(source)
+
+
     def _set_directory(self):
         """Assigns directory path.
 
@@ -126,14 +134,6 @@ class InitialisationFromCmip5ModelSettings(ModelSettings):
         super(InitialisationFromCmip5ModelSettings, self).__init__(institution, 'initialization_from_CMIP5.json')
 
 
-    def _get_topics(self, source):
-        """Returns set of topics to be processed.
-
-        """
-        return [pyessv.ESDOC.cmip6.model_topic.toplevel] + \
-                pyessv.WCRP.cmip6.get_source_realms(source)
-
-
     def _get_new_setting(self, source, realm):
         """Returns a new setting to be written to fs.
 
@@ -158,14 +158,6 @@ class ModelPublicationSettings(ModelSettings):
 
         """
         super(ModelPublicationSettings, self).__init__(institution, 'model_publication.json')
-
-
-    def _get_topics(self, source):
-        """Returns set of topics to be processed.
-
-        """
-        return [pyessv.ESDOC.cmip6.model_topic.toplevel] + \
-                pyessv.WCRP.cmip6.get_source_realms(source)
 
 
     def _get_new_setting(self, source, realm):

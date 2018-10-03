@@ -37,10 +37,6 @@ _ARGS.add_argument(
 # MIP era.
 _MIP_ERA = "cmip6"
 
-# Set of test instiutes.
-_TEST_INSTITUTES = {'test-institute-1', 'test-institute-2', 'test-institute-3'}
-
-
 
 def _main(args):
     """Main entry point.
@@ -48,27 +44,13 @@ def _main(args):
     """
     pyessv.log('XLS file generation starts ... ', app='SH')
 
-    yielder = _yield_test_workbooks if args.institution_id in _TEST_INSTITUTES else _yield_institutional_workbooks
-    for wb in yielder(args.institution_id):
+    for wb in _yield_workbooks(args.institution_id):
         wb.write()
 
     pyessv.log('XLS file generation complete ... ', app='SH')
 
 
-def _yield_test_workbooks(institution_id):
-    """Returns set of spreadsheets to be generated.
-
-    """
-    for i in range(3):
-        source_id = 'sandbox-{}'.format(i + 1)
-        for j in pyessv.ESDOC.cmip6.get_model_topics():
-            topic_id = j.canonical_name
-            topic_label = j.label
-            output = _get_output_wrapper(institution_id, source_id, topic_id)
-            yield Workbook(institution_id, source_id, topic_id, topic_label, output)
-
-
-def _yield_institutional_workbooks(institution_id):
+def _yield_workbooks(institution_id):
     """Returns set of spreadsheets to be generated.
 
     """

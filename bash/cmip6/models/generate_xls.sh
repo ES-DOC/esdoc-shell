@@ -14,9 +14,6 @@ main()
 		do
 			python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=$institution_id
 		done
-		python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=test-institute-1
-		python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=test-institute-2
-		python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=test-institute-3
 	else
 		python $ESDOC_DIR_BASH/cmip6/models/generate_xls.py --institution-id=$1
 	fi

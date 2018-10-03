@@ -16,21 +16,6 @@ main()
 		git push origin master
 	done
 
-	cd $ESDOC_HOME/repos/institutional/test-institute-1
-	git add *
-	git commit -m $1
-	git push origin master
-
-	cd $ESDOC_HOME/repos/institutional/test-institute-2
-	git add *
-	git commit -m $1
-	git push origin master
-
-	cd $ESDOC_HOME/repos/institutional/test-institute-3
-	git add *
-	git commit -m $1
-	git push origin master
-
 	log "GITHUB : institutional GitHub repo changes pushed..."
 }
 

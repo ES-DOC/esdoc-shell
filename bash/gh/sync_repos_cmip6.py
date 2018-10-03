@@ -44,8 +44,7 @@ def _get_institutes():
     """Returns canonical cmip6 institutes (derived from vocabularies).
 
     """
-    return [i.canonical_name.split(':')[-1] for i in pyessv.load('wcrp:cmip6:institution-id')] + \
-           ['test-institute-1', 'test-institute-2', 'test-institute-3']
+    return [i.canonical_name.split(':')[-1] for i in pyessv.load('wcrp:cmip6:institution-id')]
 
 
 # Main entry point.

@@ -15,18 +15,6 @@ main()
 		git pull
 	done
 
-	log "GITHUB : pulling test-institute-1"
-	cd $ESDOC_HOME/repos/institutional/test-institute-1
-	git pull
-
-	log "GITHUB : pulling test-institute-2"
-	cd $ESDOC_HOME/repos/institutional/test-institute-2
-	git pull
-
-	log "GITHUB : pulling test-institute-3"
-	cd $ESDOC_HOME/repos/institutional/test-institute-3
-	git pull
-
 	log "GITHUB : institutional GitHub repo updates pulled"
 }
 
