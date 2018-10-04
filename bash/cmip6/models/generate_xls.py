@@ -17,16 +17,12 @@ import xlsxwriter
 
 import pyesdoc
 import pyessv
-from _utils import NotebookOutput
-
-# Changes
-# 1. Hide speciality ID col.
-# 2. citations & resp.party references
+from _utils import ModelTopicDocumentation
 
 
 
 # Define command line argument parser.
-_ARGS = argparse.ArgumentParser("Generates an institute's CMIP6 model XLS files.")
+_ARGS = argparse.ArgumentParser("Generates CMIP6 model XLS files.")
 _ARGS.add_argument(
     "--institution-id",
     help="An institution identifier",
@@ -42,63 +38,34 @@ def _main(args):
     """Main entry point.
 
     """
+    # Set institutes to be processed.
+    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
+                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
+
     # Write an XLS file per CMIP6 institute | topic combination.
-    for institution in pyessv.WCRP.cmip6.get_institutes(True):
-        if not args.institution_id in ["all", institution.canonical_name]:
-            continue
-        for wb in _yield_workbooks(institution.canonical_name):
-            wb.write()
-
-
-def _yield_workbooks(institution_id):
-    """Returns set of spreadsheets to be generated.
-
-    """
-    for i in pyessv.WCRP.cmip6.institution_id:
-        if i.canonical_name != institution_id:
-            continue
+    for i in institutes:
         for j in pyessv.WCRP.cmip6.get_institute_sources(i):
-            source_id = j.canonical_name
             for k in pyessv.ESDOC.cmip6.get_model_topics(j):
-                topic_id = k.canonical_name
-                topic_label = k.label
-                output = _get_output_wrapper(institution_id, source_id, topic_id)
-                yield Workbook(institution_id, source_id, topic_id, topic_label, output)
+                Spreadsheet(i, j, k).write()
 
 
-def _get_output_wrapper(institution_id, source_id, topic_id):
-    """Returns a model documentation output wrapper.
-
-    """
-    # Set path to output file.
-    fpath = os.getenv('ESDOC_HOME')
-    fpath = os.path.join(fpath, 'repos/institutional')
-    fpath = os.path.join(fpath, institution_id)
-    fpath = os.path.join(fpath, 'cmip6/models')
-    fpath = os.path.join(fpath, source_id)
-    fpath = os.path.join(fpath, 'json')
-    fpath = os.path.join(fpath, 'cmip6_{}_{}_{}.json'.format(institution_id, source_id, topic_id))
-
-    return NotebookOutput(_MIP_ERA, institution_id, source_id, topic_id, path=fpath)
-
-
-class Workbook(object):
+class Spreadsheet(object):
     """Wraps XLS workbook being generated.
 
     """
-    def __init__(self, institution_id, source_id, topic_id, topic_label, doc):
+    def __init__(self, i, j, k):
         """Instance constructor.
 
         """
-        self.institution_id = institution_id
-        self.source_id = source_id
-        self.topic_label = topic_label
-        self.topic_id = topic_id
-        self.doc = doc
+        self.institution_id = i.canonical_name
+        self.source_id = j.canonical_name
+        self.topic_label = k.label
+        self.topic_id = k.canonical_name
+        self.doc = ModelTopicDocumentation.create(_MIP_ERA, i, j, k)
         self.wb = None
         self.ws = None
         self.ws_row = 0
-        self.set_topic(doc.specialization)
+        self.set_topic(self.doc.specialization)
 
 
     def write(self):

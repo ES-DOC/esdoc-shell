@@ -23,7 +23,7 @@ from pyesdoc.mp.specializations.utils_cache import get_property_specialization
 _NULL_PROPERTY = lambda: {'values': []}
 
 
-class NotebookOutput(object):
+class ModelTopicDocumentation(object):
     """Model topic data wrapper.
 
     """

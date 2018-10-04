@@ -38,7 +38,7 @@ def _main(args):
     mappings.init()
 
     # Write a JSON file for each CMIP6 institute | CMIP5 document combination.
-    for institution_id in pyessv.WCRP.cmip6.get_institutes(True):
+    for institution_id in pyessv.WCRP.cmip6.get_institutes():
         if not args.institution_id in ["all", institution_id.canonical_name]:
             continue
         if not cmip5_documents.init(institution_id.canonical_name):

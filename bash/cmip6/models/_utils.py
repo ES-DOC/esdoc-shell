@@ -23,8 +23,8 @@ from pyesdoc.mp.specializations.utils_cache import get_property_specialization
 _NULL_PROPERTY = lambda: {'values': []}
 
 
-class NotebookOutput(object):
-    """Model topic data wrapper.
+class ModelTopicDocumentation(object):
+    """Model topic documentation data wrapper.
 
     """
     def __init__(self, mip_era, institute, source_id, topic, path=None, auto_save=True):
@@ -68,21 +68,28 @@ class NotebookOutput(object):
 
 
     @classmethod
-    def create(cls, mip_era, institution_id, source_id, topic_id):
+    def create(cls, mip_era, institution_id, source_id, topic):
         """Get notebook output wrapper instance.
 
         """
-        # Set path to notebook output file.
-        path = os.path.join(os.getenv('JH_ARCHIVE_HOME'), 'data')
-        path = os.path.join(path, institution_id)
-        path = os.path.join(path, mip_era)
-        path = os.path.join(path, 'models')
-        path = os.path.join(path, source_id)
-        path = os.path.join(path, topic_id)
-        path += '.json'
+        # Set path to JSON  file.
+        fname = '{}_{}_{}_{}.json'.format(
+            mip_era,
+            institution_id.canonical_name,
+            source_id.canonical_name,
+            topic.canonical_name
+            )
+        fpath = os.getenv('ESDOC_HOME')
+        fpath = os.path.join(fpath, 'repos/institutional')
+        fpath = os.path.join(fpath, institution_id.canonical_name)
+        fpath = os.path.join(fpath, mip_era)
+        fpath = os.path.join(fpath, 'models')
+        fpath = os.path.join(fpath, source_id.canonical_name)
+        fpath = os.path.join(fpath, 'json')
+        fpath = os.path.join(fpath, fname)
 
-        # Return notebook output wrapper.
-        return cls(mip_era, institution_id, source_id, topic_id, path=path)
+        # Return instance.
+        return cls(mip_era, institution_id.canonical_name, source_id.canonical_name, topic.canonical_name, path=fpath)
 
 
     def save(self):

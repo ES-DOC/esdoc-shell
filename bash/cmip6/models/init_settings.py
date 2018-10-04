@@ -41,7 +41,7 @@ def _main(args):
         ]
 
     # Write a settings file CMIP6 institute | setting combination.
-    for institution in pyessv.WCRP.cmip6.get_institutes(True):
+    for institution in pyessv.WCRP.cmip6.get_institutes():
         if not args.institution_id in ["all", institution.canonical_name]:
             continue
         for writer in [i(institution) for i in writers]:
