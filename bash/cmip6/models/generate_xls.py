@@ -42,12 +42,12 @@ def _main(args):
     """Main entry point.
 
     """
-    pyessv.log('XLS file generation starts ... ', app='SH')
-
-    for wb in _yield_workbooks(args.institution_id):
-        wb.write()
-
-    pyessv.log('XLS file generation complete ... ', app='SH')
+    # Write an XLS file per CMIP6 institute | topic combination.
+    for institution in pyessv.WCRP.cmip6.get_institutes(True):
+        if not args.institution_id in ["all", institution.canonical_name]:
+            continue
+        for wb in _yield_workbooks(institution.canonical_name):
+            wb.write()
 
 
 def _yield_workbooks(institution_id):
@@ -107,6 +107,7 @@ class Workbook(object):
         """
         self.write_topic()
         self.write_frontis()
+        self.write_parties_citation()
         for st in self.t.sub_topics:
             self.set_subtopic(st)
             self.write_subtopic()
@@ -136,7 +137,7 @@ class Workbook(object):
 
         """
         self.st = st
-        self.st_idx = 0 if st is None else self.st_idx + 1
+        self.st_idx = 1 if st is None else self.st_idx + 1
         self.st_id = '{}'.format(self.st_idx)
         self.set_propertyset(None)
 
@@ -241,21 +242,27 @@ class Workbook(object):
 
         ws_row += 2
         ws.write(ws_row, 0, 'Sub-Topics', f1)
+        ws.write(ws_row, 1, '1. Parties & Citations', f2)
+
         for idx, st in enumerate(self.t.sub_topics):
-            ws.write(ws_row + idx, 1, '{}. {}'.format(idx + 1, st.names(2)), f2)
-        ws_row += len(self.t.sub_topics)
+            ws_row += 1
+            ws.write(ws_row, 1, '{}. {}'.format(idx + 2, st.names(2)), f2)
 
         ws_row += 2
+        ws.write(ws_row, 0, 'How To Use', f1)
+        ws.write(ws_row, 1, 'https://es-doc.org/how-to-use-model-document-spreadsheets', f2)
+
+        ws_row += 1
         ws.write(ws_row, 0, 'Further Info', f1)
         ws.write(ws_row, 1, 'https://es-doc.org/{}'.format(self.doc.mip_era.lower()), f2)
 
-        ws_row += 1
+        ws_row += 2
         ws.write(ws_row, 0, 'Specialization Version', f1)
         ws.write(ws_row, 1, self.t.change_history[-1][0], f2)
 
 
-    def write_subtopic(self):
-        """Write sub-topic worksheet.
+    def write_parties_citation(self):
+        """Write parties & citations worksheet.
 
         """
         # Set formats.
@@ -266,6 +273,74 @@ class Workbook(object):
         f1.set_bg_color('#003366')
         f1.set_bold()
         f1.set_font_color('#FFFFFF')
+
+        f2 = self.create_format(14)
+        f2.set_bg_color('#337ab7')
+        f2.set_bold()
+        f2.set_font_color('#FFFFFF')
+
+        f3 = self.create_format(11)
+
+        f4 = self.create_format()
+        f4.set_bold()
+
+        f5 = self.create_format(10)
+        f5.set_align('left')
+        f5.set_italic()
+
+        f6 = self.create_format(14)
+        f6.set_align('left')
+        f6.set_bg_color('#CCCCCC')
+        f6.set_font_color('#000000')
+        f6.set_text_wrap()
+        f6.set_align('top')
+
+        # Write worksheet.
+        ws_title = '1. Parties & Citations'
+        ws = self.wb.add_worksheet(ws_title)
+
+        # Write columns.
+        ws.set_column(0, 0, 13)
+        ws.set_column(1, 1, 200)
+        ws.set_column('C:XFD', None, f0)
+
+        # Write title.
+        ws_row = 0
+        ws.write(ws_row, 0, '1.', f1)
+        ws.write(ws_row, 1, 'Parties & Citations', f1)
+
+        # Write parties.
+        ws_row += 2
+        ws.write(ws_row, 0, '1.1', f2)
+        ws.write(ws_row, 1, 'Parties', f2)
+        ws_row += 1
+        ws.write(ws_row, 0, 'STRING', f3)
+        ws.write(ws_row, 1, 'Mnemonic references to responsible parties', f4)
+        ws_row += 1
+        ws.write(ws_row, 1, 'NOTE: Multiple entries are allowed, please insert a new row per entry.', f5)
+        ws_row += 1
+        ws.write(ws_row, 1, '', f6)
+
+        # Write citations.
+        ws_row += 2
+        ws.write(ws_row, 0, '1.2', f2)
+        ws.write(ws_row, 1, 'Citations', f2)
+        ws_row += 1
+        ws.write(ws_row, 0, 'STRING', f3)
+        ws.write(ws_row, 1, 'Mnemonic references to citations', f4)
+        ws_row += 1
+        ws.write(ws_row, 1, 'NOTE: Multiple entries are allowed, please insert a new row per entry.', f5)
+        ws_row += 1
+        ws.write(ws_row, 1, '', f6)
+
+
+    def write_subtopic(self):
+        """Write sub-topic worksheet.
+
+        """
+        # Set formats.
+        f0 = self.create_format()
+        f0.set_bg_color('#FFFFFF')
 
         # Write worksheet.
         ws_title = '{}. {}'.format(self.st_idx, self.st.names(2))[0:31]
@@ -300,8 +375,6 @@ class Workbook(object):
             self.ws_row += 0
         else:
             self.ws_row += 3
-        # print 111, self.ps_idx, self.ps_id
-        # self.ws_row += (2 if self.ps == self.st.all_property_containers[0] else 3)
         self.ws.set_row(self.ws_row, 24)
         self.ws.write(self.ws_row, 0, self.ps_id, f0)
         self.ws.write(self.ws_row, 1, _get_property_set_label(self.ps), f0)
@@ -511,5 +584,3 @@ def _str(val):
 if __name__ == '__main__':
     _main(_ARGS.parse_args())
 
-
-# Constant value, Turbulent closure - TKE, Turbulent closure - KPP, Turbulent closure - Mellor-Yamada, Turbulent closure - Bulk Mixed Layer, Richardson number dependent - PP, Richardson number dependent - KT, Imbeded as isopycnic vertical coordinate, Other: document to the right
