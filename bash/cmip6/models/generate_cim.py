@@ -51,7 +51,6 @@ def _main(args):
     for i in institutes:
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
             _sync_fs(i, s)
-        return
 
 
 def _sync_fs(i, s):
