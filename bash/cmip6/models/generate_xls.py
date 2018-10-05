@@ -17,7 +17,7 @@ import xlsxwriter
 
 import pyesdoc
 import pyessv
-from _utils import ModelTopicDocumentation
+from _utils import ModelTopicOutput
 
 
 
@@ -43,25 +43,26 @@ def _main(args):
                  [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
 
     # Write an XLS file per CMIP6 institute | topic combination.
+    # i = institute | s = source | t = topic
     for i in institutes:
-        for j in pyessv.WCRP.cmip6.get_institute_sources(i):
-            for k in pyessv.ESDOC.cmip6.get_model_topics(j):
-                Spreadsheet(i, j, k).write()
+        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+            for t in pyessv.ESDOC.cmip6.get_model_topics(j):
+                Spreadsheet(i, s, t).write()
 
 
 class Spreadsheet(object):
     """Wraps XLS workbook being generated.
 
     """
-    def __init__(self, i, j, k):
+    def __init__(self, i, s, t):
         """Instance constructor.
 
         """
         self.institution_id = i.canonical_name
-        self.source_id = j.canonical_name
-        self.topic_label = k.label
-        self.topic_id = k.canonical_name
-        self.doc = ModelTopicDocumentation.create(_MIP_ERA, i, j, k)
+        self.source_id = s.canonical_name
+        self.topic_label = t.label
+        self.topic_id = t.canonical_name
+        self.doc = ModelTopicOutput.create(_MIP_ERA, i, s, t)
         self.wb = None
         self.ws = None
         self.ws_row = 0

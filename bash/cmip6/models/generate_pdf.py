@@ -19,7 +19,7 @@ from tornado import template
 import pyesdoc
 import pyessv
 
-from _utils import ModelTopicDocumentation
+from _utils import ModelTopicOutput
 
 
 
@@ -52,24 +52,24 @@ def _main(args):
     template = _TEMPLATES.load("main.tornado")
 
     # Write a PDF file per CMIP6 institute | topic combination.
-    # i = institute | j = source | k = topic
+    # i = institute | s = source | t = topic
     for i in institutes:
-        for j in pyessv.WCRP.cmip6.get_institute_sources(i):
-            for k in pyessv.ESDOC.cmip6.get_model_topics(j):
-                _write(template, i, j, k)
+        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+            for t in pyessv.ESDOC.cmip6.get_model_topics(j):
+                _write(template, i, s, t)
 
 
-def _write(template, i, j, k):
+def _write(template, i, s, t):
     """Main entry point.
 
     """
     # Set documentation output wrapper.
-    output = ModelTopicDocumentation.create(_MIP_ERA, i, j, k)
+    output = ModelTopicOutput.create(_MIP_ERA, i, s, t)
 
     # Generate latex.
     as_latex = template.generate(
         topic=output.specialization,
-        topic_label=k.label,
+        topic_label=t.label,
         DOC=output,
         now=dt.datetime.now(),
         _str=_str
@@ -80,10 +80,10 @@ def _write(template, i, j, k):
     as_latex = as_latex.replace('&quot;', '"')
 
     # Write pdf.
-    _write_pdf(latex.build_pdf(as_latex), i, j, k)
+    _write_pdf(latex.build_pdf(as_latex), i, s, t)
 
 
-def _write_pdf(content, i, j, k):
+def _write_pdf(content, i, s, t):
     """Get notebook output.
 
     """
@@ -91,13 +91,13 @@ def _write_pdf(content, i, j, k):
     fpath = os.path.join(fpath, i.canonical_name)
     fpath = os.path.join(fpath, _MIP_ERA)
     fpath = os.path.join(fpath, 'models')
-    fpath = os.path.join(fpath, j.canonical_name)
+    fpath = os.path.join(fpath, s.canonical_name)
     fpath = os.path.join(fpath, 'pdf')
     if not os.path.isdir(fpath):
         os.makedirs(fpath)
 
     fname = '{}_{}_{}_{}.pdf'.format(
-        _MIP_ERA, i.canonical_name, j.canonical_name, k.canonical_name
+        _MIP_ERA, i.canonical_name, s.canonical_name, t.canonical_name
         )
     pyessv.log('generating --> {}'.format(fname), app='SH')
 

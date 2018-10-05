@@ -351,7 +351,7 @@ class DocumentSet(object):
             """
             pyesdoc.write(doc, io_dir, encoding=encoding)
 
-        # Remove helper attributes that do not need to be serialzed.
+        # Remove helper attributes that do not need to be serialized.
         for experiment in self[WS_EXPERIMENT]:
             del experiment.temporal_constraints
             del experiment.forcing_constraints

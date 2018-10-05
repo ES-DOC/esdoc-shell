@@ -23,18 +23,18 @@ from pyesdoc.mp.specializations.utils_cache import get_property_specialization
 _NULL_PROPERTY = lambda: {'values': []}
 
 
-class ModelTopicDocumentation(object):
-    """Model topic documentation data wrapper.
+class ModelTopicOutput(object):
+    """Model topic documentation output wrapper.
 
     """
-    def __init__(self, mip_era, institute, source_id, topic, path=None, auto_save=True):
+    def __init__(self, mip_era, institute, source_id, topic, path=None):
         """Instance initialiser.
 
         """
         self.authors = []
-        self.auto_save = auto_save
         self.contributors = []
         self.content = dict()
+        self.fpath = path
         self.institute = unicode(institute).strip().lower()
         self.mip_era = unicode(mip_era).strip().lower()
         self.seeding_source = None
@@ -43,53 +43,33 @@ class ModelTopicDocumentation(object):
         self.topic = unicode(topic).strip().lower()
         self._prop = None
         self._prop_specialization = None
-        self._init_state(path)
 
-
-    def _init_state(self, path):
-        """Initialises state from file system.
-
-        """
-        # Initialise directory path.
-        if path is None:
-            path = os.path.join(os.path.expanduser('~'), '.esdoc/notebook-output')
-            path = os.path.join(path, self.mip_era)
-            path = os.path.join(path, 'models')
-            path = os.path.join(path, self.source_id)
-            if not os.path.isdir(path):
-                os.makedirs(path)
-            path = os.path.join(path, '{}.json'.format(self.topic))
-
-        # Initialise state from previously saved output file.
-        self.fpath = path
+        # Auto initialise from JSON output file.
         if os.path.isfile(self.fpath):
             with open(self.fpath, 'r') as fstream:
                 self._from_dict(json.loads(fstream.read()))
 
 
     @classmethod
-    def create(cls, mip_era, institution_id, source_id, topic):
+    def create(cls, m, i, s, t):
         """Get notebook output wrapper instance.
+
+        :param str m: MIP era, e.g. cmip6.
+        :param pyessv.Term i: Institute.
+        :param pyessv.Term s: Model source.
+        :param pyessv.Term t: Documentation topic.
+
+        :returns: Model topic documentation output wrapper instance.
+        :rtype: ModelTopicOutput
 
         """
         # Set path to JSON  file.
-        fname = '{}_{}_{}_{}.json'.format(
-            mip_era,
-            institution_id.canonical_name,
-            source_id.canonical_name,
-            topic.canonical_name
-            )
-        fpath = os.getenv('ESDOC_HOME')
-        fpath = os.path.join(fpath, 'repos/institutional')
-        fpath = os.path.join(fpath, institution_id.canonical_name)
-        fpath = os.path.join(fpath, mip_era)
-        fpath = os.path.join(fpath, 'models')
-        fpath = os.path.join(fpath, source_id.canonical_name)
-        fpath = os.path.join(fpath, 'json')
-        fpath = os.path.join(fpath, fname)
+        name = get_file(m, i, s, t, 'json')
+        path = get_folder((i, m, 'models', s, 'json'))
+        path = os.path.join(path, name)
 
         # Return instance.
-        return cls(mip_era, institution_id.canonical_name, source_id.canonical_name, topic.canonical_name, path=fpath)
+        return cls(m, i.canonical_name, s.canonical_name, t.canonical_name, path=path)
 
 
     def save(self):
@@ -193,12 +173,7 @@ class ModelTopicDocumentation(object):
         """Sets id of specialized property being edited.
 
         """
-        # N.B need to ensure content property exists.
-        if self.auto_save:
-            self.content[prop_id] = _NULL_PROPERTY()
-        else:
-            self.content[prop_id] = self.content.get(prop_id, _NULL_PROPERTY())
-
+        self.content[prop_id] = self.content.get(prop_id, _NULL_PROPERTY())
         self._prop = self.content[prop_id]
         self._prop_specialization = get_property_specialization(prop_id)
 
@@ -207,7 +182,6 @@ class ModelTopicDocumentation(object):
         """Sets a scalar value.
 
         :param obj val: Value to be assigned.
-        :param bool auto_save: Flag indicating whether state change will be persisted or not.
 
         """
         # Validate input:
@@ -226,10 +200,6 @@ class ModelTopicDocumentation(object):
         # Update state.
         self._prop['values'].append(val)
 
-        # Persist changes.
-        if self.auto_save:
-            self.save()
-
 
     def sort_values(self):
         """Sorts current property values.
@@ -243,3 +213,65 @@ class ModelTopicDocumentation(object):
 
         """
         return self.content.get(specialization_id, dict()).get('values', [])
+
+
+    def get_comma_delimited_values(self, specialization_id):
+        """Returns a set of comma delimited values.
+
+        """
+        value = self.get_value(specialization_id)
+
+        return [i.trim() for i in value.split(',')] if value else []
+
+
+    def get_value(self, specialization_id):
+        """Returns a single value.
+
+        """
+        values = self.get_values(specialization_id)
+
+        return values[0] if values else None
+
+
+def get_folder(parts):
+    """Returns path to an institute's mip-era repository.
+
+    """
+    path = os.path.join(os.getenv('ESDOC_HOME'), 'repos')
+    path = os.path.join(path, 'institutional')
+    for part in parts:
+        if part is None:
+            continue
+        try:
+            part.canonical_name
+        except AttributeError:
+            path = os.path.join(path, part)
+        else:
+            path = os.path.join(path, part.canonical_name)
+    if not os.path.isdir(path):
+        os.makedirs(path)
+
+    return path
+
+
+def get_folder_of_cmip6_source(i, s, subfolder=None):
+    """Returns path to an institute's repository for a particular model/source.
+
+    """
+    return get_folder((i, 'cmip6', 'models', s, subfolder))
+
+
+def get_file(m, i, s, t, encoding):
+    """Returns a file name.
+
+    """
+    if t is not None:
+        return '{}_{}_{}_{}.{}'.format(m, i.canonical_name, s.canonical_name, t.canonical_name, encoding)    
+    return '{}_{}_{}.{}'.format(m, i.canonical_name, s.canonical_name, encoding)
+
+
+def get_file_of_cmip6(i, s, t, encoding):
+    """Returns a cmip6 file name.
+
+    """
+    return get_file('cmip6', i, s, t, encoding)

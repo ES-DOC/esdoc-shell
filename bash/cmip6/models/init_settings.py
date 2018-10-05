@@ -40,11 +40,13 @@ def _main(args):
         ModelPublicationSettings
         ]
 
+    # Set institutes to be processed.
+    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
+                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
+
     # Write a settings file CMIP6 institute | setting combination.
-    for institution in pyessv.WCRP.cmip6.get_institutes():
-        if not args.institution_id in ["all", institution.canonical_name]:
-            continue
-        for writer in [i(institution) for i in writers]:
+    for i in institutes:
+        for writer in [w(i) for w in writers]:
             writer.execute()
 
 

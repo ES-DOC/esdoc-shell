@@ -23,16 +23,15 @@ from pyesdoc.mp.specializations.utils_cache import get_property_specialization
 _NULL_PROPERTY = lambda: {'values': []}
 
 
-class ModelTopicDocumentation(object):
+class ModelTopicOutput(object):
     """Model topic data wrapper.
 
     """
-    def __init__(self, mip_era, institute, source_id, topic, path=None, auto_save=True):
+    def __init__(self, mip_era, institute, source_id, topic, path=None):
         """Instance initialiser.
 
         """
         self.authors = []
-        self.auto_save = auto_save
         self.contributors = []
         self.content = dict()
         self.institute = unicode(institute).strip().lower()
@@ -186,12 +185,7 @@ class ModelTopicDocumentation(object):
         """Sets id of specialized property being edited.
 
         """
-        # N.B need to ensure content property exists.
-        if self.auto_save:
-            self.content[prop_id] = _NULL_PROPERTY()
-        else:
-            self.content[prop_id] = self.content.get(prop_id, _NULL_PROPERTY())
-
+        self.content[prop_id] = self.content.get(prop_id, _NULL_PROPERTY())
         self._prop = self.content[prop_id]
         self._prop_specialization = get_property_specialization(prop_id)
 
@@ -200,7 +194,6 @@ class ModelTopicDocumentation(object):
         """Sets a scalar value.
 
         :param obj val: Value to be assigned.
-        :param bool auto_save: Flag indicating whether state change will be persisted or not.
 
         """
         # Validate input:
@@ -218,10 +211,6 @@ class ModelTopicDocumentation(object):
 
         # Update state.
         self._prop['values'].append(val)
-
-        # Persist changes.
-        if self.auto_save:
-            self.save()
 
 
     def sort_values(self):

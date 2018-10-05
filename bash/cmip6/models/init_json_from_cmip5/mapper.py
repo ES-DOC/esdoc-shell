@@ -14,7 +14,7 @@ import os
 import convertor
 import defaults
 import mappings
-from _utils import ModelTopicDocumentation
+from _utils import ModelTopicOutput
 
 
 class MappingInfo(object):
@@ -87,7 +87,7 @@ def _get_document(institution_id, source_id, topic_id):
         os.remove(fpath)
 
     # Set output wrapper.
-    return ModelTopicDocumentation('cmip6', institution_id, source_id, topic_id, path=fpath, auto_save=False)
+    return ModelTopicOutput('cmip6', institution_id, source_id, topic_id, path=fpath)
 
 
 def _set_injected_properties(cmip6_topic, c, doc):
