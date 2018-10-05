@@ -67,6 +67,7 @@ alias esdoc-cmip6-models-generate-xls=$ESDOC_DIR_BASH/cmip6/models/generate_xls.
 alias esdoc-cmip6-models-init-cmip5-docs=$ESDOC_DIR_BASH/cmip6/models/init_cmip5_docs.sh
 alias esdoc-cmip6-models-init-json-from-cmip5=$ESDOC_DIR_BASH/cmip6/models/init_json_from_cmip5.sh
 alias esdoc-cmip6-models-init-settings=$ESDOC_DIR_BASH/cmip6/models/init_settings.sh
+alias esdoc-cmip6-models-sync-archive=$ESDOC_DIR_BASH/cmip6/models/sync_archive.sh
 
 _reset_cmip6()
 {
