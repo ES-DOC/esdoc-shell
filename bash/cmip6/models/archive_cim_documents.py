@@ -10,6 +10,7 @@
 
 """
 import argparse
+import hashlib
 import os
 import shutil
 
@@ -29,9 +30,9 @@ _ARGS.add_argument(
     default="all"
     )
 _ARGS.add_argument(
-    "--archive-folder",
+    "--destination",
     help="Folder to which CIM documents will be copied.",
-    dest="archive_folder",
+    dest="dest",
     type=str
     )
 
@@ -44,8 +45,8 @@ def _main(args):
 
     """
     # Defensive programming.
-    if not os.path.exists(args.archive_folder):
-        raise ValueError("Archive folder is invalid")
+    if not os.path.exists(args.dest):
+        raise ValueError("Destination folder is invalid")
 
     # Set institutes to be processed.
     institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id in {'', 'all'} else \
@@ -55,20 +56,10 @@ def _main(args):
     # i = institute | s = source
     for i in institutes:
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
-            for cim_file in _get_cim_files(i, s):
-                pyessv.log("syncing: {}".format(cim_file), app='SH')
-                shutil.copy(cim_file, args.archive_folder)
-
-
-def _sync_fs(archive_folder, i, s):
-    """Synchronizes institutional repo & main archive.
-
-    """
-    folder = utils.get_folder_of_cmip6_source(i, s, 'cim')
-    files = [os.path.join(folder, i) for i in os.listdir(folder)]
-
-    if files:
-        print files
+            for src in _get_cim_files(i, s):
+                fname = '{}.json'.format(hashlib.md5(src.split("/")[-1]).hexdigest())
+                dest = os.path.join(args.dest, fname)
+                shutil.copy(src, dest)
 
 
 def _get_cim_files(i, s):

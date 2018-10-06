@@ -9,7 +9,7 @@ main()
 	log "PYESDOC : CMIP6 : archiving documents ..."
 
 	declare source_dir=$ESDOC_DIR_REPOS_CORE/esdoc-docs/cmip6/experiments/cim-documents
-	declare target_dir=$ESDOC_DIR_REPOS_CORE/esdoc-archive/esdoc/cmip6/spreadsheet
+	declare target_dir=$ESDOC_DIR_REPOS_CORE/esdoc-archive/esdoc/cmip6/spreadsheet-experiments
 
 	mkdir -p $target_dir
 	rm -rf $target_dir/*.json

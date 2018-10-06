@@ -82,6 +82,9 @@ def _get_content(i, s):
     if doc is None:
         return
 
+    # Destructure injected properties.
+    _destructure(doc)
+
     # Emit validation report.
     errors = pyesdoc.validate(doc)
     if errors:
@@ -135,6 +138,17 @@ def _destructure_injected(container, doc, accessor):
     container.properties = [i for i in container.properties if i not in injected]
 
 
+def _destructure(model):
+    if model.key_properties:
+        for p in model.key_properties.properties:
+            if p.name == 'Name':
+                model.long_name = p.values[0]
+            elif p.name == 'Overview':
+                model.description = p.values[0]
+            elif p.name == 'Keywords':
+                model.keywords = [i.trim() for i in p.values[0].split(',')]
+
+
 def _map_model(i, s, accessors):
     """Returns a mapped model CIM document.
 
@@ -142,7 +156,7 @@ def _map_model(i, s, accessors):
     m = pyesdoc.create(cim.Model, project='CMIP6', source='spreadsheet', version=1, institute=i.canonical_name)
     m.activity_properties = _map_model_activity_properties(accessors) or []
     m.canonical_id = s.canonical_name
-    m.key_properties = None
+    m.key_properties = _map_model_key_properties(accessors)
     m.model_type = 'GCM'
     m.name = s.canonical_name.upper()
     m.realms = _map_realms(accessors)

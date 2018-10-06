@@ -67,16 +67,18 @@ alias esdoc-cmip6-models-generate-xls=$ESDOC_DIR_BASH/cmip6/models/generate_xls.
 alias esdoc-cmip6-models-init-cmip5-docs=$ESDOC_DIR_BASH/cmip6/models/init_cmip5_docs.sh
 alias esdoc-cmip6-models-init-json-from-cmip5=$ESDOC_DIR_BASH/cmip6/models/init_json_from_cmip5.sh
 alias esdoc-cmip6-models-init-settings=$ESDOC_DIR_BASH/cmip6/models/init_settings.sh
-alias esdoc-cmip6-models-sync-archive=$ESDOC_DIR_BASH/cmip6/models/sync_archive.sh
+alias esdoc-cmip6-models-archive-cim-documents=$ESDOC_DIR_BASH/cmip6/models/archive_cim_documents.sh
 
 _reset_cmip6()
 {
 	esdoc-cmip6-experiments-write-cim-documents
 	esdoc-cmip6-experiments-write-config
 	esdoc-cmip6-experiments-write-d3
+	esdoc-cmip6-models-write-cim-documents
 
 	esdoc-archive-delete-documents cmip6
 	esdoc-cmip6-experiments-archive-cim-documents
+	esdoc-cmip6-models-archive-cim-documents
 
 	esdoc-ws-db-flush cmip6
 	esdoc-ws-db-ingest

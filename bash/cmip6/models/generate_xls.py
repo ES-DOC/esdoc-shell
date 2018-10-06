@@ -46,7 +46,7 @@ def _main(args):
     # i = institute | s = source | t = topic
     for i in institutes:
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
-            for t in pyessv.ESDOC.cmip6.get_model_topics(j):
+            for t in pyessv.ESDOC.cmip6.get_model_topics(s):
                 Spreadsheet(i, s, t).write()
 
 
@@ -205,7 +205,7 @@ class Spreadsheet(object):
         ws.write(ws_row, 1, self.doc.source_id.upper(), f2)
 
         ws_row += 1
-        ws.write(ws_row, 0, 'Topic', f1)
+        ws.write(ws_row, 0, 'Realm / Topic', f1)
         ws.write(ws_row, 1, self.topic_label, f2)
 
         ws_row += 2

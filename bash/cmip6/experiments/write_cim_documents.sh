@@ -13,7 +13,6 @@ main()
 	declare identifiers=$ESDOC_DIR_REPOS_CORE/esdoc-docs/cmip6/experiments/spreadsheet/document-identifiers.txt
 
 	rm -rf $io_dir/*.json
-	rm -rf $io_dir/*.xml
 
 	activate_venv
 	python $ESDOC_DIR_BASH/cmip6/experiments/write_cim_documents --io-dir=$io_dir --spreadsheet=$spreadsheet --identifiers=$identifiers
