@@ -62,6 +62,7 @@ alias esdoc-cmip6-experiments-write-config=$ESDOC_DIR_BASH/cmip6/experiments/wri
 alias esdoc-cmip6-experiments-write-d3=$ESDOC_DIR_BASH/cmip6/experiments/write_d3.sh
 # ... models
 alias esdoc-cmip6-models-generate-cim=$ESDOC_DIR_BASH/cmip6/models/generate_cim.sh
+alias esdoc-cmip6-models-generate-json=$ESDOC_DIR_BASH/cmip6/models/generate_json.sh
 alias esdoc-cmip6-models-generate-pdf=$ESDOC_DIR_BASH/cmip6/models/generate_pdf.sh
 alias esdoc-cmip6-models-generate-xls=$ESDOC_DIR_BASH/cmip6/models/generate_xls.sh
 alias esdoc-cmip6-models-init-cmip5-docs=$ESDOC_DIR_BASH/cmip6/models/init_cmip5_docs.sh

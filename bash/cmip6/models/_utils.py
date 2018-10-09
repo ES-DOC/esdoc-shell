@@ -254,6 +254,13 @@ def get_folder(parts):
     return path
 
 
+def get_folder_of_cmip6_institute(i):
+    """Returns path to an institute's repository for a particular model/source.
+
+    """
+    return get_folder((i, 'cmip6', 'models'))
+
+
 def get_folder_of_cmip6_source(i, s, subfolder=None):
     """Returns path to an institute's repository for a particular model/source.
 
