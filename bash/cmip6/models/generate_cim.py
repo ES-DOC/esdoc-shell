@@ -140,7 +140,7 @@ def _destructure_injected(container, doc, accessor):
 
 def _destructure(model):
     if model.key_properties:
-        for p in model.key_properties.properties:
+        for p in [i for i in model.key_properties.properties if i.values]:
             if p.name == 'Name':
                 model.long_name = p.values[0]
             elif p.name == 'Overview':
@@ -248,6 +248,7 @@ def _map_property(specialization, accessor):
     tp.values = [i for i in tp.values if i is not None]
     tp.values = [i if isinstance(i, (str, unicode)) else unicode(i) for i in tp.values]
 
+    return tp
     return tp if tp.values else None
 
 

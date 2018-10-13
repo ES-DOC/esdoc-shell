@@ -52,7 +52,7 @@ def _main(args):
                  [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
 
     # Write a CIM file per CMIP6 institute | source combination.
-    # i = institute | s = source
+    # i = institute | s = source | t = topic
     for i in institutes:
         try:
             settings = _get_publication_settings(i)
@@ -133,8 +133,6 @@ def _write_json(i, s, t, wb):
     obj['seedingSource'] = None
     obj['sourceID'] = s.canonical_name
     obj['topic'] = t.canonical_name
-    obj['authors'] = []
-    obj['contributors'] = []
     obj['content'] = collections.OrderedDict()
 
     for idx, ws in enumerate(wb):

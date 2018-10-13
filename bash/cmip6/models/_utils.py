@@ -32,7 +32,6 @@ class ModelTopicOutput(object):
 
         """
         self.authors = []
-        self.contributors = []
         self.content = dict()
         self.fpath = path
         self.institute = unicode(institute).strip().lower()
@@ -89,8 +88,6 @@ class ModelTopicOutput(object):
         self.seeding_source = obj.get('seedingSource')
         self.source_id = obj['sourceID']
         self.topic = obj['topic']
-        self.authors = [(i['name'], i['email']) for i in obj['authors']]
-        self.contributors = [(i['name'], i['email']) for i in obj['contributors']]
         self.content = obj['content']
 
 
@@ -104,8 +101,6 @@ class ModelTopicOutput(object):
         obj['seedingSource'] = self.seeding_source
         obj['sourceID'] = self.source_id
         obj['topic'] = self.topic
-        obj['authors'] = [{'name': i[0], 'email': i[1]} for i in self.authors]
-        obj['contributors'] = [{'name': i[0], 'email': i[1]} for i in self.contributors]
         obj['content'] = collections.OrderedDict()
         for specialization_id in sorted(self.content.keys()):
             specialization_obj = self.content[specialization_id]
@@ -113,60 +108,6 @@ class ModelTopicOutput(object):
                 obj['content'][specialization_id] = self.content[specialization_id]
 
         return obj
-
-
-    def set_author(self, name, email):
-        """Adds an author to managed collection.
-
-        """
-        # Format inputs.
-        if name is not None:
-            name = unicode(name).strip()
-        if email is not None:
-            email = unicode(email).strip()
-
-        # Validate inputs.
-        if name is None or len(name) == 0:
-            raise ValueError('Invalid contributor name')
-        if email is None or len(email) == 0:
-            raise ValueError('Invalid contributor email')
-        # TODO: validate with reg-ex.
-
-        # Reject duplicates.
-        for i, j in self.authors:
-            if name.lower() == i.lower() and email.lower() == j.lower():
-                return
-
-        # Update state.
-        self.authors.append((name, email))
-        self.save()
-
-
-    def set_contributor(self, name, email):
-        """Adds a contributor to managed collection.
-
-        """
-        # Format inputs.
-        if name is not None:
-            name = unicode(name).strip()
-        if email is not None:
-            email = unicode(email).strip()
-
-        # Validate inputs.
-        if name is None or len(name) == 0:
-            raise ValueError('Invalid contributor name')
-        if email is None or len(email) == 0:
-            raise ValueError('Invalid contributor email')
-        # TODO: validate with reg-ex.
-
-        # Reject duplicates.
-        for i, j in self.contributors:
-            if name.lower() == i.lower() and email.lower() == j.lower():
-                return
-
-        # Update state.
-        self.contributors.append((name, email))
-        self.save()
 
 
     def set_id(self, prop_id):
