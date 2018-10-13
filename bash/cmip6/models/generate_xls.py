@@ -283,7 +283,7 @@ class Spreadsheet(object):
         ws.write(ws_row, 1, 'Parties', f2)
         ws_row += 1
         ws.write(ws_row, 0, 'STRING', f3)
-        ws.write(ws_row, 1, 'Mnemonic references to responsible parties', f4)
+        ws.write(ws_row, 1, 'Responsible party identifiers', f4)
         ws_row += 1
         ws.write(ws_row, 1, 'NOTE: Multiple entries are allowed, please insert a new row per entry.', f5)
         ws_row += 1
@@ -295,7 +295,7 @@ class Spreadsheet(object):
         ws.write(ws_row, 1, 'Citations', f2)
         ws_row += 1
         ws.write(ws_row, 0, 'STRING', f3)
-        ws.write(ws_row, 1, 'Mnemonic references to citations', f4)
+        ws.write(ws_row, 1, 'Citation identifiers', f4)
         ws_row += 1
         ws.write(ws_row, 1, 'NOTE: Multiple entries are allowed, please insert a new row per entry.', f5)
         ws_row += 1
