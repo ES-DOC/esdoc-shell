@@ -88,9 +88,9 @@ def _get_content(i, s):
     # Emit validation report.
     errors = pyesdoc.validate(doc)
     if errors:
-        print "INVALID CIM DOCUMENT:"
-        for err in pyesdoc.validate(doc):
-            print err
+        print "INVALID CIM DOCUMENT:", s
+        # for err in pyesdoc.validate(doc):
+        #     print err
 
     # Return JSON string.
     return pyesdoc.encode(doc)
@@ -100,8 +100,13 @@ def _get_data_accessors(i, s):
     """Returns a collection of model spreadsheet output accessors - one per spreadsheet.
 
     """
-    return [utils.ModelTopicOutput.create(_MIP_ERA, i, s, t) \
-            for t in pyessv.ESDOC.cmip6.get_model_topics(s)]
+    accessors = [utils.ModelTopicOutput.create(_MIP_ERA, i, s, t) \
+                 for t in pyessv.ESDOC.cmip6.get_model_topics(s)]
+
+    return accessors
+
+    # Note: do we only publish topics with content ?
+    return [a for a in accessors if a.content]
 
 
 def _get_cim_fpath(i, s):
@@ -139,6 +144,9 @@ def _destructure_injected(container, doc, accessor):
 
 
 def _destructure(model):
+    """Destructures properties injected by the machinery but which can be directly assigned to CIM type instances.
+
+    """
     if model.key_properties:
         for p in [i for i in model.key_properties.properties if i.values]:
             if p.name == 'Name':
@@ -146,7 +154,7 @@ def _destructure(model):
             elif p.name == 'Overview':
                 model.description = p.values[0]
             elif p.name == 'Keywords':
-                model.keywords = [i.trim() for i in p.values[0].split(',')]
+                model.keywords = [i.strip() for i in p.values[0].split(',')]
 
 
 def _map_model(i, s, accessors):
@@ -199,7 +207,7 @@ def _map_realm(specialization, accessor):
     r = pyesdoc.create(cim.Realm, project='CMIP6', source='spreadsheet', version=1)
     r.description = specialization.description or specialization.name_camel_case_spaced
     r.name = specialization.name_camel_case_spaced
-    r.specialization_id = specialization.id    
+    r.specialization_id = specialization.id
     r.key_properties = _map_topic(specialization['keyprops'], accessor)
     r.grid = _map_topic(specialization['grid'], accessor)
     r.processes = _map_topics(specialization['process'], accessor)
@@ -268,7 +276,7 @@ def _map_property_sets(specializations, accessor):
 
     """
     result = [_map_property_set(i, accessor) for i in specializations]
-    
+
     return [i for i in result if i is not None]
 
 

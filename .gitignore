@@ -5,3 +5,4 @@ resources/api-db
 resources/api-db-tmp.zip
 tmp
 *-checkpoint.ipynb
+*.pyc

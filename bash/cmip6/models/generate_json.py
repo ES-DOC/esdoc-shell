@@ -87,7 +87,6 @@ def _main(args):
                 _write_json(i, s, t, wb)
 
 
-
 def _get_publication_settings(i):
     """Returns an institute's model publication settings.
 
@@ -102,6 +101,7 @@ def _get_setting(settings, i, s, t):
     """Returns a source topic publication status.
 
     """
+    return 'on'
     try:
         return settings[s.canonical_name][t.canonical_name]['publish']
     except KeyError:
@@ -127,6 +127,7 @@ def _write_json(i, s, t, wb):
     """Writes a JSON file to file system.
 
     """
+    # Initialise output.
     obj = collections.OrderedDict()
     obj['mipEra'] = _MIP_ERA
     obj['institute'] = i.canonical_name
@@ -135,6 +136,7 @@ def _write_json(i, s, t, wb):
     obj['topic'] = t.canonical_name
     obj['content'] = collections.OrderedDict()
 
+    # Process spreadsheet.
     for idx, ws in enumerate(wb):
         # Process citations/responsible parties.
         if idx == 1:
@@ -145,7 +147,12 @@ def _write_json(i, s, t, wb):
         elif idx > 1:
             _set_xls_content(obj, ws)
 
-    print json.dumps(obj, indent=4)
+    # Persist output.
+    fname = utils.get_file_of_cmip6(i, s, t, 'json')
+    path = utils.get_folder_of_cmip6_source(i, s, 'json')
+    path = os.path.join(path, fname)
+    with open(path, 'w') as fstream:
+        fstream.write(json.dumps(obj, indent=4))
 
 
 def _set_xls_content(obj, ws):
@@ -160,7 +167,7 @@ def _set_xls_content(obj, ws):
                     obj['content'][content[0]] = {'values': content[1]}
                 content = None
 
-        elif row[2].value is not None:                    
+        elif row[2].value is not None:
             content = (row[2].value, [])
 
         elif content is not None:

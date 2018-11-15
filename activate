@@ -13,7 +13,7 @@ alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_DIR_BASH/pyesdoc/
 # Security commands.
 alias esdoc-gh-delete-teams=$ESDOC_DIR_BASH/gh/delete_teams.sh
 alias esdoc-gh-init-teams=$ESDOC_DIR_BASH/gh/init_teams.sh
-alias esdoc-gh-init-repos=$ESDOC_DIR_BASH/gh/init_repos.sh
+alias esdoc-gh-clone-repos=$ESDOC_DIR_BASH/gh/clone_repos.sh
 alias esdoc-gh-list-teams=$ESDOC_DIR_BASH/gh/list_teams.sh
 alias esdoc-gh-test-team-membership=$ESDOC_DIR_BASH/gh/test_team_membership.sh
 
@@ -75,7 +75,8 @@ _reset_cmip6()
 	esdoc-cmip6-experiments-write-cim-documents
 	esdoc-cmip6-experiments-write-config
 	esdoc-cmip6-experiments-write-d3
-	esdoc-cmip6-models-write-cim-documents
+
+	esdoc-cmip6-models-generate-cim
 
 	esdoc-archive-delete-documents cmip6
 	esdoc-cmip6-experiments-archive-cim-documents
@@ -83,8 +84,18 @@ _reset_cmip6()
 
 	esdoc-ws-db-flush cmip6
 	esdoc-ws-db-ingest
+
+	esdoc-ws-db-backup
+	esdoc-archive-compress
 }
 alias esdoc-cmip6-reset=_reset_cmip6
+
+_prepare_to_deploy()
+{
+	esdoc-ws-db-backup
+	esdoc-archive-compress
+}
+alias esdoc-prepare-to-deploy=_prepare_to_deploy
 
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_DIR_BASH/*.sh
