@@ -56,7 +56,14 @@ def _main(args):
     for i in institutes:
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
             for t in pyessv.ESDOC.cmip6.get_model_topics(s):
-                _write(template, i, s, t)
+                try:
+                    _write(template, i, s, t)
+                except Exception as err:
+                    fname = '{}_{}_{}_{}.pdf'.format(
+                        _MIP_ERA, i.canonical_name, s.canonical_name, t.canonical_name
+                        )
+                    print('ERROR --> {}'.format(fname))
+                    continue
 
 
 def _write(template, i, s, t):
@@ -124,7 +131,6 @@ def _write_pdf(content, i, s, t):
     fname = '{}_{}_{}_{}.pdf'.format(
         _MIP_ERA, i.canonical_name, s.canonical_name, t.canonical_name
         )
-    pyessv.log('generating --> {}'.format(fname), app='SH')
 
     with open(os.path.join(fpath, fname), 'w') as fstream:
         fstream.write(str(content))
