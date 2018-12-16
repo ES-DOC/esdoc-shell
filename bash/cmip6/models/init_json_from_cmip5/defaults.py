@@ -72,7 +72,7 @@ def _set_defaults(institution_id, settings):
         for realm_id in settings[source_id]:
             initializedFrom = settings[source_id][realm_id]['initializedFrom']
             if not initializedFrom or initializedFrom.split(':')[0] != 'cmip5':
-                break
+                continue
             if len(initializedFrom.split(':')) == 3:
                 cmip5_institute = initializedFrom.split(':')[-2]
                 cmip5_model = initializedFrom.split(':')[-1]
@@ -83,7 +83,7 @@ def _set_defaults(institution_id, settings):
                     cmip5_institute = institution_id
                 cmip5_model = initializedFrom.split(':')[-1]
 
-            DEFAULTS.append((cmip5_institute, cmip5_model, institution_id, source_id, realm_id))
+            DEFAULTS.append((cmip5_institute.lower(), cmip5_model.lower(), institution_id, source_id, realm_id))
 
 
 def get_cmip5_institute_id():

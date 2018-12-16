@@ -13,13 +13,6 @@
 
 \textbf{Topic}:\tab{{{topic_label}}} \\
 
-{% for idx, i in enumerate(DOC.authors) %}
-	{% if idx == 0 %}\textbf{Authors}:{% end %}\tab{{{ i }}}
-{% end %}{% if DOC.authors %} \hfill \break {% end %}
-{% for idx, i in enumerate(DOC.contributors) %}
-	{% if idx == 0 %}\textbf{Contributors}:{% end %}\tab{{{ i }}}
-{% end %}{% if DOC.contributors %} \hfill \break {% end %}
-
 \textbf{Doc. Generated}:\tab{{{ unicode(now)[0:10] }}}
 
 \textbf{Doc. Seeded From}:\tab{{{ 'N/A' if DOC.seeding_source is None else DOC.seeding_source }}} \\

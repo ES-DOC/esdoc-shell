@@ -6,7 +6,7 @@ source $ESDOC_DIR_BASH/utils.sh
 # Main entry point.
 main()
 {
-	log "CMIP6 XLS file generation: BEGINS ..."
+	log "CMIP6 model coupling XLS initialization: BEGINS ..."
 
 	if [ "$1" ]; then
 		institution=$1
@@ -15,9 +15,9 @@ main()
 	fi
 
 	activate_venv
-	python $ESDOC_DIR_BASH/cmip6/models/generate_xls --institution-id=$institution
+	python $ESDOC_DIR_BASH/cmip6/models/init_xls_coupling --institution-id=$institution
 
-	log "CMIP6 XLS file generation: END"
+	log "CMIP6 model coupling XLS initialization: ENDS"
 }
 
 # Invoke entry point.

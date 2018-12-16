@@ -6,3 +6,6 @@ resources/api-db-tmp.zip
 tmp
 *-checkpoint.ipynb
 *.pyc
+*.numbers
+*.pages
+*.key

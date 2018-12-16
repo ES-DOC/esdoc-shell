@@ -156,6 +156,7 @@ declare -a ESDOC_REPOS_CORE=(
 
 # Set of cmip6 git repos.
 declare -a ESDOC_REPOS_CMIP6=(
+	'https://github.com/ES-DOC/cmip6-dashboard.git'
 	'https://github.com/ES-DOC/cmip6-specializations-toplevel.git'
 	'https://github.com/ES-DOC/cmip6-specializations-seaice.git'
 	'https://github.com/ES-DOC/cmip6-specializations-ocnbgchem.git'

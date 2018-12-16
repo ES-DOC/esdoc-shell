@@ -51,7 +51,7 @@ def _main(args):
     institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
                  [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
 
-    # Write a CIM file per CMIP6 institute | source combination.
+    # Write a JSON file per CMIP6 institute | source | topic combination.
     # i = institute | s = source | t = topic
     for i in institutes:
         try:
@@ -84,7 +84,8 @@ def _main(args):
                     pyessv.log_warning(warning)
                     continue
 
-                _write_json(i, s, t, wb)
+                content = _get_content(i, s, t, wb)
+                _sync_fs(i, s, t, content)
 
 
 def _get_publication_settings(i):
@@ -123,8 +124,8 @@ def _get_spreadsheet_path(i, s, t):
     return openpyxl.load_workbook(path, read_only=True)
 
 
-def _write_json(i, s, t, wb):
-    """Writes a JSON file to file system.
+def _get_content(i, s, t, wb):
+    """Returns content to be written to file system.
 
     """
     # Initialise output.
@@ -140,19 +141,31 @@ def _write_json(i, s, t, wb):
     for idx, ws in enumerate(wb):
         # Process citations/responsible parties.
         if idx == 1:
-            print "TODO: process citations/responsible parties"
             continue
 
         # Extract specialization entries.
         elif idx > 1:
             _set_xls_content(obj, ws)
 
-    # Persist output.
+    return obj
+
+
+def _sync_fs(i, s, t, obj):
+    """Syncs file system contents.
+
+    """
     fname = utils.get_file_of_cmip6(i, s, t, 'json')
     path = utils.get_folder_of_cmip6_source(i, s, 'json')
     path = os.path.join(path, fname)
-    with open(path, 'w') as fstream:
-        fstream.write(json.dumps(obj, indent=4))
+
+    # Write only when there is content.
+    if len(obj['content']) > 0:
+        with open(path, 'w') as fstream:
+            fstream.write(json.dumps(obj, indent=4))
+
+    # Delete when there is no content.
+    elif os.path.exists(path):
+        os.remove(path)
 
 
 def _set_xls_content(obj, ws):

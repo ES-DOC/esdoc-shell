@@ -201,11 +201,11 @@ def get_folder(parts):
     return path
 
 
-def get_folder_of_cmip6_institute(i):
+def get_folder_of_cmip6_institute(i, mip_era='cmip6', folder='models'):
     """Returns path to an institute's repository for a particular model/source.
 
     """
-    return get_folder((i, 'cmip6', 'models'))
+    return get_folder((i, mip_era, folder))
 
 
 def get_folder_of_cmip6_source(i, s, subfolder=None):

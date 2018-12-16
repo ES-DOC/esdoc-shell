@@ -67,7 +67,7 @@ def _yield_mapping_targets():
             if mappings.get_cmip5_institute_id(m) != cmip5_institute or \
                mappings.get_cmip5_model_id(m) != cmip5_model_id:
                continue
-    
+
             # Emit toplevel.
             if cmip6_topic == 'toplevel':
                 yield mapper.MappingInfo(cmip5_model_id, m, cmip6_institution_id, cmip6_source_id, cmip6_topic)

@@ -48,9 +48,8 @@ def _write(m, institution_id, model_id, repo):
         os.makedirs(fpath)
     fname = 'cmip5_{}_{}.json'.format(institution_id, model_id)
     fpath = os.path.join(fpath, fname)
-    print fpath
-    
-    pyesdoc.write(m, fpath) 
+
+    pyesdoc.write(m, fpath)
 
 
 def _yield_targets():
@@ -59,14 +58,14 @@ def _yield_targets():
     """
     pyesdoc.archive.init()
     for m in pyesdoc.archive.yield_latest_documents("cmip5", "metafor-q", "cim-1-software-modelcomponent"):
-        institution_id = _get_cmip5_institute_id(m)
+        institution_id = _get_cmip6_institute_id(m)
         model_id = _get_cmip5_model_id(m)
         repo = _get_institution_repo(institution_id)
         yield m, institution_id, model_id, repo
 
 
-def _get_cmip5_institute_id(m):
-    """Returns CMIP5 institute identifier mapped from a CMIP5 document.
+def _get_cmip6_institute_id(m):
+    """Returns CMIP6 institute identifier mapped from a CMIP5 document.
 
     """
     identifier = m.meta.institute.lower()

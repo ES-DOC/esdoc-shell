@@ -66,6 +66,7 @@ def _sync_fs(i, s):
     if content is None:
         if os.path.exists(path):
             pyessv.log('deleting --> {}'.format(path.split('/')[-1]), app='SH')
+            os.remove(path)
 
     # Write otherwise.
     else:
@@ -103,9 +104,6 @@ def _get_data_accessors(i, s):
     accessors = [utils.ModelTopicOutput.create(_MIP_ERA, i, s, t) \
                  for t in pyessv.ESDOC.cmip6.get_model_topics(s)]
 
-    return accessors
-
-    # Note: do we only publish topics with content ?
     return [a for a in accessors if a.content]
 
 

@@ -7,21 +7,15 @@
 
 \usepackage{lmodern}
 
-% Set configuration
-\setcounter{tocdepth}{2}
-
 % Set document
 \begin{document}
 \begin{Form}
 
-% Set frontis + toc
-\pagenumbering{roman}
+% Set frontis
 {% include frontis.tornado %}
-\pagenumbering{roman}
 {% include toc.tornado %}
 
 % Set topics
-\pagenumbering{arabic}
 {% for st_idx, st in enumerate(topic.sub_topics) %}
 {% include subtopic.tornado %}
 {% end %}

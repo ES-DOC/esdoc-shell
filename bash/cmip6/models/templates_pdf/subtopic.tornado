@@ -4,9 +4,15 @@
 \large{\textit{{{st.description}}}}
 
 {% for ps_idx, ps in enumerate(st.all_property_containers) %}
-	\subsection{{{ps.name_camel_case_spaced}}}
+	{% if ps_idx == 0 %}
+		\subsection*{{{ps.idx}} Top level properties}
+	{% else %}
+		\subsection*{{{ps.idx}} {{ps.name_camel_case_spaced}}}
+	{% end %}
 	\normalsize{\textit{{{ps.description}}}}
+
 	{% for p_idx, p in enumerate(ps.properties) %}
 	{% include property.tornado %}
 	{% end %}
+
 {% end %}

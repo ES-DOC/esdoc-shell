@@ -93,6 +93,8 @@ def _get_document(institution_id, source_id, topic_id):
 def _set_injected_properties(cmip6_topic, c, doc):
     """Maps properties injected by tooling chain.
 
+    Note: c = cmip5_component
+
     """
     # Topic overview.
     if c.description and len(c.description.strip()) > 0:
@@ -111,11 +113,16 @@ def _set_injected_properties(cmip6_topic, c, doc):
         return
 
     # Sub-topics.
-    for c in [i for i in c.ext.component_tree if i.description and len(i.description.strip()) > 0]:
+    for c in [i for i in c.ext.component_tree
+              if i.description and len(i.description.strip()) > 0]:
         # Get mapped CMIP6 identifier.
         try:
             mapped_identifier = mappings.get_cmip6_component_identifier(c)
         except KeyError:
+            continue
+
+        # Skip sub-processes
+        if len(mapped_identifier.split('.')) > 3:
             continue
 
         # Sub-topic overview.

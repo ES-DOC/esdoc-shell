@@ -63,6 +63,7 @@ declare -a ACTIVITY_ID_RAW=(
 # Institution ID - canonical name
 declare -a INSTITUTION_ID=(
 	'aer'
+	'as-rcec'
 	'awi'
 	'bcc'
 	'bnu'
@@ -111,6 +112,7 @@ declare -a INSTITUTION_ID=(
 # Institution ID - raw name
 declare -a INSTITUTION_ID_RAW=(
 	'AER'
+	'AS-RCEC'
 	'AWI'
 	'BCC'
 	'BNU'
@@ -273,6 +275,7 @@ declare -a SOURCE_ID=(
 	'noresm2-mm'
 	'pcmdi-test-1-0'
 	'sam0-unicon'
+	'taiesm1'
 	'ukesm1-0-ll'
 	'ukesm1-0-mmh'
 	'uoft-ccsm4'
@@ -378,6 +381,7 @@ declare -a SOURCE_ID_RAW=(
 	'NorESM2-MM'
 	'PCMDI-test-1-0'
 	'SAM0-UNICON'
+	'TaiESM1'
 	'UKESM1-0-LL'
 	'UKESM1-0-MMh'
 	'UofT-CCSM4'

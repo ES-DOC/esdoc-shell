@@ -48,12 +48,17 @@ _TOPIC_MAPPINGS = collections.OrderedDict()
 # Map of CMIP5 enum choices to CMIP6 enum choices.
 ENUM_CHOICE_MAPPINGS = {k.lower(): v for k, v in {
     '3 extinction depths': '3 extinction depth',
+    '3d mass/volume mixing ratio for aerosols': '3D mass/volume ratio for aerosols',
+    'bc (black carbon / soot)': 'Black carbon / soot',
+    'black carbon / soot': 'BC',
     'Convective momentum transport (CMT)': 'convective momentum transport',
     'Coupled with deep and shallow': ['coupled with deep', 'coupled with shallow'],
     'Harmonic (second order)': 'Harmonic',
     'IR brightness and visible optical depth': ['IR brightness', 'visible optical depth'],
+    'k-correlated': 'correlated-k',
     'Non-linear split-explicit': 'Non-linear semi-explicit',
     'Present-day': 'present day',
+    'present day': 'fixed: present day',
     'Radiative effects of anvils': 'radiative effect of anvils',
     'Separated': 'separate diagnosis',
     'Spaceborne': 'space borne',
@@ -62,6 +67,9 @@ ENUM_CHOICE_MAPPINGS = {k.lower(): v for k, v in {
     'Turbulent closure (KPP)': 'Turbulent closure - KPP',
     'Turbulent closure (TKE)': 'Turbulent closure - TKE',
     'Use Ocean transport time step': 'use ocean model transport time step',
+    'uses atmosphericchemistry time stepping': 'Uses atmospheric chemistry time stepping',
+    'vapour/solid/liquid': ['water ice', 'water vapour', 'water liquid'],
+    'via stratospheric aerosols optical thickness': 'stratospheric aerosols optical thickness',
     'Wide-band (Morcrette)': 'wide-band model',
     'Wide-band model (Fouquart)': 'wide-band model'
 }.items()}

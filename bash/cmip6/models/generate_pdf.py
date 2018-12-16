@@ -55,7 +55,7 @@ def _main(args):
     # i = institute | s = source | t = topic
     for i in institutes:
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
-            for t in pyessv.ESDOC.cmip6.get_model_topics(j):
+            for t in pyessv.ESDOC.cmip6.get_model_topics(s):
                 _write(template, i, s, t)
 
 
@@ -63,14 +63,18 @@ def _write(template, i, s, t):
     """Main entry point.
 
     """
-    # Set documentation output wrapper.
-    output = ModelTopicOutput.create(_MIP_ERA, i, s, t)
+
+    # Set documentation wrapper.
+    doc = ModelTopicOutput.create(_MIP_ERA, i, s, t)
+
+    # Set identifiers used for indentation purposes.
+    _set_identifiers(doc.specialization)
 
     # Generate latex.
     as_latex = template.generate(
-        topic=output.specialization,
+        topic=doc.specialization,
         topic_label=t.label,
-        DOC=output,
+        DOC=doc,
         now=dt.datetime.now(),
         _str=_str
         )
@@ -83,8 +87,29 @@ def _write(template, i, s, t):
     _write_pdf(latex.build_pdf(as_latex), i, s, t)
 
 
+def _set_identifiers(t):
+    """Initialises property & property set identifiers.
+
+    """
+    idx1 = 0
+    for pc in t.all_property_containers:
+        level = len(pc.id.split('.'))
+        if level == 3:
+            idx1 += 1
+            idx2 = 1
+            idx3 = 1
+        elif level == 4:
+            idx2 += 1
+            idx3 = 1
+        elif level == 5:
+            idx3 += 1
+        pc.idx = '{}.{}.{}'.format(idx1, idx2, idx3)
+        for idx, p in enumerate(pc.properties):
+            p.idx = '{}.{}'.format(pc.idx, idx + 1)
+
+
 def _write_pdf(content, i, s, t):
-    """Get notebook output.
+    """Write PDF file to file system.
 
     """
     fpath = os.path.join(os.getenv('ESDOC_HOME'), 'repos/institutional')

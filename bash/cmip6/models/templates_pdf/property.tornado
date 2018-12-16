@@ -1,6 +1,6 @@
 {% set p_values = DOC.get_values(p.id) %}
 
-\subsubsection{{{p.name_camel_case_spaced}} {% if p.is_required %}*{% end %}}
+\subsubsection*{{{p.idx}} {{p.name_camel_case_spaced}} {% if p.is_required %}*{% end %}}
 
 \footnotesize{
 

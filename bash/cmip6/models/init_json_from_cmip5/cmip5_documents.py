@@ -44,7 +44,7 @@ def init(institution_id):
         if not os.path.exists(path):
             continue
 
-        # Cache extended documents. 
+        # Cache extended documents.
         for fname in os.listdir(path):
             doc_path = os.path.join(path, fname)
             DOCUMENTS.append(pyesdoc.extend(pyesdoc.read(doc_path)))

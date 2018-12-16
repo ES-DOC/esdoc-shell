@@ -119,6 +119,7 @@ def _convert_enum_choice(spec, val):
         try:
             return choices[val.split(' ')[0]]
         except KeyError:
+            print 'enum mapping failure: {} -> {}'.format(spec.id, val)
             if spec.enum.is_open:
                 return 'Other: {}'.format(val)
 

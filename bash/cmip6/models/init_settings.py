@@ -152,7 +152,7 @@ class InitialisationFromCmip5ModelSettings(ModelSettings):
 
 
 class ModelPublicationSettings(ModelSettings):
-    """Encpasulates model publication settings. 
+    """Encpasulates model publication settings.
 
     """
     def __init__(self, institution):
