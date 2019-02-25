@@ -130,7 +130,7 @@ class ModelTopicOutput(object):
         self._prop_specialization = get_property_specialization(prop_id)
 
 
-    def set_value(self, val):
+    def set_value(self, val, val_parser=None):
         """Sets a scalar value.
 
         :param obj val: Value to be assigned.
@@ -148,6 +148,13 @@ class ModelTopicOutput(object):
 
         # ... error if specialization complains.
         self._prop_specialization.validate_value(val)
+
+        # Apply parser (skip errors).
+        if val_parser:
+            try:
+                val = val_parser(val)
+            except:
+                pass
 
         # Update state.
         self._prop['values'].append(val)

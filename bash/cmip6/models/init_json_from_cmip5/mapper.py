@@ -129,7 +129,7 @@ def _set_injected_properties(cmip6_topic, c, doc):
         if c.description and len(c.description.strip()) > 0:
             spec_id = '{}.overview'.format(mapped_identifier)
             doc.set_id(spec_id)
-            doc.set_value(str(c.description))
+            doc.set_value(c.description, str)
 
         # Sub-topic name (level 1 sub-topics only).
         if mapped_identifier.split('.') == 3:

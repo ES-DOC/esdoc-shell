@@ -54,7 +54,13 @@ def _main(args):
     # i = institute | s = source | t = topic
     for i in institutes:
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+            if s.canonical_name != 'gfdl-cm4':
+                continue
             for t in pyessv.ESDOC.cmip6.get_model_topics(s):
+                if t.canonical_name != 'toplevel':
+                    continue
+
+                print s, t
                 Spreadsheet(i, s, t).write()
 
 

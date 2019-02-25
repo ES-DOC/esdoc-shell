@@ -9,6 +9,11 @@ main()
 	log "CMIP6 ARCHIVE model documents: BEGINS ..."
 
 	archive_folder=$ESDOC_ARCHIVE_HOME/esdoc/cmip6/spreadsheet-models
+
+	if [ ! -d "$archive_folder" ]; then
+		mkdir $archive_folder
+	fi
+
 	if [ "$1" ]; then
 		rm -rf $archive_folder/cmip6_$1*.*
 	else

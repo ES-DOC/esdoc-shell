@@ -19,6 +19,7 @@ import pyesdoc
 import pyessv
 from init_workbook import init as init_workbook
 from write_couplings import write as write_couplings
+from write_example import write as write_example
 from write_frontis import write as write_frontis
 
 
@@ -79,6 +80,7 @@ class ProcessingContext(object):
         for func in (
             init_workbook,
             write_frontis,
+            write_example,
             write_couplings,
             ):
             func(self)

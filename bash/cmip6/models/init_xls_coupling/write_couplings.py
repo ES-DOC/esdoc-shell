@@ -19,8 +19,6 @@ def write(ctx):
 
     f6 = ctx.create_format(14)
     f6.set_align('left')
-    f6.set_bg_color('#CCCCCC')
-    f6.set_font_color('#000000')
     f6.set_text_wrap()
     f6.set_align('top')
 
@@ -32,35 +30,31 @@ def write(ctx):
     ws.set_column('B:B', 28, f0)
     ws.set_column('C:C', 28, f0)
     ws.set_column('D:D', 40, f0)
-    ws.set_column('E:E', 60, f0)
+    ws.set_column('E:E', 70, f0)
 
     # ... headers
     ws_row = 0
-    ws.write(ws_row, 0, 'Variable', f1)
-    ws.write(ws_row, 1, 'Source Realm', f1)
-    ws.write(ws_row, 2, 'Target Realm', f1)
-    ws.write(ws_row, 3, 'Time Frequency (in seconds)', f1)
-    ws.write(ws_row, 4, 'Details', f1)
-
-    # ... help
-    ws_row += 1
-    ws.set_row(ws_row, 24)
-    ws.write(ws_row, 0, 'NOTE: To enter a new row, copy & paste an existing row, and edit accordingly.', f2)
+    ws.write(ws_row, 0, 'Variable *', f1)
+    ws.write(ws_row, 1, 'Source Realm *', f1)
+    ws.write(ws_row, 2, 'Target Realm *', f1)
+    ws.write(ws_row, 3, 'Time Frequency (in seconds) *', f1)
+    ws.write(ws_row, 4, 'Coupling Details *', f1)
 
     # ... inputs
-    ws_row += 1
-    ws.write(ws_row, 0, '', f6)
-    ws.write(ws_row, 1, '', f6)
-    ws.write(ws_row, 2, '', f6)
-    ws.write(ws_row, 3, '', f6)
-    ws.write(ws_row, 4, '', f6)
+    for _ in range(150):
+        ws_row += 1
+        ws.write(ws_row, 0, '', f6)
+        ws.write(ws_row, 1, '', f6)
+        ws.write(ws_row, 2, '', f6)
+        ws.write(ws_row, 3, '', f6)
+        ws.write(ws_row, 4, '', f6)
 
-    # ... drop-downs
-    ws.data_validation(ws_row, 1, ws_row, 1, {
-        'validate': 'list',
-        'source': [r.description for r in ctx.realms]
-    })
-    ws.data_validation(ws_row, 2, ws_row, 2, {
-        'validate': 'list',
-        'source': [r.description for r in ctx.realms]
-    })
+        # ... drop-downs
+        ws.data_validation(ws_row, 1, ws_row, 1, {
+            'validate': 'list',
+            'source': [r.description for r in ctx.realms]
+        })
+        ws.data_validation(ws_row, 2, ws_row, 2, {
+            'validate': 'list',
+            'source': [r.description for r in ctx.realms]
+        })

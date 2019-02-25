@@ -102,13 +102,16 @@ def _get_setting(settings, i, s, t):
     """Returns a source topic publication status.
 
     """
-    return 'on'
+    # return 'on'
+
     try:
-        return settings[s.canonical_name][t.canonical_name]['publish']
+        setting = settings[s.canonical_name][t.canonical_name]['publish']
     except KeyError:
         warning = '{} :: {} :: {} topic setting either not found or invalid'
         warning = warning.format(i.canonical_name, s.canonical_name, t.canonical_name)
         pyessv.log_warning(warning)
+    else:
+        return setting
 
 
 def _get_spreadsheet_path(i, s, t):
@@ -132,7 +135,7 @@ def _get_content(i, s, t, wb):
     obj = collections.OrderedDict()
     obj['mipEra'] = _MIP_ERA
     obj['institute'] = i.canonical_name
-    obj['seedingSource'] = None
+    obj['seedingSource'] = 'Spreadsheet'
     obj['sourceID'] = s.canonical_name
     obj['topic'] = t.canonical_name
     obj['content'] = collections.OrderedDict()
@@ -141,6 +144,7 @@ def _get_content(i, s, t, wb):
     for idx, ws in enumerate(wb):
         # Process citations/responsible parties.
         if idx == 1:
+            # TODO
             continue
 
         # Extract specialization entries.
@@ -173,19 +177,28 @@ def _set_xls_content(obj, ws):
 
     """
     content = None
+    content_is_enum = None
     for row in ws.iter_rows(min_row=1, max_col=3, max_row=ws.max_row):
+        # Separation row - begin new specialization block.
         if row[1].value is None:
             if content is not None:
                 if content[1]:
                     obj['content'][content[0]] = {'values': content[1]}
                 content = None
 
+        # Specialization begin row - spec. id is hidden in 3rd column.
         elif row[2].value is not None:
             content = (row[2].value, [])
+            content_is_enum = row[0].value == 'ENUM'
 
+        # Specialization value row.
         elif content is not None:
             if not _is_note(row[1]):
-                content[1].append(row[1].value)
+                value = row[1].value
+                # Enum values are injected into spreadsheet: <value>[: <description>]
+                if content_is_enum == True:
+                    value = value.split(':')[0]
+                content[1].append(value)
 
 
 def _is_note(cell):

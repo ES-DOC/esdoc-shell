@@ -1,3 +1,6 @@
+import collections
+
+
 def write(spreadsheet):
     """Writes a worksheet row per property value.
 
@@ -33,16 +36,28 @@ def write_property_value_enum(spreadsheet):
     """Writes a property enum value.
 
     """
-    choices = [c.value for c in spreadsheet.p.enum.choices]
-    if spreadsheet.p.enum.is_open:
-        choices.append('Other: document in cell to the right')
-    choices = [_str(i[0:255]) for i in choices]
+    # Enum choices need to include their description where appropriate.
+    def get_choice_text(c):
+        return c.value if c.description is None else \
+               "{}: {}".format(c.value, c.description)
 
-    spreadsheet.p_values = [_str(i) for i in spreadsheet.p_values] or ['']
+    # Create map choice value <--> choice text.
+    # TODO - move to domain model
+    choice_map = collections.OrderedDict()
+    for c in spreadsheet.p.enum.choices:
+        choice_map[c.value] = get_choice_text(c)
+    if spreadsheet.p.enum.is_open:
+        choice_map['OTHER'] = 'Other: document in cell to the right'
+
+    # Set values to be injected into spreadsheet.
+    p_values = [_str(i) for i in spreadsheet.p_values] or ['']
+    spreadsheet.p_values = [choice_map[i] if i in choice_map else i for i in p_values]
+
+    # Inject values into spreadsheet.
     for val in spreadsheet.p_values:
         write_property_values(spreadsheet, val, {
             'validate': 'list'
-            }, choices=choices)
+            }, choices=choice_map.values())
 
 
 def write_property_value_float(spreadsheet):

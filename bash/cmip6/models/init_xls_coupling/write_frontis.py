@@ -47,7 +47,7 @@ def write(ctx):
 
     ws_row += 2
     ws.write(ws_row, 0, 'MIP Era', f1)
-    ws.write(ws_row, 1, ctx.MIP_ERA, f2)
+    ws.write(ws_row, 1, ctx.MIP_ERA.upper(), f2)
 
     ws_row += 1
     ws.write(ws_row, 0, 'Institute', f1)
@@ -59,7 +59,7 @@ def write(ctx):
 
     ws_row += 2
     ws.write(ws_row, 0, 'How To Use', f5)
-    ws.write(ws_row, 1, 'https://es-doc.org/how-to-use-model-document-spreadsheets', f5)
+    ws.write(ws_row, 1, 'https://es-doc.org/how-to-use-coupling-spreadsheets/', f5)
 
     ws_row += 1
     ws.write(ws_row, 0, 'Further Info', f5)

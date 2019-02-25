@@ -88,10 +88,12 @@ def _get_content(i, s):
 
     # Emit validation report.
     errors = pyesdoc.validate(doc)
+    errors = [e for e in errors if
+              e.endswith('values --> is an empty list') == False]
     if errors:
         print "INVALID CIM DOCUMENT:", s
-        # for err in pyesdoc.validate(doc):
-        #     print err
+        for err in errors:
+            print err
 
     # Return JSON string.
     return pyesdoc.encode(doc)
