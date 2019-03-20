@@ -31,11 +31,16 @@ INSTITUTE_MAPPINGS_REVERSED = {v:k for k, v in _INSTITUTE_MAPPINGS.items()}
 REALM_MAPPINGS = {
     'aerosols': 'aerosol',
     'atmosphere': 'atmos',
+    'atmosphericchemistry': 'atmoschem',
     'atmospheric chemistry': 'atmoschem',
+    'landice': 'land',
     'land ice': 'landice',
+    'landsurface': 'land',
     'land surface': 'land',
     'ocean': 'ocean',
     'ocean biogeo chemistry': 'ocnbgchem',
+    'oceanbiogeochemistry': 'ocnbgchem',
+    'seaice': 'seaice',
     'sea ice': 'seaice',
 }
 
@@ -185,7 +190,7 @@ def get_cmip5_component_id(c):
     :rtype: str
 
     """
-    return c.short_name.lower()
+    return c.type.lower()
 
 
 def get_cmip6_component_identifier(c):
