@@ -84,6 +84,15 @@ alias esdoc-cmip6-models-init-xls-coupling=$ESDOC_DIR_BASH/cmip6/models/init_xls
 alias esdoc-cmip6-models-reset-cim=$ESDOC_DIR_BASH/cmip6/models/reset_cim.sh
 alias esdoc-cmip6-models-reset-json=$ESDOC_DIR_BASH/cmip6/models/reset_json.sh
 
+_reset_cmip6_experiments()
+{
+	esdoc-cmip6-experiments-write-cim-documents
+	esdoc-cmip6-experiments-write-config
+	esdoc-cmip6-experiments-write-d3
+	esdoc-cmip6-experiments-archive-cim-documents
+}
+alias esdoc-cmip6-reset-experiments=_reset_cmip6_experiments
+
 _reset_cmip6()
 {
 	esdoc-cmip6-experiments-write-cim-documents

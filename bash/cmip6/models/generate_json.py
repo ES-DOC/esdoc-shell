@@ -39,9 +39,6 @@ _MIP_ERA = "cmip6"
 # Name of file controlling publication.
 _MODEL_PUBLICATION_FNAME = "model_publication.json"
 
-# Set of valid publication states.
-_PUBLICATION_STATUS_SET = {"off", "draft", "on"}
-
 
 def _main(args):
     """Main entry point.
@@ -54,28 +51,8 @@ def _main(args):
     # Write a JSON file per CMIP6 institute | source | topic combination.
     # i = institute | s = source | t = topic
     for i in institutes:
-        try:
-            settings = _get_publication_settings(i)
-        except IOError:
-            warning = '{} model_publications.json not found'
-            warning = warning.format(i.canonical_name)
-            pyessv.log_warning(warning)
-            continue
-
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
-            try:
-                settings[s.canonical_name]
-            except KeyError:
-                warning = '{} :: {} publication settings not found'
-                warning = warning.format(i.canonical_name, s.canonical_name)
-                pyessv.log_warning(warning)
-                continue
-
             for t in pyessv.ESDOC.cmip6.get_model_topics(s):
-                setting = _get_setting(settings, i, s, t)
-                if setting in (None, "off"):
-                    continue
-
                 try:
                     wb = _get_spreadsheet_path(i, s, t)
                 except IOError:
@@ -84,34 +61,7 @@ def _main(args):
                     pyessv.log_warning(warning)
                     continue
 
-                content = _get_content(i, s, t, wb)
-                _sync_fs(i, s, t, content)
-
-
-def _get_publication_settings(i):
-    """Returns an institute's model publication settings.
-
-    """
-    fpath = os.path.join(utils.get_folder_of_cmip6_institute(i),
-                         _MODEL_PUBLICATION_FNAME)
-    with open(fpath, 'r') as fstream:
-        return json.loads(fstream.read())
-
-
-def _get_setting(settings, i, s, t):
-    """Returns a source topic publication status.
-
-    """
-    # return 'on'
-
-    try:
-        setting = settings[s.canonical_name][t.canonical_name]['publish']
-    except KeyError:
-        warning = '{} :: {} :: {} topic setting either not found or invalid'
-        warning = warning.format(i.canonical_name, s.canonical_name, t.canonical_name)
-        pyessv.log_warning(warning)
-    else:
-        return setting
+                _write_to_fs(i, s, t, _get_content(i, s, t, wb))
 
 
 def _get_spreadsheet_path(i, s, t):
@@ -154,8 +104,8 @@ def _get_content(i, s, t, wb):
     return obj
 
 
-def _sync_fs(i, s, t, obj):
-    """Syncs file system contents.
+def _write_to_fs(i, s, t, obj):
+    """Writes json content to file system.
 
     """
     fname = utils.get_file_of_cmip6(i, s, t, 'json')
@@ -167,10 +117,6 @@ def _sync_fs(i, s, t, obj):
         with open(path, 'w') as fstream:
             fstream.write(json.dumps(obj, indent=4))
 
-    # Delete when there is no content.
-    elif os.path.exists(path):
-        os.remove(path)
-
 
 def _set_xls_content(obj, ws):
     """Sets content for a particular specialization.
@@ -178,7 +124,7 @@ def _set_xls_content(obj, ws):
     """
     content = None
     content_is_enum = None
-    for row in ws.iter_rows(min_row=1, max_col=3, max_row=ws.max_row):
+    for row in ws.iter_rows(min_row=1, max_col=4, max_row=ws.max_row):
         # Separation row - begin new specialization block.
         if row[1].value is None:
             if content is not None:
@@ -192,12 +138,24 @@ def _set_xls_content(obj, ws):
             content_is_enum = row[0].value == 'ENUM'
 
         # Specialization value row.
-        elif content is not None:
-            if not _is_note(row[1]):
-                value = row[1].value
-                # Enum values are injected into spreadsheet: <value>[: <description>]
-                if content_is_enum == True:
-                    value = value.split(':')[0]
+        elif content is not None and not _is_note(row[1]):
+            value = row[1].value
+
+            # Open enums are treated differently.
+            if content_is_enum:
+                if row[3].value:
+                    value = 'Other: ' + row[3].value
+                elif value == 'Other: document in cell to the right':
+                    break
+
+            # This can occur when spreadsheet is deformatted.
+            if value == '=TRUE()':
+                value = True
+            elif value == '=FALSE()':
+                value = False
+
+            # If value is not in blocklist then emit.
+            if value not in ('-', 'Other: -'):
                 content[1].append(value)
 
 

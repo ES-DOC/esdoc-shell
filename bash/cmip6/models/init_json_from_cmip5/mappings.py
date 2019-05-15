@@ -58,6 +58,7 @@ ENUM_CHOICE_MAPPINGS = {k.lower(): v for k, v in {
     'black carbon / soot': 'BC',
     'Convective momentum transport (CMT)': 'convective momentum transport',
     'Coupled with deep and shallow': ['coupled with deep', 'coupled with shallow'],
+    'from atmosphericchemistry model': 'from Atmospheric Chemistry model',
     'Harmonic (second order)': 'Harmonic',
     'IR brightness and visible optical depth': ['IR brightness', 'visible optical depth'],
     'k-correlated': 'correlated-k',
@@ -67,6 +68,7 @@ ENUM_CHOICE_MAPPINGS = {k.lower(): v for k, v in {
     'Radiative effects of anvils': 'radiative effect of anvils',
     'Separated': 'separate diagnosis',
     'Spaceborne': 'space borne',
+    'sts (supercooled ternary solution aerosol particule)': 'STS (supercooled ternary solution aerosol particule))',
     'TVD': 'Total Variance Dissipation (TVD)',
     'Time + space varying (Smagorinski)': 'Time + space varying (Smagorinsky)',
     'Turbulent closure (KPP)': 'Turbulent closure - KPP',
@@ -237,8 +239,15 @@ def get_cmip5_component_properties(c):
         """Returns a flag indicating whether a property value is mappable or not.
 
         """
-        return val is not None and \
-               str(val).strip().lower() not in {'', 'other', 'n/a'}
+        if val is None:
+            return False
+
+        try:
+            val = str(val).strip().lower()
+        except UnicodeEncodeError:
+            pass
+
+        return val not in {'', 'other', 'n/a'}
 
     result = []
     for c in [c] + c.ext.component_tree:

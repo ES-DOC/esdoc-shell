@@ -86,4 +86,3 @@ docs.write(_ARGS.io_dir)
 
 # Write vocab validation report.
 validate_vocabularies(docs[WS_PROJECT], docs[WS_EXPERIMENT])
-

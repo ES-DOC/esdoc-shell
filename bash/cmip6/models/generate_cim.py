@@ -37,6 +37,9 @@ _MIP_ERA = "cmip6"
 # Set of properties injected by machinery.
 _INJECTED_PROPERTIES = {'Name', 'Overview', 'Keywords'}
 
+# Name of file controlling publication.
+_MODEL_PUBLICATION_FNAME = "model_publication.json"
+
 
 def _main(args):
     """Main entry point.
@@ -49,24 +52,66 @@ def _main(args):
     # Write a CIM file per CMIP6 institute | source combination.
     # i = institute | s = source
     for i in institutes:
+        # Escape if settings file not found.
+        try:
+            all_settings = _get_publication_settings(i)
+        except IOError:
+            warning = '{} model_publications.json not found'
+            warning = warning.format(i.canonical_name)
+            pyessv.log_warning(warning)
+            continue
+
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
-            _sync_fs(i, s)
+            # Escape if source settings undeclared.
+            try:
+                settings = all_settings[s.canonical_name]
+            except KeyError:
+                warning = '{} :: {} publication settings not found'
+                warning = warning.format(i.canonical_name, s.canonical_name)
+                pyessv.log_warning(warning)
+                continue
+
+            # Escape if no settings are switched 'on'.
+            settings = {k:v for (k,v) in settings.items()
+                        if settings[k]['publish'] == 'on'}
+            if not settings:
+                continue
+
+            # Sync file system.
+            _sync_fs(i, s, settings)
 
 
-def _sync_fs(i, s):
+def _get_publication_settings(i):
+    """Returns an institute's model publication settings.
+
+    """
+    fpath = os.path.join(utils.get_folder_of_cmip6_institute(i),
+                         _MODEL_PUBLICATION_FNAME)
+    with open(fpath, 'r') as fstream:
+        return json.loads(fstream.read())
+
+
+def _can_publish(i, s, settings):
+    return len([i for i in settings.values() if i['publish'] == 'on']) > 0
+
+
+def _sync_fs(i, s, settings):
     """Syncs an institute's model documentation upon the file system.
     This results in either an updated document or a deleted document.
 
     """
-    # Get file path & content.
+    # Get file content.
+    content = _get_content(i, s, settings)
+
+    # Get file path.
     path = _get_cim_fpath(i, s)
-    content = _get_content(i, s)
 
     # Delete if content is null.
     if content is None:
-        if os.path.exists(path):
-            pyessv.log('deleting --> {}'.format(path.split('/')[-1]), app='SH')
-            os.remove(path)
+        pass
+        # if os.path.exists(path):
+        #     pyessv.log('deleting --> {}'.format(path.split('/')[-1]), app='SH')
+        #     os.remove(path)
 
     # Write otherwise.
     else:
@@ -75,11 +120,11 @@ def _sync_fs(i, s):
             fstream.write(content)
 
 
-def _get_content(i, s):
+def _get_content(i, s, settings):
     """Generates a CIM document for a CMIP6 institute | source combination.
 
     """
-    doc = _map_model(i, s, _get_data_accessors(i, s))
+    doc = _map_model(i, s, _get_data_accessors(i, s, settings))
     if doc is None:
         return
 
@@ -99,12 +144,13 @@ def _get_content(i, s):
     return pyesdoc.encode(doc)
 
 
-def _get_data_accessors(i, s):
+def _get_data_accessors(i, s, settings):
     """Returns a collection of model spreadsheet output accessors - one per spreadsheet.
 
     """
-    accessors = [utils.ModelTopicOutput.create(_MIP_ERA, i, s, t) \
-                 for t in pyessv.ESDOC.cmip6.get_model_topics(s)]
+    topics = pyessv.ESDOC.cmip6.get_model_topics(s)
+    topics = [t for t in topics if t.canonical_name in settings]
+    accessors = [utils.ModelTopicOutput.create(_MIP_ERA, i, s, t) for t in topics]
 
     return [a for a in accessors if a.content]
 
@@ -221,7 +267,7 @@ def _map_topic(specialization, accessor):
     """
     if specialization is None:
         return
-    t = _instantiate(specialization, cim.Topic)
+    t = _instantiate(specialization, cim.Topic, False)
     t.properties = _map_properties(specialization.properties, accessor)
     t.property_sets = _map_property_sets(specialization.property_sets, accessor)
     t.sub_topics = _map_topics(specialization.sub_topics, accessor)
@@ -251,12 +297,11 @@ def _map_property(specialization, accessor):
     """Maps a specialization to a property.
 
     """
-    tp = _instantiate(specialization, cim.TopicProperty)
+    tp = _instantiate(specialization, cim.TopicProperty, False)
     tp.values = accessor.get_values(specialization.id)
     tp.values = [i for i in tp.values if i is not None]
     tp.values = [i if isinstance(i, (str, unicode)) else unicode(i) for i in tp.values]
 
-    return tp
     return tp if tp.values else None
 
 
@@ -264,7 +309,7 @@ def _map_property_set(specialization, accessor):
     """Maps a specialization to a property set.
 
     """
-    tps = _instantiate(specialization, cim.TopicPropertySet)
+    tps = _instantiate(specialization, cim.TopicPropertySet, False)
     tps.properties = [_map_property(i, accessor) for i in specialization.properties]
     tps.properties = [i for i in tps.properties if i is not None]
 
@@ -280,13 +325,14 @@ def _map_property_sets(specializations, accessor):
     return [i for i in result if i is not None]
 
 
-def _instantiate(specialization, cim_type):
+def _instantiate(specialization, cim_type, include_description):
     """Instantiates a CIM type instance.
 
     """
     instance = cim_type()
-    instance.description = specialization.description or specialization.name_camel_case_spaced
-    instance.name = specialization.name_camel_case_spaced
+    if include_description:
+        instance.description = specialization.description or specialization.name_camel_case_spaced
+        instance.name = specialization.name_camel_case_spaced
     instance.specialization_id = specialization.id
 
     return instance

@@ -7,7 +7,7 @@
 {% end %}
 
 {% for c in p.enum.choices %}
-	{% if p_values and c.value in p_values %}
+	{% if p_values and c.value.lower() in [i.lower() for i in p_values] %}
 		\LARGE{\XBox} \hspace{0.1cm} \footnotesize{{{_str(c.value)}}{% if c.description %} - {{_str(c.description)}}{% end %}} \\
 	{% else %}
 		\LARGE{\Square} \hspace{0.1cm} \footnotesize{{{_str(c.value)}}{% if c.description %} - {{_str(c.description)}}{% end %}} \\

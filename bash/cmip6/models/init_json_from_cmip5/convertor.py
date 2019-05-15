@@ -119,9 +119,11 @@ def _convert_enum_choice(spec, val):
         try:
             return choices[val.split(' ')[0]]
         except KeyError:
-            print 'enum mapping failure: {} -> {}'.format(spec.id, val)
             if spec.enum.is_open:
                 return 'Other: {}'.format(val)
+            else:
+                print 'enum mapping failure: {} -> {}'.format(spec.id, val)
+
 
 
 def _convert_float(spec, val):
@@ -171,7 +173,12 @@ def _convert_str(spec, val):
     """Returns a value converted to a string.
 
     """
-    return str(val).strip()
+    try:
+        val = str(val)
+    except UnicodeEncodeError:
+        pass
+
+    return val.strip()
 
 
 # Map of property value types to conversion functions.

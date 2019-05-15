@@ -123,11 +123,15 @@ def _str(val):
     """Formats a string value.
 
     """
-    if val is not None:
-        val = str(val).strip()
-        if len(val):
-            val = '{}{}'.format(val[0].upper(), val[1:])
+    if val is None:
+        return ''
 
-            return val
+    try:
+        val = str(val).strip()
+    except UnicodeEncodeError:
+        pass
+
+    if len(val):
+        return val[0].upper() + val[1:]
 
     return ''
