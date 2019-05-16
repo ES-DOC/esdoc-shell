@@ -146,7 +146,7 @@ class GitHubRepo(object):
         self.institution_id = self.name
 
     def __repr__(self):
-        return '{} :: {} :: {} :: {}'.format(self.typeof, self.name, self.gh_id, len(self.teams))
+        return '{} :: {} :: {}'.format(self.typeof, self.name, self.gh_id)
 
 
 class GitHubTeam(object):

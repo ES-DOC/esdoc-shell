@@ -185,7 +185,7 @@ def convert_names(
     for name in names:
         doc = convert_name(name, collection, slots)
         if doc is None:
-            UNCONVERTED_NAMES[collection_type].add('{}:{}'.format(collection_name, name))
+            UNCONVERTED_NAMES[collection_type].add('{}:{}:{}'.format(collection_name, name, slots))
         else:
             result.append(doc)
 

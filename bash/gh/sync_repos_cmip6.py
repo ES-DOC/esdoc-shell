@@ -36,6 +36,7 @@ def _main():
 
     for institution_id in repos_to_create:
         utils.create_repo(institution_id)
+
     for repo in [i for i in repos.values() if i.name in repos_to_delete]:
         utils.delete_repo(repo)
 
@@ -44,7 +45,8 @@ def _get_institutes():
     """Returns canonical cmip6 institutes (derived from vocabularies).
 
     """
-    return [i.canonical_name.split(':')[-1] for i in pyessv.load('wcrp:cmip6:institution-id')]
+    return [ i.canonical_name.split(':')[-1]
+             for i in pyessv.load('wcrp:cmip6:institution-id') ]
 
 
 # Main entry point.
