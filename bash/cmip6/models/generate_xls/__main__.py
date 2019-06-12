@@ -55,7 +55,8 @@ def _main(args):
     for i in institutes:
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
             for t in pyessv.ESDOC.cmip6.get_model_topics(s):
-                Spreadsheet(i, s, t).write()
+                xl = Spreadsheet(i, s, t)
+                xl.write()
 
 
 class Spreadsheet(object):
