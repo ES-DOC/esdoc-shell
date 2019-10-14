@@ -15,10 +15,7 @@ import json
 import os
 
 import openpyxl
-import pyesdoc
 import pyessv
-
-from pyesdoc.ontologies.cim import v2 as cim
 
 import _utils as utils
 
@@ -54,7 +51,7 @@ def _main(args):
         for s in pyessv.WCRP.cmip6.get_institute_sources(i):
             for t in pyessv.ESDOC.cmip6.get_model_topics(s):
                 try:
-                    wb = _get_spreadsheet_path(i, s, t)
+                    wb = _get_spreadsheet(i, s, t)
                 except IOError:
                     warning = '{} :: {} :: {} spreadsheet not found'
                     warning = warning.format(i.canonical_name, s.canonical_name, t.canonical_name)
@@ -64,7 +61,7 @@ def _main(args):
                 _write_to_fs(i, s, t, _get_content(i, s, t, wb))
 
 
-def _get_spreadsheet_path(i, s, t):
+def _get_spreadsheet(i, s, t):
     """Returns a model topic spreadsheet for processing.
 
     """

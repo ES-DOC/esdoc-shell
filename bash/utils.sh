@@ -7,8 +7,9 @@
 # Activates a virtual environment.
 activate_venv()
 {
-	export PYTHONPATH=$PYTHONPATH:$PYESDOC_HOME
-	source $PYESDOC_HOME/ops/venv/bin/activate
+	venv_path=$ESDOC_SHELL_VENV
+	source $venv_path/bin/activate
+	log "venv activated @ "$venv_path
 }
 
 # Wraps standard echo by adding ESDOC prefix.
