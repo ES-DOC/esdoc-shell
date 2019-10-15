@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: generate_json.py
+.. module:: generate_cim.py
    :license: GPL/CeCIL
    :platform: Unix, Windows
    :synopsis: Generates CMIP6 JSON documents from XLS files.
@@ -21,13 +21,14 @@ from cmip6.utils import io_mgr
 
 
 # Define command line argument parser.
-_ARGS = argparse.ArgumentParser("Generates CMIP6 citation JSON files.")
+_ARGS = argparse.ArgumentParser("Generates CMIP6 responsible parties JSON files.")
 _ARGS.add_argument(
     "--institution-id",
     help="An institution identifier",
     dest="institution_id",
     type=str
     )
+
 
 
 def _main(args):
@@ -39,13 +40,13 @@ def _main(args):
 
 
 def _write(i):
-    """Writes citation JSON file for a particular institute.
+    """Writes parties JSON file for a particular institute.
 
     """
     try:
         spreadsheet = _get_spreadsheet(i)
     except IOError:
-        msg = '{} citations spreadsheet not found'.format(i.canonical_name)
+        msg = '{} parties spreadsheet not found'.format(i.canonical_name)
         pyessv.log_warning(msg)
     else:
         content = _get_content(i, spreadsheet)
@@ -57,7 +58,7 @@ def _get_spreadsheet(i):
     """Returns a spreadsheet for processing.
 
     """
-    path = io_mgr.get_citations_spreadsheet(i)
+    path = io_mgr.get_parties_spreadsheet(i)
     if not os.path.exists(path):
         raise IOError()
 
@@ -86,7 +87,7 @@ def _write_content(i, content):
     """Writes json content to file system.
 
     """
-    fpath = io_mgr.get_citations_json(i)
+    fpath = io_mgr.get_parties_json(i)
     with open(fpath, 'w') as fstream:
         fstream.write(json.dumps(content, indent=4))
 
@@ -95,21 +96,23 @@ def _set_xls_content(obj, worksheet):
     """Sets content for a particular specialization.
 
     """
-    for row in worksheet.iter_rows(min_row=3, max_col=5, max_row=worksheet.max_row):
-        mnemonic, doi, bibtex, url, long_name = [i.value for i in row]
-        if mnemonic is None:
-            continue
-        if doi is None and bibtex is None and url is None and long_name is None:
+    for row in worksheet.iter_rows(min_row=3, max_col=7, max_row=worksheet.max_row):
+        if row[0].value is None:
             continue
 
-        citation = collections.OrderedDict()
-        citation['mnemonic'] = mnemonic
-        citation['doi'] = doi
-        citation['bibtex'] = bibtex
-        citation['url'] = url
-        citation['long_name'] = long_name
+        mnemonic, name, is_organisation, address_postal, \
+        address_email, url, orcid = [i.value for i in row]
 
-        obj['content'].append(citation)
+        party = collections.OrderedDict()
+        party['mnemonic'] = mnemonic
+        party['name'] = name
+        party['is_organisation'] = is_organisation in ['yes', 'y']
+        party['address_postal'] = address_postal
+        party['address_email'] = address_email
+        party['url'] = url
+        party['orcid'] = orcid
+
+        obj['content'].append(party)
 
 
 # Main entry point.

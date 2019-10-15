@@ -7,6 +7,7 @@
 # Activates a virtual environment.
 activate_venv()
 {
+	export PYTHONPATH=$ESDOC_DIR_BASH:$PYTHONPATH
 	venv_path=$ESDOC_SHELL_VENV
 	source $venv_path/bin/activate
 	log "venv activated @ "$venv_path

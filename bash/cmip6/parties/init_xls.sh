@@ -13,10 +13,10 @@ main()
 	else
 		institution=all
 	fi
-	xls_template=$ESDOC_DIR_BASH/cmip6/responsible_parties/templates/responsible-parties.xlsx
+	xls_template=$ESDOC_DIR_BASH/cmip6/parties/templates/responsible-parties.xlsx
 
 	activate_venv
-	python $ESDOC_DIR_BASH/cmip6/responsible_parties/init_xls.py --institution-id=$institution --xls-template=$xls_template
+	python $ESDOC_DIR_BASH/cmip6/parties/init_xls.py --institution-id=$institution --xls-template=$xls_template
 
     log "CMIP6 responsible parties XLS initialization: ENDS ..."
 }

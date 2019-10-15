@@ -50,9 +50,9 @@ alias esdoc-cmip6-citations-generate-json=$ESDOC_DIR_BASH/cmip6/citations/genera
 alias esdoc-cmip6-conformances-write-config=$ESDOC_DIR_BASH/cmip6/conformances/write_config.sh
 alias esdoc-cmip6-conformances-write-spreadsheets=$ESDOC_DIR_BASH/cmip6/conformances/write_spreadsheets.sh
 
-# ... responsible parties
-alias esdoc-cmip6-responsible-parties-init-xls=$ESDOC_DIR_BASH/cmip6/responsible_parties/init_xls.sh
-alias esdoc-cmip6-responsible-parties-generate-json=$ESDOC_DIR_BASH/cmip6/responsible_parties/generate_json.sh
+# ... parties
+alias esdoc-cmip6-parties-init-xls=$ESDOC_DIR_BASH/cmip6/parties/init_xls.sh
+alias esdoc-cmip6-parties-generate-json=$ESDOC_DIR_BASH/cmip6/parties/generate_json.sh
 
 # ... specializations
 alias esdoc-cmip6-specializations-clone=$ESDOC_DIR_BASH/cmip6/specializations/clone.sh

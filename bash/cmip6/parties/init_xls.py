@@ -15,7 +15,7 @@ import shutil
 
 import pyessv
 
-import _utils as utils
+from cmip6.utils import io_mgr
 
 
 
@@ -47,17 +47,9 @@ def _main(args):
     if not os.path.exists(args.xls_template):
         raise ValueError("XLS template file does not exist")
 
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id in {'', 'all'} else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
-    # Write one file per CMIP6 institute.
-    for i in institutes:
-        fname = '{}_{}_responsible_parties.xlsx'.format(_MIP_ERA, i.canonical_name)
-        dest = utils.get_folder_of_cmip6_institute(i, folder='responsible_parties')
-        if not os.path.isdir(dest):
-            os.makedirs(dest)
-        dest = os.path.join(dest, fname)
+    # Write one file per institute.
+    for i in io_mgr.get_institutes(args.institution_id):
+        dest = io_mgr.get_parties_spreadsheet(i)
         shutil.copy(args.xls_template, dest)
 
 

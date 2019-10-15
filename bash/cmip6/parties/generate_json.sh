@@ -15,7 +15,7 @@ main()
 	fi
 
 	activate_venv
-	python $ESDOC_DIR_BASH/cmip6/models/generate_json.py --institution-id=$institution
+	python $ESDOC_DIR_BASH/cmip6/parties/generate_json.py --institution-id=$institution
 
 	log "CMIP6 responsible parties JSON file generation: END"
 }
