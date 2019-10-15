@@ -67,6 +67,9 @@ alias esdoc-cmip6-specializations-sync-tooling=$ESDOC_DIR_BASH/cmip6/specializat
 alias esdoc-cmip6-specializations-sync-viewer=$ESDOC_DIR_BASH/cmip6/specializations/sync_viewer.sh
 alias esdoc-cmip6-specializations-validate=$ESDOC_DIR_BASH/cmip6/specializations/validate.sh
 
+# ... institutes
+alias esdoc-cmip6-institutes-verify-repos=$ESDOC_DIR_BASH/cmip6/institutes/verify_repos.sh
+
 # ... experiments
 alias esdoc-cmip6-experiments-archive-cim-documents=$ESDOC_DIR_BASH/cmip6/experiments/archive_cim_documents.sh
 alias esdoc-cmip6-experiments-write-cim-documents=$ESDOC_DIR_BASH/cmip6/experiments/write_cim_documents.sh

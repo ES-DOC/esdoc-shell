@@ -70,11 +70,11 @@ def get_citations_json(i):
     return os.path.join(path, fname)
 
 
-def get_institutes(institution_id):
+def get_institutes(institution_id=None):
     """Returns set of institutes to be processed.
 
     """
-    return pyessv.WCRP.cmip6.institution_id if institution_id == 'all' else \
+    return pyessv.WCRP.cmip6.institution_id if institution_id in (None, 'all') else \
            [pyessv.WCRP.cmip6.institution_id[institution_id]]
 
 
