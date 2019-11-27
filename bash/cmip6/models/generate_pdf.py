@@ -20,7 +20,7 @@ import pyesdoc
 import pyessv
 
 from _utils import ModelTopicOutput
-
+from cmip6.utils import vocabs
 
 
 # Define command line argument parser.
@@ -44,17 +44,10 @@ def _main(args):
     """Main entry point.
 
     """
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
-    # Load template into memory.
     template = _TEMPLATES.load("main.tornado")
-
-    # Write a PDF file per CMIP6 institute | topic combination.
-    # i = institute | s = source | t = topic
+    institutes = vocabs.get_institutes(args.institution_id)
     for i in institutes:
-        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+        for s in vocabs.get_institute_sources(i):
             for t in pyessv.ESDOC.cmip6.get_model_topics(s):
                 try:
                     _write(template, i, s, t)

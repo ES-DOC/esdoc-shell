@@ -13,7 +13,9 @@
 import os
 
 import pyesdoc
-import pyessv
+
+from cmip6.utils import logger
+
 
 
 # CMIP5 to CMIP6 institute mappings.
@@ -31,7 +33,7 @@ def _main():
     """
     for m, institution_id, model_id, repo in _yield_targets():
         if not os.path.exists(repo):
-            pyessv.log_warning('unmappable cmip5 institution: {}'.format(model_id))
+            logger.log_warning('unmappable cmip5 institution: {}'.format(model_id))
             continue
         _write(m, institution_id, model_id, repo)
 

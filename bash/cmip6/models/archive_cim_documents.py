@@ -17,7 +17,7 @@ import shutil
 import pyessv
 
 import _utils as utils
-
+from cmip6.utils import vocabs
 
 
 # Define command line argument parser.
@@ -44,18 +44,9 @@ def _main(args):
     """Main entry point.
 
     """
-    # Defensive programming.
-    if not os.path.exists(args.dest):
-        raise ValueError("Destination folder is invalid")
-
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id in {'', 'all'} else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
-    # Sync CIM files on a per CMIP6 institute | source basis.
-    # i = institute | s = source
+    institutes = vocabs.get_institutes(args.institution_id)
     for i in institutes:
-        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+        for s in vocabs.get_institute_sources(i):
             for src in _get_cim_files(i, s):
                 fname = '{}.json'.format(hashlib.md5(src.split("/")[-1]).hexdigest())
                 dest = os.path.join(args.dest, fname)
@@ -73,4 +64,7 @@ def _get_cim_files(i, s):
 
 # Main entry point.
 if __name__ == '__main__':
-    _main(_ARGS.parse_args())
+    args = _ARGS.parse_args()
+    if not os.path.exists(args.dest):
+        raise ValueError("Destination folder is invalid")
+    _main(args)

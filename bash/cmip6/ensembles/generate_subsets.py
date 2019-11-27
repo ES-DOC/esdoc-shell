@@ -10,10 +10,11 @@
 
 """
 import argparse
-import json
 import os
 
-import pyessv
+from cmip6.utils import vocabs
+
+
 
 # Define command line argument parser.
 _ARGS = argparse.ArgumentParser("Generates CMIP6 ensemble subset JSON files.")
@@ -43,16 +44,9 @@ def _main(args):
     """Main entry point.
 
     """
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
-
-    # Write a JSON file per CMIP6 institute | source | topic combination.
-    # i = institute | s = source | t = topic
-    for i in institutes:
-        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
-            for e in pyessv.WCRP.cmip6.experiment_id:
+    for i in vocabs.get_institutes(args.institution_id):
+        for s in vocabs.get_institute_sources(i):
+            for e in vocabs.get_experiments():
                 _map_superset_to_subset(args.archive_dir, i, s, e)
 
 

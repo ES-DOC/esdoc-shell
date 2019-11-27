@@ -16,7 +16,7 @@ import shutil
 import pyessv
 
 from cmip6.utils import io_mgr
-
+from cmip6.utils import vocabs
 
 
 # Define command line argument parser.
@@ -48,7 +48,7 @@ def _main(args):
         raise ValueError("XLS template file does not exist")
 
     # Write one file per institute.
-    for i in io_mgr.get_institutes(args.institution_id):
+    for i in vocabs.get_institutes(args.institution_id):
         dest = io_mgr.get_parties_spreadsheet(i)
         shutil.copy(args.xls_template, dest)
 

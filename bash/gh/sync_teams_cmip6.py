@@ -10,9 +10,6 @@
 
 
 """
-import json
-import os
-
 import pyessv
 import requests
 
@@ -32,7 +29,7 @@ def _main():
     to_create = ['cmip6-{}'.format(i) for i in institutes if 'cmip6-{}'.format(i) not in teams]
 
     # Set teams to be deleted.
-    to_delete = [i for i in teams.values() if i.name.startswith('cmip6') and  i.institution_id not in institutes]
+    to_delete = [i for i in teams.values() if i.name.startswith('cmip6') and i.institution_id not in institutes]
 
     # Escape when nothing to do.
     if len(to_create) == 0 and len(to_delete) == 0:

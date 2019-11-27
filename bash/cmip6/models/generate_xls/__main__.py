@@ -18,6 +18,7 @@ import xlsxwriter
 import pyesdoc
 import pyessv
 from _utils import ModelTopicOutput
+from cmip6.utils import vocabs
 from write_citations_and_parties import write as write_citations_and_parties
 from write_frontis import write as write_frontis
 from write_property_value import write as write_property_value
@@ -25,6 +26,8 @@ from write_property import write as write_property
 from write_propertyset import write as write_propertyset
 from write_subtopic import write as write_subtopic
 from write_topic import write as write_topic
+
+
 
 # Define command line argument parser.
 _ARGS = argparse.ArgumentParser("Generates CMIP6 model XLS files.")
@@ -46,14 +49,9 @@ def _main(args):
     """Main entry point.
 
     """
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
-    # Write an XLS file per CMIP6 institute | topic combination.
-    # i = institute | s = source | t = topic
+    institutes = vocabs.get_institutes(args.institution_id)
     for i in institutes:
-        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+        for s in vocabs.get_institute_sources(i):
             for t in pyessv.ESDOC.cmip6.get_model_topics(s):
                 xl = Spreadsheet(i, s, t)
                 xl.write()

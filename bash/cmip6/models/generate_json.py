@@ -18,6 +18,8 @@ import openpyxl
 import pyessv
 
 import _utils as utils
+from cmip6.utils import logger
+from cmip6.utils import vocabs
 
 
 
@@ -41,21 +43,16 @@ def _main(args):
     """Main entry point.
 
     """
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
-    # Write a JSON file per CMIP6 institute | source | topic combination.
-    # i = institute | s = source | t = topic
+    institutes = vocabs.get_institutes(args.institution_id)
     for i in institutes:
-        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+        for s in vocabs.get_institute_sources(i):
             for t in pyessv.ESDOC.cmip6.get_model_topics(s):
                 try:
                     wb = _get_spreadsheet(i, s, t)
                 except IOError:
                     warning = '{} :: {} :: {} spreadsheet not found'
                     warning = warning.format(i.canonical_name, s.canonical_name, t.canonical_name)
-                    pyessv.log_warning(warning)
+                    logger.log_warning(warning)
                     continue
 
                 _write_to_fs(i, s, t, _get_content(i, s, t, wb))

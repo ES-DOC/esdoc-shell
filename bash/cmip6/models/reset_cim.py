@@ -16,6 +16,7 @@ import shutil
 import pyessv
 
 import _utils as utils
+from cmip6.utils import vocabs
 
 
 
@@ -33,14 +34,9 @@ def _main(args):
     """Main entry point.
 
     """
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
-    # Reset CIM folder for each CMIP6 institute | source combination.
-    # i = institute | s = source
+    institutes = vocabs.get_institutes(args.institution_id)
     for i in institutes:
-        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+        for s in vocabs.get_institute_sources(i):
             folder = utils.get_folder_of_cmip6_source(i, s, 'cim')
             shutil.rmtree(folder)
             os.makedirs(folder)

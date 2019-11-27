@@ -16,6 +16,7 @@ import json
 import os
 
 import pyessv
+from cmip6.utils import vocabs
 
 
 
@@ -28,26 +29,6 @@ _ARGS.add_argument(
     type=str,
     default="all"
     )
-
-
-def _main(args):
-    """Main entry point.
-
-    """
-    # Set writers to be executed.
-    writers = [
-        InitialisationFromCmip5ModelSettings,
-        ModelPublicationSettings
-        ]
-
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
-    # Write a settings file CMIP6 institute | setting combination.
-    for i in institutes:
-        for writer in [w(i) for w in writers]:
-            writer.execute()
 
 
 class ModelSettings(object):
@@ -99,7 +80,7 @@ class ModelSettings(object):
         """Assigns new settings.
 
         """
-        for source in pyessv.WCRP.cmip6.get_institute_sources(self.institution):
+        for source in vocabs.get_institute_sources(self.institution):
             settings = collections.OrderedDict()
             for realm in self._get_topics(source):
                 settings[realm.canonical_name] = self._get_new_setting(source, realm)
@@ -176,6 +157,21 @@ class ModelPublicationSettings(ModelSettings):
             "publish": get_publish_state()
         }
 
+# Settings writers to be executed.
+_WRITERS = [
+    InitialisationFromCmip5ModelSettings,
+    ModelPublicationSettings
+]
+
+def _main(args):
+    """Main entry point.
+
+    """
+    institutes = vocabs.get_institutes(args.institution_id)
+    for i in institutes:
+        writers = [w(i) for w in _WRITERS]
+        for writer in writers:
+            writer.execute()
 
 
 # Main entry point.

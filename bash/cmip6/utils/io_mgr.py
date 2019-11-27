@@ -70,12 +70,55 @@ def get_citations_json(i):
     return os.path.join(path, fname)
 
 
-def get_institutes(institution_id=None):
-    """Returns set of institutes to be processed.
+def get_model_folder(institution, source_id, sub_folder=None):
+    path = [institution, 'cmip6', 'models', source_id]
+    if sub_folder:
+        path += [sub_folder]
 
-    """
-    return pyessv.WCRP.cmip6.institution_id if institution_id in (None, 'all') else \
-           [pyessv.WCRP.cmip6.institution_id[institution_id]]
+    return get_folder(path)
+
+
+def get_model_cim(institution, source_id):
+    folder = get_model_folder(institution, source_id, 'cim')
+    fname = 'cmip6_{}_{}.json'.format(
+        institution.canonical_name,
+        source_id.canonical_name
+        )
+
+    return os.path.join(folder, fname)
+
+
+def get_model_topic_json(institution, source_id, topic):
+    folder = get_model_folder(institution, source_id, 'json')
+    fname = 'cmip6_{}_{}_{}.json'.format(
+        institution.canonical_name,
+        source_id.canonical_name,
+        topic.canonical_name
+        )
+
+    return os.path.join(folder, fname)
+
+
+def get_model_topic_pdf(institution, source_id, topic):
+    folder = get_model_folder(institution, source_id, 'pdf')
+    fname = 'cmip6_{}_{}_{}.pdf'.format(
+        institution.canonical_name,
+        source_id.canonical_name,
+        topic.canonical_name
+        )
+
+    return os.path.join(folder, fname)
+
+
+def get_model_topic_xls(institution, source_id, topic):
+    folder = get_model_folder(institution, source_id)
+    fname = 'cmip6_{}_{}_{}.xlsx'.format(
+        institution.canonical_name,
+        source_id.canonical_name,
+        topic.canonical_name
+        )
+
+    return os.path.join(folder, fname)
 
 
 def get_parties_folder(i):

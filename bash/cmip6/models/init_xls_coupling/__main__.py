@@ -17,6 +17,8 @@ import xlsxwriter
 
 import pyesdoc
 import pyessv
+
+from cmip6.utils import vocabs
 from init_workbook import init as init_workbook
 from write_couplings import write as write_couplings
 from write_example import write as write_example
@@ -43,14 +45,9 @@ def _main(args):
     """Main entry point.
 
     """
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
-    # Write an XLS file per CMIP6 institute | topic combination.
-    # i = institute | s = source
+    institutes = vocabs.get_institutes(args.institution_id)
     for i in institutes:
-        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+        for s in vocabs.get_institute_sources(i):
             ctx = ProcessingContext(i, s)
             ctx.write()
 

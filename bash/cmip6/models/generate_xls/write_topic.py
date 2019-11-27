@@ -1,7 +1,10 @@
+
 import os
 
 import xlsxwriter
-import pyessv
+
+from cmip6.utils import logger
+
 
 
 def write(ctx):
@@ -20,5 +23,5 @@ def write(ctx):
     fname += '.xlsx'
     path = os.path.join(path, fname)
 
-    pyessv.log('generating --> {}'.format(fname), app='SH')
+    logger.log('generating --> {}'.format(fname), app='SH')
     ctx.wb = xlsxwriter.Workbook(path)

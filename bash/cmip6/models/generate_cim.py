@@ -18,6 +18,8 @@ import pyessv
 
 from pyesdoc.ontologies.cim import v2 as cim
 
+from cmip6.utils import logger
+from cmip6.utils import vocabs
 import _utils as utils
 
 
@@ -45,12 +47,8 @@ def _main(args):
     """Main entry point.
 
     """
-    # Set institutes to be processed.
-    institutes = pyessv.WCRP.cmip6.institution_id if args.institution_id == 'all' else \
-                 [pyessv.WCRP.cmip6.institution_id[args.institution_id]]
-
     # Write a CIM file per CMIP6 institute | source combination.
-    # i = institute | s = source
+    institutes = vocabs.get_institutes(args.institution_id)
     for i in institutes:
         # Escape if settings file not found.
         try:
@@ -58,17 +56,17 @@ def _main(args):
         except IOError:
             warning = '{} model_publications.json not found'
             warning = warning.format(i.canonical_name)
-            pyessv.log_warning(warning)
+            logger.log_warning(warning)
             continue
 
-        for s in pyessv.WCRP.cmip6.get_institute_sources(i):
+        for s in vocabs.get_institute_sources(i):
             # Escape if source settings undeclared.
             try:
                 settings = all_settings[s.canonical_name]
             except KeyError:
                 warning = '{} :: {} publication settings not found'
                 warning = warning.format(i.canonical_name, s.canonical_name)
-                pyessv.log_warning(warning)
+                logger.log_warning(warning)
                 continue
 
             # Escape if no settings are switched 'on'.
@@ -110,12 +108,12 @@ def _sync_fs(i, s, settings):
     if content is None:
         pass
         # if os.path.exists(path):
-        #     pyessv.log('deleting --> {}'.format(path.split('/')[-1]), app='SH')
+        #     logger.log('deleting --> {}'.format(path.split('/')[-1]), app='SH')
         #     os.remove(path)
 
     # Write otherwise.
     else:
-        pyessv.log('writing --> {}'.format(path.split('/')[-1]), app='SH')
+        logger.log('writing --> {}'.format(path.split('/')[-1]), app='SH')
         with open(path, 'w') as fstream:
             fstream.write(content)
 

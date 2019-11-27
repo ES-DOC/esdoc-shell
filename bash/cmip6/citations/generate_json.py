@@ -15,9 +15,10 @@ import json
 import os
 
 import openpyxl
-import pyessv
 
 from cmip6.utils import io_mgr
+from cmip6.utils import logger
+from cmip6.utils import vocabs
 
 
 # Define command line argument parser.
@@ -34,7 +35,7 @@ def _main(args):
     """Main entry point.
 
     """
-    for i in io_mgr.get_institutes(args.institution_id):
+    for i in vocabs.get_institutes(args.institution_id):
         _write(i)
 
 
@@ -46,7 +47,7 @@ def _write(i):
         spreadsheet = _get_spreadsheet(i)
     except IOError:
         msg = '{} citations spreadsheet not found'.format(i.canonical_name)
-        pyessv.log_warning(msg)
+        logger.log_warning(msg)
     else:
         content = _get_content(i, spreadsheet)
         if content:
