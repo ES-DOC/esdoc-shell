@@ -2,59 +2,11 @@
 export ESDOC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export ESDOC_DIR_BASH=$ESDOC_HOME/bash
 
-# pyesdoc meta-programming commands.
-alias esdoc-mp-cim-v1-sync=$ESDOC_DIR_BASH/pyesdoc/mp_sync_cim_v1.sh
-alias esdoc-mp-cim-v2-sync=$ESDOC_DIR_BASH/pyesdoc/mp_sync_cim_v2.sh
-alias esdoc-mp-cim-v1-generate='esdoc-mp-cim-v1-sync && $ESDOC_DIR_BASH/pyesdoc/mp_generate_cim_1.sh'
-alias esdoc-mp-cim-v2-generate='esdoc-mp-cim-v2-sync && $ESDOC_DIR_BASH/pyesdoc/mp_generate_cim_2.sh'
-alias esdoc-mp-cim-v1-validate='esdoc-mp-cim-v1-sync && $ESDOC_DIR_BASH/pyesdoc/mp_validate_cim_1.sh'
-alias esdoc-mp-cim-v2-validate='esdoc-mp-cim-v2-sync && $ESDOC_DIR_BASH/pyesdoc/mp_validate_cim_2.sh'
-
-# Security commands.
-alias esdoc-gh-abort-changes=$ESDOC_DIR_BASH/gh/abort_changes.sh
-alias esdoc-gh-delete-teams=$ESDOC_DIR_BASH/gh/delete_teams.sh
-alias esdoc-gh-init-teams=$ESDOC_DIR_BASH/gh/init_teams.sh
-alias esdoc-gh-clone-repos=$ESDOC_DIR_BASH/gh/clone_repos.sh
-alias esdoc-gh-list-teams=$ESDOC_DIR_BASH/gh/list_teams.sh
-alias esdoc-gh-test-team-membership=$ESDOC_DIR_BASH/gh/test_team_membership.sh
-alias esdoc-gh-pull-changes=$ESDOC_DIR_BASH/gh/pull_changes.sh
-alias esdoc-gh-push-changes=$ESDOC_DIR_BASH/gh/push_changes.sh
-
-alias esdoc-gh-sync-repos=$ESDOC_DIR_BASH/gh/sync_repos.sh
-alias esdoc-gh-sync-teams=$ESDOC_DIR_BASH/gh/sync_teams.sh
-
 # Stack commands.
 alias esdoc-stack-diff=$ESDOC_DIR_BASH/stack/diff.sh
 alias esdoc-stack-install=$ESDOC_DIR_BASH/stack/install.sh
-alias esdoc-stack-uninstall=$ESDOC_DIR_BASH/stack/uninstall.sh
 alias esdoc-stack-update=$ESDOC_DIR_BASH/stack/update.sh
-
-# Deployment commands.
-alias esdoc-deployment-sync-static-assets=$ESDOC_DIR_BASH/deployment/sync_static_assets.sh
-
-# CMIP5 commands.
-# alias esdoc-cmip5-archive-cim-documents=$ESDOC_DIR_BASH/cmip5/archive_cim_documents.sh
-
-# CMIP6 commands.
-alias cmip6-sync-gh-repos='$ESDOC_DIR_BASH/gh/sync_repos.sh cmip6'
-alias cmip6-sync-gh-teams='$ESDOC_DIR_BASH/gh/sync_teams.sh cmip6'
-alias cmip6-clone-gh-repos='$ESDOC_DIR_BASH/gh/clone_repos.sh cmip6'
-
-# ... conformances
-alias cmip6-conformances-write-config=$ESDOC_DIR_BASH/cmip6/conformances/write_config.sh
-alias cmip6-conformances-write-spreadsheets=$ESDOC_DIR_BASH/cmip6/conformances/write_spreadsheets.sh
-
-# ... ensembles
-alias cmip6-ensembles-generate-subsets=$ESDOC_DIR_BASH/cmip6/ensembles/generate_subsets.sh
-
-_prepare_to_deploy()
-{
-	esdoc-ws-db-backup
-	esdoc-archive-compress
-}
-alias esdoc-prepare-to-deploy=_prepare_to_deploy
 
 # Ensure target scripts are executable.
 chmod a+x $ESDOC_DIR_BASH/*.sh
 chmod a+x $ESDOC_DIR_BASH/*/*.sh
-chmod a+x $ESDOC_DIR_BASH/*/*/*.sh

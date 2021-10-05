@@ -26,7 +26,6 @@ main()
 
 	_update_repo $ESDOC_HOME
 	_update_repos $ESDOC_DIR_REPOS_CORE
-	_update_repos $ESDOC_DIR_REPOS_CMIP6
 	_update_repos $ESDOC_DIR_REPOS_EXT
 
 	log "UPDATED STACK"

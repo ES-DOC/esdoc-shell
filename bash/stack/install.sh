@@ -21,12 +21,6 @@ main()
 	do
 		_install_repo $ESDOC_DIR_REPOS_CORE $repo
 	done
-
-	for repo in "${ESDOC_REPOS_CMIP6[@]}"
-	do
-		_install_repo $ESDOC_DIR_REPOS_CMIP6 $repo
-	done
-
 	for repo in "${ESDOC_REPOS_EXT[@]}"
 	do
 		_install_repo $ESDOC_DIR_REPOS_EXT $repo

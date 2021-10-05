@@ -7,9 +7,6 @@
 # Variables.
 source $ESDOC_HOME/bash/utils_vars.sh
 
-# Vocabs.
-source $ESDOC_HOME/bash/utils_vocabs.sh
-
 # ###############################################################
 # SECTION: HELPER FUNCTIONS
 # ###############################################################
@@ -80,18 +77,11 @@ activate_sub_shells()
 	source $ESDOC_HOME/repos/core/esdoc-cdf2cim/sh/activate
 	source $ESDOC_HOME/repos/core/esdoc-cdf2cim-ws/sh/activate
 	source $ESDOC_HOME/repos/core/esdoc-errata-ws/sh/activate
-	source $ESDOC_HOME/repos/core/esdoc-web-plugin/sh/activate
 }
 
 # ###############################################################
 # SECTION: Initialise file system
 # ###############################################################
-
-# Ensure ops paths exist.
-for ops_dir in "${ESDOC_OPS_DIRS[@]}"
-do
-	mkdir -p $ops_dir
-done
 
 # Clear temp files.
 reset_tmp

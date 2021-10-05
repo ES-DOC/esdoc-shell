@@ -27,7 +27,6 @@ main()
 
 	_diff_repo $ESDOC_HOME
 	_diff_repos $ESDOC_DIR_REPOS_CORE
-	_diff_repos $ESDOC_DIR_REPOS_CMIP6
 	_diff_repos $ESDOC_DIR_REPOS_EXT
 
 	log "DIFFING STACK"

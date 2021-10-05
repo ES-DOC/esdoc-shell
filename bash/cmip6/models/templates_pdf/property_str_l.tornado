@@ -1,5 +1,0 @@
-{% if len(p_values) == 0 %}
-	\textbf{Enter TEXT:}
-{% end %}
-
-\textbf{{{ ' '.join([_str(i) for i in p_values]) }}}

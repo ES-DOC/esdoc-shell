@@ -1,7 +1,0 @@
-pyessv
-pyesdoc
-xlrd
-openpyxl
-tornado
-latex
-xlsxwriter
