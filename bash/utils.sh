@@ -50,8 +50,12 @@ log_banner()
 reset_tmp()
 {
         if [ ! -z "${ESDOC_DIR_TMP}" ]; then
-                rm -rf $ESDOC_DIR_TMP/*
-                mkdir -p $ESDOC_DIR_TMP
+            echo "About to remove all directories under ${ESDOC_DIR_TMP}"
+            echo "3 seconds to cancel before removal..."
+            sleep 3
+            rm -r $ESDOC_DIR_TMP/*
+
+            mkdir -p $ESDOC_DIR_TMP
         fi
 }
 
