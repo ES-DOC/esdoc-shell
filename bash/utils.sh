@@ -49,8 +49,10 @@ log_banner()
 # Resets temporary folder.
 reset_tmp()
 {
-	rm -rf $ESDOC_DIR_TMP/*
-	mkdir -p $ESDOC_DIR_TMP
+        if [ ! -z "${ESDOC_DIR_TMP}" ]; then
+                rm -rf $ESDOC_DIR_TMP/*
+                mkdir -p $ESDOC_DIR_TMP
+        fi
 }
 
 # Assigns the current working directory.
