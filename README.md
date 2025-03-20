@@ -7,7 +7,7 @@ ES-DOC command line shell
 What is ES-DOC ?
 --------------------------------------
 
-ES-DOC stands for Earth Science - Documentation.  It's goal is to provide software tools and services in order to support the distribution of earth science documentation.
+ES-DOC stands for Earth Science - Documentation.  Its goal is to provide software tools and services in order to support the distribution of earth science documentation.
 
 
 What is esdoc-shell ?
@@ -25,7 +25,7 @@ There is a need to support command line programs for streamlining deployments, p
 Who uses esdoc-shell ?
 --------------------------------------
 
-Anyone who wishes to install and use es-doc tools & api's from the command line.
+Anyone who wishes to install and use es-doc tools & APIs from the command line.
 
 
 Installation

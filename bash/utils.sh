@@ -49,8 +49,17 @@ log_banner()
 # Resets temporary folder.
 reset_tmp()
 {
-	rm -rf $ESDOC_DIR_TMP/*
-	mkdir -p $ESDOC_DIR_TMP
+        if [ ! -z "${ESDOC_DIR_TMP}" ]; then
+            echo "About to remove all directories under ${ESDOC_DIR_TMP}"
+            echo "3 seconds to cancel before starting removal..."
+            sleep 3
+            rm -r $ESDOC_DIR_TMP/*
+
+            mkdir -p $ESDOC_DIR_TMP
+        else
+            echo "ESDOC_DIR_TMP variable is not set so doing nothing"
+            echo "Ensure ESDOC_DIR_TMP is set for reset_tmp to function"
+        fi
 }
 
 # Assigns the current working directory.
